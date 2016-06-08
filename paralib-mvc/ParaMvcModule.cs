@@ -7,12 +7,12 @@ namespace com.paralib.mvc
     {
         public void Dispose()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Init(HttpApplication context)
         {
-            throw new NotImplementedException();
+           // throw new NotImplementedException();
         }
     }
 }

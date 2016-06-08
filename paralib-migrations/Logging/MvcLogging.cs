@@ -1,9 +1,9 @@
 ﻿using System;
 using FluentMigrator;
 
-namespace com.paralib.migrations
+namespace com.paralib.migrations.Logging
 {
-    public class Logging
+    public class MvcLogging
     {
 
         public static void Down(Migration migration)
@@ -22,6 +22,7 @@ namespace com.paralib.migrations
             .WithColumn("level").AsString(50).NotNullable()
             .WithColumn("logger").AsString(255).NotNullable()
             .WithColumn("method").AsString(255).NotNullable()
+            .WithColumn("user").AsString(255).NotNullable()
             .WithColumn("message").AsString(4000).NotNullable();
         }
 
