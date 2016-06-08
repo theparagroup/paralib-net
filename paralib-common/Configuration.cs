@@ -1,20 +1,16 @@
 ﻿using System;
-using log4net.Config;
-using System.Reflection;
-using System.IO;
+using com.paralib.common.Logging;
 
 namespace com.paralib.common
 {
     public class Configuration
     {
 
-        public static void Configure(string connectionStringName)
+        public static void Configure(string connectionStringName, LoggingModes loggingMode)
         {
             ConnectionStringName = connectionStringName;
 
-            Stream log4net = Assembly.GetExecutingAssembly().GetManifestResourceStream("com.paralib.common.Logging.database-with-fallback-mvc.xml");
-            XmlConfigurator.Configure(log4net);
-            log4net.Close();
+            LoggingConfiguration.Configure(loggingMode);
 
         }
 

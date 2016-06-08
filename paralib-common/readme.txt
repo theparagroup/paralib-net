@@ -5,6 +5,11 @@
 ====	Logging
 =============================================================
 
+We user Log4Net for logging.
+
+
+
+
 Debugging log4net problems (view output in console or trace):
 
 		<appSettings>

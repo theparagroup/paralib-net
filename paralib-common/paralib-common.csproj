@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration.cs" />
+    <Compile Include="Logging\LoggingConfiguration.cs" />
+    <Compile Include="Logging\LoggingModes.cs" />
     <Compile Include="Logging\ParaMvcRollingFileAppender.cs" />
     <Compile Include="Logging\ParaMvcAdoNetAppender.cs" />
     <Compile Include="Logging\ParaAdoNetAppender.cs" />
