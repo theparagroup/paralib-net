@@ -45,6 +45,12 @@ Note: the "nuget.config" file relocates the packages folder to the
 		  </config>
 		</configuration>
 
+We use NuGet in a minimal way. Generally, only the paralib-net library uses NuGet,
+with other projects directly referencing the assemblies in the paralib-net-dependencies
+project. Packages that make changes to the toolchain (or buildfiles) may need to be
+added to each individual project (such as Roslyn and MVC projects). Under no circumstances
+do we use NuGet to install javascript libraries, CSS stylesheets, or other trivial
+matters.
 		
 Next you should read the various readmes:
 
