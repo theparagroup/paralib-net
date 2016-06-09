@@ -5,6 +5,8 @@ namespace com.paralib.mvc
 {
     public class ParaMvcModule : IHttpModule
     {
+        //private static ILog _logger = LogManager.GetLogger(typeof(HelloController));
+
         public void Dispose()
         {
             //throw new NotImplementedException();

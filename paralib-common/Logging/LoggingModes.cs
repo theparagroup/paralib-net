@@ -8,8 +8,8 @@ namespace com.paralib.common.Logging
 {
     public enum LoggingModes
     {
+        None,
         Basic,
-        Mvc,
-        Custom
+        Mvc
     }
 }
