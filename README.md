@@ -32,7 +32,8 @@ How the paralib-net repositories, solutions and projects are set up:
 			paralib-net-reference.sln
 			nuget.config
 			paralib-reference-mvc
-				readme.txt				(IIS, ASP.NET, & MVC 'deep dive')
+				readme.txt				(coding guidelines, etc.)
+				asp-deepdive.txt		(IIS, ASP.NET, & MVC 'deep dive')
 
 				
 				
@@ -56,4 +57,5 @@ Next you should read the various readmes:
 
 		paralib-net/paralib-common/readme.txt
 		paralib-net-reference/paralib-reference-mvc/readme.txt
+		paralib-net-reference/paralib-reference-mvc/asp-deepdive.txt
 		
