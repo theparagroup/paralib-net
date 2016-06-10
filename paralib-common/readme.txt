@@ -1,4 +1,9 @@
-﻿
+﻿=============================================================
+====	Configuration
+=============================================================
+
+
+
 
 =============================================================
 ====	Logging
@@ -18,9 +23,19 @@ migration helpers
 
 Debugging log4net problems (view output in console or trace):
 
-		<appSettings>
-			<add key="log4net.Internal.Debug" value="true"/>
-		</appSettings>
-  
+		config file:
+	
+			<log4net debug="true">
+			</log4net>
+
+		app setting:
+	
+			<appSettings>
+				<add key="log4net.Internal.Debug" value="true"/>
+			</appSettings>
+
+		programatically:
+	
+			 log4net.helpers.LogLog.InternalDebugging property=true;
 
 ..........................................................................................

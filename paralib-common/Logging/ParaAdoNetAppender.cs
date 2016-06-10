@@ -7,7 +7,7 @@ namespace com.paralib.common.Logging
     {
         public ParaAdoNetAppender()
         {
-            ConnectionString = Configuration.ConnectionString;
+            ConnectionString = Paralib.Configuration.Dal.ConnectionString;
         }
     }
 }

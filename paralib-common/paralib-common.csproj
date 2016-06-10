@@ -45,13 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\DalElement.cs" />
+    <Compile Include="Configuration\ParalibSection.cs" />
     <Compile Include="Logging\LoggingConfiguration.cs" />
     <Compile Include="Logging\LoggingModes.cs" />
     <Compile Include="Logging\ParaMvcRollingFileAppender.cs" />
     <Compile Include="Logging\ParaMvcAdoNetAppender.cs" />
     <Compile Include="Logging\ParaAdoNetAppender.cs" />
+    <Compile Include="Paralib.cs" />
+    <Compile Include="ParalibException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Configuration\Settings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -63,6 +68,7 @@
     <EmbeddedResource Include="Logging\database-with-fallback-mvc.xml" />
     <Content Include="readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
