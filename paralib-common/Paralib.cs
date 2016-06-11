@@ -10,7 +10,7 @@ namespace com.paralib.common
 
         public static void Initialize()
         {
-            Initialize(Settings.Load());
+            Initialize(Settings.Load(ConfigurationManager.GetParalibSection()));
         }
 
         public static void Initialize(Action<Settings> settings)

@@ -1,5 +1,4 @@
 ﻿using System;
-using NET = System.Configuration;
 
 namespace com.paralib.common.Configuration
 {
@@ -17,27 +16,26 @@ namespace com.paralib.common.Configuration
             Dal = new DalSettings();
         }
 
-        public static Settings Load()
+        public static Settings Load(ParalibSection paralibSection)
         {
-            ParalibSection config=(ParalibSection)NET.ConfigurationManager.GetSection("paralib");
 
             Settings settings = new Settings();
 
-            if (config != null)
+            if (paralibSection != null)
             {
 
-                if (config.Dal!= null)
+                if (paralibSection.Dal!= null)
                 {
                     //if using config file, connection must point to a valid <connectionStrings> entry
-                    settings.Dal.Connection = config.Dal.Connection;
+                    settings.Dal.Connection = paralibSection.Dal.Connection;
 
                     if (settings.Dal.Connection != null)
                     {
-                        var connectionStringSetting=NET.ConfigurationManager.ConnectionStrings[settings.Dal.Connection];
+                        string connectionString=ConfigurationManager.GetConnectionString(settings.Dal.Connection);
 
-                        if (connectionStringSetting != null)
+                        if (connectionString != null)
                         {
-                            settings.Dal.ConnectionString = connectionStringSetting.ConnectionString;
+                            settings.Dal.ConnectionString = connectionString;
                         }
                         else
                         {
