@@ -26,7 +26,7 @@ namespace com.paralib.mvc
                     return;
                 }
 
-                //get logging going early
+                //get logging going early (using web.config)
                 Paralib.Initialize();
 
                 //register our paralib MVC module

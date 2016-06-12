@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace com.paralib.common.Configuration
 {
-    public delegate void SettingsChangedEventHandler(Settings settings);
+    public delegate void ConfigureEventHandler(Settings settings);
 
 }

@@ -38,7 +38,7 @@ namespace com.paralib.mvc
                 //create a default web.config section & connectionstring if they don't exist
                 ConfigurationManager.InitializeWebConfig();
 
-                //setup paralib
+                //setup paralib again (allow global.asax to modify configuration)
                 Paralib.Setup(Paralib.Settings);
 
 

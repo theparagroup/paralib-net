@@ -22,17 +22,17 @@ namespace com.paralib.common
             Just for fun, we use explicit add/remove event methods.
 
         */
-        private static event SettingsChangedEventHandler _settingsChanged;
+        private static event ConfigureEventHandler _configureEvent;
 
-        public static event SettingsChangedEventHandler SettingsChanged
+        public static event ConfigureEventHandler Configure
         {
             add
             {
-                _settingsChanged += value;
+                _configureEvent += value;
             }
             remove
             {
-                _settingsChanged -= value;
+                _configureEvent -= value;
             }
         }
 
@@ -87,6 +87,13 @@ namespace com.paralib.common
         public static void Setup(Settings settings)
         {
 
+            //allow library consumers to modify configuration programatically
+            if (_configureEvent != null)
+            {
+                _configureEvent(settings);
+            }
+
+
             //DAL
             Configuration.Dal.Connection = settings.Dal.Connection;
             Configuration.Dal.ConnectionString = settings.Dal.ConnectionString;
@@ -94,10 +101,6 @@ namespace com.paralib.common
             //if logging
             Logging.LoggingConfiguration.Configure(Logging.LoggingModes.Mvc);
 
-            if (_settingsChanged != null)
-            {
-                _settingsChanged(settings);
-            }
 
             _logger.Info("settings changed");
     }
