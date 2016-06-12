@@ -4,7 +4,7 @@ using System.Configuration;
 namespace com.paralib.common.Configuration
 {
     /*
-        <paralib>
+        <paralib enabled="true|false">
 
             <common>
                 <logging enabled="false|true" debug="false|true" level="OFF|FATAL" logUser="false|true">
@@ -30,6 +30,13 @@ namespace com.paralib.common.Configuration
 
     public class ParalibSection : ConfigurationSection
     {
+        [ConfigurationProperty("enabled",DefaultValue =true)]
+        public bool Enabled
+        {
+            get { return ((bool)(base["enabled"])); }
+            set { base["enabled"] = value; }
+        }
+
         [ConfigurationProperty("dal")]
         public DalElement Dal
         {

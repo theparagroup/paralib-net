@@ -10,8 +10,8 @@ namespace com.paralib.mvc.Configuration
         public static void InitializeWebConfig()
         {
             NET.Configuration cfg = WebConfigurationManager.OpenWebConfiguration("~");
-            PARA.ConfigurationManager. CreateParalibSection(cfg);
-            //cfg.Save(NET.ConfigurationSaveMode.Full, true);
+            PARA.ConfigurationManager.CreateParalibSection(cfg);
+            PARA.ConfigurationManager.Save(cfg);
         }
 
     }

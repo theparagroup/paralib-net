@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Web;
 using log4net;
+using com.paralib.common;
+using com.paralib.mvc.Configuration;
 
 namespace com.paralib.mvc
 {
@@ -8,7 +10,13 @@ namespace com.paralib.mvc
     {
         private static ILog _logger = LogManager.GetLogger(typeof(ParaMvcModule));
         private static readonly object _lock = new object();
-        private static bool _started;
+        private static bool _initialized;
+
+
+        public ParaMvcModule()
+        {
+            _logger.Info(".ctor");
+        }
 
         public void Dispose()
         {
@@ -19,27 +27,28 @@ namespace com.paralib.mvc
         {
             _logger.Info(null);
 
-            //init is called for each instance of HttpApplication, and there can be many
-            //per Application Domain as HttpApplication objects may be pooled.
+            //requests are multi-threaded - we want the f
             lock (_lock)
             {
-                if (_started)
+                if (_initialized)
                 {
                     return;
                 }
 
-                //create web section if needed
+                //create a default web.config section & connectionstring if they don't exist
+                ConfigurationManager.InitializeWebConfig();
 
-                //load config/delta
+                //setup paralib
+                Paralib.Setup(Paralib.Settings);
 
-                _logger.Info("ParaMvcModule start up");
 
-                _started = true;
+                _initialized = true;
+
+                _logger.Info("module first-request initialized");
 
             }
-
-
-
         }
+
+
     }
 }

@@ -48,6 +48,7 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\DalElement.cs" />
     <Compile Include="Configuration\ParalibSection.cs" />
+    <Compile Include="Configuration\SettingsChangedEventHandler.cs" />
     <Compile Include="Logging\LoggingConfiguration.cs" />
     <Compile Include="Logging\LoggingModes.cs" />
     <Compile Include="Logging\ParaMvcRollingFileAppender.cs" />

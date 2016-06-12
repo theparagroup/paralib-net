@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
+using com.paralib.common;
 
 namespace com.paralib.dal
 {
@@ -31,7 +27,7 @@ namespace com.paralib.dal
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["dbcon"].ToString();
+                return Paralib.Configuration.Dal.ConnectionString;
             }
         }
 
@@ -50,6 +46,10 @@ namespace com.paralib.dal
                 connectionString = ConnectionString;
             }
 
+            if (connectionString==null)
+            {
+                throw new ParalibException("Db class requires a valid ConnectionString. Provide one explicitly or configure a default in the <paralib> configuration section.");
+            }
 
             _con = new SqlConnection(connectionString);
             _con.Open();
