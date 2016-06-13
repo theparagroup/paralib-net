@@ -1,5 +1,6 @@
 ﻿using System;
 using com.paralib.Configuration;
+using com.paralib.Logging;
 
 namespace com.paralib
 {
@@ -14,7 +15,20 @@ namespace com.paralib
                 don't read the <paralib> section from the config file (manual config).
             */
 
+            public static AppSettings AppSettings { get; } = new AppSettings();
+
             public static ConnectionStrings ConnectionStrings { get; } = new ConnectionStrings();
+
+            public static string Connection { get; private set; }
+
+            public static string ConnectionString
+            {
+                get
+                {
+                    return ConnectionStrings[Connection];
+                }
+            }
+
 
             public static class Logging
             {
@@ -25,19 +39,33 @@ namespace com.paralib
             public static class Dal
             {
                 public static string Connection { get; internal set; }
-                public static string ConnectionString { get; internal set; }
+
+                public static string ConnectionString
+                {
+                    get
+                    {
+                        if (Connection != null)
+                        {
+                            return ConnectionStrings[Connection];
+                        }
+                        else
+                        {
+                            return Configuration.ConnectionString;
+                        }
+                    }
+                }
             }
 
 
             internal static void Load(Settings settings)
             {
-                //DAL (ugh do this first till we fix)
-                Configuration.Dal.Connection = settings.Dal.Connection;
-                Configuration.Dal.ConnectionString = ConfigurationManager.GetConnectionString(Configuration.Dal.Connection);
 
+                Connection = settings.Connection;
 
                 //unconfigure logging
+                LogManager.ResetConfiguration();
 
+                //(re)configure logging
                 Configuration.Logging.Enabled = settings.Logging.Enabled;
 
                 if (Configuration.Logging.Enabled)
@@ -46,17 +74,7 @@ namespace com.paralib
                     com.paralib.Logging.LoggingConfiguration.Configure(com.paralib.Logging.LoggingModes.Mvc);
                 }
 
-
-
-
-                //if (connectionString != null)
-                //{
-                //    settings.Dal.ConnectionString = connectionString;
-                //}
-                //else
-                //{
-                //    throw new ParalibException($"Connection [{settings.Dal.Connection}] not found. Make sure it exists in the <connectionStrings> section.");
-                //}
+                Configuration.Dal.Connection = settings.Dal.Connection;
 
             }
 

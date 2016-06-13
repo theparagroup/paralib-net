@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using com.paralib.Logging;
 
 namespace com.paralib.Configuration
 {
     public class Settings
     {
 
-        public class Logger
+        public string Connection { get; set; }
+
+        public class Log
         {
             public string Name { get; set; }
+            public bool Enabled { get; set; }
+            public string Capture { get; set; }
+            public string Connection { get; set; }
+            public string Path { get; set; }
+            public string ConnectionType { get; set; }
         }
 
         public class LoggingSettings
         {
             public bool Enabled { get; set; }
-            public Dictionary<string, Logger> Loggers { get; } = new Dictionary<string, Logger>();
+            public Dictionary<string, Log> Logs { get; } = new Dictionary<string, Log>();
         }
 
         public class DalSettings
         {
             public string Connection { get; set; }
-            public string ConnectionString { get; set; }
         }
 
         public Settings()
@@ -32,6 +39,10 @@ namespace com.paralib.Configuration
         public LoggingSettings Logging { get; private set; }
         public DalSettings Dal { get; private set; }
 
+        private static string Nullify(string value)
+        {
+            return string.IsNullOrEmpty(value) ? null : value;
+        }
 
         internal static Settings Load(ParalibSection paralibSection)
         {
@@ -40,20 +51,31 @@ namespace com.paralib.Configuration
 
             if (paralibSection != null)
             {
+                //paralib
+                settings.Connection = Nullify(paralibSection.Connection);
 
                 //Logging
                 settings.Logging.Enabled = paralibSection.Logging.Enabled;
 
-                foreach (LoggerElement element in paralibSection.Logging.Loggers)
+                foreach (LogElement element in paralibSection.Logging.Logs)
                 {
-                    settings.Logging.Loggers.Add(element.Name, new Logger() { Name = element.Name });
+                    switch (element.Type)
+                    {
+                        case LogTypes.File:
+                            settings.Logging.Logs.Add(element.Name, new Log() { Name = element.Name, Enabled = element.Enabled, Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
+                            break;
+                        case LogTypes.Database:
+                            settings.Logging.Logs.Add(element.Name, new Log() { Name = element.Name, Enabled = element.Enabled, Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType)});
+                            break;
+                        default:
+                            throw new ParalibException($"Unknown LogType {element.Type}");
+                    }
+
                 }
 
 
                 //DAL
-                settings.Dal.Connection = paralibSection.Dal.Connection;
-
-                string connectionString = ConfigurationManager.GetConnectionString(settings.Dal.Connection);
+                settings.Dal.Connection = Nullify(paralibSection.Dal.Connection);
 
 
             }

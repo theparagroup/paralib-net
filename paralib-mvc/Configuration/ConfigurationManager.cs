@@ -7,11 +7,17 @@ namespace com.paralib.Mvc.Configuration
 {
     public class ConfigurationManager
     {
+        public static NET.Configuration OpenWebConfiguration()
+        {
+            return WebConfigurationManager.OpenWebConfiguration("~");
+        }
+
+
         public static void InitializeWebConfig()
         {
-            NET.Configuration cfg = WebConfigurationManager.OpenWebConfiguration("~");
-            PARA.ConfigurationManager.CreateParalibSection(cfg);
-            PARA.ConfigurationManager.Save(cfg);
+            NET.Configuration cfg = OpenWebConfiguration();
+            PARA.ConfigurationManager.InitializeConfiguration(cfg);
+            PARA.ConfigurationManager.SaveConfiguration(cfg);
         }
 
     }

@@ -3,23 +3,23 @@ using System.Configuration;
 
 namespace com.paralib.Configuration
 {
-    [ConfigurationCollection(typeof(LoggerElement))]
-    public class LoggersCollection : ConfigurationElementCollection
+    [ConfigurationCollection(typeof(LogElement))]
+    public class LogsCollection : ConfigurationElementCollection
     {
 
-        public void Add(LoggerElement element)
+        public void Add(LogElement element)
         {
             BaseAdd(element);
         }
 
         protected override ConfigurationElement CreateNewElement()
         {
-            return new LoggerElement();
+            return new LogElement();
         }
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((LoggerElement)(element)).Name;
+            return ((LogElement)(element)).Name;
         }
 
 

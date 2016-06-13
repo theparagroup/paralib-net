@@ -12,12 +12,11 @@ namespace com.paralib
         private static Settings _settings;
 
         /*
-            Configure Event
-
-            This is a static event, so make sure you unsubcribe your instances.
-            This event does not follow the standard EventHandler pattern.
-            Just for fun, we use explicit add/remove event methods and make the
-            event thread-safe.
+            Configure Event:
+                This is a static event, so make sure you unsubcribe your instances.
+                This event does not follow the standard EventHandler pattern.
+                Just for fun, we use explicit add/remove event methods and make the
+                event thread-safe.
         */
         private static event ConfigureEventHandler _configureEvent;
 
@@ -67,7 +66,7 @@ namespace com.paralib
 
         public static void Initialize()
         {
-            Initialize(Settings.Load(ConfigurationManager.GetParalibSection()));
+            Initialize(Settings.Load(ConfigurationManager.ParalibSection));
         }
 
         public static void Initialize(Action<Settings> settings)

@@ -2,13 +2,13 @@
 
 namespace com.paralib.Configuration
 {
-    public class ConnectionStrings
+    public class AppSettings
     {
         public string this[string name]
         {
             get
             {
-                return ConfigurationManager.GetConnectionString(name);
+                return ConfigurationManager.GetAppSetting(name);
             }
         }
     }

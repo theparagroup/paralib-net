@@ -12,6 +12,13 @@ namespace com.paralib.Configuration
 
         */
 
+        [ConfigurationProperty("connection")]
+        public string Connection
+        {
+            get { return (string)base["connection"]; }
+            set { base["connection"] = value; }
+        }
+
         [ConfigurationProperty("logging")]
         public LoggingElement Logging
         {

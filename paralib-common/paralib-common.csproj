@@ -45,15 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\CaseInsensitiveEnumConverter.cs" />
+    <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LogTypes.cs" />
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Logging\LogLevels.cs" />
     <Compile Include="Paralib.Configuration.cs" />
     <Compile Include="Configuration\ConnectionStrings.cs" />
     <Compile Include="Configuration\LoggingElement.cs" />
-    <Compile Include="Configuration\LoggerElement.cs" />
-    <Compile Include="Configuration\LoggersCollection.cs" />
+    <Compile Include="Configuration\LogElement.cs" />
+    <Compile Include="Configuration\LogsCollection.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\ConfigureEventHandler.cs" />
     <Compile Include="Configuration\DalElement.cs" />

@@ -53,6 +53,10 @@ namespace com.paralib.Logging
             return new Logger(log4net.LogManager.GetLogger(Assembly.GetCallingAssembly(), name));
         }
 
+        internal static void ResetConfiguration()
+        {
+            log4net.LogManager.ResetConfiguration();
+        }
 
         internal static log4net.Core.Level GetLog4NetLevel(LogLevels level)
         {

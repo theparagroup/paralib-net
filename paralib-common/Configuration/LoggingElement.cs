@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Configuration;
+using System.ComponentModel;
 using com.paralib.Logging;
 
 namespace com.paralib.Configuration
 {
     public class LoggingElement : ConfigurationElement
     {
-        //enabled="false|true" debug="false|true" level="OFF|FATAL" logUser="false|true"
 
         [ConfigurationProperty("enabled", DefaultValue = false)]
         public bool Enabled
@@ -23,6 +23,7 @@ namespace com.paralib.Configuration
         }
 
         [ConfigurationProperty("level", DefaultValue = LogLevels.Off)]
+        [TypeConverter(typeof(CaseInsensitiveEnum<LogLevels>))]
         public LogLevels Level
         {
             get { return (LogLevels) base["level"]; }
@@ -30,12 +31,12 @@ namespace com.paralib.Configuration
         }
 
 
-        [ConfigurationProperty("loggers")]
-        [ConfigurationCollection(typeof(LoggersCollection), AddItemName ="logger")]
-        public LoggersCollection Loggers
+        [ConfigurationProperty("logs")]
+        [ConfigurationCollection(typeof(LogsCollection), AddItemName ="log")]
+        public LogsCollection Logs
         {
-            get { return ((LoggersCollection)(base["loggers"])); }
-            set { base["loggers"] = value; }
+            get { return ((LogsCollection)(base["logs"])); }
+            set { base["log"] = value; }
         }
 
     }
