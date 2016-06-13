@@ -1,7 +1,7 @@
 ﻿using System;
-using com.paralib.common.Configuration;
+using com.paralib.Configuration;
 
-namespace com.paralib.mvc
+namespace com.paralib.Mvc
 {
     public class ConfigureEventArgs:EventArgs
     {

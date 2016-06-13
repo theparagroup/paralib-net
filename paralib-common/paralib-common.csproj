@@ -7,7 +7,7 @@
     <ProjectGuid>{101E2741-5A3D-460B-BDF4-F5E5BD27CF1C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.paralib.common</RootNamespace>
+    <RootNamespace>com.paralib</RootNamespace>
     <AssemblyName>paralib-common</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

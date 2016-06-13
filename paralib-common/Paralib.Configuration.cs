@@ -1,7 +1,7 @@
 ﻿using System;
-using com.paralib.common.Configuration;
+using com.paralib.Configuration;
 
-namespace com.paralib.common
+namespace com.paralib
 {
 
     public partial class Paralib
@@ -43,7 +43,7 @@ namespace com.paralib.common
                 if (Configuration.Logging.Enabled)
                 {
                     //do something about connection timeout or throw an error or something
-                    com.paralib.common.Logging.LoggingConfiguration.Configure(com.paralib.common.Logging.LoggingModes.Mvc);
+                    com.paralib.Logging.LoggingConfiguration.Configure(com.paralib.Logging.LoggingModes.Mvc);
                 }
 
 

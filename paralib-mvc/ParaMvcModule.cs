@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web;
-using com.paralib.common;
-using com.paralib.mvc.Configuration;
+using com.paralib;
+using com.paralib.Mvc.Configuration;
 
-namespace com.paralib.mvc
+namespace com.paralib.Mvc
 {
     public class ParaMvcModule : IHttpModule
     {

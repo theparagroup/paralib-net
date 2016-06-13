@@ -1,10 +1,10 @@
 ﻿using System.Web;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using com.paralib.common;
+using com.paralib;
 
-[assembly: PreApplicationStartMethod(typeof(com.paralib.mvc.PreApplicationStartCode), "Start")]
+[assembly: PreApplicationStartMethod(typeof(com.paralib.Mvc.PreApplicationStartCode), "Start")]
 
-namespace com.paralib.mvc
+namespace com.paralib.Mvc
 {
     public static class PreApplicationStartCode
     {

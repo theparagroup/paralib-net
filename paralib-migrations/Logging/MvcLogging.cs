@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentMigrator;
 
-namespace com.paralib.migrations.Logging
+namespace com.paralib.Migrations.Logging
 {
     public class MvcLogging
     {

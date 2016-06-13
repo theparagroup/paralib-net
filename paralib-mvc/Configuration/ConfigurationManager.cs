@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Web.Configuration;
 using NET=System.Configuration;
-using PARA=com.paralib.common.Configuration;
+using PARA=com.paralib.Configuration;
 
-namespace com.paralib.mvc.Configuration
+namespace com.paralib.Mvc.Configuration
 {
     public class ConfigurationManager
     {

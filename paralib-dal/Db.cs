@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Data.SqlClient;
-using com.paralib.common;
+using com.paralib;
 
-namespace com.paralib.dal
+namespace com.paralib.Dal
 {
     public class Db
     {

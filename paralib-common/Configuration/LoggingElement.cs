@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Configuration;
-using com.paralib.common.Logging;
+using com.paralib.Logging;
 
-namespace com.paralib.common.Configuration
+namespace com.paralib.Configuration
 {
     public class LoggingElement : ConfigurationElement
     {

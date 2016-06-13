@@ -7,7 +7,7 @@
     <ProjectGuid>{BE7E9259-7ABD-440F-B58A-2A2D6A5F525E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.paralib.dal</RootNamespace>
+    <RootNamespace>com.paralib.Dal</RootNamespace>
     <AssemblyName>paralib-dal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

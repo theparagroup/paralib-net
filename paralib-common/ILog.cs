@@ -1,8 +1,8 @@
 ﻿using System;
-using com.paralib.common.Logging;
+using com.paralib.Logging;
 
 
-namespace com.paralib.common
+namespace com.paralib
 {
     public interface ILog
     {

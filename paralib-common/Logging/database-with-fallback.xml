@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <log4net>
 
-  <appender name="database" type="com.paralib.common.Logging.ParaAdoNetAppender">
+  <appender name="database" type="com.paralib.Logging.ParaAdoNetAppender">
     <threshold value="ALL" />
     <bufferSize value="1" />
     <connectionType value="System.Data.SqlClient.SqlConnection" />

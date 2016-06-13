@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.paralib.common.Configuration
+namespace com.paralib.Configuration
 {
     public class ConnectionStrings
     {

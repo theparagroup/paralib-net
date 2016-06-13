@@ -1,7 +1,7 @@
 ﻿using System;
-using com.paralib.common.Configuration;
+using com.paralib.Configuration;
 
-namespace com.paralib.common
+namespace com.paralib
 {
 
     public static partial class Paralib

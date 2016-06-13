@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Configuration;
 
-namespace com.paralib.common.Configuration
+namespace com.paralib.Configuration
 {
     public class DalElement : ConfigurationElement
     {

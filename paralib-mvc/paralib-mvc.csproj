@@ -7,7 +7,7 @@
     <ProjectGuid>{9067FF6E-8819-4CB3-9E50-197C11A0633F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.paralib.mvc</RootNamespace>
+    <RootNamespace>com.paralib.Mvc</RootNamespace>
     <AssemblyName>paralib-mvc</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

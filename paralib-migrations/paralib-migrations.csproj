@@ -7,7 +7,7 @@
     <ProjectGuid>{9FB29601-877A-4B69-BBC9-A40673EC1BEC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>com.paralib.migrations</RootNamespace>
+    <RootNamespace>com.paralib.Migrations</RootNamespace>
     <AssemblyName>paralib-migrations</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

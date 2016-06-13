@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net.Appender;
 
-namespace com.paralib.common.Logging
+namespace com.paralib.Logging
 {
     public class ParaAdoNetAppender : AdoNetAppender
     {

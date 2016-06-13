@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using com.paralib.common.Logging;
+using com.paralib.Logging;
 
-namespace com.paralib.common
+namespace com.paralib
 {
     public partial class Paralib
     {

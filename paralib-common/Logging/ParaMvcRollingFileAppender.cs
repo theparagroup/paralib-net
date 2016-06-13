@@ -2,7 +2,7 @@
 using log4net.Appender;
 using log4net.Core;
 
-namespace com.paralib.common.Logging
+namespace com.paralib.Logging
 {
     public class ParaMvcRollingFileAppender : RollingFileAppender
     {

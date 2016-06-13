@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.common.Logging
+namespace com.paralib.Logging
 {
     public class LogManager
     {

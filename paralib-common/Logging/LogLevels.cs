@@ -1,7 +1,7 @@
 ﻿using System;
 using log4net.Core;
 
-namespace com.paralib.common.Logging
+namespace com.paralib.Logging
 {
     public enum LogLevels
     {

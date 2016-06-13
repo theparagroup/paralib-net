@@ -9,7 +9,7 @@ using log4net.Core;
 using log4net.Appender;
 using log4net.Filter;
 
-namespace com.paralib.common.Logging
+namespace com.paralib.Logging
 {
     public static class LoggingConfiguration
     {
@@ -18,11 +18,11 @@ namespace com.paralib.common.Logging
 
             if (loggingMode==LoggingModes.Basic)
             {
-                ConfigureFromResourceStream("com.paralib.common.Logging.database-with-fallback.xml");
+                ConfigureFromResourceStream("com.paralib.Logging.database-with-fallback.xml");
             }
             else if (loggingMode == LoggingModes.Mvc)
             {
-                Stream log4net = Assembly.GetExecutingAssembly().GetManifestResourceStream("com.paralib.common.Logging.database-with-fallback-mvc.xml");
+                Stream log4net = Assembly.GetExecutingAssembly().GetManifestResourceStream("com.paralib.Logging.database-with-fallback-mvc.xml");
                 StreamReader sr = new StreamReader(log4net);
                 string xml = sr.ReadToEnd();
                 sr.Close();
