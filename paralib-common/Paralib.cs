@@ -95,10 +95,6 @@ namespace com.paralib.common
 
                 _logger.Info("paralib initialized");
 
-                var logger= GetLogger(typeof(Paralib));
-                logger.Info("paralib initialized2!");
-
-
             }
 
         }
