@@ -1,26 +1,23 @@
 ﻿using System;
-using log4net;
 using com.paralib.common.Configuration;
 
 namespace com.paralib.common
 {
-    public static class Paralib
+
+    public static partial class Paralib
     {
-        private static ILog _logger = LogManager.GetLogger(typeof(Paralib));
+        private static ILog _logger = GetLogger(typeof(Paralib));
         private static readonly object _lock = new object();
         private static bool _initialized;
         private static Settings _settings;
 
         /*
-        
-            SettingsChanged Event
+            Configure Event
 
             This is a static event, so make sure you unsubcribe your instances.
-
             This event does not follow the standard EventHandler pattern.
-
-            Just for fun, we use explicit add/remove event methods.
-
+            Just for fun, we use explicit add/remove event methods and make the
+            event thread-safe.
         */
         private static event ConfigureEventHandler _configureEvent;
 
@@ -28,13 +25,45 @@ namespace com.paralib.common
         {
             add
             {
-                _configureEvent += value;
+                lock(_lock)
+                {
+                    _configureEvent += value;
+                }
             }
             remove
             {
-                _configureEvent -= value;
+                lock(_lock)
+                {
+                    _configureEvent -= value;
+                }
             }
         }
+
+        public static void OnConfigure()
+        {
+            //allow library consumers to modify configuration programatically
+
+            ConfigureEventHandler handler;
+
+            lock(_lock)
+            {
+                handler = _configureEvent;
+            }
+
+            if (handler != null)
+            {
+                _logger.Info("configure event raised");
+
+
+                //send handlers the stored settings object to modify
+                handler(_settings);
+
+                //call setup again
+                Setup();
+            }
+
+        }
+
 
         public static void Initialize()
         {
@@ -59,16 +88,16 @@ namespace com.paralib.common
                     return;
                 }
 
-                //save initial settings
-                _settings = settings;
-
-                //let's set up the paralib
+                //initital setup of the paralib
                 Setup(settings);
-
 
                 _initialized = true;
 
                 _logger.Info("paralib initialized");
+
+                var logger= GetLogger(typeof(Paralib));
+                logger.Info("paralib initialized2!");
+
 
             }
 
@@ -83,40 +112,18 @@ namespace com.paralib.common
 
         }
 
-
-        public static void Setup(Settings settings)
+        private static void Setup(Settings settings)
         {
-
-            //allow library consumers to modify configuration programatically
-            if (_configureEvent != null)
-            {
-                _configureEvent(settings);
-            }
-
-
-            //DAL
-            Configuration.Dal.Connection = settings.Dal.Connection;
-            Configuration.Dal.ConnectionString = settings.Dal.ConnectionString;
-
-            //if logging
-            Logging.LoggingConfiguration.Configure(Logging.LoggingModes.Mvc);
-
-
-            _logger.Info("settings changed");
-    }
-
-    public static class Configuration
-        {
-
-            public static class Dal
-            {
-                public static string Connection { get; internal set; }
-                public static string ConnectionString { get; internal set; }
-            }
+            _settings = settings;
+            Setup();
         }
 
+        public static void Setup()
+        {
+            Configuration.Load(_settings);
 
-
+            _logger.Info("settings changed");
+        }
 
 
     }

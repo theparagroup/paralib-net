@@ -45,6 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ILog.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LogManager.cs" />
+    <Compile Include="Logging\LogLevels.cs" />
+    <Compile Include="Paralib.Configuration.cs" />
+    <Compile Include="Configuration\ConnectionStrings.cs" />
+    <Compile Include="Configuration\LoggingElement.cs" />
+    <Compile Include="Configuration\LoggerElement.cs" />
+    <Compile Include="Configuration\LoggersCollection.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\ConfigureEventHandler.cs" />
     <Compile Include="Configuration\DalElement.cs" />
@@ -55,6 +64,7 @@
     <Compile Include="Logging\ParaMvcAdoNetAppender.cs" />
     <Compile Include="Logging\ParaAdoNetAppender.cs" />
     <Compile Include="Paralib.cs" />
+    <Compile Include="Paralib.Logging.cs" />
     <Compile Include="ParalibException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\Settings.cs" />

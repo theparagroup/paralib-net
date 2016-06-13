@@ -1,9 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace com.paralib.common.Configuration
 {
     public class Settings
     {
+
+        public class Logger
+        {
+            public string Name { get; set; }
+        }
+
+        public class LoggingSettings
+        {
+            public bool Enabled { get; set; }
+            public Dictionary<string, Logger> Loggers { get; } = new Dictionary<string, Logger>();
+        }
 
         public class DalSettings
         {
@@ -13,10 +25,15 @@ namespace com.paralib.common.Configuration
 
         public Settings()
         {
+            Logging = new LoggingSettings();
             Dal = new DalSettings();
         }
 
-        public static Settings Load(ParalibSection paralibSection)
+        public LoggingSettings Logging { get; private set; }
+        public DalSettings Dal { get; private set; }
+
+
+        internal static Settings Load(ParalibSection paralibSection)
         {
 
             Settings settings = new Settings();
@@ -24,35 +41,26 @@ namespace com.paralib.common.Configuration
             if (paralibSection != null)
             {
 
-                if (paralibSection.Dal!= null)
+                //Logging
+                settings.Logging.Enabled = paralibSection.Logging.Enabled;
+
+                foreach (LoggerElement element in paralibSection.Logging.Loggers)
                 {
-                    //if using config file, connection must point to a valid <connectionStrings> entry
-                    settings.Dal.Connection = paralibSection.Dal.Connection;
-
-                    if (settings.Dal.Connection != null)
-                    {
-                        string connectionString=ConfigurationManager.GetConnectionString(settings.Dal.Connection);
-
-                        if (connectionString != null)
-                        {
-                            settings.Dal.ConnectionString = connectionString;
-                        }
-                        else
-                        {
-                            throw new ParalibException($"Connection [{settings.Dal.Connection}] not found. Make sure it exists in the <connectionStrings> section.");
-                        }
-
-                    }
-
+                    settings.Logging.Loggers.Add(element.Name, new Logger() { Name = element.Name });
                 }
+
+
+                //DAL
+                settings.Dal.Connection = paralibSection.Dal.Connection;
+
+                string connectionString = ConfigurationManager.GetConnectionString(settings.Dal.Connection);
+
 
             }
 
             return settings;
 
         }
-
-        public DalSettings Dal { get; private set; }
 
 
     }

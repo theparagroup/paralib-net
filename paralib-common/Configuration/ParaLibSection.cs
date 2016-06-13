@@ -3,38 +3,20 @@ using System.Configuration;
 
 namespace com.paralib.common.Configuration
 {
-    /*
-        <paralib enabled="true|false">
-
-            <common>
-                <logging enabled="false|true" debug="false|true" level="OFF|FATAL" logUser="false|true">
-                    <loggers>
-                    <logger name="file" threshold="OFF|FATAL" filename="application.log"/>
-                    <logger name="database" threshold="OFF|FATAL" connection="<empty>|mvc" connectionType="System.Data.SqlClient.SqlConnection"/>
-                    </loggers>
-                </logging>
-            </common>
-
-            <dal connection="oovent" />
-
-            <mvc>
-                <authentication/>
-                <authorization/>
-            </mvc>
-    
-        </paralib>
-    */
-
-
-
 
     public class ParalibSection : ConfigurationSection
     {
-        [ConfigurationProperty("enabled",DefaultValue =true)]
-        public bool Enabled
+
+        /*
+            Note: we use "sane" defaults (off, false, none).
+
+        */
+
+        [ConfigurationProperty("logging")]
+        public LoggingElement Logging
         {
-            get { return ((bool)(base["enabled"])); }
-            set { base["enabled"] = value; }
+            get { return ((LoggingElement)(base["logging"])); }
+            set { base["logging"] = value; }
         }
 
         [ConfigurationProperty("dal")]

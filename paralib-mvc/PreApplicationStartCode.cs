@@ -1,6 +1,5 @@
 ﻿using System.Web;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-using log4net;
 using com.paralib.common;
 
 [assembly: PreApplicationStartMethod(typeof(com.paralib.mvc.PreApplicationStartCode), "Start")]
@@ -9,7 +8,7 @@ namespace com.paralib.mvc
 {
     public static class PreApplicationStartCode
     {
-        private static ILog _logger = LogManager.GetLogger(typeof(PreApplicationStartCode));
+        private static ILog _logger = Paralib.GetLogger(typeof(PreApplicationStartCode));
         private static readonly object _lock = new object();
         private static bool _executed;
 

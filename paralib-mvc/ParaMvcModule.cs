@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Web;
-using log4net;
 using com.paralib.common;
 using com.paralib.mvc.Configuration;
 
@@ -8,7 +7,7 @@ namespace com.paralib.mvc
 {
     public class ParaMvcModule : IHttpModule
     {
-        private static ILog _logger = LogManager.GetLogger(typeof(ParaMvcModule));
+        private static ILog _logger = Paralib.GetLogger(typeof(ParaMvcModule));
         private static readonly object _lock = new object();
         private static bool _initialized;
 
@@ -27,7 +26,7 @@ namespace com.paralib.mvc
         {
             _logger.Info(null);
 
-            //requests are multi-threaded - we want the f
+            //requests are multi-threaded - we want the first one to get here
             lock (_lock)
             {
                 if (_initialized)
@@ -36,11 +35,12 @@ namespace com.paralib.mvc
                 }
 
                 //create a default web.config section & connectionstring if they don't exist
+                //(paralib was already initialized in PreApplicationStartCode using web.config)
                 ConfigurationManager.InitializeWebConfig();
 
-                //setup paralib again (allow global.asax to modify configuration)
-                Paralib.Setup(Paralib.Settings);
-
+                //allow configuration to be modified programatically 
+                //(probably via a static handler in global.asax)
+                Paralib.OnConfigure();
 
                 _initialized = true;
 

@@ -1,37 +1,73 @@
 ﻿using System;
-using NET=System.Configuration;
+using NET = System.Configuration;
+using com.paralib.common.Logging;
 
 namespace com.paralib.common.Configuration
 {
     public class ConfigurationManager
     {
 
+        /*
+            <paralib>
+
+                <overrides>
+                    <connectionStrings/>
+                </overrides>
+
+                <logging enabled="false|true" debug="false|true" level="OFF|FATAL" logUser="false|true">
+                    <loggers>
+                        <logger name="logger1" enabled="true|false" type="file" threshold="OFF|FATAL" filename="application.log"/>
+                        <logger name="logger2" enabled="true|false" type="database" threshold="OFF|FATAL" connection="<empty>|mvc" connectionType="System.Data.SqlClient.SqlConnection"/>
+                    </loggers>
+                </logging>
+
+                <dal connection="oovent" />
+
+                <mvc>
+                    <diagnostics enabled="false|true">
+                        view loaded assemblies, modules, handler, pipeline trace, other stuff etc.
+                    </diagnostics>
+
+                    <authentication/>
+                    <authorization/>
+                </mvc>
+
+            </paralib>
+        */
 
 
         public static void CreateParalibSection(NET.Configuration cfg)
         {
-            
+
+            /*
+                This is simply to provide a "crib" - as opposed to creating an XML Schema
+                for our section. We try to use default values but we want to make sure it's 
+                fully populated too.
+            */
+
             if (cfg.Sections["paralib"] == null)
             {
+                //<paralib>
                 var paralibSection = new ParalibSection();
 
-                //off by default
-                paralibSection.Enabled = false;
+                //<logging>
+                paralibSection.Logging = new LoggingElement();
+                paralibSection.Logging.Enabled = false;
+                paralibSection.Logging.Debug = false;
+                paralibSection.Logging.Level = LogLevels.Off;
+                paralibSection.Logging.Loggers.Add(new LoggerElement() { Name = "logger1" });
+                paralibSection.Logging.Loggers.Add(new LoggerElement() { Name = "logger2" });
 
+                //<dal>
                 paralibSection.Dal = new DalElement();
-                paralibSection.Dal.Connection = "con1";
-
+                paralibSection.Dal.Connection = "paralib";
 
                 //add section
                 cfg.Sections.Add("paralib", paralibSection);
                 paralibSection.SectionInformation.ForceSave = true;
 
                 //add "starter" connectionstring
-                CreateConnectionString(cfg,"con1", "Data Source=.\\SQLEXPRESS;Initial Catalog={database};Integrated Security=True;");
-
-
-                //customSection.Elements.Add(new CustomElement("1"));
-                //customSection.Elements.Add(new CustomElement("2"));
+                CreateConnectionString(cfg, "paralib", "Data Source=.\\SQLEXPRESS;Initial Catalog={database};Integrated Security=True;");
 
             }
 
@@ -41,7 +77,7 @@ namespace com.paralib.common.Configuration
         }
 
 
-        public static void Save(System.Configuration.Configuration cfg, bool full=false)
+        public static void Save(System.Configuration.Configuration cfg, bool full = false)
         {
 
             if (full)
@@ -70,9 +106,17 @@ namespace com.paralib.common.Configuration
         }
 
 
+        public static void LoadParalibOverrides()
+        {
+            //ExeConfigurationFileMap configMap = new ExeConfigurationFileMap();
+            //configMap.ExeConfigFilename = @"d:\test\justAConfigFile.config.whateverYouLikeExtension";
+            //Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configMap, ConfigurationUserLevel.None);
+
+        }
+
         public static ParalibSection GetParalibSection()
         {
-            return (ParalibSection) NET.ConfigurationManager.GetSection("paralib");
+            return (ParalibSection)NET.ConfigurationManager.GetSection("paralib");
         }
 
         public static string GetConnectionString(string name)
@@ -90,90 +134,6 @@ namespace com.paralib.common.Configuration
 
         }
     }
-
-
-
-    /*
-
-          public class CustomSection : ConfigurationSection
-        {
-            [ConfigurationProperty("Elements")]
-            //[ConfigurationCollection(typeof(NameValueElementCollection), AddItemName =“entry”)]
-            public CustomElementCollection Elements
-            {
-                get { return ((CustomElementCollection)(base["Elements"])); }
-                set { base["Elements"] = value; }
-            }
-
-        }
-
-
-        [ConfigurationCollection(typeof(CustomElement))]
-        public class CustomElementCollection : ConfigurationElementCollection
-        {
-
-            public void Add(CustomElement element)
-            {
-                BaseAdd(element);
-            }
-
-            protected override ConfigurationElement CreateNewElement()
-            {
-                return new CustomElement();
-            }
-
-            protected override object GetElementKey(ConfigurationElement element)
-            {
-                return ((CustomElement)(element)).Id;
-            }
-
-
-        }
-
-
-        public class CustomElement : ConfigurationElement
-        {
-
-            public CustomElement()
-            {
-            }
-
-            public CustomElement(string id)
-            {
-                Id = id;
-            }
-
-            [ConfigurationProperty("Id", IsRequired = true, IsKey = true)]
-            public String Id
-            {
-                get { return (String)base["Id"]; }
-                set { base["Id"] = value; }
-            }
-
-            [ConfigurationProperty("LastName", IsRequired = true, DefaultValue = "TEST")]
-            public String LastName
-            {
-                get { return (String)base["LastName"]; }
-                set { base["LastName"] = value; }
-            }
-
-            [ConfigurationProperty("FirstName", IsRequired = true, DefaultValue = "TEST")]
-            public String FirstName
-            {
-                get { return (String)base["FirstName"]; }
-                set { base["FirstName"] = value; }
-            }
-        }
-
-        */
-
-
-
-
-
-
-
-
 
 
 }

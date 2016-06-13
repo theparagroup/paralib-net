@@ -6,10 +6,10 @@ namespace com.paralib.common.Configuration
     public class DalElement : ConfigurationElement
     {
 
-        [ConfigurationProperty("connection", IsRequired = false, DefaultValue ="")]
-        public String Connection
+        [ConfigurationProperty("connection")]
+        public string Connection
         {
-            get { return (String)base["connection"]; }
+            get { return (string)base["connection"]; }
             set { base["connection"] = value; }
         }
     }
