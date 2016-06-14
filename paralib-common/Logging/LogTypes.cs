@@ -5,6 +5,7 @@ namespace com.paralib.Logging
 {
     public enum LogTypes
     {
+        Other=0,
         File,
         Database
     }

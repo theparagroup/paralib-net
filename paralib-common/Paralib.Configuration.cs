@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using com.paralib.Configuration;
 using com.paralib.Logging;
 
@@ -33,6 +34,11 @@ namespace com.paralib
             public static class Logging
             {
                 public static bool Enabled { get; internal set; }
+                public static bool Debug { get; internal set; }
+                public static LogLevels Level { get; internal set; }
+                internal static List<Log> InternalLogs= new List<Log>();
+                public static Log[] Logs => InternalLogs.ToArray();
+
             }
 
 
@@ -60,21 +66,19 @@ namespace com.paralib
             internal static void Load(Settings settings)
             {
 
+                //set paralib's default connectionstring name
                 Connection = settings.Connection;
 
-                //unconfigure logging
-                LogManager.ResetConfiguration();
+                Logging.Enabled = settings.Logging.Enabled;
+                Logging.Debug = settings.Logging.Debug;
+                Logging.Level = settings.Logging.Level;
+                Logging.InternalLogs = settings.Logging.Logs;
 
-                //(re)configure logging
-                Configuration.Logging.Enabled = settings.Logging.Enabled;
+                //(re)configure logging (if enabled)
+                LoggingConfigurator.Configure();
 
-                if (Configuration.Logging.Enabled)
-                {
-                    //do something about connection timeout or throw an error or something
-                    com.paralib.Logging.LoggingConfiguration.Configure(com.paralib.Logging.LoggingModes.Mvc);
-                }
-
-                Configuration.Dal.Connection = settings.Dal.Connection;
+                //set DAL's default connectionstring name (could be different)
+                Dal.Connection = settings.Dal.Connection;
 
             }
 

@@ -53,15 +53,14 @@ namespace com.paralib.Logging
             return new Logger(log4net.LogManager.GetLogger(Assembly.GetCallingAssembly(), name));
         }
 
-        internal static void ResetConfiguration()
-        {
-            log4net.LogManager.ResetConfiguration();
-        }
-
         internal static log4net.Core.Level GetLog4NetLevel(LogLevels level)
         {
             switch (level)
             {
+                case LogLevels.All:
+                    return log4net.Core.Level.All;
+                case LogLevels.None:
+                    return log4net.Core.Level.Off;
                 case LogLevels.Debug:
                     return log4net.Core.Level.Debug;
                 case LogLevels.Info:
@@ -72,6 +71,8 @@ namespace com.paralib.Logging
                     return log4net.Core.Level.Error;
                 case LogLevels.Fatal:
                     return log4net.Core.Level.Fatal;
+                case LogLevels.Off:
+                    return log4net.Core.Level.Off;
                 default:
                     throw new ParalibException($"Unknown or bad logging level [{level}]");
             }

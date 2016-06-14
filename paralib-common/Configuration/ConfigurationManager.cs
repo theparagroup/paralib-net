@@ -46,23 +46,44 @@ namespace com.paralib.Configuration
             Load();
         }
 
-        public static NET.Configuration LoadApplicationConfiguration()
+        public static bool HasParalibOverride { get; private set; }
+        public static bool HasConnectionStringsOverrides { get; private set; }
+        public static bool HasAppSettingsOverrides { get; private set; }
+        public static bool HasLog4NetOverride { get; private set; }
+
+
+        public static string DotNetConfigPath
+        {
+            get
+            {
+                return AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            }
+        }
+
+        public static string ParalibConfigPath
+        {
+            get
+            {
+                //AppDomain.CurrentDomain.SetupInformation.ConfigurationFile -> "P:\pathspec\webapp\web.config"
+                //AppDomain.CurrentDomain.SetupInformation.ConfigurationFile -> "P:\pathspec\consoleapp\consoleapp.exe.config"
+                //Path.GetDirectoryName("P:\pathspec\webapp\web.config") -> "P:\pathspec\webapp"
+                return Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile) + "\\paralib.config";
+            }
+        }
+
+        public static NET.Configuration LoadDotNetConfig()
         {
             NET.ExeConfigurationFileMap configMap = new NET.ExeConfigurationFileMap();
-            configMap.ExeConfigFilename = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            configMap.ExeConfigFilename = DotNetConfigPath;
             NET.Configuration cfg = NET.ConfigurationManager.OpenMappedExeConfiguration(configMap, NET.ConfigurationUserLevel.None);
             return cfg;
         }
 
 
-        public static NET.Configuration LoadParalibConfiguration()
+        public static NET.Configuration LoadParalibConfig()
         {
-            //AppDomain.CurrentDomain.SetupInformation.ConfigurationFile -> "P:\pathspec\webapp\web.config"
-            //AppDomain.CurrentDomain.SetupInformation.ConfigurationFile -> "P:\pathspec\consoleapp\consoleapp.exe.config"
-            //Path.GetDirectoryName("P:\pathspec\webapp\web.config") -> "P:\pathspec\webapp"
-
             NET.ExeConfigurationFileMap configMap = new NET.ExeConfigurationFileMap();
-            configMap.ExeConfigFilename = Path.GetDirectoryName(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile) + "\\paralib.config";
+            configMap.ExeConfigFilename = ParalibConfigPath;
             NET.Configuration cfg = NET.ConfigurationManager.OpenMappedExeConfiguration(configMap, NET.ConfigurationUserLevel.None);
             return cfg;
         }
@@ -136,10 +157,10 @@ namespace com.paralib.Configuration
 
         private static void Load()
         {
-            //load app stuff
+            //load paralib stuff (DotNet)
             _paralibSection = (ParalibSection)NET.ConfigurationManager.GetSection("paralib");
 
-            //load connectionstrings 
+            //load connectionstrings (DotNet)
             _connectionStrings = new NameValueCollection();
 
             foreach (NET.ConnectionStringSettings connectionStringSettings in NET.ConfigurationManager.ConnectionStrings)
@@ -147,14 +168,15 @@ namespace com.paralib.Configuration
                 _connectionStrings.Add(connectionStringSettings.Name, connectionStringSettings.ConnectionString);
             }
 
-            //load appsettings
+            //load appsettings (DotNet)
             _appSettings = NET.ConfigurationManager.AppSettings;
 
-            //look for overrides in paralib.config
-            NET.Configuration cfg = LoadParalibConfiguration();
+            //now look for overrides in paralib.config
+            NET.Configuration cfg = LoadParalibConfig();
 
             if (cfg.GetSection("paralib") != null)
             {
+                HasParalibOverride = true;
                 _paralibSection = (ParalibSection)cfg.GetSection("paralib");
             }
 
@@ -164,6 +186,7 @@ namespace com.paralib.Configuration
 
                 foreach (NET.ConnectionStringSettings connectionStringSettings in connectionStringsSection.ConnectionStrings)
                 {
+                    HasConnectionStringsOverrides = true;
                     _connectionStrings.Set(connectionStringSettings.Name, connectionStringSettings.ConnectionString);
                 }
 
@@ -172,16 +195,21 @@ namespace com.paralib.Configuration
             if (cfg.GetSection("appSettings") != null)
             {
                 //more major bullshit
-                NET.AppSettingsSection appSettingsSection =(NET.AppSettingsSection)cfg.GetSection("appSettings");
+                NET.AppSettingsSection appSettingsSection = (NET.AppSettingsSection)cfg.GetSection("appSettings");
 
-                foreach ( string key in appSettingsSection.Settings.AllKeys)
+                foreach (string key in appSettingsSection.Settings.AllKeys)
                 {
+                    HasAppSettingsOverrides = true;
                     _appSettings.Set(key, appSettingsSection.Settings[key].Value);
                     //_appSettings.Add(key, appSettingsSection.Settings[key].Value);
                 }
 
             }
 
+            if (cfg.GetSection("log4net") != null)
+            {
+                HasLog4NetOverride = true;
+            }
         }
 
         public static ParalibSection ParalibSection

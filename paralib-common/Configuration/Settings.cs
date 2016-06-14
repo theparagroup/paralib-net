@@ -9,20 +9,12 @@ namespace com.paralib.Configuration
 
         public string Connection { get; set; }
 
-        public class Log
-        {
-            public string Name { get; set; }
-            public bool Enabled { get; set; }
-            public string Capture { get; set; }
-            public string Connection { get; set; }
-            public string Path { get; set; }
-            public string ConnectionType { get; set; }
-        }
-
         public class LoggingSettings
         {
             public bool Enabled { get; set; }
-            public Dictionary<string, Log> Logs { get; } = new Dictionary<string, Log>();
+            public bool Debug { get; set; }
+            public LogLevels Level { get; set; }
+            public List<Log> Logs { get; } = new List<Log>();
         }
 
         public class DalSettings
@@ -62,10 +54,10 @@ namespace com.paralib.Configuration
                     switch (element.Type)
                     {
                         case LogTypes.File:
-                            settings.Logging.Logs.Add(element.Name, new Log() { Name = element.Name, Enabled = element.Enabled, Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
+                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, Type=element.Type, LoggerType="Paralib", Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
                             break;
                         case LogTypes.Database:
-                            settings.Logging.Logs.Add(element.Name, new Log() { Name = element.Name, Enabled = element.Enabled, Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType)});
+                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, Type = element.Type, LoggerType = "Paralib", Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType)});
                             break;
                         default:
                             throw new ParalibException($"Unknown LogType {element.Type}");

@@ -6,6 +6,7 @@ namespace com.paralib.Logging
     public enum LogLevels
     {
         All=int.MinValue,
+        None=0,
         Debug=30000,
         Info=40000,
         Warn=60000,

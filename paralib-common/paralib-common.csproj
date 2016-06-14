@@ -48,7 +48,9 @@
     <Compile Include="Configuration\CaseInsensitiveEnumConverter.cs" />
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="ILog.cs" />
+    <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\LoggingConfigurator.cs" />
     <Compile Include="Logging\LogTypes.cs" />
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Logging\LogLevels.cs" />
