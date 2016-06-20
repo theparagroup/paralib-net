@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using log4net.Config;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace com.paralib.Logging
 {
@@ -85,6 +86,9 @@ namespace com.paralib.Logging
                 //programatically make changes per settings object
                 Hierarchy h = GetHierarchy();
 
+                //let's default to All
+                h.Root.Level = log4net.Core.Level.All;
+
                 /* debug from config is set in a static constructor, 
                    so all we can do here is allow a third way to enable
 
@@ -107,7 +111,10 @@ namespace com.paralib.Logging
                 }
                 else
                 {
-                    ConfigureFromDotNetConfig();
+                    if (ConfigurationManager.Log4NetSection!=null)
+                    {
+                        ConfigureFromDotNetConfig();
+                    }
                 }
 
                 //override root level (if specified)
@@ -140,6 +147,7 @@ namespace com.paralib.Logging
                                 h.Root.AddAppender(CreateParaRollingFileAppender(log.Name, log.Capture, log.Pattern, log.Path));
                                 break;
                             case LogTypes.Database:
+                                h.Root.AddAppender(CreateParaAdoNetAppender(log.Name, log.Capture, log.Pattern, log.Table, log.Fields, log.ConnectionType, log.Connection));
                                 break;
                             case LogTypes.Log4Net:
                                 //ignore the manually configured appenders from above
@@ -185,7 +193,7 @@ namespace com.paralib.Logging
                 {
                     var filter = new log4net.Filter.LevelMatchFilter();
                     filter.AcceptOnMatch = true;
-                    filter.LevelToMatch = LogManager.GetLog4NetLevel((LogLevels)Enum.Parse(typeof(LogLevels),rule, true));
+                    filter.LevelToMatch = LogManager.GetLog4NetLevel((LogLevels)Enum.Parse(typeof(LogLevels), rule, true));
                     appender.AddFilter(filter);
                 }
 
@@ -205,7 +213,7 @@ namespace com.paralib.Logging
             appender.Name = name;
 
             log4net.Layout.PatternLayout layout = new log4net.Layout.PatternLayout();
-            layout.ConversionPattern = pattern??ParaConsoleAppender.DefaultPattern;
+            layout.ConversionPattern = pattern ?? ParaConsoleAppender.DefaultPattern;
             layout.ActivateOptions();
 
             appender.Layout = layout;
@@ -221,7 +229,7 @@ namespace com.paralib.Logging
         {
             ParaRollingFileAppender appender = new ParaRollingFileAppender();
             appender.Name = name;
-            appender.File = file??"application.log";
+            appender.File = file ?? "application.log";
             appender.AppendToFile = true;
             appender.RollingStyle = log4net.Appender.RollingFileAppender.RollingMode.Size;
             appender.MaxSizeRollBackups = 10;
@@ -239,34 +247,110 @@ namespace com.paralib.Logging
             return appender;
         }
 
-        internal static void AddParameter(log4net.Appender.AdoNetAppender appender, string pattern)
+        public static log4net.Appender.IAppender CreateParaAdoNetAppender(string name, string capture, string pattern, string table, string fields, string connectionType, string connection)
         {
-            log4net.Appender.AdoNetAppenderParameter param = new log4net.Appender.AdoNetAppenderParameter();
+            ParaAdoNetAppender appender = new ParaAdoNetAppender();
+            appender.Name = name;
+            appender.BufferSize = 1;
 
-            string parameterName = "";
+            //set up connection
+            appender.ConnectionType = connectionType ?? ParaAdoNetAppender.DefaultConnectionType;
 
-            //%date
-            //%something
-            //%property{foo}
-
-
-
-            param.ParameterName = parameterName;
-
-            if (true)
+            if (connection!=null)
             {
-                param.DbType = System.Data.DbType.String;
-                param.Size = -1;
-                param.Layout = new log4net.Layout.Layout2RawLayoutAdapter(new log4net.Layout.PatternLayout(pattern));
+                appender.ConnectionString = Paralib.Configuration.ConnectionStrings[connection];
             }
             else
+            {
+                appender.ConnectionString = Paralib.Configuration.ConnectionString;
+            }
+
+            //for commandtext
+            string fieldlist = "";
+            string paramlist = "";
+
+            //add parameters
+            pattern = pattern ?? ParaAdoNetAppender.DefaultPattern;
+            string[] parameters = pattern.Split(',');
+
+            foreach (string parameter in parameters)
+            {
+                if (paramlist != "") paramlist += ",";
+                paramlist+="@"+AddParameter(appender, parameter);
+            }
+
+            //build commandtext
+            table = table ?? ParaAdoNetAppender.DefaultTable;
+            fields = fields ?? ParaAdoNetAppender.DefaultFields;
+
+            string[] columns = fields.Split(',');
+
+            foreach (string column in columns)
+            {
+                if (fieldlist != "") fieldlist += ",";
+                fieldlist += $"[{column.Trim()}]";
+            }
+
+            appender.CommandText = $"INSERT INTO [{table}] ({fieldlist}) VALUES ({paramlist})";
+
+            appender.ActivateOptions();
+
+            AddFilters(appender, capture);
+
+            return appender;
+        }
+
+        internal static string ParseNameFromPattern(string pattern)
+        {
+            //%-20.20name{option}
+            string name = Regex.Replace(pattern, @"[%\s\d-.}]", "");
+            name = name.Replace('{', '_');
+            return name;
+        }
+
+        internal static int ParseLengthFromPattern(string pattern)
+        {
+            //%-20.20name{option}
+            Match match = Regex.Match(pattern, @"\.\d+");
+
+            if (match.Success)
+            {
+                return int.Parse(match.Value.Replace(".", ""));
+            }
+
+            return -1;
+        }
+
+        internal static string AddParameter(log4net.Appender.AdoNetAppender appender, string pattern)
+        {
+
+            //%date
+            //%.255something
+            //%property{foo}
+
+            string parameterName = ParseNameFromPattern(pattern);
+            int length = ParseLengthFromPattern(pattern);
+
+
+            log4net.Appender.AdoNetAppenderParameter param = new log4net.Appender.AdoNetAppenderParameter();
+            param.ParameterName = parameterName;
+
+            if ((parameterName == "date") || (parameterName == "d"))
             {
                 param.DbType = System.Data.DbType.DateTime;
                 param.Layout = new log4net.Layout.RawUtcTimeStampLayout();
             }
+            else
+            {
+                param.DbType = System.Data.DbType.String;
+                param.Size = length;
+                param.Layout = new log4net.Layout.Layout2RawLayoutAdapter(new log4net.Layout.PatternLayout(pattern));
+            }
 
 
             appender.AddParameter(param);
+
+            return parameterName;
         }
 
 

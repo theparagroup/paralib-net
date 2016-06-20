@@ -11,11 +11,13 @@ namespace com.paralib.Logging
         public string Name { get; set; }
         public bool Enabled { get; set; }
         public LogTypes LogType { get; set; }
+        public string LoggerType { get; set; }
         public string Pattern { get; set; }
         public string Capture { get; set; }
         public string Connection { get; set; }
         public string Path { get; set; }
         public string ConnectionType { get; set; }
-        public string LoggerType { get; set; }
+        public string Table { get; set; }
+        public string Fields { get; set; }
     }
 }

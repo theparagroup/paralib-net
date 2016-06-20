@@ -8,7 +8,7 @@ namespace com.paralib.Configuration
     public class LoggingElement : ConfigurationElement
     {
 
-        [ConfigurationProperty("enabled", DefaultValue = false)]
+        [ConfigurationProperty("enabled", DefaultValue = true)]
         public bool Enabled
         {
             get { return (bool)base["enabled"]; }

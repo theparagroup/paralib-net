@@ -15,7 +15,7 @@ namespace com.paralib.Configuration
             set { base["name"] = value; }
         }
 
-        [ConfigurationProperty("enabled")]
+        [ConfigurationProperty("enabled", DefaultValue = true)]
         public bool Enabled
         {
             get { return (bool)base["enabled"]; }
@@ -63,6 +63,20 @@ namespace com.paralib.Configuration
         {
             get { return (string)base["connectionType"]; }
             set { base["connectionType"] = value; }
+        }
+
+        [ConfigurationProperty("table")]
+        public string Table
+        {
+            get { return (string)base["table"]; }
+            set { base["table"] = value; }
+        }
+
+        [ConfigurationProperty("fields")]
+        public string Fields
+        {
+            get { return (string)base["fields"]; }
+            set { base["fields"] = value; }
         }
 
 

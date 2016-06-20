@@ -40,11 +40,13 @@ namespace com.paralib.Configuration
         private static ParalibSection _paralibSection;
         private static NameValueCollection _connectionStrings;
         private static NameValueCollection _appSettings;
+        private static object _log4netSection;
 
         static ConfigurationManager()
         {
             Load();
         }
+
 
         public static bool HasParalibOverride { get; private set; }
         public static bool HasConnectionStringsOverrides { get; private set; }
@@ -157,7 +159,7 @@ namespace com.paralib.Configuration
 
         private static void Load()
         {
-            //load paralib stuff (DotNet)
+            //load paralib section (DotNet)
             _paralibSection = (ParalibSection)NET.ConfigurationManager.GetSection("paralib");
 
             //load connectionstrings (DotNet)
@@ -170,6 +172,9 @@ namespace com.paralib.Configuration
 
             //load appsettings (DotNet)
             _appSettings = NET.ConfigurationManager.AppSettings;
+
+            //load log4net section (DotNet)
+            _log4netSection= NET.ConfigurationManager.GetSection("log4net");
 
             //now look for overrides in paralib.config
             NET.Configuration cfg = LoadParalibConfig();
@@ -217,6 +222,14 @@ namespace com.paralib.Configuration
             get
             {
                 return _paralibSection;
+            }
+        }
+
+        public static object Log4NetSection
+        {
+            get
+            {
+                return _log4netSection;
             }
         }
 

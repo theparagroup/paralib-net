@@ -62,7 +62,7 @@ namespace com.paralib.Configuration
                             settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType=element.LogType, LoggerType="ParaRollingFileAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
                             break;
                         case LogTypes.Database:
-                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType = element.LogType, LoggerType = "ParaAdoNetAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType)});
+                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType = element.LogType, LoggerType = "ParaAdoNetAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType), Table = Nullify(element.Table), Fields = Nullify(element.Fields) });
                             break;
                         default:
                             throw new ParalibException($"Can't Create LogType {element.LogType}");
