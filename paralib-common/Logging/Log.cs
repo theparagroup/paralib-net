@@ -10,7 +10,8 @@ namespace com.paralib.Logging
     {
         public string Name { get; set; }
         public bool Enabled { get; set; }
-        public LogTypes Type { get; set; }
+        public LogTypes LogType { get; set; }
+        public string Pattern { get; set; }
         public string Capture { get; set; }
         public string Connection { get; set; }
         public string Path { get; set; }

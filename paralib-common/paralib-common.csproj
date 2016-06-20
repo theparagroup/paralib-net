@@ -49,11 +49,14 @@
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\LoggerBase.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\LoggingConfigurator.cs" />
     <Compile Include="Logging\LogTypes.cs" />
     <Compile Include="Logging\LogManager.cs" />
     <Compile Include="Logging\LogLevels.cs" />
+    <Compile Include="Logging\ParaConsoleAppender.cs" />
+    <Compile Include="Logging\ParaRollingFileAppender.cs" />
     <Compile Include="Paralib.Configuration.cs" />
     <Compile Include="Configuration\ConnectionStrings.cs" />
     <Compile Include="Configuration\LoggingElement.cs" />
@@ -76,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Paralib.cd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Logging\database-with-fallback.xml" />

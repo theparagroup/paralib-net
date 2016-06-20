@@ -22,7 +22,7 @@ namespace com.paralib.Configuration
             set { base["debug"] = value; }
         }
 
-        [ConfigurationProperty("level", DefaultValue = LogLevels.Off)]
+        [ConfigurationProperty("level", DefaultValue = LogLevels.None)]
         [TypeConverter(typeof(CaseInsensitiveEnum<LogLevels>))]
         public LogLevels Level
         {

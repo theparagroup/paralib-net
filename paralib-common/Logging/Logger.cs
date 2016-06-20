@@ -1,50 +1,56 @@
 ﻿using System;
-
+using System.Runtime.CompilerServices;
 
 namespace com.paralib.Logging
 {
-    public class Logger : ILog
+    public partial class Logger : LoggerBase, ILog
     {
         private readonly static Type _callerStackBoundaryDeclaringType = typeof(Logger);
-        private log4net.ILog _logger;
 
-        internal Logger(log4net.ILog logger)
+        internal Logger(log4net.ILog logger):base (logger)
         {
-            _logger = logger;
         }
 
-        public void Debug(object message = null, Exception exception = null)
+        public override void Log(LogLevels level, object message, Exception exception)
         {
-            Log(LogLevels.Debug, message, exception);
+            Logger.Log(_callerStackBoundaryDeclaringType, LogManager.GetLog4NetLevel(level), message, exception);
         }
 
-        public void Info(object message, Exception exception)
+        void ILog.Log(LogLevels level, object message, Exception exception, string methodName, string fileName, int lineNumber)
         {
-            Log(LogLevels.Info, message, exception);
+            //can ASP.NET switch the request during a pipeline event? will TLS be preserved?
+            log4net.ThreadContext.Properties["tid"] = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            log4net.ThreadContext.Properties["user"] = System.Threading.Thread.CurrentPrincipal.Identity.Name;
+            log4net.ThreadContext.Properties["method"] = methodName;
+            log4net.ThreadContext.Properties["file"] = fileName;
+            log4net.ThreadContext.Properties["line"] = lineNumber;
+
+            Log(level, message, exception);
         }
 
-        public void Warn(object message, Exception exception)
+        void ILog.Debug(object message, Exception exception, string methodName, string fileName, int lineNumber)
         {
-            Log(LogLevels.Warn, message, exception);
+            ((ILog)this).Log(LogLevels.Debug, message, exception, methodName, fileName, lineNumber);
         }
 
-        public void Error(object message, Exception exception)
+        void ILog.Info(object message, Exception exception, string methodName, string fileName, int lineNumber)
         {
-            Log(LogLevels.Error, message, exception);
+            ((ILog)this).Log(LogLevels.Info, message, exception, methodName, fileName, lineNumber);
         }
 
-        public void Fatal(object message, Exception exception)
+        void ILog.Warn(object message, Exception exception, string methodName, string fileName, int lineNumber)
         {
-            Log(LogLevels.Fatal, message, exception);
-        }
-        
-        public void Log(LogLevels level, object message, Exception exception)
-        {
-            _logger.Logger.Log(_callerStackBoundaryDeclaringType, LogManager.GetLog4NetLevel(level), message, exception);
+            ((ILog)this).Log(LogLevels.Warn, message, exception, methodName, fileName, lineNumber);
         }
 
+        void ILog.Error(object message, Exception exception, string methodName, string fileName, int lineNumber)
+        {
+            ((ILog)this).Log(LogLevels.Error, message, exception, methodName, fileName, lineNumber);
+        }
 
-
-
+        void ILog.Fatal(object message, Exception exception, string methodName, string fileName, int lineNumber)
+        {
+            ((ILog)this).Log(LogLevels.Fatal, message, exception, methodName, fileName, lineNumber);
+        }
     }
 }

@@ -12,9 +12,6 @@ namespace com.paralib.Logging
         /*
             TODO make some improvements!
 
-            0] use: 
-                    var _logger= GetLogger(typeof(Paralib));
-                    var _logger= GetLogger(nameof(Paralib));
 
             1] add the new compiler attributes to ILog and add these to Thread.Properties %P/&property
             2] do the same for IPrincipal?
@@ -78,6 +75,10 @@ namespace com.paralib.Logging
             }
         }
 
+        internal static LogLevels GetLogLevel(log4net.Core.Level level)
+        {
+            return (LogLevels)level.Value;
+        }
 
 
     }

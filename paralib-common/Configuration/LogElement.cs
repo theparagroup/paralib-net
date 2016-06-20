@@ -22,12 +22,19 @@ namespace com.paralib.Configuration
             set { base["enabled"] = value; }
         }
 
-        [ConfigurationProperty("type")]
+        [ConfigurationProperty("type", DefaultValue = LogTypes.None)]
         [TypeConverter(typeof(CaseInsensitiveEnum<LogTypes>))]
-        public LogTypes Type
+        public LogTypes LogType
         {
             get { return (LogTypes)base["type"]; }
             set { base["type"] = value; }
+        }
+
+        [ConfigurationProperty("pattern")]
+        public string Pattern
+        {
+            get { return (string)base["pattern"]; }
+            set { base["pattern"] = value; }
         }
 
         [ConfigurationProperty("capture")]

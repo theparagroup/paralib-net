@@ -110,8 +110,8 @@ namespace com.paralib.Configuration
                 paralibSection.Logging.Enabled = false;
                 paralibSection.Logging.Debug = false;
                 paralibSection.Logging.Level = LogLevels.Off;
-                paralibSection.Logging.Logs.Add(new LogElement() { Name = "logger1", Enabled=true, Type=LogTypes.File, Path="errors.log" });
-                paralibSection.Logging.Logs.Add(new LogElement() { Name = "logger2", Enabled = false, Type = LogTypes.Database, Connection = "paralib", ConnectionType= "System.Data.SqlClient.SqlConnection" });
+                paralibSection.Logging.Logs.Add(new LogElement() { Name = "logger1", Enabled=true, LogType=LogTypes.File, Path="errors.log" });
+                paralibSection.Logging.Logs.Add(new LogElement() { Name = "logger2", Enabled = false, LogType = LogTypes.Database, Connection = "paralib", ConnectionType= "System.Data.SqlClient.SqlConnection" });
 
                 //<dal>
                 paralibSection.Dal = new DalElement();

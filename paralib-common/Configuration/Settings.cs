@@ -48,19 +48,24 @@ namespace com.paralib.Configuration
 
                 //Logging
                 settings.Logging.Enabled = paralibSection.Logging.Enabled;
+                settings.Logging.Debug = paralibSection.Logging.Debug;
+                settings.Logging.Level = paralibSection.Logging.Level;
 
                 foreach (LogElement element in paralibSection.Logging.Logs)
                 {
-                    switch (element.Type)
+                    switch (element.LogType)
                     {
+                        case LogTypes.Console:
+                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType = element.LogType, LoggerType = "ParaConsoleAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture) });
+                            break;
                         case LogTypes.File:
-                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, Type=element.Type, LoggerType="Paralib", Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
+                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType=element.LogType, LoggerType="ParaRollingFileAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
                             break;
                         case LogTypes.Database:
-                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, Type = element.Type, LoggerType = "Paralib", Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType)});
+                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType = element.LogType, LoggerType = "ParaAdoNetAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType)});
                             break;
                         default:
-                            throw new ParalibException($"Unknown LogType {element.Type}");
+                            throw new ParalibException($"Can't Create LogType {element.LogType}");
                     }
 
                 }

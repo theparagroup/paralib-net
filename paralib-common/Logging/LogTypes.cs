@@ -5,8 +5,10 @@ namespace com.paralib.Logging
 {
     public enum LogTypes
     {
-        Other=0,
+        None=0,
         File,
-        Database
+        Database,
+        Console,
+        Log4Net
     }
 }

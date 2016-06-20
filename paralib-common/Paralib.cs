@@ -1,5 +1,6 @@
 ﻿using System;
 using com.paralib.Configuration;
+using com.paralib.Logging;
 
 namespace com.paralib
 {
@@ -10,6 +11,7 @@ namespace com.paralib
         private static readonly object _lock = new object();
         private static bool _initialized;
         private static Settings _settings;
+
 
         /*
             Configure Event:
@@ -38,7 +40,7 @@ namespace com.paralib
             }
         }
 
-        public static void OnConfigure()
+        public static void RaiseConfigureEvent()
         {
             //allow library consumers to modify configuration programatically
 

@@ -40,7 +40,7 @@ namespace com.paralib.Mvc
 
                 //allow configuration to be modified programatically 
                 //(probably via a static handler in global.asax)
-                Paralib.OnConfigure();
+                Paralib.RaiseConfigureEvent();
 
                 _initialized = true;
 
