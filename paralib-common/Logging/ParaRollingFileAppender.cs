@@ -6,7 +6,8 @@ namespace com.paralib.Logging
 {
     public class ParaRollingFileAppender : RollingFileAppender
     {
-        public static readonly string DefaultPattern = "%-5p %d %5rms %-22.22logger{1} %-18.18property{method} - %m%n";
+        public static readonly string DefaultPath = "application.log";
+        public static readonly string DefaultPattern = "%date,%timestamp,%thread,%property{tid},%level,%logger,%property{method},%property{user},%message%n";
 
     }
 }

@@ -35,8 +35,9 @@ namespace com.paralib.Logging
             {
                 case LogLevels.All:
                     return log4net.Core.Level.All;
-                case LogLevels.None:
-                    return log4net.Core.Level.Off;
+                case LogLevels.Unspecified:
+                    //this is okay as long as the default level isn't "uspecified"
+                    return GetLog4NetLevel(LoggingConfigurator.DefaultLevel);
                 case LogLevels.Debug:
                     return log4net.Core.Level.Debug;
                 case LogLevels.Info:

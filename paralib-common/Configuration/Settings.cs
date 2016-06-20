@@ -11,7 +11,7 @@ namespace com.paralib.Configuration
 
         public class LoggingSettings
         {
-            public bool Enabled { get; set; }
+            public bool Enabled { get; set; } 
             public bool Debug { get; set; }
             public LogLevels Level { get; set; }
             public List<Log> Logs { get; } = new List<Log>();
@@ -47,22 +47,29 @@ namespace com.paralib.Configuration
                 settings.Connection = Nullify(paralibSection.Connection);
 
                 //Logging
-                settings.Logging.Enabled = paralibSection.Logging.Enabled;
+
+                //only use the setting (which defaults to true) if defined in file...
+                if (paralibSection.Logging.ElementInformation.IsPresent)
+                {
+                    settings.Logging.Enabled = paralibSection.Logging.Enabled;
+                }
+
                 settings.Logging.Debug = paralibSection.Logging.Debug;
                 settings.Logging.Level = paralibSection.Logging.Level;
 
                 foreach (LogElement element in paralibSection.Logging.Logs)
                 {
+                    //we do this to make sure non-applicable attributes are ignored (we could throw errors if we wanted)
                     switch (element.LogType)
                     {
                         case LogTypes.Console:
-                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType = element.LogType, LoggerType = "ParaConsoleAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture) });
+                            settings.Logging.Logs.Add(new Log(element.Name, element.LogType, element.Enabled) { Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture) });
                             break;
                         case LogTypes.File:
-                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType=element.LogType, LoggerType="ParaRollingFileAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
+                            settings.Logging.Logs.Add(new Log(element.Name, element.LogType, element.Enabled) { Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
                             break;
                         case LogTypes.Database:
-                            settings.Logging.Logs.Add(new Log() { Name = element.Name, Enabled = element.Enabled, LogType = element.LogType, LoggerType = "ParaAdoNetAppender", Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType), Table = Nullify(element.Table), Fields = Nullify(element.Fields) });
+                            settings.Logging.Logs.Add(new Log(element.Name, element.LogType, element.Enabled) { Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType), Table = Nullify(element.Table), Fields = Nullify(element.Fields) });
                             break;
                         default:
                             throw new ParalibException($"Can't Create LogType {element.LogType}");

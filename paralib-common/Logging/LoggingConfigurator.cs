@@ -67,6 +67,14 @@ namespace com.paralib.Logging
             s.Close();
         }
 
+        public static LogLevels DefaultLevel
+        {
+            get
+            {
+                return LogLevels.All;
+            }
+        }
+
         public static void Configure()
         {
             //TODO do something about connection timeout or throw an error or something when connectionstring is wrong
@@ -80,6 +88,8 @@ namespace com.paralib.Logging
             //reset congfig
             ResetConfiguration();
 
+            //this is the master switch if if enabled (e.g., <paralib><logging> is present)
+            //log4net will not be autoconfigured if paralib logging is off
             if (Paralib.Configuration.Logging.Enabled)
             {
 
@@ -87,23 +97,9 @@ namespace com.paralib.Logging
                 Hierarchy h = GetHierarchy();
 
                 //let's default to All
-                h.Root.Level = log4net.Core.Level.All;
+                h.Root.Level = LogManager.GetLog4NetLevel(DefaultLevel);
 
-                /* debug from config is set in a static constructor, 
-                   so all we can do here is allow a third way to enable
-
-                        <configuration>
-                            <appSettings>
-                                <add key="log4net.Internal.Debug" value="true"/>
-                            </appSettings>
-                        </configuration>
-                */
-                if (Paralib.Configuration.Logging.Debug)
-                {
-                    log4net.Util.LogLog.InternalDebugging = true;
-                }
-
-                //use standard log4net configuration, add manual appenders
+                //start with standard log4net configuration
                 //use paralib.config if it has log4net section, otherwise try app/web config
                 if (ConfigurationManager.HasLog4NetOverride)
                 {
@@ -111,25 +107,52 @@ namespace com.paralib.Logging
                 }
                 else
                 {
-                    if (ConfigurationManager.Log4NetSection!=null)
+                    if (ConfigurationManager.HasLog4Net)
                     {
                         ConfigureFromDotNetConfig();
                     }
                 }
 
-                //override root level (if specified)
-                if (Paralib.Configuration.Logging.Level != LogLevels.None)
+                /* debug from config is set in a static constructor, 
+                   so all we can do here is allow a fourth way to enable (including programatically)
+
+                        <configuration>
+                            <appSettings>
+                                <add key="log4net.Internal.Debug" value="true"/>
+                            </appSettings>
+                        </configuration>
+
+                        <log4net debug="true">
+                        </log4net>
+
+                        <paralib>
+                            <logging debug="true"/>
+                        </paralib>
+
+                */
+                if (Paralib.Configuration.Logging.Debug)
+                {
+                    log4net.Util.LogLog.InternalDebugging = true;
+                }
+
+                //override root level only if specified (default in config file is unspecified)
+                if (Paralib.Configuration.Logging.Level != LogLevels.Unspecified)
                 {
                     h.Root.Level = LogManager.GetLog4NetLevel(Paralib.Configuration.Logging.Level);
                 }
 
-                //sync config with log4net
+                //sync config with log4net:
+                //
+                //  <logging enabled="true" level="(set by log4net or in paralib)" debug="(set true in paralib or by log4net)">
+                //      <logs>
+                //          <log name="set by log4net">
+                //          <log name="set in paralib">
                 Paralib.Configuration.Logging.Level = LogManager.GetLogLevel(h.Root.Level);
                 Paralib.Configuration.Logging.Debug = log4net.Util.LogLog.InternalDebugging;
 
                 foreach (var appender in h.Root.Appenders)
                 {
-                    Paralib.Configuration.Logging.InternalLogs.Add(new Log() { Name = appender.Name, LogType = LogTypes.Log4Net, LoggerType = appender.GetType().Name });
+                    Paralib.Configuration.Logging.InternalLogs.Add(new Log(appender.Name, LogTypes.Log4Net, appender.GetType().Name,true));
                 }
 
                 //add paralib configured loggers to log4net
@@ -225,11 +248,11 @@ namespace com.paralib.Logging
         }
 
 
-        internal static log4net.Appender.IAppender CreateParaRollingFileAppender(string name, string capture, string pattern, string file)
+        internal static log4net.Appender.IAppender CreateParaRollingFileAppender(string name, string capture, string pattern, string path)
         {
             ParaRollingFileAppender appender = new ParaRollingFileAppender();
             appender.Name = name;
-            appender.File = file ?? "application.log";
+            appender.File = path ?? ParaRollingFileAppender.DefaultPath;
             appender.AppendToFile = true;
             appender.RollingStyle = log4net.Appender.RollingFileAppender.RollingMode.Size;
             appender.MaxSizeRollBackups = 10;
@@ -270,6 +293,8 @@ namespace com.paralib.Logging
             string paramlist = "";
 
             //add parameters
+            //NOTE: we don't support patterns with nested commas like:
+            //      %utcdate{HH:mm:ss,fff}
             pattern = pattern ?? ParaAdoNetAppender.DefaultPattern;
             string[] parameters = pattern.Split(',');
 

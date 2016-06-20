@@ -45,8 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Logging\MvcLogging.cs" />
-    <Compile Include="Logging\BasicLogging.cs" />
+    <Compile Include="Logging\StandardLogging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

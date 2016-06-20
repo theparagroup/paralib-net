@@ -66,10 +66,6 @@
     <Compile Include="Configuration\ConfigureEventHandler.cs" />
     <Compile Include="Configuration\DalElement.cs" />
     <Compile Include="Configuration\ParalibSection.cs" />
-    <Compile Include="Logging\LoggingConfiguration.cs" />
-    <Compile Include="Logging\LoggingModes.cs" />
-    <Compile Include="Logging\ParaMvcRollingFileAppender.cs" />
-    <Compile Include="Logging\ParaMvcAdoNetAppender.cs" />
     <Compile Include="Logging\ParaAdoNetAppender.cs" />
     <Compile Include="Paralib.cs" />
     <Compile Include="Paralib.Logging.cs" />
@@ -82,10 +78,6 @@
     <None Include="Paralib.cd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Logging\database-with-fallback.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Logging\database-with-fallback-mvc.xml" />
     <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup />

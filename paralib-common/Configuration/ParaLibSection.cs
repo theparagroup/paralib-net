@@ -8,7 +8,17 @@ namespace com.paralib.Configuration
     {
 
         /*
-            Note: we use "sane" defaults (off, false, none).
+            Note: we use "sane" defaults (off, false, none), except for things that are
+            implied to be "on" if they are present.
+
+            For example:
+
+                <paralib/> (logging off)
+
+                <paralib><logging/></paralib> (logging enabled)
+
+                <paralib><logging><log/></logging></paralib> (logging enabled, log enabled)
+
 
         */
 

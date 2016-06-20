@@ -15,14 +15,14 @@ namespace com.paralib.Configuration
             set { base["enabled"] = value; }
         }
 
-        [ConfigurationProperty("debug", DefaultValue = false)]
+        [ConfigurationProperty("debug")]
         public bool Debug
         {
             get { return (bool)base["debug"]; }
             set { base["debug"] = value; }
         }
 
-        [ConfigurationProperty("level", DefaultValue = LogLevels.None)]
+        [ConfigurationProperty("level", DefaultValue = LogLevels.Unspecified)]
         [TypeConverter(typeof(CaseInsensitiveEnum<LogLevels>))]
         public LogLevels Level
         {
