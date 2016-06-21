@@ -124,7 +124,7 @@ namespace com.paralib.Configuration
                 paralibSection.Logging.Level = LogLevels.Off;
                 
                 paralibSection.Logging.Logs.Add(new LogElement() { Name = "file-demo", Enabled = false, LogType=LogTypes.File, Capture = "error,fatal,info-warn", Path ="errors.log", Pattern = "%thread [%property{tid}] %level %logger %property{method} %property{file} %property{line} %property{user} %n" });
-                paralibSection.Logging.Logs.Add(new LogElement() { Name = "database-demo", Enabled = false, LogType = LogTypes.Database, Connection = "paralib", ConnectionType= "System.Data.SqlClient.SqlConnection", Table="thelog", Pattern="%.25level, %.256logger", Fields="level_name,loggger_name" });
+                paralibSection.Logging.Logs.Add(new LogElement() { Name = "database-demo", Enabled = false, LogType = LogTypes.Database, Connection = "paralib", ConnectionType= "System.Data.SqlClient.SqlConnection", Table="thelog", Pattern="%.25level, %.256logger{1}", Fields="level_name,loggger_name" });
                 paralibSection.Logging.Logs.Add(new LogElement() { Name = "database-standard", Enabled = false, LogType = LogTypes.Database});
 
                 //<dal>

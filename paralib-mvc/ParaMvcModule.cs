@@ -47,8 +47,14 @@ namespace com.paralib.Mvc
                 _logger.Info("module first-request initialized");
 
             }
+
+            context.BeginRequest += Context_BeginRequest;
+
         }
 
-
+        private void Context_BeginRequest(object sender, EventArgs e)
+        {
+            _logger.Info(null);
+        }
     }
 }
