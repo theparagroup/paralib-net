@@ -35,6 +35,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +48,16 @@
   <ItemGroup>
     <Compile Include="Configuration\CaseInsensitiveEnumConverter.cs" />
     <Compile Include="Configuration\AppSettings.cs" />
+    <Compile Include="DataAnnotations\ParaTypeAttribute.cs" />
+    <Compile Include="DataAnnotations\StringAttribute.cs" />
+    <Compile Include="DataAnnotations\ValidationError.cs" />
+    <Compile Include="DataAnnotations\ExtensionMethods.cs" />
+    <Compile Include="DataAnnotations\ObjectValidator.cs" />
+    <Compile Include="Data\BlobType.cs" />
+    <Compile Include="Data\KeyType.cs" />
+    <Compile Include="Data\StringType.cs" />
+    <Compile Include="DataAnnotations\ParaTypes.cs" />
+    <Compile Include="Data\ParaType.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LoggerBase.cs" />

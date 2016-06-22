@@ -56,6 +56,7 @@ matters.
 Next you should read the various readmes:
 
 		paralib-net/paralib-common/readme.txt
+		paralib-net/paralib-migrations/readme.txt
 		paralib-net-reference/paralib-reference-mvc/readme.txt
 		paralib-net-reference/paralib-reference-mvc/asp-deepdive.txt
 		

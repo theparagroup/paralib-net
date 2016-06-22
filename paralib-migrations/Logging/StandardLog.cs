@@ -1,22 +1,16 @@
 ﻿using System;
-using FluentMigrator;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace com.paralib.Migrations.Logging
 {
-    public class StandardLogging
+    public static class StandardLog
     {
-
-        public static void Down(Migration migration, string tableName="log")
+        public static void CreateStandardLogTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = "log")
         {
-            migration
-            .Delete.Table(tableName);
-        }
-
-
-        public static void Up(Migration migration, string tableName = "log")
-        {
-            migration
-            .Create.Table(tableName)
+            create.Table(tableName)
             .WithColumn("id").AsInt32().PrimaryKey().NotNullable().Identity()
             .WithColumn("date").AsDateTime().NotNullable()
             .WithColumn("timestamp").AsInt32().NotNullable()
@@ -29,6 +23,10 @@ namespace com.paralib.Migrations.Logging
             .WithColumn("message").AsString(256).NotNullable();
         }
 
+        public static void DeleteStandardLogTable(FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete, string tableName = "log")
+        {
+            delete.Table(tableName);
+        }
 
     }
 }

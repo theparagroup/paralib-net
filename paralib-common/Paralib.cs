@@ -122,6 +122,13 @@ namespace com.paralib
             _logger.Info("settings changed");
         }
 
+        public static DataAnnotations.ParaTypes ParaTypes
+        {
+            get
+            {
+                return DataAnnotations.ParaTypes.Instance;
+            }
+        }
 
     }
 }
