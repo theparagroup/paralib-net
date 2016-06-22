@@ -11,6 +11,7 @@ namespace com.paralib.DataAnnotations
 
         public const string Key = nameof(Key);
         public const string Blob = nameof(Blob);
+        public const string Time = nameof(Time);
 
         public const string Email= nameof(Email);
         public const string Url = nameof(Url);
@@ -26,11 +27,17 @@ namespace com.paralib.DataAnnotations
         public const string Note = nameof(Note);
         public const string Text = nameof(Text);
         public const string MaxText = nameof(MaxText);
+        public const string Password = nameof(Password);
+        public const string DateTime = nameof(DateTime);
+        public const string Decimal = nameof(Decimal);
 
         private ParaTypes()
         {
             _paraTypes.Add(nameof(Key), new KeyType(nameof(Key)));
             _paraTypes.Add(nameof(Blob), new BlobType(nameof(Blob)));
+            _paraTypes.Add(nameof(DateTime), new DateTimeType(nameof(DateTime)));
+            _paraTypes.Add(nameof(Decimal), new DecimalType(nameof(Decimal)));
+            _paraTypes.Add(nameof(Time), new TimeType(nameof(Time)));
 
 
             //more complicated and supposedly 99%
@@ -50,8 +57,9 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Note), new StringType(nameof(Note)) { MaximumLength = 512 });
             _paraTypes.Add(nameof(Text), new StringType(nameof(Text)) { MaximumLength = 1024});
             _paraTypes.Add(nameof(MaxText), new StringType(nameof(MaxText)) { MaximumLength = int.MaxValue});
-
-
+            _paraTypes.Add(nameof(Password), new StringType(nameof(Password)) { MaximumLength = 128 });
+                        
+          
         }
 
         public ParaType this[string name]

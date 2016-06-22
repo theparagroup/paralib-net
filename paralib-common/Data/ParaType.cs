@@ -14,10 +14,10 @@ namespace com.paralib.Data
         }
 
 
-        public abstract string Validate(string displayName, object value);
-
-
-
+        public virtual string Validate(string displayName, object value)
+        {
+            return null;
+        }
     }
 
     

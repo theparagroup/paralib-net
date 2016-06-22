@@ -9,12 +9,6 @@ namespace com.paralib.Data
 
         public BlobType(string name) : base(name, typeof(byte[])) { }
 
-        public override string Validate(string displayName, object value)
-        {
-            return null;
-        }
-
-
     }
 
 

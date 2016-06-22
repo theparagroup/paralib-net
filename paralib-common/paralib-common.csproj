@@ -54,10 +54,13 @@
     <Compile Include="DataAnnotations\ExtensionMethods.cs" />
     <Compile Include="DataAnnotations\ObjectValidator.cs" />
     <Compile Include="Data\BlobType.cs" />
+    <Compile Include="Data\DateTimeType.cs" />
+    <Compile Include="Data\DecimalType.cs" />
     <Compile Include="Data\KeyType.cs" />
     <Compile Include="Data\StringType.cs" />
     <Compile Include="DataAnnotations\ParaTypes.cs" />
     <Compile Include="Data\ParaType.cs" />
+    <Compile Include="Data\TimeType.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LoggerBase.cs" />

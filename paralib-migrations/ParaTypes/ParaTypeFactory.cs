@@ -14,13 +14,25 @@ namespace com.paralib.Migrations.ParaTypes
             {
                 return fluent.AsString(((StringType)paraType).MaximumLength);
             }
-            else if (paraType.Type == typeof(long))
+            else if (paraType.Type == typeof(int))
             {
                 return fluent.AsInt32();
             }
             else if (paraType.Type == typeof(byte[]))
             {
                 return fluent.AsBinary();
+            }
+            else if (paraType.Type == typeof(DateTime))
+            {
+                return fluent.AsDateTime();
+            }
+            else if (paraType.Type == typeof(TimeSpan))
+            {
+                return fluent.AsTime();
+            }
+            else if (paraType.Type == typeof(decimal))
+            {
+                return fluent.AsDecimal();
             }
             else
             {
