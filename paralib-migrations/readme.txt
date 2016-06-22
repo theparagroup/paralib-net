@@ -13,6 +13,17 @@ generally:
 	column names should match member names (e.g. role_id -> RoleId)
 
 
+	[users]						User
+		id							Id
+		first_name					FirstName
+		role_id						RoleId
+									Roles
+
+	[roles]						Role
+		id							Id
+		name						Name
+
+
 =============================================================
 ====	Migration Naming Conventions
 =============================================================
