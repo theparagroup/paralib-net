@@ -50,7 +50,7 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Address), new StringType(nameof(Address)) { MaximumLength = 256});
             _paraTypes.Add(nameof(City), new StringType(nameof(City)) { MaximumLength = 128});
             _paraTypes.Add(nameof(State), new StringType(nameof(State)) { MaximumLength = 2});
-            _paraTypes.Add(nameof(Zip), new StringType(nameof(Zip)) { MaximumLength = 5, RegEx= @"^[0-9]{5}&", BadFormatErrorMessage="'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
+            _paraTypes.Add(nameof(Zip), new StringType(nameof(Zip)) { MaximumLength = 5, RegEx= @"^[0-9]{5}$", BadFormatErrorMessage="'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
             _paraTypes.Add(nameof(Zip4), new StringType(nameof(Zip4)) { MaximumLength = 10, RegEx=@"^[0-9]{5}(-[0-9]{4})?$", BadFormatErrorMessage = "'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
             _paraTypes.Add(nameof(Phone), new StringType(nameof(Phone)) { MaximumLength = 13 });
             _paraTypes.Add(nameof(Name), new StringType(nameof(Name)) { MaximumLength = 64});
