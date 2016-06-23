@@ -34,6 +34,10 @@ namespace com.paralib.Migrations.ParaTypes
             {
                 return fluent.AsDecimal();
             }
+            else if (paraType.Type == typeof(Boolean))
+            {
+                return fluent.AsBoolean();
+            }
             else
             {
                 throw new ParalibException($"ParaType \"{paraType.Type.Name}\" is not supported in migrations.");

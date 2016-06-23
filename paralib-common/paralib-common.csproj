@@ -54,6 +54,7 @@
     <Compile Include="DataAnnotations\ExtensionMethods.cs" />
     <Compile Include="DataAnnotations\ObjectValidator.cs" />
     <Compile Include="Data\BlobType.cs" />
+    <Compile Include="Data\BoolType.cs" />
     <Compile Include="Data\DateTimeType.cs" />
     <Compile Include="Data\DecimalType.cs" />
     <Compile Include="Data\KeyType.cs" />

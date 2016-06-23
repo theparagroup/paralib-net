@@ -12,6 +12,7 @@ namespace com.paralib.DataAnnotations
         public const string Key = nameof(Key);
         public const string Blob = nameof(Blob);
         public const string Time = nameof(Time);
+        public const string Bool = nameof(Bool);
 
         public const string Email= nameof(Email);
         public const string Url = nameof(Url);
@@ -38,6 +39,7 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(DateTime), new DateTimeType(nameof(DateTime)));
             _paraTypes.Add(nameof(Decimal), new DecimalType(nameof(Decimal)));
             _paraTypes.Add(nameof(Time), new TimeType(nameof(Time)));
+            _paraTypes.Add(nameof(Bool), new BoolType(nameof(Bool)));
 
 
             //more complicated and supposedly 99%
