@@ -24,6 +24,24 @@ generally:
 		name						Name
 
 
+column order (generally):
+		primary keys
+		foreign keys (lookups)
+		foreign keys (entities)
+		dependent data in order of significance
+	
+synthetic keys only
+
+all tables have an "id" primary key (even many-to-many)
+
+identity
+		use identity for data that users create
+		use identity for lookup data
+			except when there is code that relies on the values
+				(and there usually should be a matching enumeration)
+				(start these values at 1)
+		
+
 =============================================================
 ====	Migration Naming Conventions
 =============================================================
