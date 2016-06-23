@@ -29,7 +29,7 @@ namespace com.paralib.Mvc
                 Paralib.Initialize();
 
                 //register our paralib MVC module
-                //DynamicModuleUtility.RegisterModule(typeof(ParaMvcModule));
+                DynamicModuleUtility.RegisterModule(typeof(ParaMvcModule));
 
 
                 _executed = true;

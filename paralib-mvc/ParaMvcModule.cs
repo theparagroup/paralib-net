@@ -7,61 +7,62 @@ namespace com.paralib.Mvc
 {
     public class ParaMvcModule : IHttpModule
     {
-        //private static ILog _logger = Paralib.GetLogger(typeof(ParaMvcModule));
-        //private static readonly object _lock = new object();
-        //private static bool _initialized;
+        private static ILog _logger = Paralib.GetLogger(typeof(ParaMvcModule));
+        private static readonly object _lock = new object();
+        private static bool _initialized;
 
-        public void Init(HttpApplication context)
-        {
-        }
-
-        public void Dispose()
-        {
-        }
-
-        //public ParaMvcModule()
+        //public void Init(HttpApplication context)
         //{
-        //    _logger.Info(".ctor");
         //}
 
         //public void Dispose()
         //{
-        //    _logger.Info(null);
         //}
 
-        //public void Init(HttpApplication context)
-        //{
-        //    _logger.Info(null);
+        public ParaMvcModule()
+        {
+            _logger.Info(".ctor");
+        }
 
-        //    //requests are multi-threaded - we want the first one to get here
-        //    lock (_lock)
-        //    {
-        //        if (_initialized)
-        //        {
-        //            return;
-        //        }
+        public void Dispose()
+        {
+            _logger.Info(null);
+        }
 
-        //        //create a default web.config section & connectionstring if they don't exist
-        //        //(paralib was already initialized in PreApplicationStartCode using web.config)
-        //        ConfigurationManager.InitializeWebConfig();
+        public void Init(HttpApplication context)
+        {
+            _logger.Info(null);
 
-        //        //allow configuration to be modified programatically 
-        //        //(probably via a static handler in global.asax)
-        //        Paralib.RaiseConfigureEvent();
+            //requests are multi-threaded - we want the first one to get here
+            lock (_lock)
+            {
+                if (_initialized)
+                {
+                    return;
+                }
 
-        //        _initialized = true;
+                //create a default web.config section & connectionstring if they don't exist
+                //(paralib was already initialized in PreApplicationStartCode using web.config)
+                ConfigurationManager.InitializeWebConfig();
 
-        //        _logger.Info("module first-request initialized");
+                //allow configuration to be modified programatically 
+                //(probably via a static handler in global.asax)
+                Paralib.RaiseConfigureEvent();
 
-        //    }
+                _initialized = true;
 
-        //    context.BeginRequest += Context_BeginRequest;
+                _logger.Info("module first-request initialized");
 
-        //}
+            }
 
-        //private void Context_BeginRequest(object sender, EventArgs e)
-        //{
-        //    _logger.Info(null);
-        //}
+            //TODO this blows up in integrated mode. fine in classic mode. why and how to fix?
+            //context.BeginRequest += Context_BeginRequest;
+
+
+        }
+
+        private void Context_BeginRequest(object sender, EventArgs e)
+        {
+        }
     }
 }

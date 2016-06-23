@@ -205,19 +205,35 @@ namespace com.paralib.Logging
                 {
                     string[] levels = rule.Split('-');
 
-                    var filter = new log4net.Filter.LevelRangeFilter();
-                    filter.AcceptOnMatch = true;
-                    filter.LevelMin = LogManager.GetLog4NetLevel((LogLevels)Enum.Parse(typeof(LogLevels), levels[0], true));
-                    filter.LevelMax = LogManager.GetLog4NetLevel((LogLevels)Enum.Parse(typeof(LogLevels), levels[1], true));
-                    appender.AddFilter(filter);
+                    LogLevels minLevel = (LogLevels)Enum.Parse(typeof(LogLevels), levels[0], true);
+                    LogLevels maxLevel = (LogLevels)Enum.Parse(typeof(LogLevels), levels[1], true);
+
+                    if ((minLevel==LogLevels.Off)||(maxLevel==LogLevels.Off)) continue;
+
+                    if ((minLevel == LogLevels.All) || (maxLevel == LogLevels.All))
+                    {
+                        AddFilter(appender, LogLevels.Debug, LogLevels.Fatal);
+                        continue;
+                    }
+
+                    AddFilter(appender, minLevel, maxLevel);
 
                 }
                 else
                 {
-                    var filter = new log4net.Filter.LevelMatchFilter();
-                    filter.AcceptOnMatch = true;
-                    filter.LevelToMatch = LogManager.GetLog4NetLevel((LogLevels)Enum.Parse(typeof(LogLevels), rule, true));
-                    appender.AddFilter(filter);
+
+                    LogLevels levelToMatch = (LogLevels)Enum.Parse(typeof(LogLevels), rule, true);
+
+                    if (levelToMatch == LogLevels.Off) continue;
+
+                    if (levelToMatch == LogLevels.All)
+                    {
+                        AddFilter(appender, LogLevels.Debug, LogLevels.Fatal);
+                        continue;
+                    }
+
+                    AddFilter(appender, levelToMatch);
+
                 }
 
 
@@ -228,6 +244,24 @@ namespace com.paralib.Logging
 
 
 
+        }
+
+        internal static void AddFilter(log4net.Appender.AppenderSkeleton appender, LogLevels levelToMatch)
+        {
+            var filter = new log4net.Filter.LevelMatchFilter();
+            filter.AcceptOnMatch = true;
+            filter.LevelToMatch = LogManager.GetLog4NetLevel(levelToMatch);
+            appender.AddFilter(filter);
+
+        }
+
+        internal static void AddFilter(log4net.Appender.AppenderSkeleton appender, LogLevels levelMin,LogLevels levelMax)
+        {
+            var filter = new log4net.Filter.LevelRangeFilter();
+            filter.AcceptOnMatch = true;
+            filter.LevelMin = LogManager.GetLog4NetLevel(levelMin);
+            filter.LevelMax = LogManager.GetLog4NetLevel(levelMax);
+            appender.AddFilter(filter);
         }
 
         internal static log4net.Appender.IAppender CreateParaConsoleAppender(string name, string capture, string pattern)
@@ -257,6 +291,7 @@ namespace com.paralib.Logging
             appender.RollingStyle = log4net.Appender.RollingFileAppender.RollingMode.Size;
             appender.MaxSizeRollBackups = 10;
             appender.MaximumFileSize = "10MB";
+            appender.ImmediateFlush = true;
 
             log4net.Layout.PatternLayout layout = new log4net.Layout.PatternLayout();
             layout.ConversionPattern = pattern ?? ParaRollingFileAppender.DefaultPattern;
