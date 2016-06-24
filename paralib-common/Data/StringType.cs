@@ -25,19 +25,26 @@ namespace com.paralib.Data
 
             //we want to pass null values (use [Required] for that) and throw if value is not a string
 
+
             if (value != null && ((string)value).Length > MaximumLength)
             {
-                return string.Format(TooLongErrorMessage?? _tooLongErrorMessage, displayName, MaximumLength);
+                return string.Format(TooLongErrorMessage ?? _tooLongErrorMessage, displayName, MaximumLength);
             }
 
-            if (value != null && ((string)value).Length < MinimumLength)
+            if (MinimumLength.HasValue)
             {
-                return string.Format(TooShortErrorMessage?? _tooShortErrorMessage, displayName, MinimumLength);
+                if (value != null && ((string)value).Length < MinimumLength)
+                {
+                    return string.Format(TooShortErrorMessage ?? _tooShortErrorMessage, displayName, MinimumLength);
+                }
             }
 
-            if (value != null && !Regex.IsMatch((string)value,RegEx))
+            if (RegEx != null)
             {
-                return string.Format(BadFormatErrorMessage ?? _badFormatErrorMessage, displayName);
+                if (value != null && !Regex.IsMatch((string)value, RegEx))
+                {
+                    return string.Format(BadFormatErrorMessage ?? _badFormatErrorMessage, displayName);
+                }
             }
 
             return null;
