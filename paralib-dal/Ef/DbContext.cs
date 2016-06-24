@@ -35,7 +35,8 @@ namespace com.paralib.Dal.Ef
 
         private static string GetTableName(ConventionTypeConfiguration config)
         {
-            var result = Regex.Replace(config.ClrType.Name, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
+            var result = Regex.Replace(config.ClrType.Name, "^ef", m => "");
+            result = Regex.Replace(result, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
             return result.ToLower() + "s";
         }
 
