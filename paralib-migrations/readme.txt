@@ -61,3 +61,10 @@ Down() before Up() in file
 Commonly used schema fragments are located in the paralib-migrations 
 project.
 
+=============================================================
+====	SQL Server Extensions
+=============================================================
+
+FluentMigrator.Runner assembly
+
+using FluentMigrator.Runner.Extensions;

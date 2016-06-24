@@ -48,8 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Db.cs" />
-    <Compile Include="Ef\DbConfiguration.cs" />
-    <Compile Include="Ef\DbContext.cs" />
+    <Compile Include="Ef\efConfiguration.cs" />
+    <Compile Include="Ef\efContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

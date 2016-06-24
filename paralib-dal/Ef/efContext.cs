@@ -6,12 +6,12 @@ using System.Text.RegularExpressions;
 
 namespace com.paralib.Dal.Ef
 {
-    public class DbContext : NET.DbContext
+    public class efContext : NET.DbContext
     {
 
-        public DbContext(): base(Paralib.Configuration.ConnectionString)
+        public efContext(): base(Paralib.Configuration.ConnectionString)
         {
-            NET.Database.SetInitializer<DbContext>(null);
+            NET.Database.SetInitializer<efContext>(null);
         }
 
 
