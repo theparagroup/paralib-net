@@ -5,9 +5,9 @@ using com.paralib;
 
 namespace com.paralib.Dal.Ef
 {
-    public class efConfiguration : NET.DbConfiguration
+    public class EfConfiguration : NET.DbConfiguration
     {
-        public efConfiguration()
+        public EfConfiguration()
         {
             SetExecutionStrategy("System.Data.SqlClient", () => new DefaultExecutionStrategy());
             SetDefaultConnectionFactory(new SqlConnectionFactory(Paralib.Configuration.Dal.ConnectionString));
