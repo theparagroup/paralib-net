@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using NET = System.Data.Entity;
-using System.Data.Entity.Design.PluralizationServices;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Text.RegularExpressions;
-using System.Globalization;
+
 
 namespace com.paralib.Dal.Ef
 {
@@ -49,35 +48,9 @@ namespace com.paralib.Dal.Ef
         {
             var result = Regex.Replace(config.ClrType.Name, "^Ef", m => "");
             result = Regex.Replace(result, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
-
-            var p = PluralizationService.CreateService(new CultureInfo("en-US"));
-
-
-            string s;
-
-            s = p.Pluralize("company");
-            s = p.Pluralize("labor");
-            s = p.Pluralize("alumnus");
-            s = p.Pluralize("fungus");
-
-            result = p.Pluralize(result);
+            result = Utils.Lexeme.Pluralize(result);
             return result;
-
-            //if (result.EndsWith("y",StringComparison.OrdinalIgnoreCase))
-            //{
-            //    //Ending in 'y' preceded by a consonant -> ies
-            //    return result.ToLower() + "ies";
-            //}
-            //else if (result.EndsWith("s", StringComparison.OrdinalIgnoreCase))
-            //{
-            //    //s, x, z, ch, or sh -> es
-            //    return result.ToLower() + "es";
-            //}
-            //else
-            //{
-            //    //Ending in 'y' preceded by a vowel -> s
-            //    return result.ToLower() + "s";
-            //}
+          
         }
 
 

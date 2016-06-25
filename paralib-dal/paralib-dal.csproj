@@ -33,9 +33,6 @@
     <Reference Include="EntityFramework">
       <HintPath>..\..\paralib-net-dependencies\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\..\paralib-net-dependencies\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -51,6 +48,7 @@
     <Compile Include="Db.cs" />
     <Compile Include="Ef\EfConfiguration.cs" />
     <Compile Include="Ef\EfContext.cs" />
+    <Compile Include="Utils\Lexeme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
