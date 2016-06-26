@@ -11,9 +11,10 @@ namespace com.paralib.Dal.Ef
 
         public EfConfiguration()
         {
+            _log.Info($"Reverting to default EF Execution Strategy.");
             SetExecutionStrategy("System.Data.SqlClient", () => new DefaultExecutionStrategy());
-            SetDefaultConnectionFactory(new SqlConnectionFactory(Paralib.Dal.Database.GetConnectionString(true)));
-            _log.Info($"Setting default connection to '{Paralib.Dal.Database.Name}' = '{Paralib.Dal.Database.GetConnectionString(false)}'");
+            _log.Info($"Clearing default EF Connection Factory.");
+            SetDefaultConnectionFactory(new SqlConnectionFactory("Server=0.0.0.0,0;Integrated Security=SSPI;"));
         }
     }
 }

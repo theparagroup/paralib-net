@@ -52,11 +52,11 @@ namespace com.paralib.Ado
 
             if (Port.HasValue)
             {
-                server =$"Server={Server},{Port};Network Library=DBMSSOCN;";
+                server =$"Data Source={Server},{Port};Network Library=DBMSSOCN;";
             }
             else
             {
-                server=$"Server={Server};";
+                server=$"Data Source={Server};";
             }
 
             if (Integrated)
@@ -69,9 +69,16 @@ namespace com.paralib.Ado
                 credentials += $"User ID={UserName};";
             }
 
-            if (includePassword && Password != null)
+            if (Password != null)
             {
-                credentials += $"Password={Password};";
+                if (includePassword)
+                {
+                    credentials += $"Password={Password};";
+                }
+                else
+                {
+                    credentials += "Password=*****;";
+                }
             }
 
 
@@ -105,9 +112,16 @@ namespace com.paralib.Ado
                 credentials += $"Uid={UserName};";
             }
 
-            if (includePassword && Password != null)
+            if (Password != null)
             {
-                credentials += $"Pwd={Password};";
+                if (includePassword)
+                {
+                    credentials += $"Pwd={Password};";
+                }
+                else
+                {
+                    credentials += "Pwd=*****;";
+                }
             }
 
 

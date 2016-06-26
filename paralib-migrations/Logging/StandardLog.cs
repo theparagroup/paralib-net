@@ -20,7 +20,7 @@ namespace com.paralib.Migrations.Logging
             .WithColumn("logger").AsString(256).NotNullable()
             .WithColumn("method").AsString(256).NotNullable()
             .WithColumn("user").AsString(256).NotNullable()
-            .WithColumn("message").AsString(256).NotNullable();
+            .WithColumn("message").AsString(4000).NotNullable();
         }
 
         public static void DeleteStandardLogTable(FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete, string tableName = "log")

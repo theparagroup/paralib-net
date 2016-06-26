@@ -6,7 +6,7 @@ namespace com.paralib.Configuration
     [ConfigurationCollection(typeof(DatabaseElement))]
     public class DatabasesCollection : ConfigurationElementCollection
     {
-        [ConfigurationProperty("default", IsRequired = true)]
+        [ConfigurationProperty("default")]
         public string Default
         {
             get { return (string)base["default"]; }

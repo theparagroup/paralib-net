@@ -15,7 +15,7 @@ namespace com.paralib.Configuration
             set { base["name"] = value; }
         }
 
-        [ConfigurationProperty("type", IsRequired = true)]
+        [ConfigurationProperty("type", DefaultValue =DatabaseTypes.SqlServer)]
         [TypeConverter(typeof(CaseInsensitiveEnum<DatabaseTypes>))]
         public DatabaseTypes DatabaseType
         {

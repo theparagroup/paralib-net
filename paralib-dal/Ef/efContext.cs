@@ -3,6 +3,7 @@ using System.Reflection;
 using NET = System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Text.RegularExpressions;
+using com.paralib.Ado;
 
 
 namespace com.paralib.Dal.Ef
@@ -11,15 +12,30 @@ namespace com.paralib.Dal.Ef
     {
         private static ILog _log = Paralib.GetLogger(typeof(EfContext));
 
-        public EfContext(): base(Paralib.Dal.Database.GetConnectionString(true))
+        public EfContext(string connectionString) : base(connectionString)
         {
-            _log.Info($"Setting connection to '{Paralib.Dal.Database.Name}' = '{Paralib.Dal.Database.GetConnectionString(false)}'");
+        }
+
+        public EfContext(Database database) : this(CheckDatabase(database).GetConnectionString(true))
+        {
+            _log.Info($"Setting connection to [{database.Name}] = '{database.GetConnectionString(false)}'");
+        }
+
+        private static Database CheckDatabase(Database database)
+        {
+            if (database == null) throw new ParalibException("Database cannot be null.");
+            return database;
+        }
+
+        public EfContext(): this(Paralib.Dal.Database)
+        {
+            _log.Info($"Setting connection to default database.");
 
             //Note: this won't work for derived classes:
             //      NET.Database.SetInitializer<EfContext>(null);
             //
             //so let's use reflection to invoke this member which for some reason is generic. yes.
-            _log.Info($"Disabling database initialization.");
+            _log.Info($"Disabling EF database initialization.");
             var databaseType = typeof(NET.Database);
             var setInitializer = databaseType.GetMethod("SetInitializer", BindingFlags.Static | BindingFlags.Public);
             var thisType = GetType();
@@ -36,6 +52,8 @@ namespace com.paralib.Dal.Ef
             // If you keep this convention, the generated tables 
             // will have pluralized names.
             //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            _log.Info($"Adding Parlib EF naming conventions.");
 
             var c = modelBuilder.Conventions;
 

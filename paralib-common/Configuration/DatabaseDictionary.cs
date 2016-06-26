@@ -18,11 +18,29 @@ namespace com.paralib.Configuration
             Sync = syncDatabases;
         }
 
-        public Ado.Database this[string name]
+        public Database this[string name]
         {
             get
             {
-                return _databases[name ?? Default];
+                string key = name ?? Default;
+
+                if (key!=null && _databases.ContainsKey(key))
+                {
+                    return _databases[key];
+                }
+                else
+                {
+                    if (name != null)
+                    {
+                        throw new ParalibException($"Database [{name}] does not exist.");
+                    }
+                    else
+                    {
+                        throw new ParalibException($"There is no default database configured.");
+                    }
+
+                }
+
             }
         }
 
