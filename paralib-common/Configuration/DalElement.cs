@@ -3,14 +3,20 @@ using System.Configuration;
 
 namespace com.paralib.Configuration
 {
+
     public class DalElement : ConfigurationElement
     {
 
-        [ConfigurationProperty("connection")]
-        public string Connection
+
+        [ConfigurationProperty("databases")]
+        [ConfigurationCollection(typeof(DatabasesCollection), AddItemName = "database")]
+        public DatabasesCollection Databases
         {
-            get { return (string)base["connection"]; }
-            set { base["connection"] = value; }
+            get { return ((DatabasesCollection)(base["databases"])); }
+            set { base["databases"] = value; }
         }
+
+
     }
+
 }

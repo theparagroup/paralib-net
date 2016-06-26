@@ -27,7 +27,7 @@ namespace com.paralib.Dal
         {
             get
             {
-                return Paralib.Configuration.Dal.ConnectionString;
+                return Paralib.Dal.Database.GetConnectionString(true);
             }
         }
 

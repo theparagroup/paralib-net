@@ -1,8 +1,11 @@
 ﻿using System;
 using NET = System.Configuration;
-using com.paralib.Logging;
 using System.IO;
 using System.Collections.Specialized;
+using com.paralib.Ado;
+using com.paralib.Logging;
+using System.Reflection;
+using System.Xml;
 
 namespace com.paralib.Configuration
 {
@@ -10,50 +13,63 @@ namespace com.paralib.Configuration
     {
 
         /*
-            <paralib connection="oovent">
+            
+            ConfigurationManger loads and caches two configuration sections:
 
-                <overrides>
+                    <paralib/>
+                    <log4net/>
+
+            Either (or both) of these sections can be found in either the app/web config file, 
+            or an alternate "paralib.config" file.
+
+            If the "paralib.config" is present, then it is additionally scanned for these sections:
+
+                    <appSettings/>
                     <connectionStrings/>
-                </overrides>
 
-                <logging enabled="false|true" debug="false|true" level="OFF|FATAL">
-                    <logs>
-                        <log name="logger1" enabled="true|false" type="file" capture="All|Fatal,Error,Warn,Info,Debug" path="application.log"/>
-                        <log name="logger2" enabled="true|false" type="database" capture="All|Fatal,Error,Warn,Info,Debug" connection="<default>|mvc" connectionType="System.Data.SqlClient.SqlConnection"/>
-                    </logs>
-                </logging>
+            These sections are "merged" (added to or overridden) with the in-memory representation
+            if of the app/web config file.
 
-                <dal connection="<default>|mvc" />
+            Additionally, this class provides several other features:
 
-                <mvc>
-                    <diagnostics enabled="false|true">
-                        view loaded assemblies, modules, handler, pipeline trace, other stuff etc.
-                    </diagnostics>
+                    Automatically configuring <log4net> if logging is enabled in <paralib>
+                    Creating a "boilerplate" <paralib> section
+                    Merging connectionStrings and appSettings
+                    Saving *.config files
 
-                    <authentication/>
-                    <authorization/>
-                </mvc>
-
-            </paralib>
         */
 
         private static ParalibSection _paralibSection;
-        private static object _log4netSection;
-        private static NameValueCollection _connectionStrings;
-        private static NameValueCollection _appSettings;
+        private static XmlNode _log4netSection;
 
         static ConfigurationManager()
         {
             Load();
         }
 
+        public static ParalibSection ParalibSection
+        {
+            get
+            {
+                return _paralibSection;
+            }
+        }
+
+        public static XmlNode Log4NetSection
+        {
+            get
+            {
+                return _log4netSection;
+            }
+        }
+
 
         public static bool HasParalib { get; private set; }
         public static bool HasParalibOverride { get; private set; }
-        public static bool HasConnectionStringsOverrides { get; private set; }
-        public static bool HasAppSettingsOverrides { get; private set; }
         public static bool HasLog4Net { get; private set; }
         public static bool HasLog4NetOverride { get; private set; }
+        public static bool HasConnectionStringsOverrides { get; private set; }
+        public static bool HasAppSettingsOverrides { get; private set; }
 
 
         public static string DotNetConfigPath
@@ -92,15 +108,35 @@ namespace com.paralib.Configuration
             return cfg;
         }
 
-        public static bool HasLog4NetElement(string path)
+        public static XmlNode GetLog4NetXmlNode(string path)
         {
             Stream s = new FileStream(path, FileMode.Open);
-            System.Xml.XmlReader xmlReader = System.Xml.XmlReader.Create(s, null);
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
+            XmlReader xmlReader = XmlReader.Create(s, null);
+            XmlDocument doc = new XmlDocument();
             doc.Load(xmlReader);
-            System.Xml.XmlNodeList configNodeList = doc.GetElementsByTagName("log4net");
             s.Close();
-            return (configNodeList.Count > 0);
+
+            XmlNodeList configNodeList = doc.GetElementsByTagName("log4net");
+
+            XmlNode configNode = null;
+
+            if (configNodeList.Count>0)
+            {
+                configNode = configNodeList[0];
+            }
+
+            return configNode;
+        }
+
+        public static string GetConnectionString(string name)
+        {
+            return NET.ConfigurationManager.ConnectionStrings[name].ConnectionString;
+        }
+
+
+        public static string GetAppSetting(string name)
+        {
+            return NET.ConfigurationManager.AppSettings[name];
         }
 
         public static void InitializeConfiguration(NET.Configuration cfg)
@@ -115,7 +151,6 @@ namespace com.paralib.Configuration
             {
                 //<paralib>
                 var paralibSection = new ParalibSection();
-                paralibSection.Connection = "paralib";
 
                 //<logging>
                 paralibSection.Logging = new LoggingElement();
@@ -123,32 +158,32 @@ namespace com.paralib.Configuration
                 paralibSection.Logging.Debug = false;
                 paralibSection.Logging.Level = LogLevels.Off;
                 
+                //<logs>
                 paralibSection.Logging.Logs.Add(new LogElement() { Name = "file-demo", Enabled = false, LogType=LogTypes.File, Capture = "error,fatal,info-warn", Path ="errors.log", Pattern = "%thread [%property{tid}] %level %logger %property{method} %property{file} %property{line} %property{user} %n" });
-                paralibSection.Logging.Logs.Add(new LogElement() { Name = "database-demo", Enabled = false, LogType = LogTypes.Database, Connection = "paralib", ConnectionType= "System.Data.SqlClient.SqlConnection", Table="thelog", Pattern="%.25level, %.256logger{1}", Fields="level_name,loggger_name" });
+                paralibSection.Logging.Logs.Add(new LogElement() { Name = "database-demo", Enabled = false, LogType = LogTypes.Database, Database= "paralib", Table="thelog", Pattern="%.25level, %.256logger{1}", Fields="level_name,loggger_name" });
                 paralibSection.Logging.Logs.Add(new LogElement() { Name = "database-standard", Enabled = false, LogType = LogTypes.Database});
 
                 //<dal>
-                paralibSection.Dal = new DalElement();
-                paralibSection.Dal.Connection = "paralib";
+                paralibSection.Dal.Databases.Default = "paralib";
+                paralibSection.Dal.Databases.Sync = false;
+                paralibSection.Dal.Databases.Add(new DatabaseElement() { Name = "paralib", DatabaseType = DatabaseTypes.SqlServer, Server = ".\\SQLEXPRESS", Store = "store", Integrated = true });
+                paralibSection.Dal.Databases.Add(new DatabaseElement() { Name = "foo", DatabaseType = DatabaseTypes.MySql, Server = "127.0.0.1", Port = 99, UserName = "foo", Password = "bar" });
 
                 //add section
                 cfg.Sections.Add("paralib", paralibSection);
                 paralibSection.SectionInformation.ForceSave = true;
 
-                //add "starter" connectionstring
-                CreateConnectionString(cfg, "paralib", "Data Source=.\\SQLEXPRESS;Initial Catalog={database};Integrated Security=True;");
-
             }
 
         }
 
-        public static void CreateConnectionString(NET.Configuration cfg, string name, string connectionString)
+        public static void CreateConnectionString(NET.Configuration cfg, string name, string connectionString, string providerName=null)
         {
             NET.ConnectionStringsSection connections = (NET.ConnectionStringsSection)cfg.GetSection("connectionStrings");
 
             if (connections.ConnectionStrings[name] == null)
             {
-                connections.ConnectionStrings.Add(new NET.ConnectionStringSettings(name, connectionString));
+                connections.ConnectionStrings.Add(new NET.ConnectionStringSettings(name, connectionString, providerName));
             }
 
         }
@@ -169,6 +204,45 @@ namespace com.paralib.Configuration
 
         }
 
+        private static FieldInfo _fiElementReadOnly = typeof(NET.ConfigurationElement).GetField("_bReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
+        public static void SetElementReadOnly(NET.ConfigurationElement element, bool value)
+        {
+            _fiElementReadOnly.SetValue(element, value);
+        }
+
+        private static FieldInfo _fiElementCollectionReadOnly= typeof(NET.ConfigurationElementCollection).GetField("bReadOnly", BindingFlags.Instance | BindingFlags.NonPublic);
+        public static void SetElementCollectionReadOnly(NET.ConfigurationElementCollection element, bool value)
+        {
+            _fiElementCollectionReadOnly.SetValue(element, value);
+        }
+
+        public static bool SyncConnectionStringSettings(Database database)
+        {
+            return SyncConnectionStringSettings(new NET.ConnectionStringSettings(database.Name, database.GetConnectionString(true), database.ProviderName));
+        }
+
+        public static bool SyncConnectionStringSettings(NET.ConnectionStringSettings connectionStringSettings)
+        {
+            NET.ConnectionStringSettings css = NET.ConfigurationManager.ConnectionStrings[connectionStringSettings.Name];
+
+            if (css!=null)
+            {
+                SetElementReadOnly(NET.ConfigurationManager.ConnectionStrings[connectionStringSettings.Name], false);
+                NET.ConfigurationManager.ConnectionStrings[connectionStringSettings.Name].ConnectionString = connectionStringSettings.ConnectionString;
+                NET.ConfigurationManager.ConnectionStrings[connectionStringSettings.Name].ProviderName = connectionStringSettings.ProviderName;
+                SetElementReadOnly(NET.ConfigurationManager.ConnectionStrings[connectionStringSettings.Name], true);
+                return false;
+            }
+            else
+            {
+                SetElementCollectionReadOnly(NET.ConfigurationManager.ConnectionStrings, false);
+                NET.ConfigurationManager.ConnectionStrings.Add(new NET.ConnectionStringSettings(connectionStringSettings.Name, connectionStringSettings.ConnectionString, connectionStringSettings.ProviderName));
+                SetElementCollectionReadOnly(NET.ConfigurationManager.ConnectionStrings, true);
+                return true;
+            }
+
+        }
+
         private static void Load()
         {
             //load paralib section (DotNet)
@@ -185,21 +259,10 @@ namespace com.paralib.Configuration
 
             }
 
-            //load connectionstrings (DotNet)
-            _connectionStrings = new NameValueCollection();
-
-            foreach (NET.ConnectionStringSettings connectionStringSettings in NET.ConfigurationManager.ConnectionStrings)
-            {
-                _connectionStrings.Add(connectionStringSettings.Name, connectionStringSettings.ConnectionString);
-            }
-
-            //load appsettings (DotNet)
-            _appSettings = NET.ConfigurationManager.AppSettings;
-
             //load log4net section (DotNet)
             //note: this will return null if there is no <section> or <log4net>
-            //and will return an XML element if there is
-            _log4netSection = NET.ConfigurationManager.GetSection("log4net");
+            //and will return a ConfigXMLElement (:XmlElement:XmlLinkedNode:XmlNode) if there is:
+            _log4netSection = NET.ConfigurationManager.GetSection("log4net") as XmlNode;
             HasLog4Net = (_log4netSection != null);
 
             //now look for overrides in paralib.config
@@ -207,6 +270,7 @@ namespace com.paralib.Configuration
 
             if (cfg.HasFile)
             {
+                //use the entire <paralib> from paralib.config if it exists
                 if (cfg.GetSection("paralib") != null)
                 {
                     ParalibSection overriddenParalibSection = (ParalibSection)cfg.GetSection("paralib");
@@ -218,6 +282,32 @@ namespace com.paralib.Configuration
                     }
                 }
 
+                /* use the entire <log4net> from paralib.config if it exists
+                
+                    this returns null if there is no <section>
+                    but returns a DefaultSection even if there is no <log4net>
+                    and IsPresent doesn't seem to work:
+
+                        object overriddenLog4NetSection = cfg.GetSection("log4net");
+                        if (overriddenLog4NetSection != null)
+                        {
+                            _log4netSection = overriddenLog4NetSection;
+                            HasLog4NetOverride = true;
+                        }
+                */
+
+                //so just open it as an XML file and look
+                XmlNode log4netSection = GetLog4NetXmlNode(ParalibConfigPath);
+
+                if (log4netSection!=null)
+                {
+                    _log4netSection = log4netSection;
+                    HasLog4Net = true;
+                    HasLog4NetOverride = true;
+                }
+
+
+                //add or override in-memory <connectionStrings> from paralib.config <connectionStrings>
                 if (cfg.GetSection("connectionStrings") != null)
                 {
                     NET.ConnectionStringsSection connectionStringsSection = (NET.ConnectionStringsSection)cfg.GetSection("connectionStrings");
@@ -228,18 +318,37 @@ namespace com.paralib.Configuration
                         if (connectionStringSettings.ElementInformation.IsPresent)
                         {
                             HasConnectionStringsOverrides = true;
-                            _connectionStrings.Set(connectionStringSettings.Name, connectionStringSettings.ConnectionString);
+                            SyncConnectionStringSettings(connectionStringSettings);
                         }
                     }
 
                 }
 
+
+                //if (cfg.GetSection("connectionStrings") != null)
+                //{
+                //    NET.ConnectionStringsSection connectionStringsSection = (NET.ConnectionStringsSection)cfg.GetSection("connectionStrings");
+
+                //    foreach (NET.ConnectionStringSettings connectionStringSettings in connectionStringsSection.ConnectionStrings)
+                //    {
+                //        //ignore stuff from machine.config or elsewhere
+                //        if (connectionStringSettings.ElementInformation.IsPresent)
+                //        {
+                //            HasConnectionStringsOverrides = true;
+                //            _connectionStrings.Set(connectionStringSettings.Name, connectionStringSettings.ConnectionString);
+                //        }
+                //    }
+
+                //}
+
+
+                //add or override app settings from paralib.config
                 if (cfg.GetSection("appSettings") != null)
                 {
                     //more major bullshit
                     NET.AppSettingsSection appSettingsSection = (NET.AppSettingsSection)cfg.GetSection("appSettings");
 
-                    //where would other appsettings would come from?
+                    //this check is probably not needed - where would other appsettings would come from?
                     if (appSettingsSection.ElementInformation.IsPresent)
                     {
                         foreach (string key in appSettingsSection.Settings.AllKeys)
@@ -247,61 +356,19 @@ namespace com.paralib.Configuration
                             HasAppSettingsOverrides = true;
 
                             //this adds as well
-                            _appSettings.Set(key, appSettingsSection.Settings[key].Value);
+                            NET.ConfigurationManager.AppSettings.Set(key, appSettingsSection.Settings[key].Value);
                         }
                     }
 
                 }
 
-                /*
-                    //this returns null if there is no <section>
-                    //but returns a DefaultSection even if there is no <log4net>
-                    //and IsPresent doesn't seem to work.
-                    object overriddenLog4NetSection = cfg.GetSection("log4net");
-                    if (overriddenLog4NetSection != null)
-                    {
-                        _log4netSection = overriddenLog4NetSection;
-                        HasLog4NetOverride = true;
-                    }
-                */
 
-                //just open it as an XML file and look
-                if (HasLog4NetElement(ParalibConfigPath))
-                {
-                    _log4netSection = cfg.GetSection("log4net");
-                    HasLog4NetOverride = true;
-                }
+
+
 
             }
         }
 
-        public static ParalibSection ParalibSection
-        {
-            get
-            {
-                return _paralibSection;
-            }
-        }
-
-        public static object Log4NetSection
-        {
-            get
-            {
-                return _log4netSection;
-            }
-        }
-
-
-        public static string GetConnectionString(string name)
-        {
-            return _connectionStrings[name];
-        }
-
-
-        public static string GetAppSetting(string name)
-        {
-            return _appSettings[name];
-        }
 
 
 

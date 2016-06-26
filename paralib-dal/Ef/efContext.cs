@@ -9,13 +9,17 @@ namespace com.paralib.Dal.Ef
 {
     public class EfContext : NET.DbContext
     {
+        private static ILog _log = Paralib.GetLogger(typeof(EfContext));
 
-        public EfContext(): base(Paralib.Configuration.ConnectionString)
+        public EfContext(): base(Paralib.Dal.Database.GetConnectionString(true))
         {
+            _log.Info($"Setting connection to '{Paralib.Dal.Database.Name}' = '{Paralib.Dal.Database.GetConnectionString(false)}'");
+
             //Note: this won't work for derived classes:
             //      NET.Database.SetInitializer<EfContext>(null);
-
+            //
             //so let's use reflection to invoke this member which for some reason is generic. yes.
+            _log.Info($"Disabling database initialization.");
             var databaseType = typeof(NET.Database);
             var setInitializer = databaseType.GetMethod("SetInitializer", BindingFlags.Static | BindingFlags.Public);
             var thisType = GetType();

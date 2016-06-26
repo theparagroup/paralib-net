@@ -22,13 +22,6 @@ namespace com.paralib.Configuration
 
         */
 
-        [ConfigurationProperty("connection")]
-        public string Connection
-        {
-            get { return (string)base["connection"]; }
-            set { base["connection"] = value; }
-        }
-
         [ConfigurationProperty("logging")]
         public LoggingElement Logging
         {
@@ -36,12 +29,15 @@ namespace com.paralib.Configuration
             set { base["logging"] = value; }
         }
 
+
         [ConfigurationProperty("dal")]
         public DalElement Dal
         {
             get { return ((DalElement)(base["dal"])); }
             set { base["dal"] = value; }
         }
+
+
 
     }
 }

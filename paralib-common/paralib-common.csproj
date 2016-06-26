@@ -50,8 +50,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ado\Database.cs" />
     <Compile Include="Configuration\CaseInsensitiveEnumConverter.cs" />
     <Compile Include="Configuration\AppSettings.cs" />
+    <Compile Include="Ado\DatabaseTypes.cs" />
+    <Compile Include="Configuration\DatabaseDictionary.cs" />
+    <Compile Include="Configuration\DatabaseElement.cs" />
+    <Compile Include="Configuration\DatabasesCollection.cs" />
     <Compile Include="DataAnnotations\ParaTypeAttribute.cs" />
     <Compile Include="DataAnnotations\StringAttribute.cs" />
     <Compile Include="DataAnnotations\ValidationError.cs" />
@@ -87,6 +92,8 @@
     <Compile Include="Configuration\ParalibSection.cs" />
     <Compile Include="Logging\ParaAdoNetAppender.cs" />
     <Compile Include="Paralib.cs" />
+    <Compile Include="Paralib.Dal.cs" />
+    <Compile Include="Paralib.Utils.cs" />
     <Compile Include="Paralib.Logging.cs" />
     <Compile Include="ParalibException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

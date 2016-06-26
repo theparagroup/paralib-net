@@ -1,13 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using com.paralib.Ado;
 using com.paralib.Logging;
 
 namespace com.paralib.Configuration
 {
     public class Settings
     {
+        /*
 
-        public string Connection { get; set; }
+            This class represents all of the initial settings for the paralib.
+
+            It can be created programatically, read from config file, or modified
+            in the Paralib.Configure() event.
+
+        */
 
         public class LoggingSettings
         {
@@ -19,7 +26,20 @@ namespace com.paralib.Configuration
 
         public class DalSettings
         {
-            public string Connection { get; set; }
+            public class DatabaseSettings
+            {
+                public Dictionary<string, Database> Databases { get; } = new Dictionary<string, Database>();
+                public string Default { get; set; }
+                public bool Sync { get; set; }
+            }
+
+            public DalSettings()
+            {
+                Database = new DatabaseSettings();
+            }
+
+            public DatabaseSettings Database { get; private set; }
+
         }
 
         public Settings()
@@ -29,6 +49,7 @@ namespace com.paralib.Configuration
         }
 
         public LoggingSettings Logging { get; private set; }
+
         public DalSettings Dal { get; private set; }
 
         private static string Nullify(string value)
@@ -36,15 +57,14 @@ namespace com.paralib.Configuration
             return string.IsNullOrEmpty(value) ? null : value;
         }
 
-        internal static Settings Load(ParalibSection paralibSection)
+        internal static Settings Create(ParalibSection paralibSection)
         {
 
             Settings settings = new Settings();
 
             if (paralibSection != null)
             {
-                //paralib
-                settings.Connection = Nullify(paralibSection.Connection);
+
 
                 //Logging
 
@@ -69,7 +89,7 @@ namespace com.paralib.Configuration
                             settings.Logging.Logs.Add(new Log(element.Name, element.LogType, element.Enabled) { Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Path= Nullify(element.Path)});
                             break;
                         case LogTypes.Database:
-                            settings.Logging.Logs.Add(new Log(element.Name, element.LogType, element.Enabled) { Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Connection= Nullify(element.Connection), ConnectionType= Nullify(element.ConnectionType), Table = Nullify(element.Table), Fields = Nullify(element.Fields) });
+                            settings.Logging.Logs.Add(new Log(element.Name, element.LogType, element.Enabled) { Pattern = Nullify(element.Pattern), Capture = Nullify(element.Capture), Database=Nullify(element.Database), Table = Nullify(element.Table), Fields = Nullify(element.Fields) });
                             break;
                         default:
                             throw new ParalibException($"Can't Create LogType {element.LogType}");
@@ -78,8 +98,14 @@ namespace com.paralib.Configuration
                 }
 
 
-                //DAL
-                settings.Dal.Connection = Nullify(paralibSection.Dal.Connection);
+                //dal
+                settings.Dal.Database.Default = Nullify(paralibSection.Dal.Databases.Default);
+                settings.Dal.Database.Sync = paralibSection.Dal.Databases.Sync;
+
+                foreach (DatabaseElement element in paralibSection.Dal.Databases)
+                {
+                    settings.Dal.Database.Databases.Add(element.Name, new Database(element.Name, element.DatabaseType) { Server = element.Server, Port = element.Port, Store = Nullify(element.Store), Integrated = element.Integrated, UserName = Nullify(element.UserName), Password = Nullify(element.Password), Parameters = Nullify(element.Parameters) });
+                }
 
 
             }

@@ -51,18 +51,11 @@ namespace com.paralib.Configuration
             set { base["path"] = value; }
         }
 
-        [ConfigurationProperty("connection")]
-        public string Connection
+        [ConfigurationProperty("database")]
+        public string Database
         {
-            get { return (string)base["connection"]; }
-            set { base["connection"] = value; }
-        }
-
-        [ConfigurationProperty("connectionType")]
-        public string ConnectionType
-        {
-            get { return (string)base["connectionType"]; }
-            set { base["connectionType"] = value; }
+            get { return (string)base["database"]; }
+            set { base["database"] = value; }
         }
 
         [ConfigurationProperty("table")]

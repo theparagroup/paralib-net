@@ -1,4 +1,5 @@
 ﻿using System;
+using com.paralib.Ado;
 
 namespace com.paralib.Configuration
 {

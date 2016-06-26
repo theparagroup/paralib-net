@@ -1,12 +1,13 @@
 ﻿using System;
 using log4net.Repository.Hierarchy;
 using log4net.Repository;
-using com.paralib.Configuration;
 using System.IO;
 using System.Reflection;
 using log4net.Config;
 using System.Text;
 using System.Text.RegularExpressions;
+using com.paralib.Configuration;
+using com.paralib.Ado;
 
 namespace com.paralib.Logging
 {
@@ -90,7 +91,7 @@ namespace com.paralib.Logging
 
             //this is the master switch if if enabled (e.g., <paralib><logging> is present)
             //log4net will not be autoconfigured if paralib logging is off
-            if (Paralib.Configuration.Logging.Enabled)
+            if (Paralib.Logging.Enabled)
             {
 
                 //programatically make changes per settings object
@@ -130,15 +131,15 @@ namespace com.paralib.Logging
                         </paralib>
 
                 */
-                if (Paralib.Configuration.Logging.Debug)
+                if (Paralib.Logging.Debug)
                 {
                     log4net.Util.LogLog.InternalDebugging = true;
                 }
 
                 //override root level only if specified (default in config file is unspecified)
-                if (Paralib.Configuration.Logging.Level != LogLevels.Unspecified)
+                if (Paralib.Logging.Level != LogLevels.Unspecified)
                 {
-                    h.Root.Level = LogManager.GetLog4NetLevel(Paralib.Configuration.Logging.Level);
+                    h.Root.Level = LogManager.GetLog4NetLevel(Paralib.Logging.Level);
                 }
 
                 //sync config with log4net:
@@ -147,16 +148,16 @@ namespace com.paralib.Logging
                 //      <logs>
                 //          <log name="set by log4net">
                 //          <log name="set in paralib">
-                Paralib.Configuration.Logging.Level = LogManager.GetLogLevel(h.Root.Level);
-                Paralib.Configuration.Logging.Debug = log4net.Util.LogLog.InternalDebugging;
+                Paralib.Logging.Level = LogManager.GetLogLevel(h.Root.Level);
+                Paralib.Logging.Debug = log4net.Util.LogLog.InternalDebugging;
 
                 foreach (var appender in h.Root.Appenders)
                 {
-                    Paralib.Configuration.Logging.InternalLogs.Add(new Log(appender.Name, LogTypes.Log4Net, appender.GetType().Name,true));
+                    Paralib.Logging.InternalLogs.Add(new Log(appender.Name, LogTypes.Log4Net, appender.GetType().Name,true));
                 }
 
                 //add paralib configured loggers to log4net
-                foreach (var log in Paralib.Configuration.Logging.Logs)
+                foreach (var log in Paralib.Logging.Logs)
                 {
                     if (log.Enabled)
                     {
@@ -170,7 +171,7 @@ namespace com.paralib.Logging
                                 h.Root.AddAppender(CreateParaRollingFileAppender(log.Name, log.Capture, log.Pattern, log.Path));
                                 break;
                             case LogTypes.Database:
-                                h.Root.AddAppender(CreateParaAdoNetAppender(log.Name, log.Capture, log.Pattern, log.Table, log.Fields, log.ConnectionType, log.Connection));
+                                h.Root.AddAppender(CreateParaAdoNetAppender(log.Name, log.Capture, log.Pattern, log.Table, log.Fields, Paralib.Dal.Databases[log.Database]));
                                 break;
                             case LogTypes.Log4Net:
                                 //ignore the manually configured appenders from above
@@ -305,23 +306,15 @@ namespace com.paralib.Logging
             return appender;
         }
 
-        public static log4net.Appender.IAppender CreateParaAdoNetAppender(string name, string capture, string pattern, string table, string fields, string connectionType, string connection)
+        public static log4net.Appender.IAppender CreateParaAdoNetAppender(string name, string capture, string pattern, string table, string fields, Database database)
         {
             ParaAdoNetAppender appender = new ParaAdoNetAppender();
             appender.Name = name;
             appender.BufferSize = 1;
 
             //set up connection
-            appender.ConnectionType = connectionType ?? ParaAdoNetAppender.DefaultConnectionType;
-
-            if (connection!=null)
-            {
-                appender.ConnectionString = Paralib.Configuration.ConnectionStrings[connection];
-            }
-            else
-            {
-                appender.ConnectionString = Paralib.Configuration.ConnectionString;
-            }
+            appender.ConnectionType = database.ConnectionType;
+            appender.ConnectionString = database.GetConnectionString(true);
 
             //for commandtext
             string fieldlist = "";

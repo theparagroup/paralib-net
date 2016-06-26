@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using com.paralib.Ado;
 
 namespace com.paralib.Logging
 {
@@ -14,9 +11,8 @@ namespace com.paralib.Logging
         public string LoggerType { get; }
         public string Pattern { get; set; }
         public string Capture { get; set; }
-        public string Connection { get; set; }
         public string Path { get; set; }
-        public string ConnectionType { get; set; }
+        public string Database { get; set; }
         public string Table { get; set; }
         public string Fields { get; set; }
 
