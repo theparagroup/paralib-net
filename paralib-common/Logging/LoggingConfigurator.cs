@@ -49,7 +49,7 @@ namespace com.paralib.Logging
             XmlConfigurator.Configure();
         }
 
-        public static void ConfigureFromParalibConfig()
+        public static void ConfigureFromOverridesConfig()
         {
             XmlConfigurator.Configure(new FileInfo(ConfigurationManager.ParalibConfigPath));
         }
@@ -104,7 +104,7 @@ namespace com.paralib.Logging
                 //use paralib.config if it has log4net section, otherwise try app/web config
                 if (ConfigurationManager.HasLog4NetOverride)
                 {
-                    ConfigureFromParalibConfig();
+                    ConfigureFromOverridesConfig();
                 }
                 else
                 {

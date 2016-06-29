@@ -84,6 +84,16 @@ namespace com.paralib.Configuration
         {
             get
             {
+
+                //quick way to redirect the override file
+                if (_paralibSection!=null)
+                {
+                    if (!string.IsNullOrEmpty(_paralibSection.Use))
+                    {
+                        return _paralibSection.Use;
+                    }
+                }
+
                 //AppDomain.CurrentDomain.SetupInformation.ConfigurationFile -> "P:\pathspec\webapp\web.config"
                 //AppDomain.CurrentDomain.SetupInformation.ConfigurationFile -> "P:\pathspec\consoleapp\consoleapp.exe.config"
                 //Path.GetDirectoryName("P:\pathspec\webapp\web.config") -> "P:\pathspec\webapp"
@@ -91,7 +101,7 @@ namespace com.paralib.Configuration
             }
         }
 
-        public static NET.Configuration LoadDotNetConfig()
+        public static NET.Configuration ReadDotNetConfig()
         {
             NET.ExeConfigurationFileMap configMap = new NET.ExeConfigurationFileMap();
             configMap.ExeConfigFilename = DotNetConfigPath;
@@ -100,7 +110,7 @@ namespace com.paralib.Configuration
         }
 
 
-        public static NET.Configuration LoadParalibConfig()
+        public static NET.Configuration ReadParalibConfig()
         {
             NET.ExeConfigurationFileMap configMap = new NET.ExeConfigurationFileMap();
             configMap.ExeConfigFilename = ParalibConfigPath;
@@ -110,6 +120,8 @@ namespace com.paralib.Configuration
 
         public static XmlNode GetLog4NetXmlNode(string path)
         {
+            if (!File.Exists(path)) return null;
+
             Stream s = new FileStream(path, FileMode.Open);
             XmlReader xmlReader = XmlReader.Create(s, null);
             XmlDocument doc = new XmlDocument();
@@ -243,6 +255,8 @@ namespace com.paralib.Configuration
 
         }
 
+
+
         private static void Load()
         {
             //load paralib section (DotNet)
@@ -250,10 +264,14 @@ namespace com.paralib.Configuration
             _paralibSection = (ParalibSection)NET.ConfigurationManager.GetSection("paralib");
             if (_paralibSection != null)
             {
-                HasParalib = _paralibSection.ElementInformation.IsPresent;
 
-                if (!HasParalib)
+                if (_paralibSection.ElementInformation.IsPresent)
                 {
+                    HasParalib = true;
+                }
+                else
+                {
+                    HasParalib = false;
                     _paralibSection = null;
                 }
 
@@ -266,7 +284,7 @@ namespace com.paralib.Configuration
             HasLog4Net = (_log4netSection != null);
 
             //now look for overrides in paralib.config
-            NET.Configuration cfg = LoadParalibConfig();
+            NET.Configuration cfg = ReadParalibConfig();
 
             if (cfg.HasFile)
             {
@@ -277,6 +295,9 @@ namespace com.paralib.Configuration
 
                     if (overriddenParalibSection.ElementInformation.IsPresent)
                     {
+                        //ignore the "use" attribute in the override file
+                        overriddenParalibSection.Use = _paralibSection?.Use;
+
                         _paralibSection = overriddenParalibSection;
                         HasParalibOverride = true;
                     }
@@ -323,23 +344,6 @@ namespace com.paralib.Configuration
                     }
 
                 }
-
-
-                //if (cfg.GetSection("connectionStrings") != null)
-                //{
-                //    NET.ConnectionStringsSection connectionStringsSection = (NET.ConnectionStringsSection)cfg.GetSection("connectionStrings");
-
-                //    foreach (NET.ConnectionStringSettings connectionStringSettings in connectionStringsSection.ConnectionStrings)
-                //    {
-                //        //ignore stuff from machine.config or elsewhere
-                //        if (connectionStringSettings.ElementInformation.IsPresent)
-                //        {
-                //            HasConnectionStringsOverrides = true;
-                //            _connectionStrings.Set(connectionStringSettings.Name, connectionStringSettings.ConnectionString);
-                //        }
-                //    }
-
-                //}
 
 
                 //add or override app settings from paralib.config

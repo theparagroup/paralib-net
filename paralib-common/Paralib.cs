@@ -132,6 +132,7 @@ namespace com.paralib
         {
             _logger.Info("loading settings...");
 
+            //dal
             //set paralib's databases dictionary and default
             Dal.Databases = new DatabaseDictionary(_settings.Dal.Database.Databases, _settings.Dal.Database.Default, _settings.Dal.Database.Sync);
 
@@ -153,7 +154,10 @@ namespace com.paralib
             //(re)configure logging (if enabled)
             LoggingConfigurator.Configure();
 
-            //dal
+            //migrations
+            Migrations.Devmode = _settings.Migrations.Devmode;
+            Migrations.Database = _settings.Migrations.Database;
+            Migrations.Commands = _settings.Migrations.Commands;
 
             //mvc
 

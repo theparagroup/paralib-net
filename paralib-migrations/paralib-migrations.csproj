@@ -35,6 +35,9 @@
       <HintPath>..\..\paralib-net-dependencies\packages\FluentMigrator.1.6.2\lib\40\FluentMigrator.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentMigrator.Runner">
+      <HintPath>..\..\paralib-net-dependencies\packages\FluentMigrator.Runner.1.6.2\lib\40\FluentMigrator.Runner.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,6 +52,9 @@
     <Compile Include="Logging\StandardLog.cs" />
     <Compile Include="ParaTypes\ParaTypeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runner\CommandProcessor.cs" />
+    <Compile Include="Runner\MigrationOptions.cs" />
+    <Compile Include="Runner\RunnerFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\paralib-common\paralib-common.csproj">

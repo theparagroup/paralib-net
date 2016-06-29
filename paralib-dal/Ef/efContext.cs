@@ -8,6 +8,7 @@ using com.paralib.Ado;
 
 namespace com.paralib.Dal.Ef
 {
+    [NET.DbConfigurationType(typeof(EfConfiguration))]
     public class EfContext : NET.DbContext
     {
         private static ILog _log = Paralib.GetLogger(typeof(EfContext));

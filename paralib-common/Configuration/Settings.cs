@@ -42,15 +42,25 @@ namespace com.paralib.Configuration
 
         }
 
+        public class MigrationsSettings
+        {
+            public bool Devmode { get; set; }
+            public string Database { get; set; }
+            public string Commands { get; set; }
+        }
+
         public Settings()
         {
             Logging = new LoggingSettings();
             Dal = new DalSettings();
+            Migrations = new MigrationsSettings();
         }
 
         public LoggingSettings Logging { get; private set; }
 
         public DalSettings Dal { get; private set; }
+
+        public MigrationsSettings Migrations { get; private set; }
 
         private static string Nullify(string value)
         {
@@ -107,6 +117,10 @@ namespace com.paralib.Configuration
                     settings.Dal.Database.Databases.Add(element.Name, new Database(element.Name, element.DatabaseType) { Server = element.Server, Port = element.Port, Store = Nullify(element.Store), Integrated = element.Integrated, UserName = Nullify(element.UserName), Password = Nullify(element.Password), Parameters = Nullify(element.Parameters) });
                 }
 
+                //migrations
+                settings.Migrations.Devmode = paralibSection.Migrations.Devmode;
+                settings.Migrations.Database = Nullify(paralibSection.Migrations.Database);
+                settings.Migrations.Commands = Nullify(paralibSection.Migrations.Commands);
 
             }
 

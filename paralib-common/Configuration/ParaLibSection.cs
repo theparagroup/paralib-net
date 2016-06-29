@@ -22,6 +22,14 @@ namespace com.paralib.Configuration
 
         */
 
+        [ConfigurationProperty("use")]
+        public string Use
+        {
+            get { return (string)base["use"]; }
+            set { base["use"] = value; }
+        }
+
+
         [ConfigurationProperty("logging")]
         public LoggingElement Logging
         {
@@ -37,7 +45,13 @@ namespace com.paralib.Configuration
             set { base["dal"] = value; }
         }
 
+        [ConfigurationProperty("migrations")]
+        public MigrationsElement Migrations
+        {
+            get { return ((MigrationsElement)(base["migrations"])); }
+            set { base["migrations"] = value; }
+        }
 
-
+        
     }
 }

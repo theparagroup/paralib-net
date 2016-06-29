@@ -54,6 +54,7 @@
     <Compile Include="Configuration\CaseInsensitiveEnumConverter.cs" />
     <Compile Include="Configuration\AppSettings.cs" />
     <Compile Include="Ado\DatabaseTypes.cs" />
+    <Compile Include="Configuration\MigrationsElement.cs" />
     <Compile Include="Configuration\DatabaseDictionary.cs" />
     <Compile Include="Configuration\DatabaseElement.cs" />
     <Compile Include="Configuration\DatabasesCollection.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Logging\ParaAdoNetAppender.cs" />
     <Compile Include="Paralib.cs" />
     <Compile Include="Paralib.Dal.cs" />
+    <Compile Include="Paralib.Migrations.cs" />
     <Compile Include="Paralib.Utils.cs" />
     <Compile Include="Paralib.Logging.cs" />
     <Compile Include="ParalibException.cs" />

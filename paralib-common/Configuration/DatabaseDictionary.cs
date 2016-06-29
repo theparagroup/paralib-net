@@ -18,6 +18,17 @@ namespace com.paralib.Configuration
             Sync = syncDatabases;
         }
 
+        public bool Exists(string name)
+        {
+            string key = name ?? Default;
+
+            if (key != null)
+            {
+                return _databases.ContainsKey(key);
+            }
+
+            return false;
+        }
         public Database this[string name]
         {
             get
