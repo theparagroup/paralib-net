@@ -31,6 +31,7 @@ namespace com.paralib.DataAnnotations
         public const string Password = nameof(Password);
         public const string DateTime = nameof(DateTime);
         public const string Decimal = nameof(Decimal);
+        public const string Integer = nameof(Integer);
 
         private ParaTypes()
         {
@@ -40,6 +41,7 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Decimal), new DecimalType(nameof(Decimal)));
             _paraTypes.Add(nameof(Time), new TimeType(nameof(Time)));
             _paraTypes.Add(nameof(Bool), new BoolType(nameof(Bool)));
+            _paraTypes.Add(nameof(Integer), new IntegerType(nameof(Integer))); 
 
 
             //more complicated and supposedly 99%

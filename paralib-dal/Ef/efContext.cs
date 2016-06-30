@@ -71,7 +71,8 @@ namespace com.paralib.Dal.Ef
         {
             var result = Regex.Replace(config.ClrType.Name, "^Ef", m => "");
             result = Regex.Replace(result, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
-            result = Utils.Lexeme.Pluralize(result);
+            //result = Utils.Lexeme.Pluralize(result);
+            result += "s";
             return result;
           
         }

@@ -67,6 +67,7 @@
     <Compile Include="Data\BoolType.cs" />
     <Compile Include="Data\DateTimeType.cs" />
     <Compile Include="Data\DecimalType.cs" />
+    <Compile Include="Data\IntegerType.cs" />
     <Compile Include="Data\KeyType.cs" />
     <Compile Include="Data\StringType.cs" />
     <Compile Include="DataAnnotations\ParaTypes.cs" />
