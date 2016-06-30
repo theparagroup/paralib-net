@@ -8,7 +8,9 @@ namespace com.paralib.Migrations.Logging
 {
     public static class StandardLog
     {
-        public static void CreateStandardLogTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = "log")
+        public const string DefaultTableName= "log";
+
+        public static void CreateTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = DefaultTableName)
         {
             create.Table(tableName)
             .WithColumn("id").AsInt32().PrimaryKey().NotNullable().Identity()
@@ -23,7 +25,7 @@ namespace com.paralib.Migrations.Logging
             .WithColumn("message").AsString(4000).NotNullable();
         }
 
-        public static void DeleteStandardLogTable(FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete, string tableName = "log")
+        public static void DeleteTable(FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete, string tableName = DefaultTableName)
         {
             delete.Table(tableName);
         }

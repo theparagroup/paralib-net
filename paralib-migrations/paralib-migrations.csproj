@@ -49,7 +49,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="ParaMigration.cs" />
     <Compile Include="Logging\StandardLog.cs" />
+    <Compile Include="ParaTypes\ColumnMetadata.cs" />
     <Compile Include="ParaTypes\ParaTypeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runner\CommandProcessor.cs" />
@@ -61,12 +63,19 @@
       <Project>{101e2741-5a3d-460b-bdf4-f5e5bd27cf1c}</Project>
       <Name>paralib-common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\paralib-dal\paralib-dal.csproj">
+      <Project>{be7e9259-7abd-440f-b58a-2a2d6a5f525e}</Project>
+      <Name>paralib-dal</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CodeGen\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

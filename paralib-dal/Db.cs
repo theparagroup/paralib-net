@@ -1,92 +1,88 @@
 ﻿using System;
-using System.Data.SqlClient;
-using com.paralib;
+using System.Data;
+using com.paralib.Ado;
+using com.paralib.Dal.DbProviders;
 
 namespace com.paralib.Dal
 {
-    public class Db
+    public class Db:IDbProvider,IDisposable
     {
-        private SqlConnection _con;
-        private SqlCommand _cmd;
+        private Database _database;
+        private IDbProvider _provider;
 
-        public static string Encode(string value)
+        public Db(string database = null, bool autoOpen = true):this(Paralib.Dal.Databases[database], autoOpen)
         {
-            if (value == null)
-            { 
-                return "NULL";
-            }
-            else
-            {
-                 return "'" + value.Replace("'", "''") + "'";
-            }
-            
         }
 
-
-        public static String ConnectionString
+        public Db(Database database, bool autoOpen=true)
         {
-            get
+            if (database==null)
             {
-                return Paralib.Dal.Database.GetConnectionString(true);
+                throw new ParalibException("Datbase cannot be null.");
             }
-        }
 
-        public Db(bool autoOpen=true, string connectionString=null)
-        {
+            _database = database;
+
+            switch (_database.DatabaseType)
+            {
+                case DatabaseTypes.SqlServer:
+                    _provider = new SqlServerDbProvider(_database.GetConnectionString(true));
+                    break;
+
+                default:
+                    throw new ParalibException($"Database type {_database.DatabaseType} not supported.");
+            }
+
+
             if (autoOpen)
             {
-                Open(connectionString);
+                Open();
             }
-        }
-
-        public void Open(string connectionString)
-        {
-            if (connectionString==null)
-            {
-                connectionString = ConnectionString;
-            }
-
-            if (connectionString==null)
-            {
-                throw new ParalibException("Db class requires a valid ConnectionString. Provide one explicitly or configure a default in the <paralib> configuration section.");
-            }
-
-            _con = new SqlConnection(connectionString);
-            _con.Open();
         }
 
         public void Open()
         {
-            Open(null);
-        }
-
-        public System.Data.IDataReader ExecuteReader(string sql)
-        {
-            //caller must close reader
-            _cmd = _con.CreateCommand();
-            _cmd.CommandText = sql;
-            return _cmd.ExecuteReader();
-        }
-
-        public int ExecuteNonQuery(string sql)
-        {
-            //caller must close reader
-            _cmd = _con.CreateCommand();
-            _cmd.CommandText = sql;
-            return _cmd.ExecuteNonQuery();
-        }
-
-        public int ExecuteScalar(string sql)
-        {
-            _cmd = _con.CreateCommand();
-            _cmd.CommandText = sql;
-            return (int)_cmd.ExecuteScalar();
+            _provider.Open();
         }
 
         public void Close()
         {
-            //no need to close or dispose SqlCommand
-            _con.Close();
+            _provider.Close();
+        }
+
+        public string Encode(string value)
+        {
+            return _provider.Encode(value);
+        }
+
+        public int ExecuteNonQuery(string sql)
+        {
+            return _provider.ExecuteNonQuery(sql);
+        }
+
+        public IDataReader ExecuteReader(string sql)
+        {
+            return _provider.ExecuteReader(sql);
+        }
+
+        public T ExecuteScalar<T>(string sql)
+        {
+            return _provider.ExecuteScalar<T>(sql);
+        }
+
+        public Table[] GetTables()
+        {
+            return _provider.GetTables();
+        }
+
+        public bool TableExists(string tableName)
+        {
+            return _provider.TableExists(tableName);
+        }
+
+        public void Dispose()
+        {
+            _provider.Close();
         }
     }
 }

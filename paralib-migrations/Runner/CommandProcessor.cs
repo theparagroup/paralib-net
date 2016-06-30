@@ -1,8 +1,9 @@
-﻿using com.paralib.Ado;
-using FluentMigrator.Runner;
+﻿using FluentMigrator.Runner;
 using System;
 using System.Linq;
 using System.Reflection;
+using com.paralib.Ado;
+using com.paralib.Dal;
 
 namespace com.paralib.Migrations.Runner
 {
@@ -13,8 +14,28 @@ namespace com.paralib.Migrations.Runner
         public bool Devmode;
         public string Database;
 
-        public static string Help { get; } = "commands:\n\tdevmode\n\trefresh [db]\n\tdrop [db]\n\tup|down [db] [version]\n\trollback [db] [steps]\n\tgen [db]\n\tlist\n\tq(uit)\n";
 
+        public static string Help
+        {
+            get
+            {
+                string help = "";
+
+                help += "commands:\n";
+                help += "\tdevmode\n\trefresh [db]\n\tdrop [db]\n";
+                help += "\tup|down [db] [version]\n";
+                help += "\trollback [db] [steps]\n";
+                help += "\tgen [db]\n";
+                help += "\tlist\n";
+                help += "\ttables [db]\n";
+                help += "\tschema [db] \n";
+                help += "\tq(uit)\n";
+
+                return help;
+            }
+
+
+        }
         public static void ConsoleMain(string[] args)
         {
             Paralib.Initialize();
@@ -66,6 +87,7 @@ namespace com.paralib.Migrations.Runner
             say($"Default database is [{Paralib.Dal.Databases.Default}]");
             say($"devmode is [{Devmode}]");
             say("-------------------------------------------------------------------------------");
+            say("");
 
             int i = 0;
 
@@ -93,21 +115,25 @@ namespace com.paralib.Migrations.Runner
 
                     if (parts.Length > 1)
                     {
-                        if (parts[0] == "up" || parts[0] == "down" || parts[0] == "migrate")
+                        if (parts[0] == "up" || parts[0] == "down" || parts[0] == "rollback")
                         {
                             //is arg2 a string
                             if ((from c in parts[1].ToCharArray() where !char.IsNumber(c) select c).Count() == 0)
                             {
-                                db = parts[1];
-
-                                if (parts.Length==3)
+                                if (parts.Length == 2)
                                 {
+                                    n = parts[1];
+                                }
+                                else if (parts.Length == 3)
+                                {
+                                    //okay, a numeric database name
+                                    db = parts[1];
                                     n = parts[2];
                                 }
                             }
                             else
                             {
-                                n = parts[1];
+                                db = parts[1];
                             }
                         }
                         else
@@ -133,7 +159,7 @@ namespace com.paralib.Migrations.Runner
                     }
                     else
                     {
-                        sayError($"Database {db} doesn't exist.");
+                        sayError($"Database [{db}] doesn't exist.");
                         continue;
                     }
 
@@ -153,6 +179,107 @@ namespace com.paralib.Migrations.Runner
                             case "list":
                                 migrationRunner.ListMigrations();
                                 break;
+
+                            case "tables":
+
+                                using (var con = new Db(database))
+                                {
+                                    var ts = con.GetTables();
+
+                                    say("");
+
+                                    foreach (var t in ts)
+                                    {
+                                        say($"  {t.Name}");
+                                    }
+
+                                    say("");
+                                }
+
+                                break;
+
+                            case "schema":
+
+                                using (var con = new Db(database))
+                                {
+                                    var ts = con.GetTables();
+
+                                    say("");
+
+                                    foreach (var t in ts.OrderBy(t=>t.Name))
+                                    {
+                                        say($"  {t.Name}");
+
+                                        foreach (var c in t.Columns.Values)
+                                        {
+                                            string coldesc = $"   > {c.Name} [{c.DbType}(";
+
+                                            if (c.Length.HasValue)
+                                            {
+                                                coldesc += $"{c.Length})]";
+                                            }
+                                            else
+                                            {
+                                                coldesc += $"{c.Precision}-{c.Scale})]";
+                                            }
+
+                                            coldesc += $" [{c.ClrType?.Name}]";
+
+                                            if (c.IsNullable)
+                                            {
+                                                coldesc += " NULL";
+                                            }
+                                            else
+                                            {
+                                                coldesc += " NOT NULL";
+                                            }
+
+                                            if (c.IsPrimary)
+                                            {
+                                                coldesc += " PK";
+                                            }
+
+                                            if (c.IsForeign)
+                                            {
+                                                coldesc += $" FK";
+                                            }
+
+                                            //say($"As{c.Name}, {c.DbType}, {c.ClrType}");
+                                            //say($"case \"{c.DbType}\": c.ClrType = typeof({c.ClrType}); break;");
+
+                                            say(coldesc);
+
+                                        }
+
+                                        if (t.ForeignKeys.Length > 0)
+                                        {
+                                            say("");
+                                            say("      foreign keys:");
+                                            foreach (var r in t.ForeignKeys)
+                                            {
+                                                say($"        {r.OnColumn} -> {r.OtherTable}.{r.OtherColumn}");
+                                            }
+                                        }
+
+                                        if (t.References.Length > 0)
+                                        {
+                                            say("");
+                                            say("      references:");
+                                            foreach (var r in t.References)
+                                            {
+                                                say($"        {r.OtherTable}.{r.OtherColumn} -> {r.OnColumn}");
+                                            }
+                                        }
+
+                                        say("");
+
+                                    }
+
+                                    say("");
+                                }
+
+                                break;
+
 
                             case "refresh":
                                 if (NotDevmode(sayError)) continue;
@@ -216,7 +343,7 @@ namespace com.paralib.Migrations.Runner
                     }
                     catch (Exception ex)
                     {
-                        sayError($"Exception {ex.Message} occurred.");
+                        sayError($"Exception [{ex.GetType().Name}] '{ex.Message}' occurred.\n\n{ex.StackTrace}");
                     }
 
                 }
