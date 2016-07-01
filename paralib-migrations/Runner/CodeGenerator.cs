@@ -25,6 +25,14 @@ namespace com.paralib.Migrations.Runner
             Generate(typeof(MetadataGenerator), "Metadata", "Models", database, Paralib.Migrations.Codegen.Metadata, "Metadata");
 
             //ef
+            Generate(typeof(EfGenerator), "Ef", "Ef", database, Paralib.Migrations.Codegen.Ef);
+
+            //EfContext or DbContext depending on convention
+            if (Paralib.Migrations.Codegen.Ef.Enabled)
+            {
+                new EfContextGenerator(new ClassFileWriter(GetFileOptions(Paralib.Migrations.Codegen.Ef, "Ef")), GetConvention(), Paralib.Migrations.Codegen.Skip, GetClassOptions(Paralib.Migrations.Codegen.Ef, "Ef")).Generate(database);
+            }
+
 
             //nh
 
@@ -38,7 +46,7 @@ namespace com.paralib.Migrations.Runner
                 ClassOptions co = GetClassOptions(properties, defaultSubNamespace, parameter);
                 IConvention convention = GetConvention();
 
-                Generator generator = (Generator)Activator.CreateInstance(generatorType, new FileWriter(fo), convention, Paralib.Migrations.Codegen.Skip, co);
+                ClassGenerator generator = (ClassGenerator)Activator.CreateInstance(generatorType, new ClassFileWriter(fo), convention, Paralib.Migrations.Codegen.Skip, co);
 
                 Table[] tables = null;
 
@@ -56,7 +64,7 @@ namespace com.paralib.Migrations.Runner
             return new FileOptions() { Path = properties.Path ?? Paralib.Migrations.Codegen.Path, SubDirectory=(properties.Path==null?defaultSubDirectory: null), Replace = properties.Replace };
         }
 
-        protected static ClassOptions GetClassOptions(GenerationProperties properties, string defaultSubNamespace, string parameter)
+        protected static ClassOptions GetClassOptions(GenerationProperties properties, string defaultSubNamespace, string parameter=null)
         {
             return new ClassOptions() { Namespace = properties.Namespace ?? Paralib.Migrations.Codegen.Namespace, SubNamespace = (properties.Path == null ? defaultSubNamespace : null), Parameter = parameter, Implements = properties.Implements, Ctor = properties.Ctor };
         }

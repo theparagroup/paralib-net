@@ -7,17 +7,11 @@ namespace com.paralib.Migrations.CodeGen
 {
 
 
-    public class ModelGenerator:Generator
+    public class ModelGenerator:ClassGenerator
     {
 
         public ModelGenerator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions) : base(writer, convention, skip, classOptions)
         {
-        }
-
-        private bool IsNullable(Column column)
-        {
-            if (column.IsNullable && CSharpTypes.HasNullable(column.ClrType)) return true;
-            return false;
         }
 
         protected override void OnGenerate(Table table, string className)

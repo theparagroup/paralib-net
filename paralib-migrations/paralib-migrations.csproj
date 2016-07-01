@@ -48,14 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGen\Generator.cs" />
+    <Compile Include="CodeGen\EfContextGenerator.cs" />
     <Compile Include="CodeGen\FileOptions.cs" />
     <Compile Include="CodeGen\ClassOptions.cs" />
-    <Compile Include="CodeGen\FileWriter.cs" />
+    <Compile Include="CodeGen\ClassFileWriter.cs" />
     <Compile Include="CodeGen\IConvention.cs" />
     <Compile Include="CodeGen\IClassWriter.cs" />
-    <Compile Include="CodeGen\Generator.cs" />
+    <Compile Include="CodeGen\ClassGenerator.cs" />
     <Compile Include="CodeGen\LogicGenerator.cs" />
     <Compile Include="CodeGen\MetadataGenerator.cs" />
+    <Compile Include="CodeGen\EfGenerator.cs" />
     <Compile Include="CodeGen\ModelGenerator.cs" />
     <Compile Include="CodeGen\Conventions\MicrosoftConvention.cs" />
     <Compile Include="CodeGen\Conventions\ParalibConvention.cs" />

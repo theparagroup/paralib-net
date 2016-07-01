@@ -7,9 +7,11 @@ namespace com.paralib.Migrations.CodeGen.Conventions
     {
         public string Ctor { get; set; } 
 
-        public string Implements { get; set; } 
+        public string Implements { get; set; }
 
-        public string GetClassName(string tableName)
+        public string EfPrefix { get; } = null;
+
+        public string GetClassName(string tableName, bool singularize)
         {
             throw new NotImplementedException();
         }

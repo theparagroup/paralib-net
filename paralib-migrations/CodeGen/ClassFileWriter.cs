@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Migrations.CodeGen
 {
-    public class FileWriter : IClassWriter
+    public class ClassFileWriter : IClassWriter
     {
         protected string _path;
         protected bool _replace;
         protected bool _exists;
         protected StreamWriter _streamWriter;
 
-        public FileWriter(FileOptions fileOptions)
+        public ClassFileWriter(FileOptions fileOptions)
         {
             string slash = new string(Path.DirectorySeparatorChar, 1);
 

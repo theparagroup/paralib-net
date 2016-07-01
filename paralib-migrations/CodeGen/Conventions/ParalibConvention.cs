@@ -10,13 +10,18 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 
         public string Implements { get; set; }
 
-        public string GetClassName(string tableName)
+        public string EfPrefix { get; } = "Ef";
+
+        public string GetClassName(string tableName, bool singularize)
         {
+            //employee_types -> EmployeeType
             var result = Regex.Replace(tableName, "^.", m => m.Value.ToUpper());
             result = Regex.Replace(result, "_.", m => m.Value.ToUpper());
 
             string[] parts = result.Split('_');
-            parts[parts.Length - 1] = Lexeme.Singularize(parts[parts.Length - 1]);
+
+            if (singularize) parts[parts.Length - 1] = Lexeme.Singularize(parts[parts.Length - 1]);
+
             result = string.Join("",parts);
 
             return result;

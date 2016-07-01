@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using com.paralib.Dal.Metadata;
+using com.paralib.Dal.Utils;
 
 namespace com.paralib.Migrations.CodeGen
 {
@@ -12,7 +13,7 @@ namespace com.paralib.Migrations.CodeGen
         protected IClassWriter _writer;
         protected IConvention Convention { get; private set; }
         protected ClassOptions ClassOptions { get; private set; }
-
+        
         public Generator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions)
         {
             _skip = skip;
@@ -21,28 +22,21 @@ namespace com.paralib.Migrations.CodeGen
             ClassOptions = classOptions;
         }
 
-        public void Generate(Table[] tables)
+        protected virtual string GetClassName(string tableName)
         {
-            foreach (Table table in tables)
-            {
-                Generate(table);
-            }
+            return Convention.GetClassName(tableName, true);
         }
 
-        public void Generate(Table table)
+        protected bool IsNullable(Column column)
         {
-            if (_skip != null && (from s in _skip where s == table.Name select s).Count() > 0) return;
+            if (column.IsNullable && CSharpTypes.HasNullable(column.ClrType)) return true;
+            return false;
+        }
 
-            string className = Convention.GetClassName(table.Name);
-
+        protected void Start(string className)
+        {
             _writer.Start(className);
-
-            OnGenerate(table, className);
-
-            _writer.End();
-
         }
-        
 
         protected void Write(string text)
         {
@@ -54,8 +48,10 @@ namespace com.paralib.Migrations.CodeGen
             _writer.WriteLine(text);
         }
 
-        protected abstract void OnGenerate(Table table, string className);
-
+        protected void End()
+        {
+            _writer.End();
+        }
 
     }
 }

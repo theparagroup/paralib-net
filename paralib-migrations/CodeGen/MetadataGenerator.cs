@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Linq;
 using com.paralib.Dal.Metadata;
-using com.paralib.Dal.Utils;
 
 namespace com.paralib.Migrations.CodeGen
 {
 
 
-    public class MetadataGenerator:Generator
+    public class MetadataGenerator:ClassGenerator
     {
 
         public MetadataGenerator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions) : base(writer, convention, skip, classOptions)
         {
         }
 
-        private bool IsNullable(Column column)
-        {
-            if (column.IsNullable && CSharpTypes.HasNullable(column.ClrType)) return true;
-            return false;
-        }
 
         protected override void OnGenerate(Table table, string className)
         {
