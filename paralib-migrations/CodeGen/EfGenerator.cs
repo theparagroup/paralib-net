@@ -35,13 +35,13 @@ namespace com.paralib.Migrations.CodeGen
             foreach  (Relationship r in table.ForeignKeys)
             {
                 //public virtual EfUserType UserType { get; set; }
-                WriteLine($"\t\tpublic virtual {Convention.GetClassName(r.OtherTable, true)} {Convention.GetClassName(r.OtherTable, true)} {{ get; set;}}");
+                WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {Convention.GetClassName(r.OtherTable, true)} {{ get; set;}}");
             }
 
             foreach (Relationship r in table.References)
             {
                 //public virtual List<EfUser> Users { get; set; }
-                WriteLine($"\t\tpublic virtual List<{Convention.GetClassName(r.OtherTable, true)}> {Convention.GetClassName(r.OtherTable, false)} {{ get; set;}}");
+                WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {Convention.GetClassName(r.OtherTable, false)} {{ get; set;}}");
             }
 
 

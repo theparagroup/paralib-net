@@ -4,7 +4,7 @@ using NET = System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Text.RegularExpressions;
 using com.paralib.Ado;
-
+using com.paralib.Dal.Utils;
 
 namespace com.paralib.Dal.Ef
 {
@@ -69,10 +69,15 @@ namespace com.paralib.Dal.Ef
 
         private static string GetTableName(ConventionTypeConfiguration config)
         {
+            //EfEmployeeType -> employee_types
+
             var result = Regex.Replace(config.ClrType.Name, "^Ef", m => "");
             result = Regex.Replace(result, ".[A-Z]", m => m.Value[0] + "_" + m.Value[1]);
-            //result = Utils.Lexeme.Pluralize(result);
-            result += "s";
+
+            string[] parts = result.Split('_');
+            parts[parts.Length - 1] = Lexeme.Pluralize(parts[parts.Length - 1]);
+            result = string.Join("_", parts);
+
             return result;
           
         }
