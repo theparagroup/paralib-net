@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.paralib.Dal.DbProviders
+namespace com.paralib.Dal.Metadata
 {
     public class Relationship
     {

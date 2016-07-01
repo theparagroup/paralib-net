@@ -2,6 +2,8 @@
 using com.paralib.Configuration;
 using com.paralib.Logging;
 using com.paralib.Ado;
+using com.paralib.SettingsOptions;
+using com.paralib.ParalibProperties;
 
 namespace com.paralib
 {
@@ -12,6 +14,9 @@ namespace com.paralib
         private static readonly object _lock = new object();
         private static bool _initialized;
         private static Settings _settings = new Settings();
+
+
+        public static MigrationsProperties Migrations { get; } =new MigrationsProperties();
 
         /* 
         
@@ -158,6 +163,47 @@ namespace com.paralib
             Migrations.Devmode = _settings.Migrations.Devmode;
             Migrations.Database = _settings.Migrations.Database;
             Migrations.Commands = _settings.Migrations.Commands;
+
+            Migrations.Codegen.Path = _settings.Migrations.Codegen.Path;
+            Migrations.Codegen.Namespace = _settings.Migrations.Codegen.Namespace;
+            Migrations.Codegen.Skip = _settings.Migrations.Codegen.Skip;
+            Migrations.Codegen.Convention = _settings.Migrations.Codegen.Convention;
+
+            Migrations.Codegen.Model.Enabled = _settings.Migrations.Codegen.Model.Enabled;
+            Migrations.Codegen.Model.Path = _settings.Migrations.Codegen.Model.Path;
+            Migrations.Codegen.Model.Namespace = _settings.Migrations.Codegen.Model.Namespace;
+            Migrations.Codegen.Model.Replace = _settings.Migrations.Codegen.Model.Replace;
+            Migrations.Codegen.Model.Implements = _settings.Migrations.Codegen.Model.Implements;
+            Migrations.Codegen.Model.Ctor= _settings.Migrations.Codegen.Model.Ctor;
+
+            Migrations.Codegen.Logic.Enabled = _settings.Migrations.Codegen.Logic.Enabled;
+            Migrations.Codegen.Logic.Path = _settings.Migrations.Codegen.Logic.Path;
+            Migrations.Codegen.Logic.Namespace = _settings.Migrations.Codegen.Logic.Namespace;
+            Migrations.Codegen.Logic.Replace = _settings.Migrations.Codegen.Logic.Replace;
+            Migrations.Codegen.Logic.Implements = _settings.Migrations.Codegen.Logic.Implements;
+            Migrations.Codegen.Logic.Ctor = _settings.Migrations.Codegen.Logic.Ctor;
+
+            Migrations.Codegen.Metadata.Enabled = _settings.Migrations.Codegen.Metadata.Enabled;
+            Migrations.Codegen.Metadata.Path = _settings.Migrations.Codegen.Metadata.Path;
+            Migrations.Codegen.Metadata.Namespace = _settings.Migrations.Codegen.Metadata.Namespace;
+            Migrations.Codegen.Metadata.Replace = _settings.Migrations.Codegen.Metadata.Replace;
+            Migrations.Codegen.Metadata.Implements = _settings.Migrations.Codegen.Metadata.Implements;
+            Migrations.Codegen.Metadata.Ctor = _settings.Migrations.Codegen.Metadata.Ctor;
+
+            Migrations.Codegen.Ef.Enabled = _settings.Migrations.Codegen.Ef.Enabled;
+            Migrations.Codegen.Ef.Path = _settings.Migrations.Codegen.Ef.Path;
+            Migrations.Codegen.Ef.Namespace = _settings.Migrations.Codegen.Ef.Namespace;
+            Migrations.Codegen.Ef.Replace = _settings.Migrations.Codegen.Ef.Replace;
+            Migrations.Codegen.Ef.Implements = _settings.Migrations.Codegen.Ef.Implements;
+            Migrations.Codegen.Ef.Ctor = _settings.Migrations.Codegen.Ef.Ctor;
+
+            Migrations.Codegen.Nh.Enabled = _settings.Migrations.Codegen.Nh.Enabled;
+            Migrations.Codegen.Nh.Path = _settings.Migrations.Codegen.Nh.Path;
+            Migrations.Codegen.Nh.Namespace = _settings.Migrations.Codegen.Nh.Namespace;
+            Migrations.Codegen.Nh.Replace = _settings.Migrations.Codegen.Nh.Replace;
+            Migrations.Codegen.Nh.Implements = _settings.Migrations.Codegen.Nh.Implements;
+            Migrations.Codegen.Nh.Ctor = _settings.Migrations.Codegen.Nh.Ctor;
+
 
             //mvc
 

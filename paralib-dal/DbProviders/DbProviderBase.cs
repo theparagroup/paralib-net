@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Dal.DbProviders
 {
     public abstract class DbProviderBase : IDbProvider
     {
         protected IDbConnection _con;
+
+        public const string ColumnMetadataTable = "paralib_column_metadata";
 
         public DbProviderBase(string connectionString)
         {
@@ -120,6 +123,7 @@ namespace com.paralib.Dal.DbProviders
             AddClrTypes(table);
             FindPrimaryKeys(table);
             FindRelationships(table);
+            AddColumnProperties(table);
 
         }
 
@@ -279,11 +283,34 @@ namespace com.paralib.Dal.DbProviders
 
         }
 
+        protected virtual void AddColumnProperties(Table table)
+        {
+            if (TableExists(ColumnMetadataTable))
+            {
+                string sql = $"select * from {ColumnMetadataTable} where TABLE_NAME='{table.Name}'";
 
+                var reader = ExecuteReader(sql);
+
+                while (reader.Read())
+                {
+                    string column = reader.GetValue<string>("COLUMN_NAME");
+
+                    if (table.Columns.ContainsKey(column))
+                    {
+                        table.Columns[reader.GetValue<string>("COLUMN_NAME")].Properties = (new Properties(){ ParaType = reader.GetValue<string>("PARA_TYPE"), Description = reader.GetValue<string>("DESCRIPTION") });
+                    }
+                }
+
+                reader.Close();
+
+            }
+
+        }
 
         public virtual bool TableExists(string tableName)
         {
-            throw new NotImplementedException();
+            string sql = $"select count(*) from INFORMATION_SCHEMA.TABLES where TABLE_NAME='{tableName}'";
+            return (ExecuteScalar<int>(sql)!=0);
         }
 
 

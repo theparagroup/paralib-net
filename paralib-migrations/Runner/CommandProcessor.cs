@@ -249,6 +249,11 @@ namespace com.paralib.Migrations.Runner
 
                                             say(coldesc);
 
+                                            if (c.Properties!=null)
+                                            {
+                                                say("      Props: "+c.Properties);
+                                            }
+
                                         }
 
                                         if (t.ForeignKeys.Length > 0)
@@ -328,7 +333,8 @@ namespace com.paralib.Migrations.Runner
                                 break;
 
                             case "gen":
-                                sayError($"not implemented ");
+                                CodeGenerator.Generate(database);
+                                sayError($"Complete ");
                                 break;
 
                             case "devmode":

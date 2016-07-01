@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Dal.DbProviders
 {

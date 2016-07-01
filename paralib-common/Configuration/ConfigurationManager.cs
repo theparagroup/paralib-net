@@ -283,7 +283,7 @@ namespace com.paralib.Configuration
             _log4netSection = NET.ConfigurationManager.GetSection("log4net") as XmlNode;
             HasLog4Net = (_log4netSection != null);
 
-            //now look for overrides in paralib.config
+            //now look for overrides in paralib.config (or in the "use" attribute in the paralib section we just set)
             NET.Configuration cfg = ReadParalibConfig();
 
             if (cfg.HasFile)
@@ -295,7 +295,7 @@ namespace com.paralib.Configuration
 
                     if (overriddenParalibSection.ElementInformation.IsPresent)
                     {
-                        //ignore the "use" attribute in the override file
+                        //ignore the "use" attribute in the override file by saving the original one from DotNet
                         overriddenParalibSection.Use = _paralibSection?.Use;
 
                         _paralibSection = overriddenParalibSection;
@@ -303,7 +303,7 @@ namespace com.paralib.Configuration
                     }
                 }
 
-                /* use the entire <log4net> from paralib.config if it exists
+                /* use the entire <log4net> from paralib.config (or "uses") if it exists
                 
                     this returns null if there is no <section>
                     but returns a DefaultSection even if there is no <log4net>

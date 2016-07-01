@@ -2,6 +2,7 @@
 using System.Data;
 using com.paralib.Ado;
 using com.paralib.Dal.DbProviders;
+using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Dal
 {

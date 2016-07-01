@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Configuration;
+using com.paralib.Configuration.Migrations.Codegen;
 
-namespace com.paralib.Configuration
+namespace com.paralib.Configuration.Migrations
 {
 
     public class MigrationsElement : ConfigurationElement
@@ -28,7 +29,12 @@ namespace com.paralib.Configuration
             set { base["commands"] = value; }
         }
 
-
+        [ConfigurationProperty("codegen")]
+        public CodegenElement Codegen
+        {
+            get { return ((CodegenElement)(base["codegen"])); }
+            set { base["codegen"] = value; }
+        }
 
     }
 

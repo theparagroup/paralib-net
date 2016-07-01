@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace com.paralib.Dal.DbProviders
+namespace com.paralib.Dal.Metadata
 {
     public class Table
     {

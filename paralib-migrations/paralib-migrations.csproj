@@ -48,12 +48,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGen\FileOptions.cs" />
+    <Compile Include="CodeGen\ClassOptions.cs" />
+    <Compile Include="CodeGen\FileWriter.cs" />
+    <Compile Include="CodeGen\IConvention.cs" />
+    <Compile Include="CodeGen\IClassWriter.cs" />
+    <Compile Include="CodeGen\Generator.cs" />
+    <Compile Include="CodeGen\LogicGenerator.cs" />
+    <Compile Include="CodeGen\MetadataGenerator.cs" />
+    <Compile Include="CodeGen\ModelGenerator.cs" />
+    <Compile Include="CodeGen\Conventions\Microsoft.cs" />
+    <Compile Include="CodeGen\Conventions\Paralib.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="ParaMigration.cs" />
     <Compile Include="Logging\StandardLog.cs" />
     <Compile Include="ParaTypes\ColumnMetadata.cs" />
     <Compile Include="ParaTypes\ParaTypeFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runner\CodeGenerator.cs" />
     <Compile Include="Runner\CommandProcessor.cs" />
     <Compile Include="Runner\MigrationOptions.cs" />
     <Compile Include="Runner\RunnerFactory.cs" />
@@ -74,9 +86,7 @@
   <ItemGroup>
     <Content Include="readme.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CodeGen\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

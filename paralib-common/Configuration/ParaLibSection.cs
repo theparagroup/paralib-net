@@ -1,4 +1,5 @@
-﻿using System;
+﻿using com.paralib.Configuration.Migrations;
+using System;
 using System.Configuration;
 
 namespace com.paralib.Configuration

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.paralib.Dal.DbProviders
+namespace com.paralib.Dal.Metadata
 {
     public class Column
     {
@@ -15,5 +15,6 @@ namespace com.paralib.Dal.DbProviders
         public int? Length { get; set; }
         public byte? Precision { get; set; }
         public int? Scale { get; set; }
+        public Properties Properties { get; set; }
     }
 }

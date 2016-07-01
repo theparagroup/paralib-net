@@ -9,6 +9,7 @@ namespace com.paralib
 
         public static class Dal
         {
+            public const string ColumnMetadataTable = "paralib_column_metadata";
 
             public static DatabaseDictionary Databases { get; internal set; }
 

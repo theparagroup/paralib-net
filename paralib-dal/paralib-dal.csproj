@@ -47,14 +47,16 @@
   <ItemGroup>
     <Compile Include="DbProviders\SqlServerDbProvider.cs" />
     <Compile Include="DbProviders\DbProviderBase.cs" />
-    <Compile Include="DbProviders\Relationship.cs" />
+    <Compile Include="Metadata\Properties.cs" />
+    <Compile Include="Metadata\Relationship.cs" />
     <Compile Include="Db.cs" />
-    <Compile Include="DbProviders\Column.cs" />
-    <Compile Include="DbProviders\Table.cs" />
+    <Compile Include="Metadata\Column.cs" />
+    <Compile Include="Metadata\Table.cs" />
     <Compile Include="DbProviders\IDbProvider.cs" />
     <Compile Include="Ef\EfConfiguration.cs" />
     <Compile Include="Ef\EfContext.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Utils\CSharpTypes.cs" />
     <Compile Include="Utils\Lexeme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -15,38 +15,35 @@ namespace com.paralib.Migrations.ParaTypes
 
         public static bool Creating { get; private set; }
 
-        public const string DefaultTableName= "paralib_column_metadata";
-
         public static List<ColumnMetadata> Changes = new List<ColumnMetadata>();
 
 
-
-        public static void CreateTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = DefaultTableName)
+        public static void CreateTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create)
         {
-            create.Table(tableName)
-            .WithColumn("id").AsInt32().PrimaryKey().Identity()
-            .WithColumn("table").AsString(256)
-            .WithColumn("column").AsString(256)
-            .WithColumn("para_type").AsString(256)
-            .WithColumn("description").AsString(256).Nullable();
+            create.Table(Paralib.Dal.ColumnMetadataTable)
+            .WithColumn("ID").AsInt32().PrimaryKey().Identity()
+            .WithColumn("TABLE_NAME").AsString(256)
+            .WithColumn("COLUMN_NAME").AsString(256)
+            .WithColumn("PARA_TYPE").AsString(256)
+            .WithColumn("DESCRIPTION").AsString(256).Nullable();
 
-            create.UniqueConstraint().OnTable(tableName).Columns(new string[] { "table", "column" });
+            create.UniqueConstraint().OnTable(Paralib.Dal.ColumnMetadataTable).Columns(new string[] { "TABLE_NAME", "COLUMN_NAME" });
 
             Creating = true;
 
         }
 
-        public static void DeleteTable(FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete, string tableName = DefaultTableName)
+        public static void DeleteTable(FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete)
         {
-            delete.Table(tableName);
+            delete.Table(Paralib.Dal.ColumnMetadataTable);
         }
 
-        public static void Save(FluentMigrator.Migration migration, string tableName = DefaultTableName)
+        public static void Save(FluentMigrator.Migration migration)
         {
             foreach (ColumnMetadata cm in Changes)
             {
-                migration.Delete.FromTable(tableName).Row(new { table = cm.Table, column = cm.Column });
-                migration.Insert.IntoTable(tableName).Row(new { table = cm.Table, column = cm.Column, para_type = cm.ParaType.Name, description = cm.Description });
+                migration.Delete.FromTable(Paralib.Dal.ColumnMetadataTable).Row(new { TABLE_NAME = cm.Table, COLUMN_NAME = cm.Column });
+                migration.Insert.IntoTable(Paralib.Dal.ColumnMetadataTable).Row(new { TABLE_NAME = cm.Table, COLUMN_NAME = cm.Column, PARA_TYPE = cm.ParaType.Name, DESCRIPTION = cm.Description });
             }
 
             Changes.Clear();

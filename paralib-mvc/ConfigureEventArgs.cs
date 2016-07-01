@@ -1,5 +1,4 @@
 ﻿using System;
-using com.paralib.Configuration;
 
 namespace com.paralib.Mvc
 {

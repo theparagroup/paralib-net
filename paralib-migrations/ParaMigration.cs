@@ -10,7 +10,7 @@ namespace com.paralib.Migrations
 
         protected string GetColumnMetadataTableName()
         {
-            return ColumnMetadataTableName ?? ColumnMetadata.DefaultTableName;
+            return ColumnMetadataTableName ?? Paralib.Dal.ColumnMetadataTable;
         }
 
         public abstract void OnUp();

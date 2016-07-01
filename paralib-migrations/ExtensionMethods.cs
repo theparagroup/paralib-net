@@ -28,14 +28,14 @@ namespace com.paralib.Migrations
             Logging.StandardLog.DeleteTable(delete, tableName);
         }
 
-        public static void ColumnMetadataTable(this FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = ParaTypes.ColumnMetadata.DefaultTableName)
+        public static void ColumnMetadataTable(this FluentMigrator.Builders.Create.ICreateExpressionRoot create)
         {
-            ParaTypes.ColumnMetadata.CreateTable(create, tableName);
+            ParaTypes.ColumnMetadata.CreateTable(create);
         }
 
-        public static void ColumnMetadataTable(this FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete, string tableName = ParaTypes.ColumnMetadata.DefaultTableName)
+        public static void ColumnMetadataTable(this FluentMigrator.Builders.Delete.IDeleteExpressionRoot delete)
         {
-            ParaTypes.ColumnMetadata.DeleteTable(delete, tableName);
+            ParaTypes.ColumnMetadata.DeleteTable(delete);
         }
 
 
