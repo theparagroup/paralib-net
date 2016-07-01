@@ -57,8 +57,8 @@
     <Compile Include="CodeGen\LogicGenerator.cs" />
     <Compile Include="CodeGen\MetadataGenerator.cs" />
     <Compile Include="CodeGen\ModelGenerator.cs" />
-    <Compile Include="CodeGen\Conventions\Microsoft.cs" />
-    <Compile Include="CodeGen\Conventions\Paralib.cs" />
+    <Compile Include="CodeGen\Conventions\MicrosoftConvention.cs" />
+    <Compile Include="CodeGen\Conventions\ParalibConvention.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="ParaMigration.cs" />
     <Compile Include="Logging\StandardLog.cs" />

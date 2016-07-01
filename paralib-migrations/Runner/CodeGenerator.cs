@@ -42,7 +42,7 @@ namespace com.paralib.Migrations.Runner
 
                 Table[] tables = null;
 
-                using (var db = new Db())
+                using (var db = new Db(database))
                 {
                     tables = db.GetTables();
                 }
@@ -70,11 +70,11 @@ namespace com.paralib.Migrations.Runner
             {
                 if (conventionName == "Paralib")
                 {
-                    convention = new CodeGen.Conventions.Paralib();
+                    convention = new CodeGen.Conventions.ParalibConvention();
                 }
                 else if (conventionName == "Microsoft")
                 {
-                    convention = new CodeGen.Conventions.Microsoft();
+                    convention = new CodeGen.Conventions.MicrosoftConvention();
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace com.paralib.Migrations.Runner
             }
             else
             {
-                convention = new CodeGen.Conventions.Paralib();
+                convention = new CodeGen.Conventions.ParalibConvention();
             }
 
             convention.Implements = Paralib.Migrations.Codegen.Model.Implements ?? convention.Implements;

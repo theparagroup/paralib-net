@@ -3,7 +3,7 @@
 
 namespace com.paralib.Migrations.CodeGen.Conventions
 {
-    public class Microsoft : IConvention
+    public class MicrosoftConvention : IConvention
     {
         public string Ctor { get; set; } 
 
