@@ -12,6 +12,7 @@ namespace com.paralib.Migrations.CodeGen
         protected string _path;
         protected bool _replace;
         protected bool _exists;
+        protected bool _crlf = true;
         protected StreamWriter _streamWriter;
 
         public ClassFileWriter(FileOptions fileOptions)
@@ -63,6 +64,11 @@ namespace com.paralib.Migrations.CodeGen
             {
                 if (_streamWriter != null)
                 {
+                    if (_crlf)
+                    {
+                        text = text.Replace("\n", "\r\n");
+                    }
+
                     _streamWriter.Write(text);
                 }
             }

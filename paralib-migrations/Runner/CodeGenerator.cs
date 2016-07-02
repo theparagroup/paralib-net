@@ -22,7 +22,7 @@ namespace com.paralib.Migrations.Runner
             Generate(typeof(LogicGenerator), "Logic", null, database, Paralib.Migrations.Codegen.Logic);
 
             //metadata
-            Generate(typeof(MetadataGenerator), "Metadata", "Models", database, Paralib.Migrations.Codegen.Metadata, "Metadata");
+            Generate(typeof(MetadataGenerator), "Metadata", null, database, Paralib.Migrations.Codegen.Metadata, "Metadata");
 
             //ef
             Generate(typeof(EfGenerator), "Ef", "Ef", database, Paralib.Migrations.Codegen.Ef);

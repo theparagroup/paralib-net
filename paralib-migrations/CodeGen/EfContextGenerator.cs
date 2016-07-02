@@ -21,7 +21,7 @@ namespace com.paralib.Migrations.CodeGen
 
         public void Generate(Database database)
         {
-            Start("EfContext");
+            Start("DbContext");
             WriteLine("using System;");
             WriteLine("using System.Data.Entity;");
             WriteLine("using com.paralib.Dal.Ef;");

@@ -18,6 +18,7 @@ namespace com.paralib.Migrations.CodeGen
         {
             WriteLine("using System;");
             WriteLine("using System.ComponentModel.DataAnnotations;");
+            WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
             WriteLine("using com.paralib.DataAnnotations;");
             if (ClassOptions.Namespace != null) WriteLine($"using {ClassOptions.Namespace}{(ClassOptions.SubNamespace != null ? "." + ClassOptions.SubNamespace : "")}{(ClassOptions.Parameter != null ? "." + ClassOptions.Parameter : "")};\n");
             WriteLine();
@@ -38,12 +39,17 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine($"\tpublic class {className}Metadata");
             WriteLine("\t{");
 
+            int i = 0;
+
             foreach (Column column in table.Columns.Values)
             {
                 WriteLine();
 
                 //add metadata
                 string displayName = Convention.GetDisplayName(column.Name);
+
+                //key info (useful for EF on non-standard columns
+                if (column.IsPrimary) WriteLine($"\t\t[Key, Column(Order = {i})]");
 
                 //display
                 WriteLine($"\t\t[Display(Name=\"{displayName}\")]");
@@ -63,9 +69,9 @@ namespace com.paralib.Migrations.CodeGen
                 }
 
 
-
-
                 WriteLine($"\t\tpublic object {Convention.GetPropertyName(column.Name)};");
+
+                ++i;
             }
 
             WriteLine("\t}");

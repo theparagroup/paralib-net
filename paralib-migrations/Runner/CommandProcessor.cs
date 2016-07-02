@@ -85,6 +85,7 @@ namespace com.paralib.Migrations.Runner
             say(Help);
             say("-------------------------------------------------------------------------------");
             say($"Default database is [{Paralib.Dal.Databases.Default}]");
+            say($"Assembly is [{_assembly.GetName().Name}]");
             say($"devmode is [{Devmode}]");
             say("-------------------------------------------------------------------------------");
             say("");
@@ -251,7 +252,7 @@ namespace com.paralib.Migrations.Runner
 
                                             if (c.Properties!=null)
                                             {
-                                                say("      Props: "+c.Properties);
+                                                say($"      Props: {c.Properties.ParaType}, '{c.Properties.Description}'");
                                             }
 
                                         }
