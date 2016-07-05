@@ -29,6 +29,7 @@ namespace com.paralib.Migrations.Runner
                 help += "\tlist\n";
                 help += "\ttables [db]\n";
                 help += "\tschema [db] \n";
+                help += "\thelp\n";
                 help += "\tq(uit)\n";
 
                 return help;
@@ -176,6 +177,10 @@ namespace com.paralib.Migrations.Runner
 
                         switch (parts[0])
                         {
+
+                            case "help":
+                                say(Help);
+                                break;
 
                             case "list":
                                 migrationRunner.ListMigrations();
