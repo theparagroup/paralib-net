@@ -31,19 +31,19 @@ namespace com.paralib.Mvc.Authorization
 
                             if (filterContext.Result is HttpUnauthorizedResult)
                             {
+                                string loginUrl = UnauthenticatedUrl;
+                                if (loginUrl == null) loginUrl = Paralib.Mvc.Authentication.LoginUrl;
+                                if (loginUrl == null) loginUrl = FormsAuthentication.LoginUrl;
 
                                 if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
                                 {
-                                    string loginUrl = UnauthenticatedUrl;
-                                    if (loginUrl == null) loginUrl = Paralib.Mvc.Authentication.LoginUrl;
-                                    if (loginUrl == null) loginUrl = FormsAuthentication.LoginUrl;
 
                                     loginUrl += "?ReturnUrl=" + filterContext.HttpContext.Server.UrlEncode(filterContext.HttpContext.Request.RawUrl);
                                     filterContext.Result = new RedirectResult(loginUrl);
                                 }
                                 else
                                 {
-                                    filterContext.Result = new RedirectResult(UnauthorizedUrl);
+                                    filterContext.Result = new RedirectResult(UnauthorizedUrl??loginUrl);
                                 }
 
                             }
