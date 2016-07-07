@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using com.paralib.Ado;
 using com.paralib.Dal;
+using com.paralib.Utils;
 
 namespace com.paralib.Migrations.Runner
 {
@@ -26,6 +27,7 @@ namespace com.paralib.Migrations.Runner
                 help += "\tup|down [db] [version]\n";
                 help += "\trollback [db] [steps]\n";
                 help += "\tgen [db]\n";
+                help += "\thash [password] [salt]\n";
                 help += "\tlist\n";
                 help += "\ttables [db]\n";
                 help += "\tschema [db] \n";
@@ -112,9 +114,63 @@ namespace com.paralib.Migrations.Runner
 
                 if (parts.Length > 0)
                 {
+
+                    //commands that don't require database
+                    string arg2 = null;
+                    string arg3 = null;
+
+                    if (parts.Length > 1) arg2 = parts[1];
+                    if (parts.Length > 2) arg3 = parts[2];
+
+                    switch (parts[0])
+                    {
+                        case "quit":
+                        case "q":
+                            quit();
+                            continue;
+
+                        case "help":
+                            say(Help);
+                            continue;
+
+                        case "devmode":
+                            Devmode = !Devmode;
+                            say($"devmode is [{Devmode}]");
+                            continue;
+
+                        case "hash":
+
+                            string hash = null;
+
+                            if (arg2 == null)
+                            {
+                                say("password required");
+                                continue;
+                            }
+
+                            if (arg3 != null)
+                            {
+                                hash = Crypto.HashPassword(arg2, arg3);
+                            }
+                            else
+                            {
+                                hash = Crypto.HashPassword(arg2);
+                            }
+
+                            string[] hashParts = hash.Split('|');
+                            say($"salt => {hashParts[0]}");
+                            say($"hash => {hashParts[1]}");
+
+                            continue;
+
+                    }
+
+
+                    //commands that use a database
+
+                    //(poor attempt at parsing this shit)
                     string db = null;
                     string n = null;
-
                     if (parts.Length > 1)
                     {
                         if (parts[0] == "up" || parts[0] == "down" || parts[0] == "rollback")
@@ -146,11 +202,6 @@ namespace com.paralib.Migrations.Runner
                     }
 
 
-                    if (command=="q" || command=="quit")
-                    {
-                        quit();
-                    }
-
                     db = db ?? Database;
 
                     Database database = null;
@@ -177,10 +228,6 @@ namespace com.paralib.Migrations.Runner
 
                         switch (parts[0])
                         {
-
-                            case "help":
-                                say(Help);
-                                break;
 
                             case "list":
                                 migrationRunner.ListMigrations();
@@ -341,11 +388,6 @@ namespace com.paralib.Migrations.Runner
                             case "gen":
                                 CodeGenerator.Generate(database);
                                 sayError($"Complete ");
-                                break;
-
-                            case "devmode":
-                                Devmode = !Devmode;
-                                say($"devmode is [{Devmode}]");
                                 break;
 
                             default:
