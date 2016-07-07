@@ -128,6 +128,7 @@
     <Compile Include="Paralib\SettingsOptions\LoggingOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Paralib\Settings.cs" />
+    <Compile Include="Utils\Crypto.cs" />
     <Compile Include="Utils\Json.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -51,9 +51,13 @@ namespace com.paralib.Mvc.Infrastructure
                     RouteTable.Routes.MapMvcAttributeRoutes();
 
                     //if (using authentication) configure MVC authentication
-                    if (Paralib.Mvc.Authentication.Global)
+                    if (Paralib.Mvc.Authentication.Enabled)
                     {
-                        GlobalFilters.Filters.Add(new AuthorizeAttribute());
+                        //if glogal=true put "[Authorize]" on everything
+                        if (Paralib.Mvc.Authentication.Global)
+                        {
+                            GlobalFilters.Filters.Add(new AuthorizeAttribute());
+                        }
                     }
 
                     _initialized = true;
