@@ -27,7 +27,7 @@ namespace com.paralib.Utils
 
         public static bool VerifyPassword(string hash, string password)
         {
-            string[] parts = password.Split('|');
+            string[] parts = hash.Split('|');
             byte[] salt = null;
             byte[] hashedPassword = null;
 

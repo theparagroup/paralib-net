@@ -158,6 +158,7 @@ namespace com.paralib.Migrations.Runner
                             }
 
                             string[] hashParts = hash.Split('|');
+                            say($"{hash}");
                             say($"salt => {hashParts[0]}");
                             say($"hash => {hashParts[1]}");
 
