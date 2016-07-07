@@ -67,6 +67,8 @@
     <Compile Include="Configuration\DatabaseDictionary.cs" />
     <Compile Include="Configuration\DatabaseElement.cs" />
     <Compile Include="Configuration\DatabasesCollection.cs" />
+    <Compile Include="Configuration\Mvc\AuthenticationElement.cs" />
+    <Compile Include="Configuration\Mvc\MvcElement.cs" />
     <Compile Include="Data\Int32Type.cs" />
     <Compile Include="Paralib\ParalibProperties\MigrationsProperties.cs" />
     <Compile Include="Paralib\ParalibProperties\CodegenProperties.cs" />
@@ -111,9 +113,13 @@
     <Compile Include="Paralib\Paralib.Utils.cs" />
     <Compile Include="Paralib\Paralib.Logging.cs" />
     <Compile Include="Paralib\ParalibException.cs" />
+    <Compile Include="Paralib\ParalibProperties\Mvc\AuthenticationProperties.cs" />
+    <Compile Include="Paralib\ParalibProperties\Mvc\MvcProperties.cs" />
     <Compile Include="Paralib\SettingsOptions\CodegenOptions.cs" />
     <Compile Include="Paralib\SettingsOptions\GenerationOptions.cs" />
     <Compile Include="Paralib\SettingsOptions\EfOptions.cs" />
+    <Compile Include="Paralib\SettingsOptions\Mvc\AuthenticationOptions.cs" />
+    <Compile Include="Paralib\SettingsOptions\Mvc\MvcOptions.cs" />
     <Compile Include="Paralib\SettingsOptions\NhOptions.cs" />
     <Compile Include="Paralib\SettingsOptions\MetadataOptions.cs" />
     <Compile Include="Paralib\SettingsOptions\LogicOptions.cs" />
@@ -129,6 +135,7 @@
     <None Include="Paralib.cd" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configuration\Mvc\mvc.xml" />
     <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup />

@@ -1,4 +1,5 @@
 ﻿using com.paralib.Configuration.Migrations;
+using com.paralib.Configuration.Mvc;
 using System;
 using System.Configuration;
 
@@ -28,6 +29,13 @@ namespace com.paralib.Configuration
         {
             get { return (string)base["use"]; }
             set { base["use"] = value; }
+        }
+
+        [ConfigurationProperty("mvc")]
+        public MvcElement Mvc
+        {
+            get { return ((MvcElement)(base["mvc"])); }
+            set { base["mvc"] = value; }
         }
 
 

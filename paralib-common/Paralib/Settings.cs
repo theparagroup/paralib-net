@@ -5,6 +5,7 @@ using com.paralib.Logging;
 using com.paralib.Configuration;
 using com.paralib.Configuration.Migrations.Codegen;
 using com.paralib.SettingsOptions;
+using com.paralib.SettingsOptions.Mvc;
 
 namespace com.paralib
 {
@@ -32,6 +33,8 @@ namespace com.paralib
             public DatabaseSettings Database { get; private set; } = new DatabaseSettings();
 
         }
+
+        public MvcOptions Mvc { get; private set; } = new MvcOptions();
 
         public LoggingOptions Logging { get; private set; } = new LoggingOptions();
 
@@ -148,6 +151,16 @@ namespace com.paralib
                 settings.Migrations.Codegen.Nh.Replace = paralibSection.Migrations.Codegen.Nh.Replace;
                 settings.Migrations.Codegen.Nh.Implements = Nullify(paralibSection.Migrations.Codegen.Nh.Implements);
                 settings.Migrations.Codegen.Nh.Ctor = Nullify(paralibSection.Migrations.Codegen.Nh.Ctor);
+
+                //mvc (defaults to true if present)
+                if (paralibSection.Mvc.Authentication.ElementInformation.IsPresent)
+                {
+                    settings.Mvc.Authentication.Enabled = paralibSection.Mvc.Authentication.Enabled;
+                    settings.Mvc.Authentication.LoginUrl = Nullify(paralibSection.Mvc.Authentication.LoginUrl);
+                    settings.Mvc.Authentication.DefaultUrl = Nullify(paralibSection.Mvc.Authentication.DefaultUrl);
+                    settings.Mvc.Authentication.Global = paralibSection.Mvc.Authentication.Global;
+                }
+
 
 
 

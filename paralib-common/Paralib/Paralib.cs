@@ -4,6 +4,7 @@ using com.paralib.Logging;
 using com.paralib.Ado;
 using com.paralib.SettingsOptions;
 using com.paralib.ParalibProperties;
+using com.paralib.ParalibProperties.Mvc;
 
 namespace com.paralib
 {
@@ -15,8 +16,10 @@ namespace com.paralib
         private static bool _initialized;
         private static Settings _settings = new Settings();
 
+        public static long InitializedAt { get; private set; }
 
         public static MigrationsProperties Migrations { get; } =new MigrationsProperties();
+        public static MvcProperties Mvc { get; } = new MvcProperties();
 
         /* 
         
@@ -29,39 +32,37 @@ namespace com.paralib
         public static void Initialize()
         {
             //use a config file (app/web or paralib)
-            _logger.Info("initializing with config file");
             Initialize(Settings.Create(ConfigurationManager.ParalibSection));
+            _logger.Info("initializing with config file");
         }
 
         public static void Initialize(Action<Settings> settings)
         {
-            //use the action syntax
-            _logger.Info("initializing with action syntax");
+            //use action syntax
             Settings s = new Settings();
             settings(s);
             Initialize(s);
+
+            _logger.Info("initializing with action syntax");
         }
 
         public static void Initialize(Settings settings)
         {
-            //explicit
-            _logger.Info("initializing with explicit settings");
 
             lock (_lock)
             {
-                if (_initialized)
+                if (!_initialized)
                 {
-                    return;
+                    //initital setup of the paralib
+                    _settings = settings;
+                    Load();
+
+                    InitializedAt = DateTime.Now.Ticks;
+                    _initialized = true;
+
+                    _logger.Info("initializing with explicit settings");
+                    _logger.Info("paralib initialized");
                 }
-
-                //initital setup of the paralib
-                _settings = settings;
-                Load();
-
-                _initialized = true;
-
-                _logger.Info("paralib initialized");
-
             }
 
         }
@@ -135,7 +136,6 @@ namespace com.paralib
         */
         internal static void Load()
         {
-            _logger.Info("loading settings...");
 
             //dal
             //set paralib's databases dictionary and default
@@ -206,6 +206,11 @@ namespace com.paralib
 
 
             //mvc
+            Mvc.Authentication.Enabled = _settings.Mvc.Authentication.Enabled;
+            Mvc.Authentication.LoginUrl = _settings.Mvc.Authentication.LoginUrl;
+            Mvc.Authentication.DefaultUrl = _settings.Mvc.Authentication.DefaultUrl;
+            Mvc.Authentication.Global = _settings.Mvc.Authentication.Global;
+
 
             _logger.Info("settings loaded");
 

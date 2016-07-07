@@ -1,0 +1,18 @@
+﻿<mvc>
+
+  <authentication loginUrl="" defaultUrl="" global="true" persistSessions="" persistApplication="" >
+
+    <global-filters>
+      
+    </global-filters>
+    
+    <spoof-users use="name">
+      <user name="" password=""/>
+      <user name="" password=""/>
+      <user name="" password=""/>
+    </spoof-users>
+
+  </authentication>
+
+
+</mvc>
