@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http.Filters;
 using System.Web.Http.Results;
 using System.Linq;
+using System.Web.Http;
 
 namespace com.paralib.Mvc.Authentication.WebApi2
 {
@@ -52,7 +53,7 @@ namespace com.paralib.Mvc.Authentication.WebApi2
 
             if (true)
             {
-                context.Principal = new GenericPrincipal(new GenericIdentity("user"), new string[] { });
+                context.Principal = new GenericPrincipal(new GenericIdentity(parts[0]), new string[] { });
             }
             else
             {
@@ -82,7 +83,11 @@ namespace com.paralib.Mvc.Authentication.WebApi2
                 if (!response.Headers.WwwAuthenticate.Any((h) => h.Scheme == "Basic"))
                 {
                     //WWW-Authenticate: Basic realm="myRealm"
-                    response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue("Basic", "realm=The Realm"));
+                    
+                    //response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue("Basic", "realm=The Realm"));
+                    //response.Headers.Pragma.Add(new NameValueHeaderValue("Basic", "Realm"));
+
+                    context.Result = new UnauthorizedResult(new List<AuthenticationHeaderValue>() { new AuthenticationHeaderValue("Basic", "realm=The Realm!") }, context.Request);
                 }
             }
 

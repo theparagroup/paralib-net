@@ -97,28 +97,32 @@ namespace com.paralib.Mvc.Infrastructure
             HttpApplication application = (HttpApplication)sender;
             HttpContext context = application.Context;
 
-            if (FormsAuthentication.CookiesSupported == true)
+            if (Paralib.Mvc.Authentication.Enabled)
             {
-                if (context.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+
+                if (FormsAuthentication.CookiesSupported == true)
                 {
-                    try
+                    if (context.Request.Cookies[FormsAuthentication.FormsCookieName] != null)
                     {
-                        FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(context.Request.Cookies[FormsAuthentication.FormsCookieName].Value);
-
-                        IPrincipal principle = Forms.GetParaPrinciple(ticket);
-
-                        if (principle==null)
+                        try
                         {
-                            principle = new GenericPrincipal(new GenericIdentity(null, null), null);
+                            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(context.Request.Cookies[FormsAuthentication.FormsCookieName].Value);
+
+                            IPrincipal principle = Forms.GetParaPrinciple(ticket);
+
+                            if (principle == null)
+                            {
+                                principle = new GenericPrincipal(new GenericIdentity(null, null), null);
+                            }
+
+                            HttpContext.Current.User = principle;
+                            System.Threading.Thread.CurrentPrincipal = principle;
+
                         }
-
-                        HttpContext.Current.User = principle;
-                        System.Threading.Thread.CurrentPrincipal = principle;
-
-                    }
-                    catch (Exception)
-                    {
-                        //somehting went wrong
+                        catch (Exception)
+                        {
+                            throw;
+                        }
                     }
                 }
             }
