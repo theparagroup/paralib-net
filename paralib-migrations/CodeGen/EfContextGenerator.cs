@@ -33,6 +33,16 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine($"\tpublic class DbContext:EfContext");
             WriteLine("\t{");
 
+            //diagnostics
+            WriteLine();
+            WriteLine("#if DEBUG");
+            WriteLine("\t\tpublic DbContext()");
+            WriteLine("\t\t{");
+            WriteLine("\t\t\tDatabase.Log = message => System.Diagnostics.Debug.WriteLine(message);");
+            WriteLine("\t\t}");
+            WriteLine("#endif");
+            WriteLine();
+
             Table[] tables = null;
 
             using (var db = new Db(database))

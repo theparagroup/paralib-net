@@ -2,6 +2,7 @@
 using System.Linq;
 using com.paralib.Dal.Metadata;
 using com.paralib.Dal.Utils;
+using System.Text.RegularExpressions;
 
 namespace com.paralib.Migrations.CodeGen
 {
@@ -34,8 +35,12 @@ namespace com.paralib.Migrations.CodeGen
 
             foreach  (Relationship r in table.ForeignKeys)
             {
-                //public virtual EfUserType UserType { get; set; }
-                WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {Convention.GetClassName(r.OtherTable, true)} {{ get; set;}}");
+                //OnColumn = created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                //OnColumn = user_type_id => public virtual EfUserType UserType { get; set; }
+                string onColumn = Regex.Replace(r.OnColumn.ToLower(), "_id$", m => "");
+
+
+                WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {Convention.GetClassName(onColumn, true)} {{ get; set;}}");
             }
 
             foreach (Relationship r in table.References)
