@@ -34,6 +34,14 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\paralib-net-dependencies\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\paralib-net-dependencies\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\paralib-net-dependencies\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
@@ -56,9 +64,11 @@
   <ItemGroup>
     <Compile Include="Authentication\Forms.cs" />
     <Compile Include="Authentication\ParaIdentity.cs" />
+    <Compile Include="Authentication\WebApi2\BasicAuthAttribute.cs" />
     <Compile Include="Authorization\ParaPrinciple.cs" />
     <Compile Include="Authorization\PermissionsAttribute.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Infrastructure\WebApi2\ParaDirectRouteProvider.cs" />
     <Compile Include="Infrastructure\ParaView[TModel,TBaseController].cs" />
     <Compile Include="Infrastructure\ParaMvcModule.cs" />
     <Compile Include="Infrastructure\PreApplicationStartCode.cs" />

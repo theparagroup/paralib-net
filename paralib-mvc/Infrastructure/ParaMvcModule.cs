@@ -8,6 +8,9 @@ using System.Web.Security;
 using System.Security.Principal;
 using com.paralib.Mvc.Authorization;
 using com.paralib.Mvc.Authentication;
+using WebApi = System.Web.Http;
+using static System.Web.Http.HttpConfigurationExtensions;
+using com.paralib.Mvc.Infrastructure.WebApi2;
 
 namespace com.paralib.Mvc.Infrastructure
 {
@@ -45,10 +48,12 @@ namespace com.paralib.Mvc.Infrastructure
                     //(probably via a static handler in global.asax)
                     Paralib.RaiseConfigureEvent();
 
-
                     //configure MVC
                     RouteTable.Routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
                     RouteTable.Routes.MapMvcAttributeRoutes();
+
+                    //configure WebApi2
+                    WebApi.GlobalConfiguration.Configure(config => { config.MapHttpAttributeRoutes(new ParaDirectRouteProvider()); });
 
                     //if (using authentication) configure MVC authentication
                     if (Paralib.Mvc.Authentication.Enabled)
