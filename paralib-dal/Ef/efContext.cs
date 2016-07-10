@@ -78,6 +78,11 @@ namespace com.paralib.Dal.Ef
             parts[parts.Length - 1] = Lexeme.Pluralize(parts[parts.Length - 1]);
             result = string.Join("_", parts);
 
+
+            //fixing stupid microsoft ideas about the english language
+            result = result.ToLower();
+            result = Regex.Replace(result, "_status$", m => "_statuses");
+
             return result;
           
         }
