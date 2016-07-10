@@ -15,15 +15,17 @@ using System.Web.Http;
 namespace com.paralib.Mvc.Authentication.WebApi2
 {
 
-    public class BasicAuthAttribute : Attribute, IAuthenticationFilter
+    public abstract class BasicAuthAttribute : Attribute, IAuthenticationFilter
     {
         public string Realm { get; set; }
 
 
         private UnauthorizedResult Unauthorized(HttpRequestMessage request)
         {
-            return new UnauthorizedResult(null, request);
+            return new UnauthorizedResult(new List<AuthenticationHeaderValue>() { new AuthenticationHeaderValue("Basic", "realm=The Realm!") }, request);
         }
+
+        protected abstract IPrincipal OnAuthenticate(string user, string password);
 
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
@@ -50,15 +52,21 @@ namespace com.paralib.Mvc.Authentication.WebApi2
             string[] parts = credentials.Split(':');
 
             //authenticate here
+            IPrincipal principal = null;
 
-            if (true)
+            if (parts.Length == 2)
             {
-                context.Principal = new GenericPrincipal(new GenericIdentity(parts[0]), new string[] { });
+                principal=OnAuthenticate(parts[0], parts[1]);
             }
-            else
+
+            if (principal==null)
             {
+                principal = new GenericPrincipal(new GenericIdentity(""), new string[] { });
                 context.ErrorResult = Unauthorized(context.Request);
             }
+
+            //apparently sets thread too
+            context.Principal = principal;
 
             await Nothing();
         }
@@ -83,11 +91,12 @@ namespace com.paralib.Mvc.Authentication.WebApi2
                 if (!response.Headers.WwwAuthenticate.Any((h) => h.Scheme == "Basic"))
                 {
                     //WWW-Authenticate: Basic realm="myRealm"
-                    
+
                     //response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue("Basic", "realm=The Realm"));
                     //response.Headers.Pragma.Add(new NameValueHeaderValue("Basic", "Realm"));
 
-                    context.Result = new UnauthorizedResult(new List<AuthenticationHeaderValue>() { new AuthenticationHeaderValue("Basic", "realm=The Realm!") }, context.Request);
+                    //context.Result = new UnauthorizedResult(new List<AuthenticationHeaderValue>() { new AuthenticationHeaderValue("Basic", "realm=The Realm!") }, context.Request);
+                    context.Result = Unauthorized(context.Request);
                 }
             }
 

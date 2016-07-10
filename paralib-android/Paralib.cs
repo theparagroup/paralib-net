@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Android
 {
-    public class Class1
+    public class Paralib
     {
-      
-
-
-        public string Foo = "Bar bar bar!!!!!";
 
 
     }
