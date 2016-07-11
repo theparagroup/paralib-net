@@ -89,6 +89,7 @@ namespace com.paralib.Dal.Utils
                 case "Boolean":
                 case "Byte":
                 case "Char":
+                case "DateTime":
                 case "Decimal":
                 case "Double":
                 case "Int16":

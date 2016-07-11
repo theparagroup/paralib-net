@@ -68,7 +68,7 @@ namespace com.paralib.Mvc.Authentication.WebApi2
             //apparently sets thread too
             context.Principal = principal;
 
-            await Nothing();
+            //await Nothing();
         }
 
         public Task Nothing()
@@ -83,7 +83,7 @@ namespace com.paralib.Mvc.Authentication.WebApi2
         {
 
 
-            HttpResponseMessage response = await context.Result.ExecuteAsync(cancellationToken);
+            HttpResponseMessage response = context.Result.ExecuteAsync(cancellationToken).Result;
 
             if (response.StatusCode == HttpStatusCode.Unauthorized)
             {
