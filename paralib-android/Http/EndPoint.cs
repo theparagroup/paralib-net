@@ -18,6 +18,7 @@ namespace com.paralib.Android.Http
         public virtual bool Secure { get; set; }
         public virtual string User { get; set; }
         public virtual string Password { get; set; }
+        public virtual TimeSpan Timeout { get; set; }
         public virtual int ResponseCode { get; protected set; }
         public virtual T Response { get; protected set; }
 
@@ -62,6 +63,8 @@ namespace com.paralib.Android.Http
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
 
             Uri uri = new Uri($"http{(Secure ? "s" : "")}://{Host}/{Path}");
+            HttpClient.Timeout = Timeout;
+
             HttpResponseMessage response = null;
 
             if (Method == HttpMethods.GET)
