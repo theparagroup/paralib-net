@@ -53,7 +53,12 @@ namespace com.paralib.Mvc.Infrastructure
                     RouteTable.Routes.MapMvcAttributeRoutes();
 
                     //configure WebApi2
-                    WebApi.GlobalConfiguration.Configure(config => { config.MapHttpAttributeRoutes(new ParaDirectRouteProvider()); });
+                    //TODO this should execute if webapi2 is used
+                    try
+                    {
+                        WebApi.GlobalConfiguration.Configure(config => { config.MapHttpAttributeRoutes(new ParaDirectRouteProvider()); });
+                    }
+                    catch { }
 
                     //if (using authentication) configure MVC authentication
                     if (Paralib.Mvc.Authentication.Enabled)
