@@ -1,6 +1,19 @@
 ﻿=============================================================
-====	Creating a Standard User for an Existing Database (SQL Server)
+====	Creating a Standard User (SQL Server)
 =============================================================
 
+Create Login
+	user/pass
+	disable policies
 
-ALTER USER user_name WITH LOGIN = login_name
+Create user in database
+	general
+		user
+		login
+		schema=dbo
+	membership
+		db_owner
+
+if the user already exists
+
+	ALTER USER user_name WITH LOGIN = login_name
