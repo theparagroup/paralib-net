@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paralib-mvc", "paralib-mvc\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paralib-common", "paralib-common\paralib-common.csproj", "{101E2741-5A3D-460B-BDF4-F5E5BD27CF1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paralib-android", "paralib-android\paralib-android.csproj", "{B391566B-94C5-4E32-B77C-29215619D5B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paralib-xandroid", "paralib-xandroid\paralib-xandroid.csproj", "{B391566B-94C5-4E32-B77C-29215619D5B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
