@@ -51,15 +51,18 @@
     <Compile Include="Http\EndPoint.cs" />
     <Compile Include="Http\HttpMethods.cs" />
     <Compile Include="Paralib.cs" />
+    <Compile Include="ParalibException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SharedPreferences.cs" />
+    <Compile Include="Utils\SharedPreferences.cs" />
     <Compile Include="Utils\Attributes.cs" />
     <Compile Include="Utils\Dip.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Utils\Json.cs" />
-    <Compile Include="Utils\Views.cs" />
-    <Compile Include="Utils\Layouts.cs" />
-    <Compile Include="Utils\ParameterValues.cs" />
-    <Compile Include="Utils\Parameters.cs" />
+    <Compile Include="XSizes.cs" />
+    <Compile Include="XView.cs" />
+    <Compile Include="XLayout.cs" />
+    <Compile Include="XLayoutParameters.cs" />
+    <Compile Include="XLayoutParams.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt" />

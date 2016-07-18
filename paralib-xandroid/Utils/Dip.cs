@@ -10,8 +10,11 @@ namespace com.paralib.Xandroid.Utils
 {
     public class Dip
     {
-        public static int ToInt(float dips)
+        public static int ToInt32(float dips)
         {
+            //match, wrap
+            if (dips < 0) return Convert.ToInt32(dips);
+
             return Convert.ToInt32(TypedValue.ApplyDimension(ComplexUnitType.Dip, dips, Application.Context.Resources.DisplayMetrics));
         }
     }

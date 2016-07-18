@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Xandroid.Utils
+namespace com.paralib.Xandroid
 {
-    public enum ParameterValues
-    {
-        Match=-1,
-        Wrap=-2
-    }
+    //public enum XLayoutParameters
+    //{
+    //    Match=-1,
+    //    Wrap=-2
+    //}
 }

@@ -21,6 +21,7 @@ namespace com.paralib.Xandroid.Http
         public virtual TimeSpan Timeout { get; set; }
         public virtual int ResponseCode { get; protected set; }
         public virtual T Response { get; protected set; }
+        public virtual string ResponseJson { get; protected set; }
 
         protected static HttpClient HttpClient
         {
@@ -86,9 +87,9 @@ namespace com.paralib.Xandroid.Http
             {
                 //call sync
                 var responseContent = response.Content;
-                string responseString = responseContent.ReadAsStringAsync().Result;
+                ResponseJson = responseContent.ReadAsStringAsync().Result;
 
-                Response = JsonConvert.DeserializeObject<T>(responseString);
+                Response = JsonConvert.DeserializeObject<T>(ResponseJson);
 
             }
 
