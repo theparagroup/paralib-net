@@ -32,7 +32,7 @@ namespace com.paralib.Xandroid
 
         }
 
-        public static TextView Text(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? gravity = null, int? id = null, string tag=null)
+        public static TextView TextView(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? gravity = null, int? id = null, string tag=null)
         {
             var view = new TextView(context) { LayoutParameters = layoutParams };
 

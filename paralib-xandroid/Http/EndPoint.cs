@@ -83,6 +83,8 @@ namespace com.paralib.Xandroid.Http
             }
 
             ResponseCode = (int)response.StatusCode;
+            ResponseJson = null;
+            Response = default(T);
 
             if (response.IsSuccessStatusCode)
             {
