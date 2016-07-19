@@ -62,10 +62,10 @@
     <Compile Include="Utils\Dip.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Utils\Json.cs" />
+    <Compile Include="XImeActions.cs" />
     <Compile Include="XSizes.cs" />
     <Compile Include="XView.cs" />
     <Compile Include="XLayout.cs" />
-    <Compile Include="XLayoutParameters.cs" />
     <Compile Include="XLayoutParams.cs" />
   </ItemGroup>
   <ItemGroup>

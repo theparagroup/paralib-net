@@ -1,6 +1,8 @@
 ﻿using Android.Content;
 using Android.Graphics;
+using Android.Text;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
 using com.paralib.Xandroid.Utils;
 using System;
@@ -38,6 +40,7 @@ namespace com.paralib.Xandroid
             if (tag != null) view.Tag = tag;
             if (gravity.HasValue) view.Gravity = gravity.Value;
 
+            //order matters
             view.SetTextAppearance(context, GetTextAppearance(size));
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
@@ -48,7 +51,7 @@ namespace com.paralib.Xandroid
 
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? gravity = null, int? id = null, string tag = null)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, bool password=false, XImeActions? imeAction=null, GravityFlags? gravity = null, int? id = null, string tag = null)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
@@ -56,9 +59,19 @@ namespace com.paralib.Xandroid
             if (tag != null) view.Tag = tag;
             if (gravity.HasValue) view.Gravity = gravity.Value;
 
+            //order matters
             view.SetTextAppearance(context, GetTextAppearance(size));
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
+
+            if (imeAction.HasValue)
+            {
+                view.SetSingleLine();
+                view.ImeOptions = (ImeAction)imeAction;
+            }
+
+            //order matters
+            if (password) view.InputType = InputTypes.ClassText | InputTypes.TextVariationPassword;
 
             return view;
         }
@@ -72,6 +85,7 @@ namespace com.paralib.Xandroid
             if (gravity.HasValue) view.Gravity = gravity.Value;
 
 
+            //order matters
             view.SetTextAppearance(context, GetTextAppearance(size));
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
