@@ -71,6 +71,7 @@ namespace com.paralib.Xandroid
             if (tag != null) view.Tag = tag;
             if (gravity.HasValue) view.Gravity = gravity.Value;
 
+
             view.SetTextAppearance(context, GetTextAppearance(size));
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;

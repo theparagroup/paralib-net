@@ -55,3 +55,41 @@ Driver Issues:
 Mono.AndroidTools.InstallFailedException: Failure [INSTALL_FAILED_UPDATE_INCOMPATIBLE]:
 
 	Uninstall the app via Application Manager. It may be listed under the "package name".
+
+
+=============================================================
+====	Useful ADB Commands
+=============================================================
+
+C:\Program Files (x86)\Android\android-sdk\platform-tools
+
+./adb devices
+
+./adb -s c6cfb0701b2c3d05 shell pwd
+
+./adb -s 0a00da34 shell pm list packages
+
+./adb -s c6cfb0701b2c3d05 shell run-as App1.App1 ls //data/data/App1.App1
+
+(i can't get runas to work on my note 4, and there is an "8k bug")
+
+./adb backup -apk com.twitter.android
+
+./adb install thisIsTheAPKName.apk
+
+./adb -s c6cfb0701b2c3d05 logcat *:E
+
+"C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe" -s c6cfb0701b2c3d05 pull //system/etc/permissions/handheld_core_hardware.xml
+[100%] //system/etc/permissions/handheld_core_hardware.xml
+
+"C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe" -s c6cfb0701b2c3d05 push handheld_core_hardware.xml //system/etc/permissions/handheld_core_hardware.xml
+[100%] //system/etc/permissions/
+
+android.hardware.usb.host.xml
+handheld_core_hardware.xml
+tablet_core_hardware.xml
+
+
+
+
+

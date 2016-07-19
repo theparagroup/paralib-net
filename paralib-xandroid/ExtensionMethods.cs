@@ -23,5 +23,6 @@ namespace com.paralib.Xandroid
             return view;
         }
 
+
     }
 }

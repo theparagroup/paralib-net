@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using com.paralib.Xandroid.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -89,7 +90,7 @@ namespace com.paralib.Xandroid.Http
                 var responseContent = response.Content;
                 ResponseJson = responseContent.ReadAsStringAsync().Result;
 
-                Response = JsonConvert.DeserializeObject<T>(ResponseJson);
+                Response = Json.DeSerialize<T>(ResponseJson);
 
             }
 

@@ -16,12 +16,18 @@ namespace com.paralib.Xandroid
 
         public static ViewGroup.LayoutParams ViewGroup(float width, float height)
         {
-            return new ViewGroup.LayoutParams(Dip.ToInt32(width), Dip.ToInt32(height));
+            var layoutParams = new ViewGroup.LayoutParams(Dip.ToInt32(width), Dip.ToInt32(height));
+            return layoutParams;
         }
 
-        public static LinearLayout.LayoutParams Linear(float width, float height, float weight = 0)
+        public static LinearLayout.LayoutParams Linear(float width, float height, float weight = 0, GravityFlags? gravity=null, float? leftMargin = null, float? topMargin = null, float? rightMargin = null, float? bottomMargin = null)
         {
-            return new LinearLayout.LayoutParams(Dip.ToInt32(width), Dip.ToInt32(height), weight);
+            var layoutParams= new LinearLayout.LayoutParams(Dip.ToInt32(width), Dip.ToInt32(height), weight);
+            if (gravity.HasValue) layoutParams.Gravity = gravity.Value;
+            layoutParams.SetMargins(Dip.ToInt32(leftMargin ?? 0), Dip.ToInt32(topMargin ?? 0), Dip.ToInt32(rightMargin ?? 0), Dip.ToInt32(bottomMargin ?? 0));
+
+            return layoutParams;
+
         }
 
     }
