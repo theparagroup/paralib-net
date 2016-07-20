@@ -38,6 +38,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\paralib-net-dependencies\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SQLite-net">
+      <HintPath>..\..\paralib-net-dependencies\lib\SQLite-net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cache\CacheItem.cs" />
+    <Compile Include="Cache\CacheItem[T].cs" />
+    <Compile Include="Cache\CacheManager.cs" />
+    <Compile Include="Cache\CacheStatuses.cs" />
     <Compile Include="Http\EndPoint.cs" />
     <Compile Include="Http\HttpMethods.cs" />
     <Compile Include="Paralib.cs" />
