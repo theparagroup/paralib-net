@@ -12,7 +12,13 @@ namespace com.paralib.Xandroid
 {
     public class XLayout
     {
-       
+
+        public static ScrollView ScrollView(Context context, ViewGroup.LayoutParams layoutParams, View view)
+        {
+            var scrollView = new ScrollView(context) { LayoutParameters = layoutParams };
+            scrollView.AddView(view);
+            return scrollView;
+        }
 
         public static LinearLayout Linear(Context context, ViewGroup.LayoutParams layoutParams, Orientation orientation=Orientation.Horizontal, Color? backgroundColor = null, GravityFlags gravity = GravityFlags.NoGravity, int? id = null)
         {
@@ -20,6 +26,7 @@ namespace com.paralib.Xandroid
             if (backgroundColor.HasValue) layout.SetBackgroundColor(backgroundColor.Value);
             layout.SetGravity(gravity);
             if (id.HasValue) layout.Id = id.Value;
+
             return layout;
         }
 
