@@ -12,11 +12,16 @@ using Android.Widget;
 
 namespace com.paralib.Xandroid.Cache
 {
+    /*
+        These have no meaning to the cache subsystem, the application defines these.
+    */
     public enum CacheStatuses
     {
         NotCached = 0,
         Downloaded = 1,
-        Modified = 2,
-        Uploaded = 4
+        New = 2,
+        Modified = 3,
+        Saved = 4,
+        Uploaded = 5
     }
 }

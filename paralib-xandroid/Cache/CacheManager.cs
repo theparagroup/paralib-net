@@ -139,6 +139,7 @@ namespace com.paralib.Xandroid.Cache
                         newItem.CreatedOn = oldItem.CreatedOn;
                         newItem.RetrievedOn = oldItem.RetrievedOn;
                         newItem.ModifiedOn = oldItem.ModifiedOn;
+                        newItem.SavedOn = oldItem.SavedOn;
                         newItem.UploadedOn = oldItem.UploadedOn;
                     }
                     else
@@ -148,6 +149,7 @@ namespace com.paralib.Xandroid.Cache
 
                     if (cacheStatus==CacheStatuses.Downloaded) newItem.RetrievedOn=now;
                     if (cacheStatus == CacheStatuses.Modified) newItem.ModifiedOn = now;
+                    if (cacheStatus == CacheStatuses.Saved) newItem.SavedOn = now;
                     if (cacheStatus == CacheStatuses.Uploaded) newItem.UploadedOn = now;
 
                     db.InsertOrReplace(newItem);
