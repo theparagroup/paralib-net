@@ -57,6 +57,12 @@ Mono.AndroidTools.InstallFailedException: Failure [INSTALL_FAILED_UPDATE_INCOMPA
 	Uninstall the app via Application Manager. It may be listed under the "package name".
 
 
+Genymotion Issues:
+	soemthing like this:
+		A numeric comparison was attempted on "$(_DeviceSdkVersion)" that evaluates to "" instead of a number, in condition "$(_DeviceSdkVersion) >= 21"
+
+	make sure you set the android sdk path in genymotion to the same used by xamarin
+
 =============================================================
 ====	Useful ADB Commands
 =============================================================
