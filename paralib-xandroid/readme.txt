@@ -14,9 +14,31 @@ install
 	SDK Platforms for APIs you want to target
 
 
+Download correct version of NDK and unzip it beside SDK (google provides no help finding these)
+
+	ndk_r10e (Jan 2015)
+		Windows 32-bit : http://dl.google.com/android/ndk/android-ndk-r10e-windows-x86.exe
+
+
+Goto Tools/Options/Xamarin and click "change" on all the paths, this will change the registry entries:
+
+	HKEY_CURRENT_USER\Software\Novell\Mono for Android
+
 issues:
 
+Release:
+
+	you can only deploy an apk with release build
+	choose your CPU architecture
+
 Don't even try to use the built-in Android emulator. Either use Gennymotion or a real device.
+
+Genymotion Issues:
+	soemthing like this:
+		A numeric comparison was attempted on "$(_DeviceSdkVersion)" that evaluates to "" instead of a number, in condition "$(_DeviceSdkVersion) >= 21"
+
+	make sure you set the android sdk path in genymotion to the same used by xamarin
+
 
 Xamarin.iOS.CSharp.targets not found (shared projects):
 
@@ -57,11 +79,6 @@ Mono.AndroidTools.InstallFailedException: Failure [INSTALL_FAILED_UPDATE_INCOMPA
 	Uninstall the app via Application Manager. It may be listed under the "package name".
 
 
-Genymotion Issues:
-	soemthing like this:
-		A numeric comparison was attempted on "$(_DeviceSdkVersion)" that evaluates to "" instead of a number, in condition "$(_DeviceSdkVersion) >= 21"
-
-	make sure you set the android sdk path in genymotion to the same used by xamarin
 
 =============================================================
 ====	Useful ADB Commands

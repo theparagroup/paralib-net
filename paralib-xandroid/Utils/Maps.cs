@@ -12,9 +12,17 @@ namespace com.paralib.Xandroid.Utils
     {
         public static void MapAddress(Context context, string address)
         {
-            var geoUri = Android.Net.Uri.Parse(string.Format("geo:0,0?q={0}", WebUtility.UrlEncode(address)));
-            var mapIntent = new Intent(Intent.ActionView, geoUri);
-            context.StartActivity(mapIntent);
+            try
+            {
+
+                var geoUri = Android.Net.Uri.Parse(string.Format("geo:0,0?q={0}", WebUtility.UrlEncode(address)));
+                var mapIntent = new Intent(Intent.ActionView, geoUri);
+                context.StartActivity(mapIntent);
+            }
+            catch (ActivityNotFoundException)
+            {
+                MessageBox.Show(context, "Warning", "Could not start map application. Do you have one installed?");
+            }
         }
     }
 }
