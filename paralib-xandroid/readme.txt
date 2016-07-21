@@ -114,6 +114,16 @@ tablet_core_hardware.xml
 
 
 =============================================================
+====	Tools
+=============================================================
+
+https://play.google.com/store/apps/details?id=com.roysolberg.android.developertools
+
+https://play.google.com/store/apps/details?id=eu.chainfire.usbhostdiagnostics&hl=en
+https://play.google.com/store/apps/details?id=org.tauruslabs.usbhostcheck
+https://play.google.com/store/apps/details?id=com.nutsaboutnets.otgrfex
+
+=============================================================
 ====	Versions
 =============================================================
 

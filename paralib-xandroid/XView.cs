@@ -32,10 +32,13 @@ namespace com.paralib.Xandroid
 
         }
 
-        public static TextView TextView(Context context, XSizes size, string text=null, Color? color = null)
+        public static TextView TextView(Context context, XSizes size, string text=null, Color? color = null, int? id = null, string tag = null)
         {
             var view = new TextView(context);
             view.Text = text;
+
+            if (id.HasValue) view.Id = id.Value;
+            if (tag != null) view.Tag = tag;
 
             //order matters (do this before other appearance changes)
             view.SetTextAppearance(context, GetTextAppearance(size));
@@ -46,12 +49,10 @@ namespace com.paralib.Xandroid
 
         public static TextView TextView(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? gravity = null, int? id = null, string tag=null)
         {
-            var view = TextView(context, size, text,color);
+            var view = TextView(context, size, text,color,id,tag);
 
             view.LayoutParameters = layoutParams;
 
-            if (id.HasValue) view.Id = id.Value;
-            if (tag != null) view.Tag = tag;
             if (gravity.HasValue) view.Gravity = gravity.Value;
 
             return view;
