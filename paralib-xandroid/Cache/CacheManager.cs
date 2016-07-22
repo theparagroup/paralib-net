@@ -113,6 +113,52 @@ namespace com.paralib.Xandroid.Cache
             return null;
         }
 
+        private static void _UpdateStatus<T>(CacheItem<T> cacheItem, CacheStatuses cacheStatus)
+        {
+
+            cacheItem.CacheStatus = cacheStatus;
+
+            var now = DateTime.Now;
+
+            if (cacheStatus == CacheStatuses.Downloaded) cacheItem.RetrievedOn = now;
+            if (cacheStatus == CacheStatuses.Modified) cacheItem.ModifiedOn = now;
+            if (cacheStatus == CacheStatuses.Cached) cacheItem.CachedOn = now;
+            if (cacheStatus == CacheStatuses.Uploaded) cacheItem.UploadedOn = now;
+        }
+
+        public static CacheStatuses GetStatus<T>(int? id = null)
+        {
+            using (var db = new SQLiteConnection(DbPath))
+            {
+                var oldItem = Get<T>(id);
+
+                if (oldItem!=null)
+                {
+                    return oldItem.CacheStatus;
+                }
+                else
+                {
+                    return CacheStatuses.NotCached;
+                }
+
+            }
+        }
+
+        public static void UpdateStatus<T>(CacheStatuses cacheStatus, int? id = null)
+        {
+            using (var db = new SQLiteConnection(DbPath))
+            {
+                var oldItem = Get<T>(id);
+
+                if (oldItem!=null)
+                {
+                    _UpdateStatus(oldItem, cacheStatus);
+                    db.Update(oldItem);
+                }
+
+
+            }
+        }
 
         public static CacheItem<T> Save<T>(T value, CacheStatuses cacheStatus, int? id=null)
         {
@@ -130,27 +176,21 @@ namespace com.paralib.Xandroid.Cache
                     var newItem = new CacheItem<T>();
                     newItem.Key = ToKey(typeof(T), id);
                     newItem.Value = value;
-                    newItem.CacheStatus = cacheStatus;
-
-                    var now = DateTime.Now;
 
                     if (oldItem!=null)
                     {
                         newItem.CreatedOn = oldItem.CreatedOn;
                         newItem.RetrievedOn = oldItem.RetrievedOn;
                         newItem.ModifiedOn = oldItem.ModifiedOn;
-                        newItem.SavedOn = oldItem.SavedOn;
+                        newItem.CachedOn = oldItem.CachedOn;
                         newItem.UploadedOn = oldItem.UploadedOn;
                     }
                     else
                     {
-                        newItem.CreatedOn = now; ;
+                        newItem.CreatedOn = DateTime.Now;
                     }
 
-                    if (cacheStatus==CacheStatuses.Downloaded) newItem.RetrievedOn=now;
-                    if (cacheStatus == CacheStatuses.Modified) newItem.ModifiedOn = now;
-                    if (cacheStatus == CacheStatuses.Saved) newItem.SavedOn = now;
-                    if (cacheStatus == CacheStatuses.Uploaded) newItem.UploadedOn = now;
+                    _UpdateStatus(newItem, cacheStatus);
 
                     db.InsertOrReplace(newItem);
 

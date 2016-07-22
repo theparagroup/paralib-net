@@ -20,6 +20,7 @@ namespace com.paralib.Xandroid.Http
         public virtual string User { get; set; }
         public virtual string Password { get; set; }
         public virtual TimeSpan Timeout { get; set; }
+        public virtual T Content { get; set; }
         public virtual int ResponseCode { get; protected set; }
         public virtual T Response { get; protected set; }
         public virtual string ResponseJson { get; protected set; }
@@ -75,7 +76,9 @@ namespace com.paralib.Xandroid.Http
             }
             else if (Method == HttpMethods.PUT)
             {
-                response = HttpClient.PutAsync(uri,null).Result;
+                string jsonContent = Json.Serialize(Content);
+                HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                response = HttpClient.PutAsync(uri, httpContent).Result;
             }
             else
             {
@@ -92,7 +95,10 @@ namespace com.paralib.Xandroid.Http
                 var responseContent = response.Content;
                 ResponseJson = responseContent.ReadAsStringAsync().Result;
 
-                Response = Json.DeSerialize<T>(ResponseJson);
+                if (Method == HttpMethods.GET)
+                {
+                    Response = Json.DeSerialize<T>(ResponseJson);
+                }
 
             }
 

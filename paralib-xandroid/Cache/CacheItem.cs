@@ -40,7 +40,7 @@ namespace com.paralib.Xandroid.Cache
         public DateTime ModifiedOn { get; set; }
 
         [Column("saved_on")]
-        public DateTime SavedOn { get; set; }
+        public DateTime CachedOn { get; set; }
 
         [Column("Uploaded_on")]
         public DateTime UploadedOn { get; set; }

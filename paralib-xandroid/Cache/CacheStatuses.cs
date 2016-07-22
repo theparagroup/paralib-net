@@ -21,7 +21,7 @@ namespace com.paralib.Xandroid.Cache
         Downloaded = 1,
         New = 2,
         Modified = 3,
-        Saved = 4,
+        Cached = 4,
         Uploaded = 5
     }
 }
