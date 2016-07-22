@@ -61,7 +61,7 @@ namespace com.paralib.Xandroid
 
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, bool password=false, XImeActions? imeAction=null, GravityFlags? gravity = null, int? id = null, string tag = null)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType=XInputTypes.Text, XImeActions? imeAction=null, GravityFlags? gravity = null, int? id = null, string tag = null)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
@@ -81,7 +81,14 @@ namespace com.paralib.Xandroid
             }
 
             //order matters
-            if (password) view.InputType = InputTypes.ClassText | InputTypes.TextVariationPassword;
+            if (inputType==XInputTypes.Password)
+            {
+                view.InputType = InputTypes.ClassText | InputTypes.TextVariationPassword;
+            }
+            else if (inputType == XInputTypes.Decimal)
+            {
+                view.InputType = InputTypes.ClassNumber | InputTypes.NumberFlagDecimal;
+            }
 
             return view;
         }

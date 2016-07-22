@@ -71,6 +71,7 @@
     <Compile Include="Utils\Dip.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Utils\Json.cs" />
+    <Compile Include="XInputTypes.cs" />
     <Compile Include="XImeActions.cs" />
     <Compile Include="XSizes.cs" />
     <Compile Include="XView.cs" />
