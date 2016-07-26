@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using com.paralib.Xandroid.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Android.Http
+namespace com.paralib.Xandroid.Http
 {
     public class EndPoint<T>
     {
@@ -19,8 +20,10 @@ namespace com.paralib.Android.Http
         public virtual string User { get; set; }
         public virtual string Password { get; set; }
         public virtual TimeSpan Timeout { get; set; }
+        public virtual T Content { get; set; }
         public virtual int ResponseCode { get; protected set; }
         public virtual T Response { get; protected set; }
+        public virtual string ResponseJson { get; protected set; }
 
         protected static HttpClient HttpClient
         {
@@ -73,7 +76,9 @@ namespace com.paralib.Android.Http
             }
             else if (Method == HttpMethods.PUT)
             {
-                response = HttpClient.PutAsync(uri,null).Result;
+                string jsonContent = Json.Serialize(Content);
+                HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                response = HttpClient.PutAsync(uri, httpContent).Result;
             }
             else
             {
@@ -81,14 +86,19 @@ namespace com.paralib.Android.Http
             }
 
             ResponseCode = (int)response.StatusCode;
+            ResponseJson = null;
+            Response = default(T);
 
             if (response.IsSuccessStatusCode)
             {
                 //call sync
                 var responseContent = response.Content;
-                string responseString = responseContent.ReadAsStringAsync().Result;
+                ResponseJson = responseContent.ReadAsStringAsync().Result;
 
-                Response = JsonConvert.DeserializeObject<T>(responseString);
+                if (Method == HttpMethods.GET)
+                {
+                    Response = Json.DeSerialize<T>(ResponseJson);
+                }
 
             }
 

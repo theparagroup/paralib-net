@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Android.Http
+namespace com.paralib.Xandroid
 {
-    public enum HttpMethods
+    public enum XSizes
     {
-        GET,
-        POST,
-        PUT,
-        DELETE
+        Small,
+        Medium,
+        Large
     }
 }

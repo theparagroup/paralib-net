@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace com.paralib.Android.Utils
+namespace com.paralib.Xandroid.Utils
 {
     public static class Json
     {

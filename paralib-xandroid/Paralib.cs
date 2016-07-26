@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Android
+namespace com.paralib.Xandroid
 {
     public class Paralib
     {
