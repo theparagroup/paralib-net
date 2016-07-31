@@ -27,9 +27,15 @@ namespace com.paralib.Migrations.CodeGen.Conventions
             return result;
         }
 
-        public string GetPropertyName(string columnName)
+        public string GetPropertyName(string columnName, bool keyify=true)
         {
-            //employee_type_id -> EmployeeTypeId
+            //employee_type_id -> EmployeeType (keyify==false)
+            if (!keyify)
+            {
+                columnName = Regex.Replace(columnName.ToLower(), "_id$", m => "");
+            }
+
+            //employee_type_id -> EmployeeTypeId (keyify==true)
             var result = Regex.Replace(columnName, "^.", m => m.Value.ToUpper());
             result = Regex.Replace(result, "_.", m => new string(new char[] { char.ToUpper(m.Value[1]) }));
             return result;

@@ -21,7 +21,7 @@ namespace com.paralib.Migrations.CodeGen.Conventions
             throw new NotImplementedException();
         }
 
-        public string GetPropertyName(string columnName)
+        public string GetPropertyName(string columnName, bool keyify=true)
         {
             throw new NotImplementedException();
         }

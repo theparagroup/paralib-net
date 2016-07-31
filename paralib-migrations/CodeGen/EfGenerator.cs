@@ -18,10 +18,32 @@ namespace com.paralib.Migrations.CodeGen
             return Convention.EfPrefix + base.GetClassName(tableName);
         }
 
+        protected string GetDependentEntityNavProperty(string tableName)
+        {
+            //user_types -> IList<EfUserType> UserTypes;
+            return Convention.GetClassName(tableName, false);
+        }
+
+        protected string GetFKNavProperty(string columnName)
+        {
+            //created_by_user_id => CreatedByUser
+            //user_type_id => UserType
+
+            columnName = Convention.GetPropertyName(columnName, false);
+            return columnName;
+        }
+
         protected override void OnGenerate(Table table, string className)
         {
             WriteLine("using System;");
             WriteLine("using System.Collections.Generic;");
+            WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
+
+            if (className=="EfJob")
+            {
+                int x = 1;
+            }
+                
 
             //bad hack
             if (ClassOptions.Namespace != null) WriteLine($"using {ClassOptions.Namespace};");
@@ -33,20 +55,33 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine($"\tpublic class {className}:{Convention.GetClassName(table.Name,true)}");
             WriteLine("\t{");
 
+            //fkey navigation properties
             foreach  (Relationship r in table.ForeignKeys)
             {
-                //OnColumn = created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
-                //OnColumn = user_type_id => public virtual EfUserType UserType { get; set; }
-                string onColumn = Regex.Replace(r.OnColumn.ToLower(), "_id$", m => "");
+                //created_by_user_id => [ForeignKey("CreatedByUserId")]
+                WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(r.OnColumn)}\")]");
 
-
-                WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {Convention.GetClassName(onColumn, true)} {{ get; set;}}");
+                //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                //user_type_id => public virtual EfUserType UserType { get; set; }
+                string fkNav = GetFKNavProperty(r.OnColumn);
+                WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {fkNav} {{ get; set;}}");
             }
 
+            //dependent entity navigation properties
             foreach (Relationship r in table.References)
             {
+                //created_by_user_id => [InverseProperty("CreatedByUser")]
+                WriteLine($"\t\t[InverseProperty(\"{GetFKNavProperty(r.OtherColumn)}\")]");
+
+                //public virtual List<EfUser> CreatedByUser_Users { get; set; }
+                string entityNavPrefix = "";
+                if (table.References.Where(tr=> tr.OtherTable==r.OtherTable).Count()>1)
+                {
+                    entityNavPrefix = GetFKNavProperty(r.OtherColumn) + "_";
+                }
+                
                 //public virtual List<EfUser> Users { get; set; }
-                WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {Convention.GetClassName(r.OtherTable, false)} {{ get; set;}}");
+                WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {entityNavPrefix+GetDependentEntityNavProperty(r.OtherTable)} {{ get; set;}}");
             }
 
 
