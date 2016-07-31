@@ -12,7 +12,7 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 
         public string EfPrefix { get; } = "Ef";
 
-        public string GetClassName(string tableName, bool singularize)
+        public string GetClassName(string tableName, Pluralities plurality)
         {
             //employee_types -> EmployeeType
             var result = Regex.Replace(tableName, "^.", m => m.Value.ToUpper());
@@ -20,22 +20,29 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 
             string[] parts = result.Split('_');
 
-            if (singularize) parts[parts.Length - 1] = Lexeme.Singularize(parts[parts.Length - 1]);
+            //in paralib convention tables are by default plural, we only need to handle the singular case
+            if (plurality == Pluralities.Singular)
+            {
+                parts[parts.Length - 1] = Lexeme.Singularize(parts[parts.Length - 1]);
+            }
 
             result = string.Join("",parts);
 
             return result;
         }
 
-        public string GetPropertyName(string columnName, bool keyify=true)
+        public string GetEntityName(string columnName)
         {
-            //employee_type_id -> EmployeeType (keyify==false)
-            if (!keyify)
-            {
-                columnName = Regex.Replace(columnName.ToLower(), "_id$", m => "");
-            }
+            //employee_type_id -> EmployeeType
+            columnName = Regex.Replace(columnName.ToLower(), "_id$", m => "");
 
-            //employee_type_id -> EmployeeTypeId (keyify==true)
+            var result = GetPropertyName(columnName);
+            return result;
+        }
+
+        public string GetPropertyName(string columnName)
+        {
+            //employee_type_id -> EmployeeTypeId
             var result = Regex.Replace(columnName, "^.", m => m.Value.ToUpper());
             result = Regex.Replace(result, "_.", m => new string(new char[] { char.ToUpper(m.Value[1]) }));
             return result;

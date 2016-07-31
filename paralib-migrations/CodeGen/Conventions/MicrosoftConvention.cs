@@ -11,7 +11,7 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 
         public string EfPrefix { get; } = null;
 
-        public string GetClassName(string tableName, bool singularize)
+        public string GetClassName(string tableName, Pluralities plurality)
         {
             throw new NotImplementedException();
         }
@@ -21,7 +21,12 @@ namespace com.paralib.Migrations.CodeGen.Conventions
             throw new NotImplementedException();
         }
 
-        public string GetPropertyName(string columnName, bool keyify=true)
+        public string GetEntityName(string columnName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetPropertyName(string columnName)
         {
             throw new NotImplementedException();
         }

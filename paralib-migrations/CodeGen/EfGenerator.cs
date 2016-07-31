@@ -21,7 +21,7 @@ namespace com.paralib.Migrations.CodeGen
         protected string GetDependentEntityNavProperty(string tableName)
         {
             //user_types -> IList<EfUserType> UserTypes;
-            return Convention.GetClassName(tableName, false);
+            return Convention.GetClassName(tableName, Pluralities.Plural);
         }
 
         protected string GetFKNavProperty(string columnName)
@@ -29,7 +29,7 @@ namespace com.paralib.Migrations.CodeGen
             //created_by_user_id => CreatedByUser
             //user_type_id => UserType
 
-            columnName = Convention.GetPropertyName(columnName, false);
+            columnName = Convention.GetEntityName(columnName);
             return columnName;
         }
 
@@ -39,11 +39,11 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine("using System.Collections.Generic;");
             WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
 
-            if (className=="EfJob")
-            {
-                int x = 1;
-            }
-                
+            //for debugging
+            //if (className=="EfJob")
+            //{
+            //    int x = 1;
+            //}
 
             //bad hack
             if (ClassOptions.Namespace != null) WriteLine($"using {ClassOptions.Namespace};");
@@ -52,7 +52,7 @@ namespace com.paralib.Migrations.CodeGen
 
             if (ClassOptions.Namespace!=null) WriteLine($"namespace {ClassOptions.Namespace}{(ClassOptions.SubNamespace!=null?"."+ ClassOptions.SubNamespace:"")}\n{{");
 
-            WriteLine($"\tpublic class {className}:{Convention.GetClassName(table.Name,true)}");
+            WriteLine($"\tpublic class {className}:{Convention.GetClassName(table.Name, Pluralities.Singular)}");
             WriteLine("\t{");
 
             //fkey navigation properties

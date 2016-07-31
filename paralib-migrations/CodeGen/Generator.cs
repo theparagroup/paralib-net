@@ -24,7 +24,7 @@ namespace com.paralib.Migrations.CodeGen
 
         protected virtual string GetClassName(string tableName)
         {
-            return Convention.GetClassName(tableName, true);
+            return Convention.GetClassName(tableName, Pluralities.Singular);
         }
 
         protected bool IsNullable(Column column)

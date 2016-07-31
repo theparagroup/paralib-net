@@ -62,6 +62,7 @@
     <Compile Include="CodeGen\ModelGenerator.cs" />
     <Compile Include="CodeGen\Conventions\MicrosoftConvention.cs" />
     <Compile Include="CodeGen\Conventions\ParalibConvention.cs" />
+    <Compile Include="CodeGen\Pluralities.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="ParaMigration.cs" />
     <Compile Include="Logging\StandardLog.cs" />
