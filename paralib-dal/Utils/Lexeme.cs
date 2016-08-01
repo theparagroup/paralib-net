@@ -18,9 +18,9 @@ namespace com.paralib.Dal.Utils
     {
         private static PluralizationService _pluralizer=PluralizationService.CreateService(new CultureInfo("en-US"));
 
-        private static bool IsPluralOverride(ref bool plural, string value, string pluralPatternm, string singularPattern)
+        private static bool IsPluralOverride(ref bool plural, string value, string pluralPattern, string singularPattern)
         {
-            if (Regex.IsMatch(value, pluralPatternm, RegexOptions.IgnoreCase))
+            if (Regex.IsMatch(value, pluralPattern, RegexOptions.IgnoreCase))
             {
                 plural = true;
                 return true;
@@ -52,6 +52,7 @@ namespace com.paralib.Dal.Utils
         public static string Pluralize(string value)
         {
             if (IsOverride(ref value, "status$", m => m.Value + "es")) return value;
+            if (IsOverride(ref value, "info$", m => m.Value + "")) return value;
 
             string result = _pluralizer.Pluralize(value);
             return result;
@@ -62,6 +63,7 @@ namespace com.paralib.Dal.Utils
             bool plural= _pluralizer.IsPlural(value);
 
             IsPluralOverride(ref plural, value, "statuses$", "status$");
+            IsPluralOverride(ref plural, value, "info$", "info");
 
             return plural;
         }
@@ -69,6 +71,7 @@ namespace com.paralib.Dal.Utils
         public static string Singularize(string value)
         {
             if (IsOverride(ref value, "statuses$", m => m.Value.Substring(0, 6))) return value;
+            if (IsOverride(ref value, "info$", m => m.Value + "")) return value;
 
             string result = _pluralizer.Singularize(value);
             return result;
@@ -79,6 +82,7 @@ namespace com.paralib.Dal.Utils
             bool singular = _pluralizer.IsSingular(value);
 
             if (IsPluralOverride(ref singular, value, "statuses$", "status$")) return !singular;
+            if (IsPluralOverride(ref singular, value, "info$", "info$")) return singular;
 
             return singular;
 
