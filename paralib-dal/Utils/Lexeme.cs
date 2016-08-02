@@ -63,7 +63,7 @@ namespace com.paralib.Dal.Utils
             bool plural= _pluralizer.IsPlural(value);
 
             IsPluralOverride(ref plural, value, "statuses$", "status$");
-            IsPluralOverride(ref plural, value, "info$", "info");
+            IsPluralOverride(ref plural, value, "info$", "info$");
 
             return plural;
         }
@@ -82,7 +82,7 @@ namespace com.paralib.Dal.Utils
             bool singular = _pluralizer.IsSingular(value);
 
             if (IsPluralOverride(ref singular, value, "statuses$", "status$")) return !singular;
-            if (IsPluralOverride(ref singular, value, "info$", "info$")) return singular;
+            if (IsPluralOverride(ref singular, value, "info$", "info$")) return !singular;
 
             return singular;
 
