@@ -10,6 +10,7 @@ namespace com.paralib.Dal.Utils
         fixing stupid microsoft ideas about the english language
 
         status/statuses
+        info/info
 
     */
 
@@ -52,7 +53,7 @@ namespace com.paralib.Dal.Utils
         public static string Pluralize(string value)
         {
             if (IsOverride(ref value, "status$", m => m.Value + "es")) return value;
-            if (IsOverride(ref value, "info$", m => m.Value + "")) return value;
+            if (IsOverride(ref value, "info$", m => m.Value)) return value;
 
             string result = _pluralizer.Pluralize(value);
             return result;
@@ -71,7 +72,7 @@ namespace com.paralib.Dal.Utils
         public static string Singularize(string value)
         {
             if (IsOverride(ref value, "statuses$", m => m.Value.Substring(0, 6))) return value;
-            if (IsOverride(ref value, "info$", m => m.Value + "")) return value;
+            if (IsOverride(ref value, "info$", m => m.Value)) return value;
 
             string result = _pluralizer.Singularize(value);
             return result;
