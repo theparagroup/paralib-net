@@ -61,6 +61,7 @@
     <Compile Include="ParalibException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\FileSystem.cs" />
+    <Compile Include="Utils\Email.cs" />
     <Compile Include="Utils\Phone.cs" />
     <Compile Include="Utils\Maps.cs" />
     <Compile Include="Utils\MessageBox.cs" />
