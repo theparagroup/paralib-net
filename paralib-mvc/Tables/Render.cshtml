@@ -1,0 +1,48 @@
+﻿@model com.paralib.Mvc.Tables.TableDefinition 
+
+
+<table id="@Model.TableId" class="@Model.TableClass"  border="1">
+    @{
+
+        int rowNum = 0;
+        foreach (object obj in Model.Source)
+        {
+            if (rowNum == 0)
+            {
+                <tr class="@Model.TrHeaderClass @Model.TrClass">
+
+                    @foreach (var column in Model.Columns)
+                    {
+                        <th class="@Model.ThClass @Model.ThHeaderClass @(column.Attribute?.ThClass)">@column.Name</th>
+                    }
+
+                </tr>
+            }
+
+            <tr class="@Model.TrRowClass @Model.TrClass">
+
+                @foreach (var column in Model.Columns)
+                {
+                    <td class="@Model.TdClass @Model.TdRowClass @(column.Attribute?.TdClass)">
+                    
+                        @if (column.Attribute?.Raw??false)
+                        {
+                            @Html.Raw(Model.GetValue(obj, column))
+                        }
+                        else
+                        {
+                            @Model.GetValue(obj, column)
+
+                        }
+
+                    
+                    </td>
+                }
+
+            </tr>
+
+            ++rowNum;
+        }
+
+    }
+</table>
