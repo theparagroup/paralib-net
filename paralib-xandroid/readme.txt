@@ -2,7 +2,9 @@
 ====	Xamarin Install
 =============================================================
 
-install java 1.7
+https://developer.xamarin.com/guides/android/getting_started/installation/windows/manual_installation/
+
+install java 1.7 32 bit
 install android sdk
 install xamarin for visual studio
 
@@ -84,6 +86,9 @@ Mono.AndroidTools.InstallFailedException: Failure [INSTALL_FAILED_UPDATE_INCOMPA
 ====	Useful ADB Commands
 =============================================================
 
+Enable Developer Mode on phone: System-> About -> tap "Build Number" 7 times
+
+
 C:\Program Files (x86)\Android\android-sdk\platform-tools
 
 ./adb devices
@@ -137,9 +142,10 @@ Jelly Bean
 18/4.3.1
 
 KitKat
-19/4.4.2
+19/4.4.2 (printing)
 20/4.4W.2
 
 Lollipop
 21/5.0.1
 22/5.1.1
+
