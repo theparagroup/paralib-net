@@ -16,16 +16,35 @@ namespace com.paralib.Xandroid
 {
     public class XView
     {
-        public static int GetTextAppearance(XSizes size)
+        public static int GetTextAppearanceX(XSizes size)
         {
             switch (size)
             {
                 case XSizes.Small:
-                    return Android.Resource.Style.TextAppearanceSmall;
+                    return Android.Resource.Style.TextAppearanceSmall; //14sp
                 case XSizes.Medium:
-                    return Android.Resource.Style.TextAppearanceMedium;
+                    return Android.Resource.Style.TextAppearanceMedium; //18sp
                 case XSizes.Large:
-                    return Android.Resource.Style.TextAppearanceLarge;
+                    return Android.Resource.Style.TextAppearanceLarge; //22sp
+                default:
+                    throw new ParalibException("bad size");
+            }
+
+
+        }
+
+        public static float GetTextAppearance2(XSizes size)
+        {
+            switch (size)
+            {
+                case XSizes.Small:
+                    return 14;
+                case XSizes.Medium:
+                    return 18;
+                case XSizes.Large:
+                    return 22;
+                case XSizes.XLarge:
+                    return 26;
                 default:
                     throw new ParalibException("bad size");
             }
@@ -42,35 +61,38 @@ namespace com.paralib.Xandroid
             if (tag != null) view.Tag = tag;
 
             //order matters (do this before other appearance changes)
-            view.SetTextAppearance(context, GetTextAppearance(size));
+            //view.SetTextAppearance(context, GetTextAppearance(size));
+            view.TextSize = GetTextAppearance2(size);
             view.SetTextColor(color ?? Color.Black);
 
             return view;
         }
 
-        public static TextView TextView(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? gravity = null, int? id = null, string tag=null)
+        public static TextView TextView(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
         {
-            var view = TextView(context, size, text,color,id,tag);
+            var view = TextView(context, size, text, color, id, tag);
 
             view.LayoutParameters = layoutParams;
 
-            if (gravity.HasValue) view.Gravity = gravity.Value;
+            if (textGravity.HasValue) view.Gravity = textGravity.Value;
 
             return view;
         }
 
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType=XInputTypes.Text, XImeActions? imeAction=null, GravityFlags? gravity = null, int? id = null, string tag = null)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType=XInputTypes.Text, XImeActions? imeAction=null, GravityFlags? textGravity = null, int? id = null, string tag = null)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
             if (id.HasValue) view.Id = id.Value;
             if (tag != null) view.Tag = tag;
-            if (gravity.HasValue) view.Gravity = gravity.Value;
+            if (textGravity.HasValue) view.Gravity = textGravity.Value;
 
             //order matters
-            view.SetTextAppearance(context, GetTextAppearance(size));
+            //view.SetTextAppearance(context, GetTextAppearance(size));
+            view.TextSize = GetTextAppearance2(size);
+
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
 
@@ -93,17 +115,19 @@ namespace com.paralib.Xandroid
             return view;
         }
 
-        public static Button Button(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? gravity = null, int? id = null, string tag = null)
+        public static Button Button(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
         {
             var view = new Button(context) { LayoutParameters = layoutParams };
 
             if (id.HasValue) view.Id = id.Value;
             if (tag != null) view.Tag = tag;
-            if (gravity.HasValue) view.Gravity = gravity.Value;
+            if (textGravity.HasValue) view.Gravity = textGravity.Value;
 
 
             //order matters
-            view.SetTextAppearance(context, GetTextAppearance(size));
+            //view.SetTextAppearance(context, GetTextAppearance(size));
+            view.TextSize = GetTextAppearance2(size);
+
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
 
@@ -113,9 +137,11 @@ namespace com.paralib.Xandroid
         public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int srcId, Color? backgroundColor = null, int? id = null, string tag = null)
         {
             var view = new ImageView(context) { LayoutParameters = layoutParams };
-
+            
             if (id.HasValue) view.Id = id.Value;
             if (tag != null) view.Tag = tag;
+
+            view.SetAdjustViewBounds(true);
 
             view.SetImageResource(srcId);
 

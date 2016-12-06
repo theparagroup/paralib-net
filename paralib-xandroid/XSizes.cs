@@ -10,6 +10,7 @@ namespace com.paralib.Xandroid
     {
         Small,
         Medium,
-        Large
+        Large,
+        XLarge
     }
 }

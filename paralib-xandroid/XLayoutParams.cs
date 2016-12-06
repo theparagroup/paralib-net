@@ -26,8 +26,6 @@ namespace com.paralib.Xandroid
             return layoutParams;
         }
 
-
-
         public static LinearLayout.LayoutParams Linear(float width, float height, float weight = 0, GravityFlags? gravity=null, float? leftMargin = null, float? topMargin = null, float? rightMargin = null, float? bottomMargin = null)
         {
             var layoutParams= new LinearLayout.LayoutParams(Dip.ToInt32(width), Dip.ToInt32(height), weight);
