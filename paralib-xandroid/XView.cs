@@ -52,7 +52,7 @@ namespace com.paralib.Xandroid
 
         }
 
-        public static TextView TextView(Context context, XSizes size, string text=null, Color? color = null, int? id = null, string tag = null)
+        public static TextView TextView(Context context, XSizes size, string text=null, Color? color = null, Color? backgroundColor=null, int? id = null, string tag = null)
         {
             var view = new TextView(context);
             view.Text = text;
@@ -64,13 +64,14 @@ namespace com.paralib.Xandroid
             //view.SetTextAppearance(context, GetTextAppearance(size));
             view.TextSize = GetTextAppearance2(size);
             view.SetTextColor(color ?? Color.Black);
+            if (backgroundColor != null) view.SetBackgroundColor(backgroundColor.Value);
 
             return view;
         }
 
-        public static TextView TextView(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
+        public static TextView TextView(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, Color? backgroundColor = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
         {
-            var view = TextView(context, size, text, color, id, tag);
+            var view = TextView(context, size, text, color, backgroundColor, id, tag);
 
             view.LayoutParameters = layoutParams;
 
@@ -134,16 +135,17 @@ namespace com.paralib.Xandroid
             return view;
         }
 
-        public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int srcId, Color? backgroundColor = null, int? id = null, string tag = null)
+        public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int ?srcId=null, Color? backgroundColor = null, int? id = null, string tag = null)
         {
             var view = new ImageView(context) { LayoutParameters = layoutParams };
             
             if (id.HasValue) view.Id = id.Value;
             if (tag != null) view.Tag = tag;
+            
 
             view.SetAdjustViewBounds(true);
 
-            view.SetImageResource(srcId);
+            if (srcId != null) view.SetImageResource(srcId.Value);
 
             if (backgroundColor.HasValue) view.SetBackgroundColor(backgroundColor.Value);
 
