@@ -1,6 +1,7 @@
 ﻿using System;
-using Android.Content;
 using System.IO;
+using Android.Content;
+using Android.Graphics.Drawables;
 
 namespace com.paralib.Xandroid.Utils
 {
@@ -11,5 +12,6 @@ namespace com.paralib.Xandroid.Utils
             var s = context.Resources.OpenRawResource(id);
             return s;
         }
+
     }
 }
