@@ -82,13 +82,14 @@ namespace com.paralib.Xandroid
 
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType=XInputTypes.Text, XImeActions? imeAction=null, GravityFlags? textGravity = null, int? id = null, string tag = null)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType=XInputTypes.Text, XImeActions? imeAction=null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus=false)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
             if (id.HasValue) view.Id = id.Value;
             if (tag != null) view.Tag = tag;
             if (textGravity.HasValue) view.Gravity = textGravity.Value;
+            if (selectOnFocus.HasValue) view.SetSelectAllOnFocus(selectOnFocus.Value);
 
             //order matters
             //view.SetTextAppearance(context, GetTextAppearance(size));
