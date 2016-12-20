@@ -27,6 +27,7 @@ namespace com.paralib.DataAnnotations
         public const string Comment = nameof(Comment);
         public const string Note = nameof(Note);
         public const string Text = nameof(Text);
+        public const string LongText = nameof(LongText);
         public const string MaxText = nameof(MaxText);
         public const string Password = nameof(Password);
         public const string DateTime = nameof(DateTime);
@@ -61,6 +62,7 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Comment), new StringType(nameof(Comment)) { MaximumLength = 256 });
             _paraTypes.Add(nameof(Note), new StringType(nameof(Note)) { MaximumLength = 512 });
             _paraTypes.Add(nameof(Text), new StringType(nameof(Text)) { MaximumLength = 1024});
+            _paraTypes.Add(nameof(LongText), new StringType(nameof(LongText)) { MaximumLength = 2048 });
             _paraTypes.Add(nameof(MaxText), new StringType(nameof(MaxText)) { MaximumLength = int.MaxValue});
             _paraTypes.Add(nameof(Password), new StringType(nameof(Password)) { MaximumLength = 128 });
             _paraTypes.Add(nameof(Currency), new StringType(nameof(Currency)) { MaximumLength = 10, RegEx= @"^\$?(\d{1,3},?(\d{3},?)*\d{3}(.\d{0,3})?|\d{1,3}(.\d{2})?)$", BadFormatErrorMessage = "'{0}' must be a currency value.", TooLongErrorMessage = "'{0}' is too large." });
