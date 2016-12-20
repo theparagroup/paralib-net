@@ -100,9 +100,15 @@ namespace com.paralib.Xandroid
 
             if (imeAction.HasValue)
             {
+                //this is required for ime actions, but now the box won't strech horizontally
+                //
+                //  this doesn't help:
+                //      view.SetHorizontallyScrolling(false);
+
                 view.SetSingleLine();
                 view.ImeOptions = (ImeAction)imeAction;
             }
+
 
             //order matters
             if (inputType==XInputTypes.Password)
