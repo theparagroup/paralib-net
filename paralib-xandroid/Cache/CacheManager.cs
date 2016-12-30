@@ -66,16 +66,6 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-        public static void Free()
-        {
-            throw new NotImplementedException();
-
-            //using (var db = new SQLiteConnection(DbPath))
-            //{
-            //    db.Execute("delete from cache_items where status != 2");
-            //}
-        }
-
         public static void Clear<T>(int? id=null)
         {
 
@@ -113,19 +103,6 @@ namespace com.paralib.Xandroid.Cache
             return null;
         }
 
-        private static void _UpdateStatus<T>(CacheItem<T> cacheItem, CacheStatuses cacheStatus)
-        {
-
-            cacheItem.CacheStatus = cacheStatus;
-
-            var now = DateTime.Now;
-
-            if (cacheStatus == CacheStatuses.Downloaded) cacheItem.RetrievedOn = now;
-            if (cacheStatus == CacheStatuses.Modified) cacheItem.ModifiedOn = now;
-            if (cacheStatus == CacheStatuses.Cached) cacheItem.CachedOn = now;
-            if (cacheStatus == CacheStatuses.Uploaded) cacheItem.UploadedOn = now;
-        }
-
         public static CacheStatuses GetStatus<T>(int? id = null)
         {
             using (var db = new SQLiteConnection(DbPath))
@@ -138,13 +115,13 @@ namespace com.paralib.Xandroid.Cache
                 }
                 else
                 {
-                    return CacheStatuses.NotCached;
+                    return CacheStatuses.NotFound;
                 }
 
             }
         }
 
-        public static void UpdateStatus<T>(CacheStatuses cacheStatus, int? id = null)
+        public static void UpdateStatus<T>(bool modified, int? id = null)
         {
             using (var db = new SQLiteConnection(DbPath))
             {
@@ -152,7 +129,17 @@ namespace com.paralib.Xandroid.Cache
 
                 if (oldItem!=null)
                 {
-                    _UpdateStatus(oldItem, cacheStatus);
+                    if (modified)
+                    {
+                        oldItem.CacheStatus = CacheStatuses.Modified;
+                        oldItem.ModifiedOn = DateTime.Now;
+                    }
+                    else
+                    {
+                        oldItem.CacheStatus = CacheStatuses.Cached;
+                        oldItem.CachedOn = DateTime.Now;
+                    }
+
                     db.Update(oldItem);
                 }
 
@@ -160,13 +147,13 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-        public static CacheItem<T> Save<T>(T value, CacheStatuses cacheStatus, int? id=null)
+        public static CacheItem<T> Save<T>(T value, bool modified=false, int? id = null)
         {
             using (var db = new SQLiteConnection(DbPath))
             {
                 if (value == null)
                 {
-                    db.Delete<CacheItem>(ToKey(typeof(T),id));
+                    db.Delete<CacheItem>(ToKey(typeof(T), id));
                     return null;
                 }
                 else
@@ -177,20 +164,28 @@ namespace com.paralib.Xandroid.Cache
                     newItem.Key = ToKey(typeof(T), id);
                     newItem.Value = value;
 
-                    if (oldItem!=null)
+                    if (oldItem != null)
                     {
                         newItem.CreatedOn = oldItem.CreatedOn;
-                        newItem.RetrievedOn = oldItem.RetrievedOn;
-                        newItem.ModifiedOn = oldItem.ModifiedOn;
                         newItem.CachedOn = oldItem.CachedOn;
-                        newItem.UploadedOn = oldItem.UploadedOn;
+                        newItem.ModifiedOn = oldItem.ModifiedOn;
                     }
                     else
                     {
                         newItem.CreatedOn = DateTime.Now;
                     }
 
-                    _UpdateStatus(newItem, cacheStatus);
+
+                    if (modified)
+                    {
+                        newItem.CacheStatus = CacheStatuses.Modified;
+                        newItem.ModifiedOn = DateTime.Now;
+                    }
+                    else
+                    {
+                        newItem.CacheStatus = CacheStatuses.Cached;
+                        newItem.CachedOn = DateTime.Now;
+                    }
 
                     db.InsertOrReplace(newItem);
 
