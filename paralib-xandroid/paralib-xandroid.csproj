@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Java.Interop">
+      <HintPath>..\..\paralib-net-dependencies\lib\MonoAndroid\v1.0\Java.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="Mono.Android">
       <HintPath>..\..\paralib-net-dependencies\lib\MonoAndroid\v5.1\Mono.Android.dll</HintPath>
     </Reference>
@@ -75,6 +78,7 @@
     <Compile Include="Utils\Dip.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Utils\Json.cs" />
+    <Compile Include="Utils\Text.cs" />
     <Compile Include="XInputTypes.cs" />
     <Compile Include="XImeActions.cs" />
     <Compile Include="XSizes.cs" />
