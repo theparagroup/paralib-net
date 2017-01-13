@@ -52,7 +52,7 @@ namespace com.paralib.Xandroid
 
         }
 
-        public static TextView TextView(Context context, XSizes size, string text=null, Color? color = null, Color? backgroundColor=null, int? id = null, string tag = null)
+        public static TextView TextView(Context context, XSizes size, string text = null, Color? color = null, Color? backgroundColor = null, int? id = null, string tag = null)
         {
             var view = new TextView(context);
             view.Text = text;
@@ -82,7 +82,7 @@ namespace com.paralib.Xandroid
 
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType=XInputTypes.Text, XImeActions? imeAction=null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus=false)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
@@ -111,7 +111,7 @@ namespace com.paralib.Xandroid
 
 
             //order matters
-            if (inputType==XInputTypes.Password)
+            if (inputType == XInputTypes.Password)
             {
                 view.InputType = InputTypes.ClassText | InputTypes.TextVariationPassword;
             }
@@ -119,6 +119,14 @@ namespace com.paralib.Xandroid
             {
                 view.InputType = InputTypes.ClassNumber | InputTypes.NumberFlagDecimal;
             }
+
+            if (maxLength.HasValue)
+            {
+                view.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(maxLength.Value) });
+            }
+
+            if (onTextChanged != null) view.TextChanged += (senderAlert, args) => { onTextChanged(senderAlert, args); };
+
 
             return view;
         }
@@ -142,13 +150,13 @@ namespace com.paralib.Xandroid
             return view;
         }
 
-        public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int ?srcId=null, Color? backgroundColor = null, int? id = null, string tag = null)
+        public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int? srcId = null, Color? backgroundColor = null, int? id = null, string tag = null)
         {
             var view = new ImageView(context) { LayoutParameters = layoutParams };
-            
+
             if (id.HasValue) view.Id = id.Value;
             if (tag != null) view.Tag = tag;
-            
+
 
             view.SetAdjustViewBounds(true);
 
@@ -188,6 +196,36 @@ namespace com.paralib.Xandroid
             return view;
         }
 
+        //paramterize this
+        public static Spinner Spinner<T>(Context context, List<T> items, int? id = null, Action<Spinner, int, T> itemSelected = null) where T :class
+        {
+            Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
 
+            if (id != null) spinner.Id = id.Value;
+
+            ArrayAdapter _adapterFrom = new ArrayAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, items);
+            _adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            spinner.Adapter = _adapterFrom;
+
+            if (itemSelected != null)
+            {
+
+                spinner.ItemSelected += (object sender, AdapterView.ItemSelectedEventArgs e) =>
+                {
+                    var daSpinner = (Spinner)sender;
+
+                    var jo = spinner.SelectedItem;
+                    var propertyInfo = jo.GetType().GetProperty("Instance");
+                    var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
+                    var pos = daSpinner.SelectedItemPosition;
+
+                    itemSelected(spinner, pos, si);
+
+                };
+            }
+
+            return spinner;
+
+        }
     }
 }
