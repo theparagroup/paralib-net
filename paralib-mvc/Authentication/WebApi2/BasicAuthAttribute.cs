@@ -1,36 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
-using System.Web.Http.Results;
-using System.Linq;
-using System.Web.Http;
 
 namespace com.paralib.Mvc.Authentication.WebApi2
 {
+    //https://www.asp.net/web-api/overview/security/authentication-filters
+    //https://samritchie.net/2014/02/27/basic-auth-with-a-web-api-2-iauthenticationfilter/
 
     public abstract class BasicAuthAttribute : Attribute, IAuthenticationFilter
     {
-        public string Realm { get; set; }
-
-
-        private UnauthorizedResult Unauthorized(HttpRequestMessage request)
+        
+        public BasicAuthAttribute(string realm)
         {
-            return new UnauthorizedResult(new List<AuthenticationHeaderValue>() { new AuthenticationHeaderValue("Basic", "realm=The Realm!") }, request);
+            Realm = realm;
         }
+
+        public string Realm { get; protected set; }
 
         protected abstract IPrincipal OnAuthenticate(string user, string password);
 
         public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
-            //we either set Principal or ErrorResult
-
+            //we either set Principal (valid credentials) or ErrorResult (invalid credentials), or do nothing (no credentials)
 
             if (context.Request.Headers.Authorization == null) return;
             if (context.Request.Headers.Authorization.Scheme != "Basic") return;
@@ -38,7 +32,7 @@ namespace com.paralib.Mvc.Authentication.WebApi2
             if (String.IsNullOrEmpty(context.Request.Headers.Authorization.Parameter))
             {
                 //blank credentials
-                context.ErrorResult = Unauthorized(context.Request);
+                context.ErrorResult = new UnauthorizedResult("Missing credentials",context.Request);
                 return;
             }
 
@@ -61,46 +55,27 @@ namespace com.paralib.Mvc.Authentication.WebApi2
 
             if (principal==null)
             {
-                principal = new GenericPrincipal(new GenericIdentity(""), new string[] { });
-                context.ErrorResult = Unauthorized(context.Request);
+                context.ErrorResult = new UnauthorizedResult("Invalid user or password", context.Request);
+            }
+            else
+            {
+                //apparently sets thread too
+                context.Principal = principal;
             }
 
-            //apparently sets thread too
-            context.Principal = principal;
-
-            //await Nothing();
+            await Task.CompletedTask;
         }
-
-        public Task Nothing()
-        {
-            return Task.CompletedTask;
-        }
-
-
-
 
         public async Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
+            //context.Result will either be the controller or the ErrorResult we set above
 
+            context.Result = new BasicChallengeResult(context.Result, Realm);
 
-            HttpResponseMessage response = context.Result.ExecuteAsync(cancellationToken).Result;
-
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                // Only add one challenge per authentication scheme?
-                if (!response.Headers.WwwAuthenticate.Any((h) => h.Scheme == "Basic"))
-                {
-                    //WWW-Authenticate: Basic realm="myRealm"
-
-                    //response.Headers.WwwAuthenticate.Add(new AuthenticationHeaderValue("Basic", "realm=The Realm"));
-                    //response.Headers.Pragma.Add(new NameValueHeaderValue("Basic", "Realm"));
-
-                    //context.Result = new UnauthorizedResult(new List<AuthenticationHeaderValue>() { new AuthenticationHeaderValue("Basic", "realm=The Realm!") }, context.Request);
-                    context.Result = Unauthorized(context.Request);
-                }
-            }
+            await Task.CompletedTask;
 
         }
+
 
         public virtual bool AllowMultiple
         {

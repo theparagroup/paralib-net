@@ -65,6 +65,8 @@
     <Compile Include="Authentication\Forms.cs" />
     <Compile Include="Authentication\ParaIdentity.cs" />
     <Compile Include="Authentication\WebApi2\BasicAuthAttribute.cs" />
+    <Compile Include="Authentication\WebApi2\BasicChallengeResult.cs" />
+    <Compile Include="Authentication\WebApi2\UnauthorizedResult.cs" />
     <Compile Include="Authorization\ParaPrinciple.cs" />
     <Compile Include="Authorization\PermissionsAttribute.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
