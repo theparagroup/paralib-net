@@ -11,8 +11,12 @@ namespace com.paralib.DataAnnotations
 
         public const string Key = nameof(Key);
         public const string Blob = nameof(Blob);
+        public const string DateTime = nameof(DateTime);
         public const string Time = nameof(Time);
         public const string Bool = nameof(Bool);
+        public const string Decimal = nameof(Decimal);
+        public const string Int32 = nameof(Int32);
+        public const string Guid = nameof(Guid);
 
         public const string Email= nameof(Email);
         public const string Url = nameof(Url);
@@ -30,9 +34,6 @@ namespace com.paralib.DataAnnotations
         public const string LongText = nameof(LongText);
         public const string MaxText = nameof(MaxText);
         public const string Password = nameof(Password);
-        public const string DateTime = nameof(DateTime);
-        public const string Decimal = nameof(Decimal);
-        public const string Int32 = nameof(Int32);
         public const string Currency = nameof(Currency);
 
         private ParaTypes()
@@ -40,10 +41,11 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Key), new KeyType(nameof(Key)));
             _paraTypes.Add(nameof(Blob), new BlobType(nameof(Blob)));
             _paraTypes.Add(nameof(DateTime), new DateTimeType(nameof(DateTime)));
-            _paraTypes.Add(nameof(Decimal), new DecimalType(nameof(Decimal)));
             _paraTypes.Add(nameof(Time), new TimeType(nameof(Time)));
             _paraTypes.Add(nameof(Bool), new BoolType(nameof(Bool)));
-            _paraTypes.Add(nameof(Int32), new Int32Type(nameof(Int32))); 
+            _paraTypes.Add(nameof(Decimal), new DecimalType(nameof(Decimal)));
+            _paraTypes.Add(nameof(Int32), new Int32Type(nameof(Int32)));
+            _paraTypes.Add(nameof(Guid), new GuidType(nameof(Guid)));
 
 
             //more complicated and supposedly 99%

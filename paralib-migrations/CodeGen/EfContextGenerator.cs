@@ -30,7 +30,7 @@ namespace com.paralib.Migrations.CodeGen
             if (ClassOptions.Namespace != null) WriteLine($"namespace {ClassOptions.Namespace}{(ClassOptions.SubNamespace != null ? "." + ClassOptions.SubNamespace : "")}\n{{");
 
             WriteLine("\t[DbConfigurationType(typeof(EfConfiguration))]");
-            WriteLine($"\tpublic class DbContext:EfContext");
+            WriteLine($"\tpublic partial class DbContext:EfContext");
             WriteLine("\t{");
 
             //diagnostics

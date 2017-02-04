@@ -100,6 +100,7 @@ namespace com.paralib.Dal.Utils
                 case "UInt16":
                 case "UInt32":
                 case "UInt64":
+                case "Guid":
                     return true;
 
                 default: return false;

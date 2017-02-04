@@ -70,6 +70,10 @@ namespace com.paralib.Migrations.ParaTypes
             {
                 return fluent.AsBoolean();
             }
+            else if (paraType.Type == typeof(Guid))
+            {
+                return fluent.AsGuid();
+            }
             else
             {
                 throw new ParalibException($"ParaType \"{paraType.Type.Name}\" is not supported in migrations.");
