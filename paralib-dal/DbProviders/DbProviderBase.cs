@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Dal.DbProviders
@@ -247,6 +248,9 @@ namespace com.paralib.Dal.DbProviders
             sql += " ON KCU2.CONSTRAINT_CATALOG = RC.UNIQUE_CONSTRAINT_CATALOG AND KCU2.CONSTRAINT_SCHEMA = RC.UNIQUE_CONSTRAINT_SCHEMA AND KCU2.CONSTRAINT_NAME = RC.UNIQUE_CONSTRAINT_NAME AND KCU2.ORDINAL_POSITION = KCU1.ORDINAL_POSITION";
             sql += $" WHERE KCU1.TABLE_NAME='{table.Name}' or KCU2.TABLE_NAME='{table.Name}'";
 
+            //note: we skip compound foreign keys (to be added in future version)
+
+            List<string> constraints = new List<string>();
             List<Relationship> fkeys = new List<Relationship>();
             List<Relationship> refs = new List<Relationship>();
 
@@ -259,6 +263,8 @@ namespace com.paralib.Dal.DbProviders
                 string fkColumn = reader.GetValue<string>("FK_COLUMN_NAME");
                 string uqTable = reader.GetValue<string>("UQ_TABLE_NAME");
                 string uqColumn = reader.GetValue<string>("UQ_COLUMN_NAME");
+
+                constraints.Add(fkName);
 
                 if (fkTable==table.Name)
                 {
@@ -275,8 +281,12 @@ namespace com.paralib.Dal.DbProviders
 
             }
 
-            table.ForeignKeys = fkeys.ToArray();
-            table.References = refs.ToArray();
+            //condense to the names of simple (non-compound) relationships
+            constraints = (from c in constraints group c by c into grp where grp.Count() == 1 select grp.Key).ToList();
+
+            //filter to non-compound relationships
+            table.ForeignKeys = (from fk in fkeys where constraints.Contains(fk.Name) select fk).ToArray();
+            table.References = (from r in refs where constraints.Contains(r.Name) select r).ToArray();
 
             reader.Close();
 

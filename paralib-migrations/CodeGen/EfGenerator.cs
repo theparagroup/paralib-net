@@ -52,10 +52,10 @@ namespace com.paralib.Migrations.CodeGen
 
             if (ClassOptions.Namespace!=null) WriteLine($"namespace {ClassOptions.Namespace}{(ClassOptions.SubNamespace!=null?"."+ ClassOptions.SubNamespace:"")}\n{{");
 
-            WriteLine($"\tpublic class {className}:{Convention.GetClassName(table.Name, Pluralities.Singular)}");
+            WriteLine($"\tpublic partial class {className}:{Convention.GetClassName(table.Name, Pluralities.Singular)}");
             WriteLine("\t{");
 
-            //fkey navigation properties
+            //fkey navigation properties (non-compound keys)
             foreach  (Relationship r in table.ForeignKeys)
             {
                 //created_by_user_id => [ForeignKey("CreatedByUserId")]
@@ -67,7 +67,7 @@ namespace com.paralib.Migrations.CodeGen
                 WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {fkNav} {{ get; set;}}");
             }
 
-            //dependent entity navigation properties
+            //dependent entity navigation properties (non-compound keys)
             foreach (Relationship r in table.References)
             {
                 //created_by_user_id => [InverseProperty("CreatedByUser")]
