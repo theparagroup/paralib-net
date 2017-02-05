@@ -67,6 +67,52 @@ namespace com.paralib.Migrations.CodeGen
                 WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {fkNav} {{ get; set;}}");
             }
 
+            /*
+                Example of compound self-referential relationship:
+
+                    [Key, Column(Order = 0)]
+                    public int Id1 { get; set; }
+
+                    [Key, Column(Order = 1)]
+                    public int Id2 { get; set; }
+
+                    public int? ParentId1 { get; set; }
+
+                    public int? ParentId2 { get; set; }
+
+                    [InverseProperty("Parent")]
+                    public virtual List<EfAccount> Accounts { get; set; }
+
+                    [ForeignKey("ParentId1,ParentId2")]
+                    public virtual EfAccount Parent { get; set; }
+
+
+                Alternate way: 
+                (note column order is relative and the ordinals do not need to match):
+
+                    [Key, Column(Order = 0)]
+                    public int Id1 { get; set;}
+
+                    [Key, Column(Order = 1)]
+                    public int Id2 { get; set;}
+
+                    [ForeignKey("EfAccount")]
+                    [Column(Order = 2)]
+                    public int Fk1 { get; set;}
+
+                    [ForeignKey("EfAccount")]
+                    [Column(Order = 3)]
+                    public int Fk2{ get; set;}
+
+                    [InverseProperty("Parent")]
+                    public virtual List<EfAccount> Accounts { get; set; }
+
+                    [ForeignKey("EfAccount")]
+                    public virtual AccountType Parent { get; set; }
+
+            */
+
+
             //dependent entity navigation properties (non-compound keys)
             foreach (Relationship r in table.References)
             {
