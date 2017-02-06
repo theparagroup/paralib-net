@@ -56,15 +56,19 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine("\t{");
 
             //fkey navigation properties (non-compound keys)
-            foreach  (Relationship r in table.ForeignKeys)
+            foreach (Relationship r in table.ForeignKeys)
             {
-                //created_by_user_id => [ForeignKey("CreatedByUserId")]
-                WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(r.OnColumn)}\")]");
+                //is other table 'skipped'?
+                if (!_skip.Contains(r.OtherTable))
+                {
+                    //created_by_user_id => [ForeignKey("CreatedByUserId")]
+                    WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(r.OnColumn)}\")]");
 
-                //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
-                //user_type_id => public virtual EfUserType UserType { get; set; }
-                string fkNav = GetFKNavProperty(r.OnColumn);
-                WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {fkNav} {{ get; set;}}");
+                    //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                    //user_type_id => public virtual EfUserType UserType { get; set; }
+                    string fkNav = GetFKNavProperty(r.OnColumn);
+                    WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {fkNav} {{ get; set;}}");
+                }
             }
 
             /*
@@ -116,18 +120,23 @@ namespace com.paralib.Migrations.CodeGen
             //dependent entity navigation properties (non-compound keys)
             foreach (Relationship r in table.References)
             {
-                //created_by_user_id => [InverseProperty("CreatedByUser")]
-                WriteLine($"\t\t[InverseProperty(\"{GetFKNavProperty(r.OtherColumn)}\")]");
-
-                //public virtual List<EfUser> CreatedByUser_Users { get; set; }
-                string entityNavPrefix = "";
-                if (table.References.Where(tr=> tr.OtherTable==r.OtherTable).Count()>1)
+                //is other table 'skipped'?
+                if (!_skip.Contains(r.OtherTable))
                 {
-                    entityNavPrefix = GetFKNavProperty(r.OtherColumn) + "_";
+
+                    //created_by_user_id => [InverseProperty("CreatedByUser")]
+                    WriteLine($"\t\t[InverseProperty(\"{GetFKNavProperty(r.OtherColumn)}\")]");
+
+                    //public virtual List<EfUser> CreatedByUser_Users { get; set; }
+                    string entityNavPrefix = "";
+                    if (table.References.Where(tr => tr.OtherTable == r.OtherTable).Count() > 1)
+                    {
+                        entityNavPrefix = GetFKNavProperty(r.OtherColumn) + "_";
+                    }
+
+                    //public virtual List<EfUser> Users { get; set; }
+                    WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {entityNavPrefix + GetDependentEntityNavProperty(r.OtherTable)} {{ get; set;}}");
                 }
-                
-                //public virtual List<EfUser> Users { get; set; }
-                WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {entityNavPrefix+GetDependentEntityNavProperty(r.OtherTable)} {{ get; set;}}");
             }
 
 
