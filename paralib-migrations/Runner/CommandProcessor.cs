@@ -1,7 +1,8 @@
-﻿using FluentMigrator.Runner;
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Collections.Generic;
+using FluentMigrator.Runner;
 using com.paralib.Ado;
 using com.paralib.Dal;
 using com.paralib.Utils;
@@ -39,7 +40,7 @@ namespace com.paralib.Migrations.Runner
 
 
         }
-        public static void ConsoleMain(string[] args)
+        public static void ConsoleMain(string[] args, Dictionary<string, Action<string[], Action<string>, Action<string>>> customCommands = null) //action(parts, say, sayError)
         {
             Paralib.Initialize();
 
@@ -58,7 +59,7 @@ namespace com.paralib.Migrations.Runner
                 () => { Console.Write("command: "); return Console.ReadLine(); },
                 s => { ConsoleColor oldColor = Console.ForegroundColor; Console.ForegroundColor = ConsoleColor.Green; Console.WriteLine(s); Console.ForegroundColor = oldColor; },
                 s => { ConsoleColor oldColor = Console.ForegroundColor; Console.ForegroundColor = ConsoleColor.Red; Console.WriteLine(s); Console.ForegroundColor = oldColor; }, 
-                () => Environment.Exit(0), args);
+                () => Environment.Exit(0), args, customCommands);
 
         }
 
@@ -81,7 +82,7 @@ namespace com.paralib.Migrations.Runner
             }
         }
 
-        public void Start(Func<string> prompt, Action<string> say, Action<string> sayError, Action quit, string[] commands=null)
+        public void Start(Func<string> prompt, Action<string> say, Action<string> sayError, Action quit, string[] commands=null, Dictionary<string, Action<string[], Action<string>, Action<string>>> customCommands =null )
         {
 
             say("-------------------------------------------------------------------------------");
@@ -392,6 +393,17 @@ namespace com.paralib.Migrations.Runner
                                 break;
 
                             default:
+
+                                //custom command?
+                                if (customCommands!=null)
+                                {
+                                    if (customCommands.ContainsKey(parts[0]))
+                                    {
+                                        customCommands[parts[0]](parts, say, sayError);
+                                        break;
+                                    }
+                                }
+
                                 sayError($"Unknown command {parts[0]}");
                                 break;
                         }
