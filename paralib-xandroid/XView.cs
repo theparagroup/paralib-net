@@ -131,6 +131,8 @@ namespace com.paralib.Xandroid
             return view;
         }
 
+        public static Action<Context, Button> ButtonStyling;
+
         public static Button Button(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
         {
             var view = new Button(context) { LayoutParameters = layoutParams };
@@ -146,6 +148,11 @@ namespace com.paralib.Xandroid
 
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
+
+            if (ButtonStyling!=null)
+            {
+                ButtonStyling(context, view);
+            }
 
             return view;
         }
