@@ -80,6 +80,7 @@ namespace com.paralib.Xandroid
             return view;
         }
 
+        public static Action<Context, EditText> EditTextStyling;
 
 
         public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null)
@@ -125,8 +126,13 @@ namespace com.paralib.Xandroid
                 view.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(maxLength.Value) });
             }
 
-            if (onTextChanged != null) view.TextChanged += (senderAlert, args) => { onTextChanged(senderAlert, args); };
+            if (EditTextStyling != null)
+            {
+                EditTextStyling(context, view);
+            }
 
+            //text is already set so the first time through doesn't fire the event
+            if (onTextChanged != null) view.TextChanged += (senderAlert, args) => { onTextChanged(senderAlert, args); };
 
             return view;
         }
@@ -203,18 +209,62 @@ namespace com.paralib.Xandroid
             return view;
         }
 
-        //paramterize this
-        public static Spinner Spinner<T>(Context context, List<T> items, int? id = null, Action<Spinner, int, T> itemSelected = null) where T :class
+        public static Action<Context, Spinner> SpinnerStyling;
+        public static Action<TextView> SpinnerButtonStyling;
+
+
+        private class _AA : ArrayAdapter
+        {
+            public _AA(Context context, int resource, int textViewResourceId, System.Collections.IList objects) : base(context, resource, textViewResourceId, objects)
+            {
+
+            }
+
+            public override View GetDropDownView(int position, View convertView, ViewGroup parent)
+            {
+                //return view for item in drop downlist
+                //convertView==reuse view
+                //parent==view to attach new view to
+
+                //parent.SetBackgroundColor(Color.Purple);
+
+
+                //force new view to be created
+                var view = base.GetDropDownView(position, convertView, parent);
+                return view;
+            }
+
+
+            public override View GetView(int position, View convertView, ViewGroup parent)
+            {
+                var view = base.GetView(position, convertView, parent);
+
+                if (view is TextView)
+                {
+                    SpinnerButtonStyling((TextView)view);
+                }
+
+
+                return view;
+            }
+
+
+        }
+
+        public static Spinner Spinner<T>(Context context, List<T> items, int? id = null, Action<Spinner, int, T> onItemSelected = null) where T :class
         {
             Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
 
+            //this will create the StateListDrawable with the NinePatches loaded (which is the default):
+            //  spinner.SetBackgroundDrawable(context.Resources.GetDrawable(Android.Resource.Drawable.ButtonDropDown));
+
             if (id != null) spinner.Id = id.Value;
 
-            ArrayAdapter _adapterFrom = new ArrayAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, items);
-            _adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-            spinner.Adapter = _adapterFrom;
+            ArrayAdapter adapterFrom = new _AA(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items); 
+            adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+            spinner.Adapter = adapterFrom;
 
-            if (itemSelected != null)
+            if (onItemSelected != null)
             {
 
                 spinner.ItemSelected += (object sender, AdapterView.ItemSelectedEventArgs e) =>
@@ -226,9 +276,14 @@ namespace com.paralib.Xandroid
                     var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
                     var pos = daSpinner.SelectedItemPosition;
 
-                    itemSelected(spinner, pos, si);
+                    onItemSelected(spinner, pos, si);
 
                 };
+            }
+
+            if (SpinnerStyling != null)
+            {
+                SpinnerStyling(context, spinner);
             }
 
             return spinner;
