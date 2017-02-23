@@ -1,5 +1,6 @@
 ﻿using Android.Graphics.Drawables;
 using Android.Views;
+using Android.Widget;
 using com.paralib.Xandroid.Utils;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace com.paralib.Xandroid
             int p = Dip.ToInt32(padding);
             view.SetPadding(p, p, p, p);
             return view;
+        }
+
+        public static TextView XSetPadding(this TextView view, float? left = null, float? top = null, float? right = null, float? bottom = null)
+        {
+            return (TextView) XSetPadding((View)view, left, top, right, bottom);
         }
 
         public static View XSetPadding(this View view, float? left=null, float? top  = null, float? right = null, float? bottom = null)
