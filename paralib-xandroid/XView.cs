@@ -231,6 +231,12 @@ namespace com.paralib.Xandroid
 
                 //force new view to be created
                 var view = base.GetDropDownView(position, convertView, parent);
+
+                if (view is TextView)
+                {
+                    ((TextView)view).Text += "!!!";
+                }
+
                 return view;
             }
 
@@ -251,7 +257,14 @@ namespace com.paralib.Xandroid
 
         }
 
-        public static Spinner Spinner<T>(Context context, List<T> items, int? id = null, Action<Spinner, int, T> onItemSelected = null) where T :class
+        public interface ISpinnerItem
+        {
+            string Key { get; set; }
+            object Value { get; set; }
+        }
+
+
+        public static Spinner Spinner<T>(Context context, List<T> items, object selectedValue=null, int? id = null, Action<Spinner, int, T> onItemSelected = null) where T :class,ISpinnerItem
         {
             Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
 
@@ -264,20 +277,34 @@ namespace com.paralib.Xandroid
             adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = adapterFrom;
 
+            if (items.Count > 0) spinner.SetSelection(0);
+            for (int i = 0; i < items.Count; ++i)
+            {
+                if ((items[i].Value?.Equals(selectedValue) ?? false) || (items[i].Value == null && selectedValue == null))
+                {
+                    spinner.SetSelection(i);
+                }
+            }
+
+
             if (onItemSelected != null)
             {
-
+                bool firedOnce = false;
                 spinner.ItemSelected += (object sender, AdapterView.ItemSelectedEventArgs e) =>
                 {
-                    var daSpinner = (Spinner)sender;
+                    if (firedOnce)
+                    {
+                        var daSpinner = (Spinner)sender;
 
-                    var jo = spinner.SelectedItem;
-                    var propertyInfo = jo.GetType().GetProperty("Instance");
-                    var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
-                    var pos = daSpinner.SelectedItemPosition;
+                        var jo = daSpinner.SelectedItem;
+                        var propertyInfo = jo.GetType().GetProperty("Instance");
+                        var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
+                        var pos = daSpinner.SelectedItemPosition;
 
-                    onItemSelected(spinner, pos, si);
+                        onItemSelected(daSpinner, pos, si);
+                    }
 
+                    firedOnce = true;
                 };
             }
 

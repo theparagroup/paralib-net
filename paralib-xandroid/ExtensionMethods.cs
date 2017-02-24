@@ -36,6 +36,14 @@ namespace com.paralib.Xandroid
             return drawable;
         }
 
+        public static T GetValue<T>(this Spinner spinner) where T : class
+        {
+            var jo = spinner.SelectedItem;
+            var propertyInfo = jo.GetType().GetProperty("Instance");
+            var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
+            return si;
+        }
+
 
     }
 }
