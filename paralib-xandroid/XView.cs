@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
 using com.paralib.Xandroid.Utils;
+using com.paralib.Xandroid.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,7 +134,6 @@ namespace com.paralib.Xandroid
 
             //text is already set so the first time through doesn't fire the event
             if (onTextChanged != null) view.TextChanged += (senderAlert, args) => { onTextChanged(senderAlert, args); };
-
             return view;
         }
 
@@ -212,59 +212,7 @@ namespace com.paralib.Xandroid
         public static Action<Context, Spinner> SpinnerStyling;
         public static Action<TextView> SpinnerButtonStyling;
 
-
-        private class _AA : ArrayAdapter
-        {
-            public _AA(Context context, int resource, int textViewResourceId, System.Collections.IList objects) : base(context, resource, textViewResourceId, objects)
-            {
-
-            }
-
-            public override View GetDropDownView(int position, View convertView, ViewGroup parent)
-            {
-                //return view for item in drop downlist
-                //convertView==reuse view
-                //parent==view to attach new view to
-
-                //parent.SetBackgroundColor(Color.Purple);
-
-
-                //force new view to be created
-                var view = base.GetDropDownView(position, convertView, parent);
-
-                if (view is TextView)
-                {
-                    ((TextView)view).Text += "!!!";
-                }
-
-                return view;
-            }
-
-
-            public override View GetView(int position, View convertView, ViewGroup parent)
-            {
-                var view = base.GetView(position, convertView, parent);
-
-                if (view is TextView)
-                {
-                    SpinnerButtonStyling((TextView)view);
-                }
-
-
-                return view;
-            }
-
-
-        }
-
-        public interface ISpinnerItem
-        {
-            string Key { get; set; }
-            object Value { get; set; }
-        }
-
-
-        public static Spinner Spinner<T>(Context context, List<T> items, object selectedValue=null, int? id = null, Action<Spinner, int, T> onItemSelected = null) where T :class,ISpinnerItem
+        public static Spinner Spinner(Context context, List<ISpinnerItem> items, object selectedValue=null, int? id = null, Action<Spinner, int, ISpinnerItem> onItemSelected = null) 
         {
             Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
 
@@ -273,7 +221,7 @@ namespace com.paralib.Xandroid
 
             if (id != null) spinner.Id = id.Value;
 
-            ArrayAdapter adapterFrom = new _AA(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items); 
+            ArrayAdapter adapterFrom = new SpinnerItemAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items, SpinnerButtonStyling); 
             adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = adapterFrom;
 
@@ -286,19 +234,16 @@ namespace com.paralib.Xandroid
                 }
             }
 
-
             if (onItemSelected != null)
             {
+                //unlike EditTexts, Spinners fire ItemSelected on creation, regardless of the order of wiring/setting
                 bool firedOnce = false;
                 spinner.ItemSelected += (object sender, AdapterView.ItemSelectedEventArgs e) =>
                 {
                     if (firedOnce)
                     {
                         var daSpinner = (Spinner)sender;
-
-                        var jo = daSpinner.SelectedItem;
-                        var propertyInfo = jo.GetType().GetProperty("Instance");
-                        var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
+                        var si = daSpinner.GetSelectedItem();
                         var pos = daSpinner.SelectedItemPosition;
 
                         onItemSelected(daSpinner, pos, si);

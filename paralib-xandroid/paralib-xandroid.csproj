@@ -79,6 +79,9 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Utils\Json.cs" />
     <Compile Include="Utils\Text.cs" />
+    <Compile Include="Widgets\ISpinnerItem.cs" />
+    <Compile Include="Widgets\SpinnerItem.cs" />
+    <Compile Include="Widgets\SpinnerItemAdapter.cs" />
     <Compile Include="XInputTypes.cs" />
     <Compile Include="XImeActions.cs" />
     <Compile Include="XSizes.cs" />

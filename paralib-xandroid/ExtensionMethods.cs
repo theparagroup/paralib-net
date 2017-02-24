@@ -2,6 +2,7 @@
 using Android.Views;
 using Android.Widget;
 using com.paralib.Xandroid.Utils;
+using com.paralib.Xandroid.Widgets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,11 +37,19 @@ namespace com.paralib.Xandroid
             return drawable;
         }
 
-        public static T GetValue<T>(this Spinner spinner) where T : class
+        public static ISpinnerItem GetSelectedItem(this Spinner spinner)
         {
             var jo = spinner.SelectedItem;
             var propertyInfo = jo.GetType().GetProperty("Instance");
-            var si = propertyInfo == null ? default(T) : propertyInfo.GetValue(jo, null) as T;
+            var si = propertyInfo?.GetValue(jo, null) as ISpinnerItem;
+            return si;
+        }
+
+        public static ISpinnerItem GetItem<T>(this Spinner spinner, int position) 
+        {
+            var jo = spinner.Adapter.GetItem(position);
+            var propertyInfo = jo.GetType().GetProperty("Instance");
+            var si = propertyInfo?.GetValue(jo, null) as ISpinnerItem;
             return si;
         }
 
