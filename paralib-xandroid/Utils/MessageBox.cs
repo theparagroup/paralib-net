@@ -11,7 +11,7 @@ namespace com.paralib.Xandroid.Utils
 {
     public class MessageBox
     {
-        public static void Show(Context context, string title, string message, string okText = "Ok", EventHandler<DialogClickEventArgs> okHandler = null,string cancelText=null, EventHandler<DialogClickEventArgs> cancelHandler = null)
+        public static void Show(Context context, string title, string message, string okText = "Ok", EventHandler<DialogClickEventArgs> okHandler = null,string cancelText=null, EventHandler<DialogClickEventArgs> cancelHandler = null, bool modal=false)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
             alert.SetTitle(title);
@@ -24,6 +24,13 @@ namespace com.paralib.Xandroid.Utils
             }
 
             Dialog dialog = alert.Create();
+
+            if (modal)
+            {
+                dialog.SetCancelable(false);
+                dialog.SetCanceledOnTouchOutside(false);
+            }
+
             dialog.Show();
         }
 

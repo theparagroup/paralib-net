@@ -136,6 +136,9 @@ namespace com.paralib.Logging
                     log4net.Util.LogLog.InternalDebugging = true;
                 }
 
+                //logger levels (not the same as capture)
+                //      All < DEBUG < INFO < WARN < ERROR < FATAL < OFF
+
                 //override root level only if specified (default in config file is unspecified)
                 if (Paralib.Logging.Level != LogLevels.Unspecified)
                 {
@@ -329,7 +332,9 @@ namespace com.paralib.Logging
             foreach (string parameter in parameters)
             {
                 if (paramlist != "") paramlist += ",";
-                paramlist+="@"+AddParameter(appender, parameter);
+
+                //log4net will honor leading/trailing spaces so we trim
+                paramlist += "@"+AddParameter(appender, parameter.Trim()); 
             }
 
             //build commandtext

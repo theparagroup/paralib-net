@@ -74,6 +74,7 @@
     <Compile Include="Infrastructure\ParaView[TModel,TBaseController].cs" />
     <Compile Include="Infrastructure\ParaMvcModule.cs" />
     <Compile Include="Infrastructure\PreApplicationStartCode.cs" />
+    <Compile Include="Infrastructure\WebApi2\ParaExceptionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\Column.cs" />
     <Compile Include="Tables\ColumnAttribute.cs" />

@@ -53,10 +53,14 @@ namespace com.paralib.Mvc.Infrastructure
                     RouteTable.Routes.MapMvcAttributeRoutes();
 
                     //configure WebApi2
-                    //TODO this should execute if webapi2 is used
+                    //TODO this should execute only if webapi2 is used/enabled?
                     try
                     {
-                        WebApi.GlobalConfiguration.Configure(config => { config.MapHttpAttributeRoutes(new ParaDirectRouteProvider()); });
+                        WebApi.GlobalConfiguration.Configure(config => 
+                        {
+                            config.MapHttpAttributeRoutes(new ParaDirectRouteProvider());
+                            config.Services.Add(typeof(WebApi.ExceptionHandling.IExceptionLogger), new ParaExceptionLogger());
+                        });
                     }
                     catch { }
 
