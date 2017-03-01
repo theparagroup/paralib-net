@@ -32,16 +32,18 @@ namespace com.paralib.Xandroid.Utils
         }
 
 
-        public static T Get<T>(string key) where T : IConvertible
+        public static T Get<T>(string key, T @default=default(T)) where T : IConvertible
         {
 
             if (typeof(T)==typeof(string))
             {
-                return (T)Convert.ChangeType(SharedPreferences.GetString(key, null), typeof(T));
+                string default2 = (string)Convert.ChangeType(@default, typeof(string));
+                return (T)Convert.ChangeType(SharedPreferences.GetString(key, default2), typeof(T));
             }
             else if (typeof(T) == typeof(int))
             {
-                return (T)Convert.ChangeType(SharedPreferences.GetInt(key, 0), typeof(T));
+                int default2 = (int)Convert.ChangeType(@default, typeof(int));
+                return (T)Convert.ChangeType(SharedPreferences.GetInt(key, default2), typeof(T));
             }
             else
             {

@@ -31,14 +31,27 @@ namespace com.paralib.Xandroid.Utils
                 dialog.SetCanceledOnTouchOutside(false);
             }
 
+            if (_lastToast != null)
+            {
+                _lastToast.Cancel();
+                _lastToast = null;
+            }
+
+
             dialog.Show();
         }
 
+        private static Toast _lastToast;
 
         public static void Popup(Context context, string text, bool @long=false)
         {
-            Toast toast = Toast.MakeText(context, text,@long?ToastLength.Long:ToastLength.Short);
-            toast.Show();
+            if (_lastToast!=null)
+            {
+                _lastToast.Cancel();
+            }
+
+            _lastToast = Toast.MakeText(context, text, @long?ToastLength.Long:ToastLength.Short);
+            _lastToast.Show();
         }
 
     }

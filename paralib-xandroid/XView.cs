@@ -112,10 +112,14 @@ namespace com.paralib.Xandroid
             }
 
 
-            //order matters
+            //order of setting matters, order of flags matters
             if (inputType == XInputTypes.Password)
             {
                 view.InputType = InputTypes.ClassText | InputTypes.TextVariationPassword;
+            }
+            else if (inputType == XInputTypes.Integer)
+            {
+                view.InputType = InputTypes.ClassNumber;
             }
             else if (inputType == XInputTypes.Decimal)
             {
