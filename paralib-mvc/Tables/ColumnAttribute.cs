@@ -12,6 +12,9 @@ namespace com.paralib.Mvc.Tables
     {
         public bool Hide { get; set; } = false;
         public bool Raw { get; set; } = false;
+        public string Description { get; set; }
+        public string AnchorHref { get; set; }
+        public string AnchorText { get; set; }
         public string ThClass { get; set; }
         public string TdClass { get; set; }
     }
