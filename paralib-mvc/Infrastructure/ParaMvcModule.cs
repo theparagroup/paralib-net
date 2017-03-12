@@ -46,6 +46,7 @@ namespace com.paralib.Mvc.Infrastructure
 
                     //allow configuration to be modified programatically 
                     //(probably via a static handler in global.asax)
+                    //TODO shouldn't this be called in the Paralib.Initialize() method automatically
                     Paralib.RaiseConfigureEvent();
 
                     //configure MVC

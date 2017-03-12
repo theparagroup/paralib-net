@@ -48,7 +48,7 @@ namespace com.paralib
 
         public static void Initialize(Settings settings)
         {
-
+            //TODO should this call RaiseConfigureEvent?
             lock (_lock)
             {
                 if (!_initialized)
