@@ -73,6 +73,10 @@ namespace com.paralib.Mvc.Tables
             return Type.GetProperty(column.Name).GetValue(row, null)?.ToString();
         }
 
+        public string GetValue(object row, string columnName)
+        {
+            return Type.GetProperty(columnName).GetValue(row, null)?.ToString();
+        }
 
 
 
