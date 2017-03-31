@@ -92,6 +92,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="notes.txt" />
     <Content Include="Tables\Render.cshtml" />
   </ItemGroup>
   <ItemGroup />

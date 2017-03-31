@@ -8,7 +8,7 @@ using System.Web.Routing;
 
 namespace com.paralib.Mvc.Infrastructure
 {
-    public class MvcUtils
+    internal class MvcUtils
     {
         private static Dictionary<string, ParaAction> _cache = new Dictionary<string, ParaAction>();
 

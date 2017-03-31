@@ -1,0 +1,28 @@
+﻿Design Goals & Notes
+
+1] Use zero-config wherever possible
+2] Encapsulate forms-based authentication, identity & authorization
+3] Provide built-in basic auth for WebApi2
+4] Provide base classes for controllers and views
+
+		The base view needs to be set in the various web.config files and the
+		system will enforce the controller relationship.
+
+		ParaController:System.Web.Mvc.Controller
+		ParaView[TModel, TBaseController]:WebViewPage<TModel>
+
+			SiteController:ParaController
+			ApplicationView[TModel,TBaseController]:ParaView[TModel,TBaseController]
+			SiteView[TModel]:ApplicationView[SiteController]
+			Controller:SiteController
+
+				Area
+					AreaController:SiteController
+					AreaView[TModel]:ApplicationView[AreaController]
+					Controller:AreaController
+
+5] Discourage hardcoding area/action/controller names in controllers and views
+
+x] integrate ParaHtml with partials, etc? namespaces, ajax, etc
+
+x] integrate ParaTables?
