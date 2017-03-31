@@ -70,12 +70,16 @@
     <Compile Include="Authorization\ParaPrinciple.cs" />
     <Compile Include="Authorization\PermissionsAttribute.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Infrastructure\ParaController.cs" />
+    <Compile Include="Infrastructure\ParaHelper.cs" />
     <Compile Include="Infrastructure\WebApi2\ParaDirectRouteProvider.cs" />
     <Compile Include="Infrastructure\ParaView[TModel,TBaseController].cs" />
     <Compile Include="Infrastructure\ParaMvcModule.cs" />
     <Compile Include="Infrastructure\PreApplicationStartCode.cs" />
     <Compile Include="Infrastructure\WebApi2\ParaExceptionLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Infrastructure\ParaAction.cs" />
+    <Compile Include="Infrastructure\MvcUtils.cs" />
     <Compile Include="Tables\Column.cs" />
     <Compile Include="Tables\ColumnAttribute.cs" />
     <Compile Include="Tables\TableDefinition.cs" />
@@ -90,6 +94,7 @@
   <ItemGroup>
     <Content Include="Tables\Render.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
