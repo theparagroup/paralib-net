@@ -131,6 +131,8 @@
     <Compile Include="Paralib\Settings.cs" />
     <Compile Include="Utils\Crypto.cs" />
     <Compile Include="Utils\Json.cs" />
+    <Compile Include="Utils\Resources.cs" />
+    <Compile Include="Utils\Streams.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

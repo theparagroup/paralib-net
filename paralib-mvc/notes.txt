@@ -23,6 +23,8 @@
 
 5] Discourage hardcoding area/action/controller names in controllers and views
 
-x] integrate ParaHtml with partials, etc? namespaces, ajax, etc
+6] Encapulate javascript and other libraries (bootstrap) in re-usable c# libraries whenever possible
+
+x] integrate ParaQuery with partials, etc? namespaces, ajax, etc
 
 x] integrate ParaTables?

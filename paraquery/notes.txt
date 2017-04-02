@@ -1,0 +1,6 @@
+﻿Design Goals & Notes
+
+1] Build web pages in C# without Razor/Mvc/ASP
+2] Create re-usable javascript snippet library in C#
+3] Fluent syntax option
+4] Mvc/Razor integration option
