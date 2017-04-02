@@ -55,6 +55,9 @@
     <Compile Include="jQuery\Blocks\Function.cs" />
     <Compile Include="jQuery\Blocks\Ready.cs" />
     <Compile Include="jQuery\Methods.cs" />
+    <Compile Include="StringContext\Context.cs" />
+    <Compile Include="StringContext\Request.cs" />
+    <Compile Include="StringContext\Server.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="pQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,45 +6,13 @@ using System.Web.Routing;
 
 namespace com.paralib.Mvc.Infrastructure
 {
-    public class ParaHelper<TModel>
+    public class ParaViewHelper<TModel>:ParaControllerHelper
     {
         private WebViewPage<TModel> _view;
-
-        internal ParaHelper(WebViewPage<TModel> view)
+        
+        internal ParaViewHelper(WebViewPage<TModel> view):base(view.ViewContext.Controller)
         {
             _view = view;
-        }
-
-        public bool IsAuthenticated
-        {
-            get
-            {
-                return HttpContext.Current.User.Identity.IsAuthenticated;
-            }
-        }
-
-        public string ActionName
-        {
-            get
-            {
-                return _view.ViewContext.RouteData.GetRequiredString("action");
-            }
-        }
-
-        public string ControllerName
-        {
-            get
-            {
-                return _view.ViewContext.RouteData.GetRequiredString("controller");
-            }
-        }
-
-        public string AreaName
-        {
-            get
-            {
-                return _view.ViewContext.RouteData.DataTokens["area"]?.ToString();
-            }
         }
 
         public MvcHtmlString Action(string url, object values = null)

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Core;
 
-namespace com.paraquery.Core
+
+namespace com.paraquery.StringContext
 {
-    public interface IServer
+    public class Request : IRequest
     {
-        string UrlPrefix(string url);
+
     }
 }

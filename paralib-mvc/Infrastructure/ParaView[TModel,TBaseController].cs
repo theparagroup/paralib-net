@@ -5,7 +5,8 @@ namespace com.paralib.Mvc.Infrastructure
 {
     public abstract class ParaView<TModel, TBaseController> : WebViewPage<TModel> where TBaseController:ParaController
     {
-        public ParaHelper<TModel> Para { private set; get; }
+        public ParaViewHelper<TModel> Para { private set; get; }
+        private paraquery.pQuery _pQuery;
 
         public override void InitHelpers()
         {
@@ -16,11 +17,22 @@ namespace com.paralib.Mvc.Infrastructure
                 throw new ParalibException($"View '{((RazorView)ViewContext.View).ViewPath}' cannot be called from controller '{ViewContext.RouteData.Values["controller"]}' since it is not derived from {typeof(TBaseController).Name}.");
             }
 
-            Para = new ParaHelper<TModel>(this);
+            Para = new ParaViewHelper<TModel>(this);
 
         }
 
+        public paraquery.pQuery pQuery
+        {
+            get
+            {
+                if (_pQuery == null)
+                {
+                    _pQuery = new paraquery.pQuery(new ParaQuery.Context(this));
+                }
 
+                return _pQuery;
+            }
+        }
 
     }
 }

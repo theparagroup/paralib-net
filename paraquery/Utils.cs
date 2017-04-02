@@ -9,6 +9,12 @@ namespace com.paraquery
 {
     public class Utils
     {
+        internal static Exception Exception(string message)
+        {
+            //centralized exception point
+            return new System.Exception(message);
+        }
+
         public static string Parameters(string[] parameters)
         {
             string parameterList = "";

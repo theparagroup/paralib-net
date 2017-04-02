@@ -28,14 +28,18 @@ namespace com.paraquery.Core
 
         public void Attributes(object attributes=null)
         {
+            //TODO allow for namespaces
+            //TODO allow for namespace-vars (class="[admin:foo-bar]" -> class="nsvar-foo-bar") 
             //TODO allow for name substitutions (clazz->class, classes->class)
-            //TODO allow for symbol replacement in names ( data_value -> data-value, data__value -> data_value)
-            //TODO allow for variables? (style="debug")
-            //TODO allow for expansions? new { id="foo", style=new { background_color="green"}, margin=new { border_style="solid" } }
+            //TODO allow for symbol replacement (_,-) in names ( data_value -> data-value, data__value -> data_value)
+            //TODO allow for variables? (class="{debug}" -> class="debug-verbose")
+            //TODO allow for expansions? new { id="foo", style=new {background_color="green"}, margin=new { border_style="solid" } } -> id="foo" style="backgound-color:green;" margin="border-style:solid;"
 
-            // id="[foo]" -> id="ns-foo"
-            // id="[admin:foo]" -> id="nsvar-foo"
-            // id="foo" -> id="foo"
+            // id="foo-bar" -> id="foo-bar" (no change)
+            // id="[foo-bar]" -> id="ns-foo-bar" (ns prefixing)
+            // id="[blah:admin:foo-bar]" -> id="blah-admin-foo-bar" (if admin not an nsvar)
+            // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
+            // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
 
             var atts = Html.Attribute.ToDictionary(attributes);
 

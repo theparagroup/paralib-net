@@ -19,9 +19,9 @@ namespace com.paraquery
             _context = context;
         }
 
-        public pQuery(string @namespace=null)
+        public pQuery(string urlPrefix = null, string @namespace=null, Dictionary<string, string> namespaceVars=null)
         {
-            _context = new Context(null,null,new StringContext.Response(),@namespace, null);
+            _context = new StringContext.Context(urlPrefix,@namespace,namespaceVars);
         }
 
         public IResponse Response
@@ -111,6 +111,10 @@ namespace com.paraquery
 
         public void Ajax(string url, string targetId, object data=null)
         {
+            //prefix
+            url = _context.Server.UrlPrefix(url??"");
+
+            //default data
             if (data==null)
             {
                 data = new object { };
