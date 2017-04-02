@@ -115,14 +115,16 @@ namespace com.paraquery
             url = _context.Server.UrlPrefix(url??"");
 
             //default data
-            if (data==null)
+            string dataString = "data";
+            if (data!=null)
             {
-                data = new object { };
+                dataString = Json.Serialize(data, true);
             }
             
             string template=Template("com.paraquery.jQuery.Js.ajax.js");
-            string script = template.Replace("{0}", url).Replace("{1}", Json.Serialize(data, true)).Replace("{2}", targetId);
+            string script = template.Replace("{0}", url).Replace("{1}", dataString).Replace("{2}", targetId);
             Response.Snippet("ajax", script);
         }
+
     }
 }

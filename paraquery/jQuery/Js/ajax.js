@@ -15,7 +15,7 @@ $.ajax({
     type: 'get',
     url: '{0}',
     data: {1},
-    async: false,
+    async: true,
     success: function (data) {
         $('#{2}').html(data);
     }
