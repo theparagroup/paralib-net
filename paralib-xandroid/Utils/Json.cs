@@ -2,9 +2,8 @@
 
 namespace com.paralib.Xandroid.Utils
 {
-    public static class Json
+    public class Json
     {
-
         public static string Serialize(object value, bool ignoreLoops = true)
         {
             new Newtonsoft.Json.JsonSerializerSettings();
@@ -28,6 +27,6 @@ namespace com.paralib.Xandroid.Utils
         {
             return Newtonsoft.Json.JsonConvert.DeserializeObject(value);
         }
-
     }
-}
+
+} 
