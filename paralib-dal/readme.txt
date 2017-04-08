@@ -17,3 +17,15 @@ Create user in database
 if the user already exists
 
 	ALTER USER user_name WITH LOGIN = login_name
+
+
+=============================================================
+====	Correct NTFS Permmissions for SQL Server Files
+=============================================================
+
+Using Management Studio to attach/create, make sure the folder has full control
+permissions for the user Studio is running under.
+
+Note the following user will be given acccess as well:
+
+	"NT SERVICE\MSSQL$SQLEXPRESS12"
