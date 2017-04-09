@@ -13,10 +13,12 @@ namespace com.paralib.Xandroid.Widgets
     {
 
         protected Action<TextView> _spinnerButtonStyling;
+        protected Action<TextView> _spinnerDropDownStyling;
 
-        public SpinnerItemAdapter(Context context, int resource, int textViewResourceId, List<ISpinnerItem> objects, Action<TextView> spinnerButtonStyling=null) : base(context, resource, textViewResourceId, objects)
+        public SpinnerItemAdapter(Context context, int resource, int textViewResourceId, List<ISpinnerItem> objects, Action<TextView> spinnerButtonStyling=null, Action<TextView> spinnerDropDownStyling = null) : base(context, resource, textViewResourceId, objects)
         {
             _spinnerButtonStyling = spinnerButtonStyling;
+            _spinnerDropDownStyling = spinnerDropDownStyling;
         }
 
         public ISpinnerItem GetSpinnerItem(int position)
@@ -44,6 +46,12 @@ namespace com.paralib.Xandroid.Widgets
             {
                 var spinnerItem = GetSpinnerItem(position);
                 if (spinnerItem != null) ((TextView)view).Text = spinnerItem.DropdownDisplay ?? spinnerItem.Display ?? spinnerItem.Key;
+
+                if (_spinnerDropDownStyling != null)
+                {
+                    _spinnerDropDownStyling((TextView)view);
+                }
+
             }
 
             return view;

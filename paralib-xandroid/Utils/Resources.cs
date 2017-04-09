@@ -13,5 +13,11 @@ namespace com.paralib.Xandroid.Utils
             return s;
         }
 
+        public static Drawable GetDrawable(Context context, int id)
+        {
+            //crashes on API 19
+            //var drawbale = context.GetDrawable(id);
+            return context.Resources.GetDrawable(id);
+        }
     }
 }

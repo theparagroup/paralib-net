@@ -236,6 +236,7 @@ namespace com.paralib.Xandroid
 
         public static Action<Context, Spinner> SpinnerStyling;
         public static Action<TextView> SpinnerButtonStyling;
+        public static Action<TextView> SpinnerDropDownStyling;
 
         public static Spinner Spinner(Context context, List<ISpinnerItem> items, object selectedValue=null, int? id = null, Action<Spinner, int, ISpinnerItem> onItemSelected = null) 
         {
@@ -246,7 +247,7 @@ namespace com.paralib.Xandroid
 
             if (id != null) spinner.Id = id.Value;
 
-            ArrayAdapter adapterFrom = new SpinnerItemAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items, SpinnerButtonStyling); 
+            ArrayAdapter adapterFrom = new SpinnerItemAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items, SpinnerButtonStyling, SpinnerDropDownStyling); 
             adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = adapterFrom;
 
