@@ -17,5 +17,10 @@ namespace com.paralib.Xandroid.Utils
 
             return Convert.ToInt32(TypedValue.ApplyDimension(ComplexUnitType.Dip, dips, Application.Context.Resources.DisplayMetrics));
         }
+        public static float FromPixels(int px)
+        {
+            return px/ Application.Context.Resources.DisplayMetrics.Density;
+        }
+
     }
 }

@@ -17,35 +17,56 @@ namespace com.paralib.Xandroid
 {
     public class XView
     {
-        public static int GetTextAppearanceX(XSizes size)
+        //public static int GetTextAppearanceX(XSizes size)
+        //{
+        //    switch (size)
+        //    {
+        //        case XSizes.Small:
+        //            return Android.Resource.Style.TextAppearanceSmall; //14sp
+        //        case XSizes.Medium:
+        //            return Android.Resource.Style.TextAppearanceMedium; //18sp
+        //        case XSizes.Large:
+        //            return Android.Resource.Style.TextAppearanceLarge; //22sp
+        //        default:
+        //            throw new ParalibException("bad size");
+        //    }
+
+
+        //}
+
+        //public static float GetTextAppearance2(XSizes size)
+        //{
+        //    switch (size)
+        //    {
+        //        case XSizes.Small:
+        //            return 14;
+        //        case XSizes.Medium:
+        //            return 18;
+        //        case XSizes.Large:
+        //            return 22;
+        //        case XSizes.XLarge:
+        //            return 26;
+        //        default:
+        //            throw new ParalibException("bad size");
+        //    }
+
+
+        //}
+
+        public static float GetTextAppearance(XSizes size)
         {
+            float scale = Utils.Screen.IsXLarge() ? 1.7f : 1.0f;
+
             switch (size)
             {
                 case XSizes.Small:
-                    return Android.Resource.Style.TextAppearanceSmall; //14sp
+                    return 14 * scale;
                 case XSizes.Medium:
-                    return Android.Resource.Style.TextAppearanceMedium; //18sp
+                    return 18 * scale;
                 case XSizes.Large:
-                    return Android.Resource.Style.TextAppearanceLarge; //22sp
-                default:
-                    throw new ParalibException("bad size");
-            }
-
-
-        }
-
-        public static float GetTextAppearance2(XSizes size)
-        {
-            switch (size)
-            {
-                case XSizes.Small:
-                    return 14;
-                case XSizes.Medium:
-                    return 18;
-                case XSizes.Large:
-                    return 22;
+                    return 22 * scale;
                 case XSizes.XLarge:
-                    return 26;
+                    return 26 * scale;
                 default:
                     throw new ParalibException("bad size");
             }
@@ -63,7 +84,7 @@ namespace com.paralib.Xandroid
 
             //order matters (do this before other appearance changes)
             //view.SetTextAppearance(context, GetTextAppearance(size));
-            view.TextSize = GetTextAppearance2(size);
+            view.TextSize = GetTextAppearance(size);
             view.SetTextColor(color ?? Color.Black);
             if (backgroundColor != null) view.SetBackgroundColor(backgroundColor.Value);
 
@@ -95,7 +116,7 @@ namespace com.paralib.Xandroid
 
             //order matters
             //view.SetTextAppearance(context, GetTextAppearance(size));
-            view.TextSize = GetTextAppearance2(size);
+            view.TextSize = GetTextAppearance(size);
 
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;
@@ -154,7 +175,7 @@ namespace com.paralib.Xandroid
 
             //order matters
             //view.SetTextAppearance(context, GetTextAppearance(size));
-            view.TextSize = GetTextAppearance2(size);
+            view.TextSize = GetTextAppearance(size);
 
             view.SetTextColor(color ?? Color.Black);
             view.Text = text;

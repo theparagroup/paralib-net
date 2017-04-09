@@ -47,7 +47,7 @@ namespace com.paralib.Xandroid.Utils
             var ss = new SpannableString(text ?? "");
             int l = text.Length;
 
-            ss.SetSpan(new AbsoluteSizeSpan((int)XView.GetTextAppearance2(size), true), 0, l, SpanTypes.ExclusiveExclusive);
+            ss.SetSpan(new AbsoluteSizeSpan((int)XView.GetTextAppearance(size), true), 0, l, SpanTypes.ExclusiveExclusive);
 
             if (underline) ss.SetSpan(new UnderlineSpan(), 0, l, SpanTypes.ExclusiveExclusive);
 
