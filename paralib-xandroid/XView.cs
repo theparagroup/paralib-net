@@ -287,5 +287,24 @@ namespace com.paralib.Xandroid
             return spinner;
 
         }
+        public static CheckBox CheckBox(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, bool @checked=false, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
+        {
+            var view = new CheckBox(context) { LayoutParameters = layoutParams };
+
+            if (id.HasValue) view.Id = id.Value;
+            if (tag != null) view.Tag = tag;
+            if (textGravity.HasValue) view.Gravity = textGravity.Value;
+
+            //order matters
+            view.TextSize = GetTextAppearance(size);
+            view.SetTextColor(color ?? Color.Black);
+            view.Text = text;
+
+            view.Checked = @checked;
+
+            return view;
+        }
+
+
     }
 }
