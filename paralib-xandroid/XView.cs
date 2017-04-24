@@ -302,6 +302,12 @@ namespace com.paralib.Xandroid
 
             view.Checked = @checked;
 
+            //styling?
+            //var states = new int[][] { new int[] { Android.Resource.Attribute.StateChecked }, new int[] { } };
+            //var colors = new int[] { Globals.LightGreen };
+            //showLineTotals.ButtonTintList = new Android.Content.Res.ColorStateList(states, colors);
+
+
             return view;
         }
 
