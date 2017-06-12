@@ -36,6 +36,8 @@ namespace com.paralib.DataAnnotations
         public const string Password = nameof(Password);
         public const string Currency = nameof(Currency);
 
+        public const string Path = nameof(Path);
+
         private ParaTypes()
         {
             _paraTypes.Add(nameof(Key), new KeyType(nameof(Key)));
@@ -68,7 +70,20 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(MaxText), new StringType(nameof(MaxText)) { MaximumLength = int.MaxValue});
             _paraTypes.Add(nameof(Password), new StringType(nameof(Password)) { MaximumLength = 128 });
             _paraTypes.Add(nameof(Currency), new StringType(nameof(Currency)) { MaximumLength = 10, RegEx= @"^\$?(\d{1,3},?(\d{3},?)*\d{3}(.\d{0,3})?|\d{1,3}(.\d{2})?)$", BadFormatErrorMessage = "'{0}' must be a currency value.", TooLongErrorMessage = "'{0}' is too large." });
-                        
+
+
+            /*
+            Path:
+                The Win32 API imposed a limit of 260 characters, known as MAX_PATH.
+                Windows NT does not support full pathnames longer than 32,767 bytes for NTFS. 
+                Unicode versions of the Win32 API can use the NTFS length.
+                Windows 10 allows for "opt-in" to use the NTFS length.
+                Linux has a pathname limit of 4,096. 
+
+                For cross-platform purposes, we use the Win32 length.
+
+            */
+            _paraTypes.Add(nameof(Path), new StringType(nameof(Path)) { MaximumLength = 260 });
 
 
         }
