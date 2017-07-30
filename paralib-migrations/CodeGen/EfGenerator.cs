@@ -9,7 +9,7 @@ namespace com.paralib.Migrations.CodeGen
 
     public class EfGenerator:ClassGenerator
     {
-        public EfGenerator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions) : base(writer, convention, skip, classOptions)
+        public EfGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 
@@ -59,7 +59,9 @@ namespace com.paralib.Migrations.CodeGen
             foreach (Relationship r in table.ForeignKeys)
             {
                 //is other table 'skipped'?
-                if (!_skip.Contains(r.OtherTable))
+                //if (!_skip.Contains(r.OtherTable))
+                //is other table included in our table list?
+                if ((from t in _tables where t.Name==r.OtherTable select t).Count()>0)
                 {
                     //created_by_user_id => [ForeignKey("CreatedByUserId")]
                     WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(r.OnColumn)}\")]");
@@ -121,7 +123,9 @@ namespace com.paralib.Migrations.CodeGen
             foreach (Relationship r in table.References)
             {
                 //is other table 'skipped'?
-                if (!_skip.Contains(r.OtherTable))
+                //if (!_skip.Contains(r.OtherTable))
+                //is other table included in our table list?
+                if ((from t in _tables where t.Name == r.OtherTable select t).Count() > 0)
                 {
 
                     //created_by_user_id => [InverseProperty("CreatedByUser")]

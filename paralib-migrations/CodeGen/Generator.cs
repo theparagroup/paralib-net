@@ -9,14 +9,14 @@ namespace com.paralib.Migrations.CodeGen
 
     public abstract class Generator
     {
-        protected string[] _skip;
+        protected Table[] _tables;
         protected IClassWriter _writer;
         protected IConvention Convention { get; private set; }
         protected ClassOptions ClassOptions { get; private set; }
         
-        public Generator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions)
+        public Generator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions)
         {
-            _skip = skip;
+            _tables = tables;
             _writer = writer;
             Convention = convention;
             ClassOptions = classOptions;

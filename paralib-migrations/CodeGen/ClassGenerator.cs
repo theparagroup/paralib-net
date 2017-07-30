@@ -10,22 +10,20 @@ namespace com.paralib.Migrations.CodeGen
     public abstract class ClassGenerator:Generator
     {
 
-        public ClassGenerator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions):base(writer,convention,skip, classOptions)
+        public ClassGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions):base(writer,convention,tables, classOptions)
         {
         }
 
-        public void Generate(Table[] tables)
+        public void Generate()
         {
-            foreach (Table table in tables)
+            foreach (Table table in _tables)
             {
                 Generate(table);
             }
         }
 
-        public void Generate(Table table)
+        protected void Generate(Table table)
         {
-            if (_skip != null && (from s in _skip where s == table.Name select s).Count() > 0) return;
-
             string className = GetClassName(table.Name);
 
             _writer.Start(className);

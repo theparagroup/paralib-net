@@ -10,7 +10,7 @@ namespace com.paralib.Migrations.CodeGen
 
     public class EfContextGenerator:Generator
     {
-        public EfContextGenerator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions) : base(writer, convention, skip, classOptions)
+        public EfContextGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 
@@ -56,16 +56,9 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine("\t\t}");
             WriteLine();
 
-            Table[] tables = null;
 
-            using (var db = new Db(database))
+            foreach (Table table in _tables)
             {
-                tables = db.GetTables();
-            }
-
-            foreach (Table table in tables)
-            {
-                if (_skip != null && (from s in _skip where s == table.Name select s).Count() > 0) continue;
 
                 //public DbSet<EfUser> Users { get; set; }
                 WriteLine($"\t\tpublic DbSet<{GetClassName(table.Name)}> {Convention.GetClassName(table.Name,Pluralities.Plural)} {{ get; set; }}");

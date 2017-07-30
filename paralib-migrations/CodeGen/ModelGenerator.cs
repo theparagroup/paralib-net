@@ -10,7 +10,7 @@ namespace com.paralib.Migrations.CodeGen
     public class ModelGenerator:ClassGenerator
     {
 
-        public ModelGenerator(IClassWriter writer, IConvention convention, string[] skip, ClassOptions classOptions) : base(writer, convention, skip, classOptions)
+        public ModelGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 

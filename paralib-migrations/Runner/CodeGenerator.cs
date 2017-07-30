@@ -4,33 +4,81 @@ using com.paralib.Migrations.CodeGen;
 using com.paralib.Dal;
 using com.paralib.Dal.Metadata;
 using com.paralib.ParalibProperties;
+using System.Collections.Generic;
 
 namespace com.paralib.Migrations.Runner
 {
     public class CodeGenerator
     {
 
-       
+        protected static Table[] GetTables(Database database, string[] skip)
+        {
+            //TODO this is currently blacklist with wildcard, it would be handy to whitelist as well
+
+            Table[] tables;
+
+            using (var db = new Db(database))
+            {
+                tables = db.GetTables();
+            }
+
+            if (skip != null)
+            {
+
+                List<Table> tableList = new List<Table>();
+
+                foreach (Table table in tables)
+                {
+                    bool include = true;
+
+                    foreach (var s in skip)
+                    {
+                        if (s.EndsWith("*"))
+                        {
+                            if (table.Name.StartsWith(s.Substring(0, s.Length - 1))) include = false;
+                        }
+                        else
+                        {
+                            if (s == table.Name) include = false;
+                        }
+                    }
+
+                    if (include)
+                    {
+                        tableList.Add(table);
+                    }
+
+                }
+
+                return tableList.ToArray();
+            }
+            else
+            {
+                return tables;
+            }
+        }
 
         public static void Generate(Database database)
         {
+            //get tables
+            Table[] tables = GetTables(database, Paralib.Migrations.Codegen.Skip);
 
             //models
-            Generate(typeof(ModelGenerator), null, null, database, Paralib.Migrations.Codegen.Model);
+            Generate(typeof(ModelGenerator), null, null, database, tables, Paralib.Migrations.Codegen.Model);
 
             //logic
-            Generate(typeof(LogicGenerator), "Logic", null, database, Paralib.Migrations.Codegen.Logic);
+            Generate(typeof(LogicGenerator), "Logic", null, database, tables, Paralib.Migrations.Codegen.Logic);
 
             //metadata
-            Generate(typeof(MetadataGenerator), "Metadata", null, database, Paralib.Migrations.Codegen.Metadata, "Metadata");
+            Generate(typeof(MetadataGenerator), "Metadata", null, database, tables, Paralib.Migrations.Codegen.Metadata, "Metadata");
 
             //ef
-            Generate(typeof(EfGenerator), "Ef", "Ef", database, Paralib.Migrations.Codegen.Ef);
+            Generate(typeof(EfGenerator), "Ef", "Ef", database, tables, Paralib.Migrations.Codegen.Ef);
 
             //EfContext or DbContext depending on convention
             if (Paralib.Migrations.Codegen.Ef.Enabled)
             {
-                new EfContextGenerator(new ClassFileWriter(GetFileOptions(Paralib.Migrations.Codegen.Ef, "Ef")), GetConvention(), Paralib.Migrations.Codegen.Skip, GetClassOptions(Paralib.Migrations.Codegen.Ef, "Ef")).Generate(database);
+                new EfContextGenerator(new ClassFileWriter(GetFileOptions(Paralib.Migrations.Codegen.Ef, "Ef")), GetConvention(), tables, GetClassOptions(Paralib.Migrations.Codegen.Ef, "Ef")).Generate(database);
             }
 
 
@@ -38,7 +86,7 @@ namespace com.paralib.Migrations.Runner
 
         }
 
-        public static void Generate(Type generatorType, string defaultSubDirectory, string defaultSubNamespace, Database database, GenerationProperties properties, string parameter = null)
+        public static void Generate(Type generatorType, string defaultSubDirectory, string defaultSubNamespace, Database database, Table[] tables, GenerationProperties properties, string parameter = null)
         {
             if (properties.Enabled)
             {
@@ -46,16 +94,9 @@ namespace com.paralib.Migrations.Runner
                 ClassOptions co = GetClassOptions(properties, defaultSubNamespace, parameter);
                 IConvention convention = GetConvention();
 
-                ClassGenerator generator = (ClassGenerator)Activator.CreateInstance(generatorType, new ClassFileWriter(fo), convention, Paralib.Migrations.Codegen.Skip, co);
+                ClassGenerator generator = (ClassGenerator)Activator.CreateInstance(generatorType, new ClassFileWriter(fo), convention, tables, co);
 
-                Table[] tables = null;
-
-                using (var db = new Db(database))
-                {
-                    tables = db.GetTables();
-                }
-
-                generator.Generate(tables);
+                generator.Generate();
             }
         }
 
