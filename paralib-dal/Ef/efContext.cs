@@ -32,10 +32,16 @@ namespace com.paralib.Dal.Ef
         {
             _log.Info($"Setting connection to default database.");
 
-            //Note: this won't work for derived classes:
-            //      NET.Database.SetInitializer<EfContext>(null);
-            //
-            //so let's use reflection to invoke this member which for some reason is generic. yes.
+            /*
+                Note: calling this method on this base class won't configure any sub-classes (which is what we want):
+            
+                    NET.Database.SetInitializer<EfContext>(null);
+            
+                So let's use reflection to invoke the SetInitializer on the derived type via GetType(),
+                which for some reason is generic. Yes. So we have to do all this.
+            
+            */
+
             _log.Info($"Disabling EF database initialization.");
             var databaseType = typeof(NET.Database);
             var setInitializer = databaseType.GetMethod("SetInitializer", BindingFlags.Static | BindingFlags.Public);

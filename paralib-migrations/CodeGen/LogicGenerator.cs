@@ -6,7 +6,11 @@ using com.paralib.Dal.Utils;
 
 namespace com.paralib.Migrations.CodeGen
 {
+    /*
 
+        Generates (once) classes where you can place custom logic.
+
+    */
 
     public class LogicGenerator:ClassGenerator
     {

@@ -6,7 +6,21 @@ using com.paralib.Dal.Utils;
 
 namespace com.paralib.Migrations.CodeGen
 {
+    /*
 
+        Abstract base class for all generators:
+
+            ModelGenerator
+            LogicGenerator
+            MetadataGenerator
+            EfGenerator
+            etc.
+
+        
+        Support various writers, options, and conventions.
+
+
+    */
 
     public abstract class Generator
     {

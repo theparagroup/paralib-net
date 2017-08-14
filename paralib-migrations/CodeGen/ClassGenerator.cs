@@ -6,7 +6,11 @@ using com.paralib.Dal.Utils;
 
 namespace com.paralib.Migrations.CodeGen
 {
+    /*
+        Specialized base class for generators to streamline generation via Generate() and OnGenerate() methods.
 
+
+    */
 
     public abstract class ClassGenerator:Generator
     {

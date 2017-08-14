@@ -8,6 +8,23 @@ using com.paralib.Dal;
 
 namespace com.paralib.Migrations.CodeGen
 {
+    /*
+        Generates the DbContext class as a sub-class of the DAL's EfContext class, which 
+        changes various settings (initializer, naming conventions) from the Microsoft default, supports
+        our paralib logging, DAL databases, SQL logging, etc.
+        
+        The naming conventions in the EfContext are hardcoded and are currently the mirror image of the 
+        ParalibConvention used when generating the model and their related classes:
+
+            database name           class name
+            -----------------       -----------------
+            customer_addresses      EfCustomerAddress
+
+        Later versions should support other conventions (Microsoft default, other custom), or perhaps
+        we would made full-explicit-declaration ([Table],[Column]) an option.
+
+
+    */
 
     public class EfContextGenerator:Generator
     {

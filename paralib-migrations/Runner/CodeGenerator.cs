@@ -115,6 +115,8 @@ namespace com.paralib.Migrations.Runner
 
         protected static IConvention GetConvention()
         {
+            //TODO currently only supporting the Paralib convention (the default) both here and in the DAL's EfContext class
+
             string conventionName = Paralib.Migrations.Codegen.Convention;
             IConvention convention = null;
 
