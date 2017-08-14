@@ -243,7 +243,7 @@ namespace com.paralib.Migrations.Runner
 
                                     say("");
 
-                                    foreach (var t in ts)
+                                    foreach (var t in ts.Values)
                                     {
                                         say($"  {t.Name}");
                                     }
@@ -261,7 +261,7 @@ namespace com.paralib.Migrations.Runner
 
                                     say("");
 
-                                    foreach (var t in ts.OrderBy(t=>t.Name))
+                                    foreach (var t in ts.Values.OrderBy(t=>t.Name))
                                     {
                                         say($"  {t.Name}");
 

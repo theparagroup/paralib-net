@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using com.paralib.Ado;
+using System.Collections.Generic;
 using com.paralib.Dal.DbProviders;
 using com.paralib.Dal.Metadata;
 
@@ -71,7 +72,7 @@ namespace com.paralib.Dal
             return _provider.ExecuteScalar<T>(sql);
         }
 
-        public Table[] GetTables()
+        public Dictionary<string, Table> GetTables()
         {
             return _provider.GetTables();
         }

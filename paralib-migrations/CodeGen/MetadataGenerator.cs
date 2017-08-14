@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Migrations.CodeGen
@@ -9,7 +10,7 @@ namespace com.paralib.Migrations.CodeGen
     public class MetadataGenerator:ClassGenerator
     {
 
-        public MetadataGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
+        public MetadataGenerator(IClassWriter writer, IConvention convention, Dictionary<string, Table> tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 

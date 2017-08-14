@@ -11,57 +11,60 @@ namespace com.paralib.Migrations.Runner
     public class CodeGenerator
     {
 
-        protected static Table[] GetTables(Database database, string[] skip)
+        protected static Dictionary<string, Table> GetTables(Database database, string[] skip)
         {
             //TODO this is currently blacklist with wildcard, it would be handy to whitelist as well
 
-            Table[] tables;
+            Dictionary<string, Table> tables;
 
             using (var db = new Db(database))
             {
                 tables = db.GetTables();
             }
 
+            List<string> skipList = new List<string>();
+
             if (skip != null)
             {
 
-                List<Table> tableList = new List<Table>();
-
-                foreach (Table table in tables)
+                foreach (string tableName in tables.Keys)
                 {
-                    bool include = true;
-
                     foreach (var s in skip)
                     {
                         if (s.EndsWith("*"))
                         {
-                            if (table.Name.StartsWith(s.Substring(0, s.Length - 1))) include = false;
+                            if (tableName.StartsWith(s.Substring(0, s.Length - 1)))
+                            {
+                                skipList.Add(tableName);
+                            }
                         }
                         else
                         {
-                            if (s == table.Name) include = false;
+                            if (s == tableName)
+                            {
+                                skipList.Add(tableName);
+                            }
                         }
-                    }
-
-                    if (include)
-                    {
-                        tableList.Add(table);
                     }
 
                 }
 
-                return tableList.ToArray();
+                foreach (string tableName in skipList)
+                {
+                    tables.Remove(tableName);
+                }
+
             }
-            else
-            {
-                return tables;
-            }
+
+            return tables;
         }
 
         public static void Generate(Database database)
         {
+            //TODO refactor this to not use type activiation (makes refactoring a pain)
+
             //get tables
-            Table[] tables = GetTables(database, Paralib.Migrations.Codegen.Skip);
+            Dictionary<string, Table> tables = GetTables(database, Paralib.Migrations.Codegen.Skip);
 
             //models
             Generate(typeof(ModelGenerator), null, null, database, tables, Paralib.Migrations.Codegen.Model);
@@ -82,11 +85,11 @@ namespace com.paralib.Migrations.Runner
             }
 
 
-            //nh
+            //TODO nh
 
         }
 
-        public static void Generate(Type generatorType, string defaultSubDirectory, string defaultSubNamespace, Database database, Table[] tables, GenerationProperties properties, string parameter = null)
+        public static void Generate(Type generatorType, string defaultSubDirectory, string defaultSubNamespace, Database database, Dictionary<string, Table> tables, GenerationProperties properties, string parameter = null)
         {
             if (properties.Enabled)
             {

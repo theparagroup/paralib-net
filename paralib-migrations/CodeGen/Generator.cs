@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using com.paralib.Dal.Metadata;
 using com.paralib.Dal.Utils;
 
@@ -9,12 +10,12 @@ namespace com.paralib.Migrations.CodeGen
 
     public abstract class Generator
     {
-        protected Table[] _tables;
+        protected Dictionary<string, Table> _tables;
         protected IClassWriter _writer;
         protected IConvention Convention { get; private set; }
         protected ClassOptions ClassOptions { get; private set; }
         
-        public Generator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions)
+        public Generator(IClassWriter writer, IConvention convention, Dictionary<string, Table> tables, ClassOptions classOptions)
         {
             _tables = tables;
             _writer = writer;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Collections.Generic;
 using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Dal.DbProviders
@@ -13,7 +14,7 @@ namespace com.paralib.Dal.DbProviders
         int ExecuteNonQuery(string sql);
         T ExecuteScalar<T>(string sql);
 
-        Table[] GetTables();
+        Dictionary<string, Table> GetTables();
         bool TableExists(string tableName);
 
         void Close();

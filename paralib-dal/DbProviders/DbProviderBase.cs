@@ -64,28 +64,28 @@ namespace com.paralib.Dal.DbProviders
             }
         }
 
-        public virtual Table[] GetTables()
+        public virtual Dictionary<string, Table> GetTables()
         {
             var reader = ExecuteReader("select TABLE_NAME from INFORMATION_SCHEMA.TABLES");
 
-            List<Table> ts = new List<Table>();
+            Dictionary<string, Table> tables = new Dictionary<string, Table>();
 
-            while(reader.Read())
+            while (reader.Read())
             {
                 var table=new Table();
                 table.Name = reader.GetValue<string>("TABLE_NAME");
 
-                ts.Add(table);
+                tables.Add(table.Name,table);
             }
 
             reader.Close();
 
-            foreach (var t in ts)
+            foreach (var t in tables.Values)
             {
                 AddColumns(t);
             }
 
-            return ts.ToArray();
+            return tables;
 
         }
 

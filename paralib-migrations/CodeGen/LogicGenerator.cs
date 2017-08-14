@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using com.paralib.Dal.Metadata;
 using com.paralib.Dal.Utils;
 
@@ -10,7 +11,7 @@ namespace com.paralib.Migrations.CodeGen
     public class LogicGenerator:ClassGenerator
     {
 
-        public LogicGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
+        public LogicGenerator(IClassWriter writer, IConvention convention, Dictionary<string, Table> tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 

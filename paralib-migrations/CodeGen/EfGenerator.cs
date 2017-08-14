@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using com.paralib.Dal.Metadata;
 using com.paralib.Dal.Utils;
 using System.Text.RegularExpressions;
@@ -9,7 +10,7 @@ namespace com.paralib.Migrations.CodeGen
 
     public class EfGenerator:ClassGenerator
     {
-        public EfGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
+        public EfGenerator(IClassWriter writer, IConvention convention, Dictionary<string, Table> tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 
@@ -40,10 +41,10 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
 
             //for debugging
-            //if (className=="EfJob")
-            //{
-            //    int x = 1;
-            //}
+            if (className == "EfClientCustomer")
+            {
+                int x = 1;
+            }
 
             //bad hack
             if (ClassOptions.Namespace != null) WriteLine($"using {ClassOptions.Namespace};");
@@ -61,7 +62,7 @@ namespace com.paralib.Migrations.CodeGen
                 //is other table 'skipped'?
                 //if (!_skip.Contains(r.OtherTable))
                 //is other table included in our table list?
-                if ((from t in _tables where t.Name==r.OtherTable select t).Count()>0)
+                if ((from t in _tables.Values where t.Name==r.OtherTable select t).Count()>0)
                 {
                     //created_by_user_id => [ForeignKey("CreatedByUserId")]
                     WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(r.OnColumn)}\")]");
@@ -125,7 +126,7 @@ namespace com.paralib.Migrations.CodeGen
                 //is other table 'skipped'?
                 //if (!_skip.Contains(r.OtherTable))
                 //is other table included in our table list?
-                if ((from t in _tables where t.Name == r.OtherTable select t).Count() > 0)
+                if ((from t in _tables.Values where t.Name == r.OtherTable select t).Count() > 0)
                 {
 
                     //created_by_user_id => [InverseProperty("CreatedByUser")]

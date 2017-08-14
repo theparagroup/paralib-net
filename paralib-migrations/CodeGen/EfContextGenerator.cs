@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using com.paralib.Dal.Metadata;
 using com.paralib.Dal.Utils;
 using com.paralib.Ado;
@@ -10,7 +11,7 @@ namespace com.paralib.Migrations.CodeGen
 
     public class EfContextGenerator:Generator
     {
-        public EfContextGenerator(IClassWriter writer, IConvention convention, Table[] tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
+        public EfContextGenerator(IClassWriter writer, IConvention convention, Dictionary<string, Table> tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 
@@ -57,7 +58,7 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine();
 
 
-            foreach (Table table in _tables)
+            foreach (Table table in _tables.Values)
             {
 
                 //public DbSet<EfUser> Users { get; set; }
