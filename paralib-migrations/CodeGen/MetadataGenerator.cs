@@ -58,6 +58,12 @@ namespace com.paralib.Migrations.CodeGen
 
         protected override void OnGenerate(Table table, string className)
         {
+            //for debugging
+            if (className == "Book")
+            {
+                int x = 1;
+            }
+
             WriteLine("using System;");
             WriteLine("using System.ComponentModel.DataAnnotations;");
             WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
@@ -96,7 +102,7 @@ namespace com.paralib.Migrations.CodeGen
                 //foreign key info (useful for EF when the principal end of a one-to-one cannot be determined)
                 if (column.IsForeign)
                 {
-                    foreach (Relationship fk in table.ForeignKeys)
+                    foreach (Relationship fk in table.ForeignKeys.Values)
                     {
                         if (fk.OnColumn==column.Name)
                         {

@@ -7,7 +7,7 @@ namespace com.paralib.Dal.Metadata
     {
         public string Name { get; set; }
         public Dictionary<string,Column> Columns { get; set; }
-        public Relationship[] ForeignKeys { get; set; }
-        public Relationship[] References { get; set; }
+        public Dictionary<string, Relationship> ForeignKeys { get; set; }
+        public Dictionary<string, Relationship> References { get; set; }
     }
 }

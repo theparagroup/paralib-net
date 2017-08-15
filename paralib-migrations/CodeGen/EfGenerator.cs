@@ -448,7 +448,7 @@ namespace com.paralib.Migrations.CodeGen
 
             
             //Generate fkey reference navigation properties for when this class is the dependent entity (single-valued keys only)
-            foreach (Relationship fk in table.ForeignKeys)
+            foreach (Relationship fk in table.ForeignKeys.Values)
             {
                 //is other table included in our table list (not 'skipped')?
                 if ((from t in _tables.Values where t.Name==fk.OtherTable select t).Count()>0)
@@ -468,7 +468,7 @@ namespace com.paralib.Migrations.CodeGen
             }
 
             //Generate collection or reference navigation properties for when this class is the primary entity (single-valued keys only)
-            foreach (Relationship r in table.References)
+            foreach (Relationship r in table.References.Values)
             {
 
                 //is other table included in our table list (not 'skipped')?

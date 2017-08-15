@@ -91,6 +91,15 @@ namespace com.paralib.Dal.DbProviders
 
         protected virtual void AddColumns(Table table)
         {
+            /*
+
+                Here we build the column collection for the table.
+
+                We build primary and foreign key information in seperate queries, and "fix-up" the column
+                properties, as well the Clr type info and the "paralib_column_metadata" (if any).
+
+            */
+
             string sql = "select TABLE_NAME, COLUMN_NAME, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE";
             sql += $" from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='{table.Name}' order by ORDINAL_POSITION";
 
@@ -120,7 +129,7 @@ namespace com.paralib.Dal.DbProviders
 
             reader.Close();
 
-
+            //Add clr, PK, FK, and metadata
             AddClrTypes(table);
             FindPrimaryKeys(table);
             FindRelationships(table);
@@ -128,12 +137,14 @@ namespace com.paralib.Dal.DbProviders
 
         }
 
-        private void _AddClrTypes(Table table)
+        private void FindClrTypes(Table table)
         {
             /*
 
-                This version will read the first row of data on SqlServer and gets the datatype
-                at runtime. Handy to detirmine the mappings below.
+                This alternate version of AddClrTypes (not currently used) will read the first row 
+                of data on SqlServer and gets the datatype at runtime. 
+                
+                It was handy in determining the hard-coded mappings we now use.
 
             */
             var reader = ExecuteReader($"select top 1 * from {table.Name}");
@@ -154,6 +165,10 @@ namespace com.paralib.Dal.DbProviders
         protected virtual void AddClrTypes(Table table)
         {
             /*
+
+                Here we "fix-up" the Clr type property on all the columns.
+            
+            
                 Fluent, DbType, ClrType
                 -------------------------------------------------
                 Asid, int, System.Int32
@@ -214,6 +229,25 @@ namespace com.paralib.Dal.DbProviders
 
         protected virtual void FindPrimaryKeys(Table table)
         {
+            /*
+
+                Here we query for all primary key information for the table.
+
+                Example:
+
+                    TABLE_NAME	COLUMN_NAME	ORDINAL_POSITION
+                    ----------  ----------- ----------------
+                    authors	    foo	        1
+                    authors	    bar	        2
+
+            */
+
+            if (table.Name == "authors")
+            {
+                int x = 1;
+            }
+
+
             string sql = "select";
             sql += " kcu.TABLE_NAME,kcu.COLUMN_NAME, kcu.ORDINAL_POSITION";
             sql += " from INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc";
@@ -228,7 +262,8 @@ namespace com.paralib.Dal.DbProviders
 
             while (reader.Read())
             {
-                table.Columns[reader.GetValue<string>("COLUMN_NAME")].IsPrimary = true;
+                string pkColumn = reader.GetValue<string>("COLUMN_NAME");
+                table.Columns[pkColumn].IsPrimary = true;
             }
 
             reader.Close();
@@ -238,6 +273,53 @@ namespace com.paralib.Dal.DbProviders
 
         protected virtual void FindRelationships(Table table)
         {
+            /*
+                This query retrieves both "foreign keys" and "references" for the table at the same time, ordered by 
+                ordinals of the foreign keys.
+
+                Example schema:
+
+
+                    courses                     books                       authors
+                    --------        <*:1>       --------        <*:1>       --------
+                    id (pk)                     id (pk)                     foo (pk:1)
+                    book_id (fk)                foo (fk:1)                  bar (pk:2)
+                                                bar (fk:2)
+
+
+                Example query results:
+
+
+                    FK_CONSTRAINT_NAME	FK_TABLE_NAME	FK_COLUMN_NAME	FK_ORDINAL_POSITION	    UQ_CONSTRAINT_NAME	UQ_TABLE_NAME	UQ_COLUMN_NAME	UQ_ORDINAL_POSITION
+                    ------------------  -------------   --------------  -------------------     ------------------  -------------   --------------  -------------------
+                    FK_books_authors	books	        foo	            1	                    PK_books	        authors	        foo	            1
+                    FK_books_authors	books	        bar	            2	                    PK_books	        authors	        bar	            2
+                    FK_courses_books	courses	        book_id	        1	                    PK_books_1	        books	        id	            1    
+            
+                
+
+                Essentially, the left-hand side is a list of foreign key constraints (an their columns), with
+                the corresponding "unique constraints" (usually primary keys, but not necessarily) on
+                the right-hand side. 
+
+                Here we build both the FK and Reference relationship collections (swapping FK_TABLE_NAME and 
+                UQ_TABLE_NAME for the respective Relationship obects, "On" and "Other", etc.).
+
+                We also "fix up" the IsForeign property on the column objects.
+
+                Note: currently we do not include relationships involving multiple keys (compound, composite, etc).
+                We do this at the end by filtering them out.
+                
+
+            */
+
+            if (table.Name == "books")
+            {
+                int x = 1;
+            }
+
+            //run the query
+
             string sql = "SELECT";
             sql += " KCU1.CONSTRAINT_NAME AS 'FK_CONSTRAINT_NAME', KCU1.TABLE_NAME AS 'FK_TABLE_NAME', KCU1.COLUMN_NAME AS 'FK_COLUMN_NAME', KCU1.ORDINAL_POSITION AS 'FK_ORDINAL_POSITION',";
             sql += " KCU2.CONSTRAINT_NAME AS 'UQ_CONSTRAINT_NAME', KCU2.TABLE_NAME AS 'UQ_TABLE_NAME', KCU2.COLUMN_NAME AS 'UQ_COLUMN_NAME', KCU2.ORDINAL_POSITION AS 'UQ_ORDINAL_POSITION'";
@@ -247,12 +329,16 @@ namespace com.paralib.Dal.DbProviders
             sql += " JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KCU2";
             sql += " ON KCU2.CONSTRAINT_CATALOG = RC.UNIQUE_CONSTRAINT_CATALOG AND KCU2.CONSTRAINT_SCHEMA = RC.UNIQUE_CONSTRAINT_SCHEMA AND KCU2.CONSTRAINT_NAME = RC.UNIQUE_CONSTRAINT_NAME AND KCU2.ORDINAL_POSITION = KCU1.ORDINAL_POSITION";
             sql += $" WHERE KCU1.TABLE_NAME='{table.Name}' or KCU2.TABLE_NAME='{table.Name}'";
+            sql += $" order by FK_CONSTRAINT_NAME,FK_ORDINAL_POSITION";
 
-            //note: we skip compound foreign keys (to be added in future version)
+            /*
+                old dumb way
 
-            List<string> constraints = new List<string>();
-            List<Relationship> fkeys = new List<Relationship>();
-            List<Relationship> refs = new List<Relationship>();
+                List<string> fkNames = new List<string>();
+            */
+
+            Dictionary<string, Relationship> fkeys = new Dictionary<string, Relationship>();
+            Dictionary<string, Relationship> refs = new Dictionary<string, Relationship>();
 
             var reader = ExecuteReader(sql);
 
@@ -264,29 +350,58 @@ namespace com.paralib.Dal.DbProviders
                 string uqTable = reader.GetValue<string>("UQ_TABLE_NAME");
                 string uqColumn = reader.GetValue<string>("UQ_COLUMN_NAME");
 
-                constraints.Add(fkName);
+                //fkNames.Add(fkName);
 
-                if (fkTable==table.Name)
+                if (fkTable == table.Name)
                 {
-                    fkeys.Add(new Relationship() { Name = fkName, OnTable = fkTable, OnColumn = fkColumn, OtherTable = uqTable, OtherColumn = uqColumn });
 
-                    table.Columns[fkColumn].IsForeign= true;
+                    if (!fkeys.ContainsKey(fkName))
+                    {
+                        //create FK elationship with first column
+                        fkeys.Add(fkName, new Relationship() { Name = fkName, OnTable = fkTable, OnColumn = fkColumn, OtherTable = uqTable, OtherColumn = uqColumn });
+                    }
+                    else
+                    {
+                        //TODO add additional columns
+                    }
+
+                    //fixup
+                    table.Columns[fkColumn].IsForeign = true;
 
                 }
 
                 if (uqTable == table.Name)
                 {
-                    refs.Add(new Relationship() { Name = fkName, OnTable = uqTable, OnColumn = uqColumn, OtherTable = fkTable, OtherColumn = fkColumn });
+
+                    if (!refs.ContainsKey(fkName))
+                    {
+                        //create Reference relationship with first column
+                        refs.Add(fkName, new Relationship() { Name = fkName, OnTable = uqTable, OnColumn = uqColumn, OtherTable = fkTable, OtherColumn = fkColumn });
+                    }
+                    else
+                    {
+                        //TODO add additional columns
+                        //referenced columns *should* be in the same order as the fk columns, correct?
+                    }
+
+
                 }
 
             }
 
-            //condense to the names of simple (non-compound) relationships
-            constraints = (from c in constraints group c by c into grp where grp.Count() == 1 select grp.Key).ToList();
+            /*
+                old dumb way
 
-            //filter to non-compound relationships
-            table.ForeignKeys = (from fk in fkeys where constraints.Contains(fk.Name) select fk).ToArray();
-            table.References = (from r in refs where constraints.Contains(r.Name) select r).ToArray();
+                //condense to the names of simple (non-compound) relationships
+                fkNames = (from c in fkNames group c by c into grp where grp.Count() == 1 select grp.Key).ToList();
+
+                //filter to non-compound relationships
+                table.ForeignKeys = (from fk in fkeys where fkNames.Contains(fk.Name) select fk).ToArray();
+                table.References = (from r in refs where fkNames.Contains(r.Name) select r).ToArray();
+            */
+
+            table.ForeignKeys = fkeys;
+            table.References = refs;
 
             reader.Close();
 
@@ -295,6 +410,15 @@ namespace com.paralib.Dal.DbProviders
 
         protected virtual void AddColumnProperties(Table table)
         {
+            /*
+
+                Here we add extended metadata information for the columns from the [paralib_column_metadata]
+                table (if it exists).
+
+                We leave it null otherwise.
+
+            */
+
             if (TableExists(ColumnMetadataTable))
             {
                 string sql = $"select * from {ColumnMetadataTable} where TABLE_NAME='{table.Name}'";

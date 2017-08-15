@@ -311,21 +311,21 @@ namespace com.paralib.Migrations.Runner
 
                                         }
 
-                                        if (t.ForeignKeys.Length > 0)
+                                        if (t.ForeignKeys.Values.Count > 0)
                                         {
                                             say("");
                                             say("      foreign keys:");
-                                            foreach (var r in t.ForeignKeys)
+                                            foreach (var r in t.ForeignKeys.Values)
                                             {
                                                 say($"        {r.OnColumn} -> {r.OtherTable}.{r.OtherColumn}");
                                             }
                                         }
 
-                                        if (t.References.Length > 0)
+                                        if (t.References.Values.Count > 0)
                                         {
                                             say("");
                                             say("      references:");
-                                            foreach (var r in t.References)
+                                            foreach (var r in t.References.Values)
                                             {
                                                 say($"        {r.OtherTable}.{r.OtherColumn} -> {r.OnColumn}");
                                             }
