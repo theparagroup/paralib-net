@@ -90,8 +90,25 @@ namespace com.paralib.Migrations.CodeGen
                 //add metadata
                 string displayName = Convention.GetDisplayName(column.Name);
 
-                //key info (useful for EF on non-standard columns
+                //key & order info (useful for EF on unconventionally-named or multi-valued key columns)
                 if (column.IsPrimary) WriteLine($"\t\t[Key, Column(Order = {i})]");
+
+                //foreign key info (useful for EF when the principal end of a one-to-one cannot be determined)
+                if (column.IsForeign)
+                {
+                    foreach (Relationship fk in table.ForeignKeys)
+                    {
+                        if (fk.OnColumn==column.Name)
+                        {
+                            //is other table included in our table list (not 'skipped')?
+                            if ((from t in _tables.Values where t.Name == fk.OtherTable select t).Count() > 0)
+                            {
+                                WriteLine($"\t\t[ForeignKey(\"{Convention.GetEntityName(fk.OnColumn)}\")]");
+                            }
+                        }
+                    }
+
+                }
 
                 //display
                 WriteLine($"\t\t[Display(Name=\"{displayName}\")]");
