@@ -354,15 +354,17 @@ namespace com.paralib.Dal.DbProviders
 
                 if (fkTable == table.Name)
                 {
+                    var columns = new ColumnPair { OnColumn = fkColumn, OtherColumn = uqColumn };
 
                     if (!fkeys.ContainsKey(fkName))
                     {
                         //create FK elationship with first column
-                        fkeys.Add(fkName, new Relationship { Name = fkName, OnTable = fkTable, OtherTable = uqTable, Columns = new List<ColumnPair>{ new ColumnPair { OnColumn = fkColumn, OtherColumn = uqColumn } } });
+                        fkeys.Add(fkName, new Relationship { Name = fkName, OnTable = fkTable, OtherTable = uqTable, Columns = new List<ColumnPair> { columns } });
                     }
                     else
                     {
-                        //TODO add additional columns
+                        //add additional columns
+                        fkeys[fkName].Columns.Add(columns);
                     }
 
                     //fixup
@@ -372,16 +374,18 @@ namespace com.paralib.Dal.DbProviders
 
                 if (uqTable == table.Name)
                 {
+                    var columns = new ColumnPair { OnColumn = uqColumn, OtherColumn = fkColumn };
 
                     if (!refs.ContainsKey(fkName))
                     {
                         //create Reference relationship with first column
-                        refs.Add(fkName, new Relationship { Name = fkName, OnTable = uqTable, OtherTable = fkTable, Columns = new List<ColumnPair> { new ColumnPair { OnColumn = uqColumn, OtherColumn = fkColumn } } });
+                        refs.Add(fkName, new Relationship { Name = fkName, OnTable = uqTable, OtherTable = fkTable, Columns = new List<ColumnPair> { columns } });
                     }
                     else
                     {
-                        //TODO add additional columns
+                        //add additional columns
                         //referenced columns *should* be in the same order as the fk columns, correct?
+                        refs[fkName].Columns.Add(columns);
                     }
 
 

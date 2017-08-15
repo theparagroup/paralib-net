@@ -317,9 +317,11 @@ namespace com.paralib.Migrations.Runner
                                             say("      foreign keys:");
                                             foreach (var r in t.ForeignKeys.Values)
                                             {
+                                                say("");
+                                                say($"        {r.Name}");
                                                 foreach (var c in r.Columns)
                                                 {
-                                                    say($"        {c.OnColumn} -> {r.OtherTable}.{c.OtherColumn}");
+                                                    say($"           ({c.OnColumn} -> {r.OtherTable}.{c.OtherColumn})");
                                                 }
                                             }
                                         }
@@ -330,9 +332,11 @@ namespace com.paralib.Migrations.Runner
                                             say("      references:");
                                             foreach (var r in t.References.Values)
                                             {
+                                                say("");
+                                                say($"        {r.Name}");
                                                 foreach (var c in r.Columns)
                                                 {
-                                                    say($"        {r.OtherTable}.{c.OtherColumn} -> {c.OnColumn}");
+                                                    say($"           ({r.OtherTable}.{c.OtherColumn} -> {c.OnColumn})");
                                                 }
                                             }
                                         }
