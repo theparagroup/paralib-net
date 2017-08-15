@@ -66,7 +66,7 @@ namespace com.paralib.Dal.DbProviders
 
         public virtual Dictionary<string, Table> GetTables()
         {
-            var reader = ExecuteReader("select TABLE_NAME from INFORMATION_SCHEMA.TABLES");
+            var reader = ExecuteReader("select TABLE_NAME from INFORMATION_SCHEMA.TABLES order by TABLE_NAME");
 
             Dictionary<string, Table> tables = new Dictionary<string, Table>();
 
