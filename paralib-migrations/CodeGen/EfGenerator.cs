@@ -442,6 +442,8 @@ namespace com.paralib.Migrations.CodeGen
 
                 We *do* support multi-valued primary keys, however, as in the compound keys of a many-to-many association table.
 
+            TODO and multi-valued one-to-many?
+
             */
 
             
