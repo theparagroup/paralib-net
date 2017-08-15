@@ -140,8 +140,6 @@ namespace com.paralib.Migrations.Runner
                 convention = new CodeGen.Conventions.ParalibConvention();
             }
 
-            convention.Implements = Paralib.Migrations.Codegen.Model.Implements ?? convention.Implements;
-            convention.Ctor = Paralib.Migrations.Codegen.Model.Implements ?? convention.Ctor;
 
             return convention;
         }

@@ -104,12 +104,26 @@ namespace com.paralib.Migrations.CodeGen
                 {
                     foreach (Relationship fk in table.ForeignKeys.Values)
                     {
-                        if (fk.OnColumn==column.Name)
+                        //old dumb way
+                        //if (fk.OnColumn == column.Name)
+                        if (fk.Columns.Where(c=>c.OnColumn==column.Name).Count()>0)
                         {
                             //is other table included in our table list (not 'skipped')?
                             if ((from t in _tables.Values where t.Name == fk.OtherTable select t).Count() > 0)
                             {
-                                WriteLine($"\t\t[ForeignKey(\"{Convention.GetEntityName(fk.OnColumn)}\")]");
+                                //single vs multi value FKs (same logic as in EfGenerator)
+                                if (fk.Columns.Count == 1)
+                                {
+                                    //for single-valued FKs, we can use the property name
+                                    //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                                    WriteLine($"\t\t[ForeignKey(\"{Convention.GetReferenceName(column.Name)}\")]");
+                                }
+                                else
+                                {
+                                    //for multi-valued FKs, we should use the table name
+                                    //user_first_name, user_last_name => public virtual EfUser User { get; set; }
+                                    WriteLine($"\t\t[ForeignKey(\"{Convention.GetClassName(fk.OtherTable, Pluralities.Singular)}\")]");
+                                }
                             }
                         }
                     }

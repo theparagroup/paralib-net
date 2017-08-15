@@ -5,11 +5,6 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 {
     public class MicrosoftConvention : IConvention
     {
-        public string Ctor { get; set; } 
-
-        public string Implements { get; set; }
-
-        public string EfPrefix { get; } = null;
 
         public string GetClassName(string tableName, Pluralities plurality)
         {
@@ -21,7 +16,12 @@ namespace com.paralib.Migrations.CodeGen.Conventions
             throw new NotImplementedException();
         }
 
-        public string GetEntityName(string columnName)
+        public string GetReferenceName(string columnName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCollectionName(string tableName)
         {
             throw new NotImplementedException();
         }

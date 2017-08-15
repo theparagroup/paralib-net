@@ -358,7 +358,7 @@ namespace com.paralib.Dal.DbProviders
                     if (!fkeys.ContainsKey(fkName))
                     {
                         //create FK elationship with first column
-                        fkeys.Add(fkName, new Relationship() { Name = fkName, OnTable = fkTable, OnColumn = fkColumn, OtherTable = uqTable, OtherColumn = uqColumn });
+                        fkeys.Add(fkName, new Relationship { Name = fkName, OnTable = fkTable, OtherTable = uqTable, Columns = new List<ColumnPair>{ new ColumnPair { OnColumn = fkColumn, OtherColumn = uqColumn } } });
                     }
                     else
                     {
@@ -376,7 +376,7 @@ namespace com.paralib.Dal.DbProviders
                     if (!refs.ContainsKey(fkName))
                     {
                         //create Reference relationship with first column
-                        refs.Add(fkName, new Relationship() { Name = fkName, OnTable = uqTable, OnColumn = uqColumn, OtherTable = fkTable, OtherColumn = fkColumn });
+                        refs.Add(fkName, new Relationship { Name = fkName, OnTable = uqTable, OtherTable = fkTable, Columns = new List<ColumnPair> { new ColumnPair { OnColumn = uqColumn, OtherColumn = fkColumn } } });
                     }
                     else
                     {

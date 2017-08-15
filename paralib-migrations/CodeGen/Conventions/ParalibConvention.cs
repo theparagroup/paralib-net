@@ -6,11 +6,6 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 {
     public class ParalibConvention : IConvention
     {
-        public string Ctor { get; set; } 
-
-        public string Implements { get; set; }
-
-        public string EfPrefix { get; } = "Ef";
 
         public string GetClassName(string tableName, Pluralities plurality)
         {
@@ -31,7 +26,7 @@ namespace com.paralib.Migrations.CodeGen.Conventions
             return result;
         }
 
-        public string GetEntityName(string columnName)
+        public string GetReferenceName(string columnName)
         {
             //employee_type_id -> EmployeeType
             columnName = Regex.Replace(columnName.ToLower(), "_id$", m => "");
@@ -39,6 +34,13 @@ namespace com.paralib.Migrations.CodeGen.Conventions
             var result = GetPropertyName(columnName);
             return result;
         }
+
+        public string GetCollectionName(string tableName)
+        {
+            //user_types -> IList<EfUserType> UserTypes;
+            return GetClassName(tableName, Pluralities.Plural);
+        }
+
 
         public string GetPropertyName(string columnName)
         {

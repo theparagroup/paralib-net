@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="DbProviders\SqlServerDbProvider.cs" />
     <Compile Include="DbProviders\DbProviderBase.cs" />
+    <Compile Include="Metadata\ColumnPair.cs" />
     <Compile Include="Metadata\Properties.cs" />
     <Compile Include="Metadata\Relationship.cs" />
     <Compile Include="Db.cs" />

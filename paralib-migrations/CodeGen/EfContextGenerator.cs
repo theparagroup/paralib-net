@@ -28,13 +28,15 @@ namespace com.paralib.Migrations.CodeGen
 
     public class EfContextGenerator:Generator
     {
+        public const string EfPrefix = "Ef";
+
         public EfContextGenerator(IClassWriter writer, IConvention convention, Dictionary<string, Table> tables, ClassOptions classOptions) : base(writer, convention, tables, classOptions)
         {
         }
 
         protected override string GetClassName(string tableName)
         {
-            return Convention.EfPrefix + base.GetClassName(tableName);
+            return EfPrefix + base.GetClassName(tableName);
         }
 
         public void Generate(Database database)

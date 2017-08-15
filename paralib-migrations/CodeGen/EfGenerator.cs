@@ -376,27 +376,27 @@ namespace com.paralib.Migrations.CodeGen
 
         protected override string GetClassName(string tableName)
         {
-            return Convention.EfPrefix + base.GetClassName(tableName);
+            return EfContextGenerator.EfPrefix + base.GetClassName(tableName);
         }
 
-        protected string GetCollectionNavProperty(string tableName)
+        protected string _GetCollectionNavProperty(string tableName)
         {
             //user_types -> IList<EfUserType> UserTypes;
             return Convention.GetClassName(tableName, Pluralities.Plural);
         }
 
-        protected string GetReferenceNavProperty2(string tableName)
+        protected string _GetReferenceNavPropertyFromTableName(string tableName)
         {
             //user_types -> EfUserType UserType;
             return Convention.GetClassName(tableName, Pluralities.Singular);
         }
 
-        protected string GetReferenceNavPropertyFromColumnName(string columnName)
+        protected string _GetReferenceNavPropertyFromColumnName(string columnName)
         {
             //created_by_user_id => CreatedByUser
             //user_type_id => UserType
 
-            columnName = Convention.GetEntityName(columnName);
+            columnName = Convention.GetReferenceName(columnName);
             return columnName;
         }
 
@@ -460,10 +460,33 @@ namespace com.paralib.Migrations.CodeGen
                         WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(fk.OnColumn)}\")]");
                     */
 
-                    //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
-                    //user_type_id => public virtual EfUserType UserType { get; set; }
-                    string fkNav = GetReferenceNavPropertyFromColumnName(fk.OnColumn);
+                    /*
+                        old dumb way
+
+                        //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                        //user_type_id => public virtual EfUserType UserType { get; set; }
+                        string fkNav = GetReferenceNavPropertyFromColumnName(fk.OnColumn);
+                        WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {fkNav} {{ get; set;}}");
+
+                    */
+
+                    //TODO push all this into GetReferenceName()
+                    //single vs multi value FKs (same logic as in MetadataGenerator)
+                    string fkNav;
+                    if (fk.Columns.Count==1)
+                    {
+                        //for single-valued FKs, we can use the property name
+                        //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                        fkNav = Convention.GetReferenceName(fk.Columns[0].OnColumn);
+                    }
+                    else
+                    {
+                        //for multi-valued FKs, we should use the table name
+                        //user_first_name, user_last_name => public virtual EfUser User { get; set; }
+                        fkNav = Convention.GetClassName(fk.OtherTable, Pluralities.Singular);
+                    }
                     WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {fkNav} {{ get; set;}}");
+
                 }
             }
 
@@ -476,7 +499,8 @@ namespace com.paralib.Migrations.CodeGen
                 {
 
                     //created_by_user_id => [InverseProperty("CreatedByUser")]
-                    WriteLine($"\t\t[InverseProperty(\"{GetReferenceNavPropertyFromColumnName(r.OtherColumn)}\")]");
+                    //TODO [0]
+                    WriteLine($"\t\t[InverseProperty(\"{Convention.GetReferenceName(r.Columns[0].OtherColumn)}\")]");               
 
                     string entityNavPrefix = "";
                     /*
@@ -504,19 +528,22 @@ namespace com.paralib.Migrations.CodeGen
 
                     */
 
+
+                    //TODO push all this into GetCollectionName()
                     Table otherTable = _tables[r.OtherTable];
-                    bool pFk = otherTable.Columns[r.OtherColumn].IsPrimary;
+                    //TODO [0]
+                    bool pFk = otherTable.Columns[r.Columns[0].OtherColumn].IsPrimary;                                 
                     int nPk = otherTable.Columns.Where(c => c.Value.IsPrimary == true).Count();
 
                     if (pFk && nPk==1)
                     {
                         //public virtual EfUser User { get; set; }
-                        WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {entityNavPrefix + GetReferenceNavProperty2(r.OtherTable)} {{ get; set;}}");
+                        WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {entityNavPrefix + Convention.GetClassName(r.OtherTable, Pluralities.Singular)} {{ get; set;}}");
                     }
                     else
                     {
                         //public virtual List<EfUser> Users { get; set; }
-                        WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {entityNavPrefix + GetCollectionNavProperty(r.OtherTable)} {{ get; set;}}");
+                        WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {entityNavPrefix + Convention.GetCollectionName(r.OtherTable)} {{ get; set;}}");
                     }
 
 
