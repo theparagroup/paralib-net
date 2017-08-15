@@ -57,10 +57,8 @@ namespace com.paralib.Migrations.CodeGen
         ORMs such as EF. In the database, these relationships are implemented with "association tables",
         also known as junction, cross-reference, or intermediate tables.
 
-
         Navigation properties must be marked virtual to support lazy loading. Lazy loading can also be
         turned off for the whole DbContext. If it's not on, you must explicitly load the entities:
-
 
             var foo=from f in db.Foo.Include("Bars") select f;      //eager loading
             db.Entry(child).Reference(c => c.Parent).Load();        //reference
@@ -118,19 +116,23 @@ namespace com.paralib.Migrations.CodeGen
 
         You can fix this in two ways:
 
-                [ForeignKey("CreatedBy")]
-                public int CreatedByAuthorId { get; set; }
+            1] add the FK attribute to the FK property, pointing to the FK reference nav property
 
-        Or
+                    [ForeignKey("CreatedBy")]
+                    public int CreatedByAuthorId { get; set; }
 
-                [ForeignKey("CreatedByAuthorId")]
-                public Parent CreatedBy { get; set; }
+
+            2] add the FK attribute to the FK reference nav property, pointing to the FK property
+
+                    [ForeignKey("CreatedByAuthorId")]
+                    public Parent CreatedBy { get; set; }
 
 ***********************************************************************************************************************
 ***********************************************************************************************************************
 ***********************************************************************************************************************
 
-        Let's add the inverse property (a collection) to the parent:
+        Let's add the inverse property (a collection in a one-to-many or a reference
+        in a one-to-one) to the parent:
 
 
             public partial class Parent
@@ -141,6 +143,7 @@ namespace com.paralib.Migrations.CodeGen
                 //add collection navigation property
                 public List<Child> Children { get; set; }
             }
+
 
         Again, if naming conventions hold, this just works.
 
@@ -344,27 +347,48 @@ namespace com.paralib.Migrations.CodeGen
             {
                 ...
 
-                [Column("bio_isbn")]
+                [Column("bio_isbn", Order = 10)]
                 [ForeignKey("Biography")]
                 public string BioIsbn { get; set; }
 
-                [Column("bio_page_no")]
+                [Column("bio_page_no", Order = 11)]
                 [ForeignKey("Biography")]
                 public int? BioPageNo { get; set; }
 
                 public virtual Biography Biography { get; set; }
             }
 
-        You can specify the order of the columns (ordnials do not have to match) in the dependent
-        entity as well but EF shouldn't need that extra information.
+        Note: that in a one-to-one mapping, we can't use "the" column name of the FK to create the
+        navigation property (since there are more than one columns in the FK). Instead we use the 
+        name of the entity:
+
+                public string CreatedByFirstName { get; set; }
+                public string CreatedByLastName { get; set; }
+                public virtual User User { get; set; }
+
+        instead of:
+
+                public string CreatedByUserId { get; set; }
+                public virtual User CreatedByUser { get; set; }
+
+        TODO: Support multiple multi-valued FKs to the same table (just number them):
+                
+                public virtual User User1 { get; set; }
+                public virtual User User2 { get; set; }
+
+        TODO: Or simply don't generate them at all and allow the developer to do so in a custom class.
+
+        With a multi-valued FK, you must specify the order of the columns that comprise the key. The 
+        ordnials do not have to match exactly but the ordering must be the same on the primary entity
+        (see MetadataGenerator for more info on this). 
 
         Note: we specify the column mappings here just because we chose non-conforming names.
 
-        EF also supports "many-to-many" relationship directly on the entity without having to navigate 
-        through the association table with a compound key. In other words, "collection to collection".
+        TODO: EF also supports "many-to-many" relationship directly on the entity without having to navigate 
+        through the association table with a compound key. In other words, "collection to collection". We don't 
+        currently support this in the code generator, but a future version should.
 
-        We don't currently support this in the code generator, but a future version should.
-
+        We do, of course, support many-to-many via an association table as coupled one-to-manys.
 
     */
 
@@ -379,40 +403,14 @@ namespace com.paralib.Migrations.CodeGen
             return EfContextGenerator.EfPrefix + base.GetClassName(tableName);
         }
 
-        protected string _GetCollectionNavProperty(string tableName)
-        {
-            //user_types -> IList<EfUserType> UserTypes;
-            return Convention.GetClassName(tableName, Pluralities.Plural);
-        }
-
-        protected string _GetReferenceNavPropertyFromTableName(string tableName)
-        {
-            //user_types -> EfUserType UserType;
-            return Convention.GetClassName(tableName, Pluralities.Singular);
-        }
-
-        protected string _GetReferenceNavPropertyFromColumnName(string columnName)
-        {
-            //created_by_user_id => CreatedByUser
-            //user_type_id => UserType
-
-            columnName = Convention.GetReferenceName(columnName);
-            return columnName;
-        }
-
         protected override void OnGenerate(Table table, string className)
         {
             WriteLine("using System;");
             WriteLine("using System.Collections.Generic;");
             WriteLine("using System.ComponentModel.DataAnnotations.Schema;");
 
-            //for debugging
-            if (className == "EfClientCustomer" || className == "EfClient" || className == "EfUser")
-            {
-                int x = 1;
-            }
-
             //bad hack
+            //TODO why?
             if (ClassOptions.Namespace != null) WriteLine($"using {ClassOptions.Namespace};");
 
             WriteLine();
@@ -422,75 +420,47 @@ namespace com.paralib.Migrations.CodeGen
             WriteLine($"\tpublic partial class {className}:{Convention.GetClassName(table.Name, Pluralities.Singular)}");
             WriteLine("\t{");
 
-            //TODO to support multi-valued keys we would have to modify the Relationship class and the provider logic
-
             /*
 
                 ForeignKeys
                     "on" table      -> this table              
                     "on" column     -> foreign key(s) in this table pointing to a primary or unique "other" column(s) in the "other" table
+                    "other" table   -> the table with the primary/unq key
+                    "other" column  -> the primary/unq key
                 
                 References:
+                    "on" table      -> this table              
+                    "on" column     -> the column pointed to by a FK in the other table
                     "other" table   -> table with a foreign key(s) pointing to this table, the "on" table
                     "other" column  -> foreign key(s) pointing to the "on" column(s)
 
-                Note: again, we do not support multi-valued keys in EF relationships:
-
-                    one-to-one with multi-valued keys
-                    one-to-many with multi-valued keys
-                    many-to-many
-
-                We *do* support multi-valued primary keys, however, as in the compound keys of a many-to-many association table.
-
-            TODO and multi-valued one-to-many?
 
             */
 
-            
-            //Generate fkey reference navigation properties for when this class is the dependent entity (single-valued keys only)
+
+            //Generate fkey navigation properties (References) for when this class is the dependent entity
             foreach (Relationship fk in table.ForeignKeys.Values)
             {
                 //is other table included in our table list (not 'skipped')?
                 if ((from t in _tables.Values where t.Name==fk.OtherTable select t).Count()>0)
                 {
                     /*
-                        We're doing this in metadata now...
 
-                        //created_by_user_id => [ForeignKey("CreatedByUserId")]
-                        WriteLine($"\t\t[ForeignKey(\"{Convention.GetPropertyName(fk.OnColumn)}\")]");
-                    */
-
-                    /*
-                        old dumb way
-
-                        //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
-                        //user_type_id => public virtual EfUserType UserType { get; set; }
-                        string fkNav = GetReferenceNavPropertyFromColumnName(fk.OnColumn);
-                        WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {fkNav} {{ get; set;}}");
+                        Note: we create [ForeignKey("table")] attributes that refer to this property
+                        in the MetadataGenerator.
 
                     */
 
-                    //TODO push all this into GetReferenceName()
-                    //single vs multi value FKs (same logic as in MetadataGenerator)
-                    string fkNav;
-                    if (fk.Columns.Count==1)
-                    {
-                        //for single-valued FKs, we can use the property name
-                        //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
-                        fkNav = Convention.GetReferenceName(fk.Columns[0].OnColumn);
-                    }
-                    else
-                    {
-                        //for multi-valued FKs, we should use the table name
-                        //user_first_name, user_last_name => public virtual EfUser User { get; set; }
-                        fkNav = Convention.GetClassName(fk.OtherTable, Pluralities.Singular);
-                    }
-                    WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {fkNav} {{ get; set;}}");
+                    //single vs multi valued keys
+                    //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
+                    //user_first_name, user_last_name => public virtual EfUser User { get; set; }
+                    WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {MetadataGenerator.GetReferenceName(Convention, fk)} {{ get; set;}}");
 
                 }
             }
 
-            //Generate collection or reference navigation properties for when this class is the primary entity (single-valued keys only)
+
+            //Generate navigation properties (Collections or References) for when this class is the primary entity
             foreach (Relationship r in table.References.Values)
             {
 
@@ -498,23 +468,13 @@ namespace com.paralib.Migrations.CodeGen
                 if ((from t in _tables.Values where t.Name == r.OtherTable select t).Count() > 0)
                 {
 
+                    //link to the dependent entity's reference property
                     //created_by_user_id => [InverseProperty("CreatedByUser")]
-                    //TODO [0]
-                    WriteLine($"\t\t[InverseProperty(\"{Convention.GetReferenceName(r.Columns[0].OtherColumn)}\")]");               
-
-                    string entityNavPrefix = "";
-                    /*
-                        TODO remove?
-                        what was the original intent of this? what use case?
-
-                            //public virtual List<EfUser> CreatedByUser_Users { get; set; }
-                            if (table.References.Where(tr => tr.OtherTable == r.OtherTable).Count() > 1)
-                            {
-                                entityNavPrefix = GetFKNavProperty(r.OtherColumn) + "_";
-                            }
-
-                    */
-
+                    //user_first_name, user_last_name => [InverseProperty("User")]
+                    //TODO put a space here
+                    WriteLine($"\t\t[InverseProperty(\"{MetadataGenerator.GetReferenceName(Convention, r, true)}\")]");
+                    
+                    
                     /*
                         Is the relationship "[on] <1:*> [other]"  or  "[on] <1:1> [other]"? 
 
@@ -529,23 +489,34 @@ namespace com.paralib.Migrations.CodeGen
                     */
 
 
-                    //TODO push all this into GetCollectionName()
                     Table otherTable = _tables[r.OtherTable];
-                    //TODO [0]
-                    bool pFk = otherTable.Columns[r.Columns[0].OtherColumn].IsPrimary;                                 
-                    int nPk = otherTable.Columns.Where(c => c.Value.IsPrimary == true).Count();
 
-                    if (pFk && nPk==1)
+                    bool oneToOne = false;
+
+                    if (r.Columns.Count == otherTable.PrimaryKeys.Count)
+                    {
+                        oneToOne = true;
+
+                        for (int i = 0; i < r.Columns.Count; ++i)
+                        {
+                            if (r.Columns[i].OtherColumn != otherTable.PrimaryKeys[i].Name)
+                            {
+                                oneToOne = false;
+                            }
+                        }
+
+                    }
+
+                    if (oneToOne)
                     {
                         //public virtual EfUser User { get; set; }
-                        WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {entityNavPrefix + Convention.GetClassName(r.OtherTable, Pluralities.Singular)} {{ get; set;}}");
+                        WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {Convention.GetClassName(r.OtherTable, Pluralities.Singular)} {{ get; set;}}");
                     }
                     else
                     {
                         //public virtual List<EfUser> Users { get; set; }
-                        WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {entityNavPrefix + Convention.GetCollectionName(r.OtherTable)} {{ get; set;}}");
+                        WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {Convention.GetClassName(r.OtherTable, Pluralities.Plural)} {{ get; set;}}");
                     }
-
 
                 }
             }

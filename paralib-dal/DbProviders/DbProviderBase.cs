@@ -231,7 +231,7 @@ namespace com.paralib.Dal.DbProviders
         {
             /*
 
-                Here we query for all primary key information for the table.
+                Here we query for all primary key information for the table
 
                 Example:
 
@@ -240,6 +240,11 @@ namespace com.paralib.Dal.DbProviders
                     authors	    foo	        1
                     authors	    bar	        2
 
+                From MySQl documentation:
+                    
+                    "The value of ORDINAL_POSITION is the column's position within the constraint, 
+                    not the column's position within the table. Column positions are numbered beginning with 1."
+
             */
 
             if (table.Name == "authors")
@@ -247,6 +252,7 @@ namespace com.paralib.Dal.DbProviders
                 int x = 1;
             }
 
+            table.PrimaryKeys = new List<Column>();
 
             string sql = "select";
             sql += " kcu.TABLE_NAME,kcu.COLUMN_NAME, kcu.ORDINAL_POSITION";
@@ -257,13 +263,15 @@ namespace com.paralib.Dal.DbProviders
             sql += $" where tc.CONSTRAINT_TYPE = 'PRIMARY KEY' and kcu.TABLE_NAME = '{table.Name}'";
             sql += " order by kcu.TABLE_NAME, kcu.ORDINAL_POSITION";
 
-
             var reader = ExecuteReader(sql);
 
             while (reader.Read())
             {
-                string pkColumn = reader.GetValue<string>("COLUMN_NAME");
-                table.Columns[pkColumn].IsPrimary = true;
+                string pkName = reader.GetValue<string>("COLUMN_NAME");
+                Column pk = table.Columns[pkName];
+
+                pk.IsPrimary = true;
+                table.PrimaryKeys.Add(pk);
             }
 
             reader.Close();
@@ -310,6 +318,8 @@ namespace com.paralib.Dal.DbProviders
                 Note: currently we do not include relationships involving multiple keys (compound, composite, etc).
                 We do this at the end by filtering them out.
                 
+
+                //TODO will this query work for FKs against unique constraints? That is, non-primary keys?
 
             */
 

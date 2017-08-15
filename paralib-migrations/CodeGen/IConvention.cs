@@ -1,4 +1,5 @@
 ﻿using System;
+using com.paralib.Dal.Metadata;
 
 namespace com.paralib.Migrations.CodeGen
 {
@@ -11,12 +12,6 @@ namespace com.paralib.Migrations.CodeGen
 
         //employee_type_id -> EmployeeTypeId
         string GetPropertyName(string columnName);
-
-        //employee_type_id -> EmployeeType
-        string GetReferenceName(string columnName);
-
-        //user_types -> IList<EfUserType> UserTypes;
-        string GetCollectionName(string tableName);
 
         //employee_type_id -> "Employee Type Id"
         string GetDisplayName(string columnName);

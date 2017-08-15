@@ -311,6 +311,17 @@ namespace com.paralib.Migrations.Runner
 
                                         }
 
+                                        if (t.PrimaryKeys.Count > 0)
+                                        {
+                                            say("");
+                                            say("      primary keys:");
+                                            foreach (var p in t.PrimaryKeys)
+                                            {
+                                                say($"        {p.Name}");
+                                            }
+                                        }
+
+
                                         if (t.ForeignKeys.Values.Count > 0)
                                         {
                                             say("");

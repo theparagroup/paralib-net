@@ -1,6 +1,7 @@
-﻿using com.paralib.Dal.Utils;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
+using com.paralib.Dal.Metadata;
+using com.paralib.Dal.Utils;
 
 namespace com.paralib.Migrations.CodeGen.Conventions
 {
@@ -25,22 +26,6 @@ namespace com.paralib.Migrations.CodeGen.Conventions
 
             return result;
         }
-
-        public string GetReferenceName(string columnName)
-        {
-            //employee_type_id -> EmployeeType
-            columnName = Regex.Replace(columnName.ToLower(), "_id$", m => "");
-
-            var result = GetPropertyName(columnName);
-            return result;
-        }
-
-        public string GetCollectionName(string tableName)
-        {
-            //user_types -> IList<EfUserType> UserTypes;
-            return GetClassName(tableName, Pluralities.Plural);
-        }
-
 
         public string GetPropertyName(string columnName)
         {

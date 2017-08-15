@@ -1,4 +1,5 @@
 ﻿using System;
+using com.paralib.Dal.Metadata;
 
 
 namespace com.paralib.Migrations.CodeGen.Conventions
@@ -12,16 +13,6 @@ namespace com.paralib.Migrations.CodeGen.Conventions
         }
 
         public string GetDisplayName(string columnName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetReferenceName(string columnName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetCollectionName(string tableName)
         {
             throw new NotImplementedException();
         }
