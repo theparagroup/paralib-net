@@ -437,6 +437,7 @@ namespace com.paralib.Migrations.CodeGen
 
             */
 
+            int fkCount = 0;
 
             //Generate fkey navigation properties (References) for when this class is the dependent entity
             foreach (Relationship fk in table.ForeignKeys.Values)
@@ -456,9 +457,11 @@ namespace com.paralib.Migrations.CodeGen
                     //user_first_name, user_last_name => public virtual EfUser User { get; set; }
                     WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {MetadataGenerator.GetReferenceName(Convention, fk)} {{ get; set;}}");
 
+                    ++fkCount;
                 }
             }
 
+            bool lineBreak = false;
 
             //Generate navigation properties (Collections or References) for when this class is the primary entity
             foreach (Relationship r in table.References.Values)
@@ -467,6 +470,13 @@ namespace com.paralib.Migrations.CodeGen
                 //is other table included in our table list (not 'skipped')?
                 if ((from t in _tables.Values where t.Name == r.OtherTable select t).Count() > 0)
                 {
+
+                    //put a line break between references and inverses
+                    if (!lineBreak && fkCount>0)
+                    {
+                        WriteLine();
+                        lineBreak = true;
+                    }
 
                     //link to the dependent entity's reference property
                     //created_by_user_id => [InverseProperty("CreatedByUser")]

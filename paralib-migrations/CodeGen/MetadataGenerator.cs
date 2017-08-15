@@ -179,11 +179,16 @@ namespace com.paralib.Migrations.CodeGen
                 //key & order info (useful for EF on unconventionally-named or multi-valued key columns)
                 if (column.IsPrimary)
                 {
-                    //TODO only add the order on multivalued PK
+                    //only add the order on multivalued PK
+                    string columnAttribute = "";
+                    if (table.PrimaryKeys.Count>1)
+                    {
+                        //note: we use the ordinal of the column in the PK constraint (as given by the db provider).
+                        int order = table.PrimaryKeys.IndexOf(column);
+                        columnAttribute = $", Column(Order = {order})";
+                    }
 
-                    //note: we use the ordinal of the column in the PK constraint (as given by the db provider).
-                    int order = table.PrimaryKeys.IndexOf(column);
-                    WriteLine($"\t\t[Key, Column(Order = {order})]");
+                    WriteLine($"\t\t[Key{columnAttribute}]");
                 }
 
                 //foreign key info (useful for EF when the principal end of a one-to-one cannot be determined)

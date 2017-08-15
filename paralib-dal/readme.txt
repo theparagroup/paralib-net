@@ -29,3 +29,6 @@ permissions for the user Studio is running under.
 Note the following user will be given acccess as well:
 
 	"NT SERVICE\MSSQL$SQLEXPRESS12"
+
+
+
