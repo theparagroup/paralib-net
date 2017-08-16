@@ -297,10 +297,10 @@ namespace com.paralib.Dal.DbProviders
                 Example schema:
 
 
-                    courses                     books                       authors
-                    --------        <*:1>       --------        <*:1>       --------
-                    id (pk)                     id (pk)                     foo (pk:1)
-                    book_id (fk)                foo (fk:1)                  bar (pk:2)
+                    courses                     books                       authors                     author_info
+                    --------        <*:1>       --------        <*:1>       --------        <1:1>       ----------
+                    id (pk)                     id (pk)                     foo (pk:1)                  foo (pk:1)
+                    book_id (fk)                foo (fk:1)                  bar (pk:2)                  bar (pk:2)
                                                 bar (fk:2)
 
 
