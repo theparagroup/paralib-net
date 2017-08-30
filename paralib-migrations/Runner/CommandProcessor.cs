@@ -35,6 +35,8 @@ namespace com.paralib.Migrations.Runner
                 help += "\thelp\n";
                 help += "\tq(uit)\n";
 
+                //TODO add help for custom commands
+
                 return help;
             }
 
