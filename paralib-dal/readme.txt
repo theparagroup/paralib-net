@@ -23,6 +23,8 @@ if the user already exists
 ====	Correct NTFS Permmissions for SQL Server Files
 =============================================================
 
+Note: running Management Studio as administrator works as well.
+
 Using Management Studio to attach/create, make sure the folder has full control
 permissions for the user Studio is running under.
 

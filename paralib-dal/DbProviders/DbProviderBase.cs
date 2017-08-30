@@ -52,7 +52,7 @@ namespace com.paralib.Dal.DbProviders
             return (T) cmd.ExecuteScalar();
         }
 
-        public virtual string Encode(string value)
+        public virtual string Encode(string value, int? length)
         {
             if (value == null)
             {
@@ -60,6 +60,11 @@ namespace com.paralib.Dal.DbProviders
             }
             else
             {
+                if (length.HasValue)
+                {
+                    value = value.Substring(0, Math.Min(length.Value, value.Length));
+                }
+
                 return "'" + value.Replace("'", "''") + "'";
             }
         }

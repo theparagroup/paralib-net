@@ -52,9 +52,9 @@ namespace com.paralib.Dal
             _provider.Close();
         }
 
-        public string Encode(string value)
+        public string Encode(string value, int? length=null)
         {
-            return _provider.Encode(value);
+            return _provider.Encode(value, length);
         }
 
         public int ExecuteNonQuery(string sql)

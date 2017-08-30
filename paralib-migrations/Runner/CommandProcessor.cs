@@ -167,6 +167,16 @@ namespace com.paralib.Migrations.Runner
 
                     }
 
+                    //custom command?
+                    if (customCommands != null)
+                    {
+                        if (customCommands.ContainsKey(parts[0]))
+                        {
+                            customCommands[parts[0]](parts, say, sayError);
+                            continue;
+                        }
+                    }
+
 
                     //commands that use a database
 
@@ -414,17 +424,6 @@ namespace com.paralib.Migrations.Runner
                                 break;
 
                             default:
-
-                                //custom command?
-                                if (customCommands!=null)
-                                {
-                                    if (customCommands.ContainsKey(parts[0]))
-                                    {
-                                        customCommands[parts[0]](parts, say, sayError);
-                                        break;
-                                    }
-                                }
-
                                 sayError($"Unknown command {parts[0]}");
                                 break;
                         }
