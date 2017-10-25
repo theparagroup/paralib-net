@@ -93,6 +93,25 @@ namespace com.paralib.Xandroid.Utils
             return ss;
         }
 
+        public static SpannableString SpannableText3(string text, Color? color = null, EventHandler onClick = null)
+        {
+            int l = text.Length;
+
+            var ss = new SpannableString(text);
+
+            ss.SetSpan(new AlignmentSpanStandard(Layout.Alignment.AlignNormal), 0, text.Length, SpanTypes.ExclusiveExclusive);
+
+            if (onClick != null)
+            {
+                var cs = new ClickableSpanWithAction(delegate (View view) { onClick(view, EventArgs.Empty); }, false);
+                ss.SetSpan(cs, 0, l, SpanTypes.ExclusiveExclusive);
+            }
+
+            if (color.HasValue) ss.SetSpan(new ForegroundColorSpan(color.Value), 0, text.Length, SpanTypes.ExclusiveExclusive);
+
+            return ss;
+        }
+
 
     }
 
