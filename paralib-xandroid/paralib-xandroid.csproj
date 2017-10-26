@@ -65,6 +65,7 @@
     <Compile Include="Utils\Assets.cs" />
     <Compile Include="Utils\FileSystem.cs" />
     <Compile Include="Utils\Email.cs" />
+    <Compile Include="Utils\PackageInfo.cs" />
     <Compile Include="Utils\Phone.cs" />
     <Compile Include="Utils\Maps.cs" />
     <Compile Include="Utils\MessageBox.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Utils\Json.cs" />
     <Compile Include="Utils\Text.cs" />
     <Compile Include="Widgets\ISpinnerItem.cs" />
+    <Compile Include="Widgets\FrameLayoutWithFooter.cs" />
     <Compile Include="Widgets\SpinnerItem.cs" />
     <Compile Include="Widgets\SpinnerItemAdapter.cs" />
     <Compile Include="XInputTypes.cs" />
