@@ -20,5 +20,12 @@ namespace com.paralib.Xandroid.Utils
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), fileName);
         }
 
+        public static string GetExternalPath(string fileName)
+        {
+            //Computer\Galaxy Note4\Phone\Android\data\@PACKAGE_NAME@\files
+            Java.IO.File external = Application.Context.GetExternalFilesDir(null);
+            return Path.Combine(Application.Context.GetExternalFilesDir(null).AbsolutePath, fileName);
+        }
+
     }
 }
