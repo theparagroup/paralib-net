@@ -45,6 +45,11 @@ namespace com.paralib.Xandroid.Utils
                 int default2 = (int)Convert.ChangeType(@default, typeof(int));
                 return (T)Convert.ChangeType(SharedPreferences.GetInt(key, default2), typeof(T));
             }
+            else if (typeof(T) == typeof(bool))
+            {
+                bool default2 = (bool)Convert.ChangeType(@default, typeof(bool));
+                return (T)Convert.ChangeType(SharedPreferences.GetBoolean(key, default2), typeof(T));
+            }
             else
             {
                 throw new NotImplementedException();
@@ -61,6 +66,10 @@ namespace com.paralib.Xandroid.Utils
             else if (typeof(T) == typeof(int))
             {
                 _editor.PutInt(key, (int)Convert.ChangeType(value, typeof(int)));
+            }
+            else if (typeof(T) == typeof(bool))
+            {
+                _editor.PutBoolean(key, (bool)Convert.ChangeType(value, typeof(bool)));
             }
             else
             {
