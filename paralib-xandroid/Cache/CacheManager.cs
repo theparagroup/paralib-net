@@ -15,6 +15,20 @@ using System.IO;
 
 namespace com.paralib.Xandroid.Cache
 {
+    /*
+
+        Essentially we want to track:
+        
+            initial creation time
+            last saved time
+            last "modified" time, where the application detirmines the modified state
+
+        TODO Refactor status to just be a boolean, or some applicaation-defined integer status value
+        TODO perhaps change modified column to "status_changed_on"
+
+    */
+
+
     public static class CacheManager
     {
         static CacheManager()
