@@ -21,7 +21,7 @@ namespace com.paralib.Xandroid.Cache
         
             initial creation time
             last saved time
-            last "modified" time, where the application detirmines the modified state
+            last "modified" time, meaning last time modified flag was set
 
         TODO Refactor status to just be a boolean, or some applicaation-defined integer status value
         TODO perhaps change modified column to "status_changed_on"
@@ -58,8 +58,7 @@ namespace com.paralib.Xandroid.Cache
             Init();
         }
 
-
-        private static string ToKey(Type type, int? id=null)
+        private static string ToKey(Type type, int? id = null)
         {
             if (id.HasValue)
             {
@@ -71,7 +70,6 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-
         public static void Clear()
         {
             using (var db = new SQLiteConnection(DbPath))
@@ -80,27 +78,13 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-        public static void Clear<T>(int? id=null)
+        public static void Clear<T>(int? id = null)
         {
 
             using (var db = new SQLiteConnection(DbPath))
             {
-                db.Delete<CacheItem>(ToKey(typeof(T),id));
+                db.Delete<CacheItem>(ToKey(typeof(T), id));
             }
-        }
-
-        public static CacheItem<T> Get<T>(int? id=null)
-        {
-            try
-            {
-                using (var db = new SQLiteConnection(DbPath))
-                {
-                    return db.Get<CacheItem<T>>(ToKey(typeof(T),id));
-                }
-            }
-            catch { }
-
-            return null;
         }
 
         public static List<CacheItem<T>> List<T>()
@@ -117,52 +101,24 @@ namespace com.paralib.Xandroid.Cache
             return null;
         }
 
-        public static CacheStatuses GetStatus<T>(int? id = null)
+        public static CacheItem<T> Get<T>(int? id = null)
         {
-            using (var db = new SQLiteConnection(DbPath))
+            try
             {
-                var oldItem = Get<T>(id);
-
-                if (oldItem!=null)
+                using (var db = new SQLiteConnection(DbPath))
                 {
-                    return oldItem.CacheStatus;
+                    return db.Get<CacheItem<T>>(ToKey(typeof(T), id));
                 }
-                else
-                {
-                    return CacheStatuses.NotFound;
-                }
-
             }
+            catch { }
+
+            return null;
         }
 
-        public static void UpdateStatus<T>(bool modified, int? id = null)
+        public static CacheItem<T> Save<T>(T value, bool? dirty = null, int? id = null)
         {
-            using (var db = new SQLiteConnection(DbPath))
-            {
-                var oldItem = Get<T>(id);
+            DateTime now = DateTime.Now;
 
-                if (oldItem!=null)
-                {
-                    if (modified)
-                    {
-                        oldItem.CacheStatus = CacheStatuses.Modified;
-                        oldItem.ModifiedOn = DateTime.Now;
-                    }
-                    else
-                    {
-                        oldItem.CacheStatus = CacheStatuses.Cached;
-                        oldItem.CachedOn = DateTime.Now;
-                    }
-
-                    db.Update(oldItem);
-                }
-
-
-            }
-        }
-
-        public static CacheItem<T> Save<T>(T value, bool modified=false, int? id = null)
-        {
             using (var db = new SQLiteConnection(DbPath))
             {
                 if (value == null)
@@ -172,34 +128,39 @@ namespace com.paralib.Xandroid.Cache
                 }
                 else
                 {
-                    var oldItem = Get<T>(id);
-
                     var newItem = new CacheItem<T>();
                     newItem.Key = ToKey(typeof(T), id);
                     newItem.Value = value;
+                    newItem.SavedOn = now;
+
+                    var oldItem = Get<T>(id);
 
                     if (oldItem != null)
                     {
                         newItem.CreatedOn = oldItem.CreatedOn;
-                        newItem.CachedOn = oldItem.CachedOn;
-                        newItem.ModifiedOn = oldItem.ModifiedOn;
+                        newItem.Dirty = oldItem.Dirty;
+                        newItem.DirtiedOn = oldItem.DirtiedOn;
+                        newItem.CleanedOn = oldItem.CleanedOn;
                     }
                     else
                     {
-                        newItem.CreatedOn = DateTime.Now;
+                        newItem.CreatedOn =now;
                     }
 
+                    if (dirty.HasValue)
+                    {
+                        newItem.Dirty = dirty.Value;
 
-                    if (modified)
-                    {
-                        newItem.CacheStatus = CacheStatuses.Modified;
-                        newItem.ModifiedOn = DateTime.Now;
+                        if (dirty.Value)
+                        {
+                            newItem.DirtiedOn = now;
+                        }
+                        else
+                        {
+                            newItem.CleanedOn = now;
+                        }
                     }
-                    else
-                    {
-                        newItem.CacheStatus = CacheStatuses.Cached;
-                        newItem.CachedOn = DateTime.Now;
-                    }
+
 
                     db.InsertOrReplace(newItem);
 
@@ -209,6 +170,50 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
+        public static void SetModified<T>(bool dirty, int? id = null)
+        {
+            DateTime now = DateTime.Now;
+
+            using (var db = new SQLiteConnection(DbPath))
+            {
+                var oldItem = Get<T>(id);
+
+                if (oldItem != null)
+                {
+                    oldItem.Dirty = dirty;
+
+                    if (dirty)
+                    {
+                        oldItem.DirtiedOn = now;
+                    }
+                    else
+                    {
+                        oldItem.CleanedOn = now;
+                    }
+
+                    db.Update(oldItem);
+                }
+
+            }
+        }
+
+        public static bool? IsDirty<T>(int? id = null)
+        {
+            using (var db = new SQLiteConnection(DbPath))
+            {
+                var oldItem = Get<T>(id);
+
+                if (oldItem != null)
+                {
+                    return oldItem.Dirty;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+        }
 
 
     }

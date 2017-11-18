@@ -23,22 +23,24 @@ namespace com.paralib.Xandroid.Cache
         [Column("key")]
         public  string Key { get; set; }
 
-        [Column("status")]
-        public CacheStatuses CacheStatus { get; set; }
-
         [MaxLength(2000)]
         [Column("json")]
         public string Json { get; set; }
 
+        [Column("dirty")]
+        public bool Dirty { get; set; }
+
         [Column("created_on")]
         public DateTime CreatedOn { get; set; }
 
-        [Column("cached_on")]
-        public DateTime CachedOn { get; set; }
+        [Column("saved_on")]
+        public DateTime SavedOn { get; set; }
 
-        [Column("modified_on")]
-        public DateTime ModifiedOn { get; set; }
+        [Column("dirtied_on")]
+        public DateTime DirtiedOn { get; set; }
 
+        [Column("cleaned_on")]
+        public DateTime CleanedOn { get; set; }
 
     }
 }

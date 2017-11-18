@@ -14,7 +14,7 @@ namespace com.paralib.Xandroid.Cache
 {
     public enum CacheStatuses
     {
-        NotFound = 0,
+        //NotFound = 0,
         Cached = 1,
         Modified = 2,
     }
