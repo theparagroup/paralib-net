@@ -56,7 +56,6 @@
     <Compile Include="Cache\CacheItem.cs" />
     <Compile Include="Cache\CacheItem[T].cs" />
     <Compile Include="Cache\CacheManager.cs" />
-    <Compile Include="Cache\CacheStatuses.cs" />
     <Compile Include="Http\EndPoint.cs" />
     <Compile Include="Http\HttpMethods.cs" />
     <Compile Include="Paralib.cs" />
