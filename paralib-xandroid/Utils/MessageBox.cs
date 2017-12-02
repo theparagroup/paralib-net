@@ -43,14 +43,24 @@ namespace com.paralib.Xandroid.Utils
 
         private static Toast _lastToast;
 
-        public static void Popup(Context context, string text, bool @long=false)
+        public static void Popup(Context context, string text, bool @long=false, float? scale=null)
         {
             if (_lastToast!=null)
             {
                 _lastToast.Cancel();
             }
 
-            _lastToast = Toast.MakeText(context, text, @long?ToastLength.Long:ToastLength.Short);
+            if (scale.HasValue)
+            {
+                var popupSpan = new Android.Text.SpannableString(text);
+                popupSpan.SetSpan(new Android.Text.Style.RelativeSizeSpan(scale.Value), 0, popupSpan.Length(), 0);
+                _lastToast = Toast.MakeText(context, popupSpan, @long ? ToastLength.Long : ToastLength.Short);
+            }
+            else
+            {
+                _lastToast = Toast.MakeText(context, text, @long ? ToastLength.Long : ToastLength.Short);
+            }
+
             _lastToast.Show();
         }
 
