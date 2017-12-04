@@ -58,7 +58,7 @@ namespace com.paralib.Xandroid.Cache
             Init();
         }
 
-        private static string ToKey(Type type, int? id = null)
+        private static string ToKey(Type type, long? id = null)
         {
             if (id.HasValue)
             {
@@ -78,7 +78,7 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-        public static void Clear<T>(int? id = null)
+        public static void Clear<T>(long? id = null)
         {
 
             using (var db = new SQLiteConnection(DbPath))
@@ -93,7 +93,7 @@ namespace com.paralib.Xandroid.Cache
             {
                 using (var db = new SQLiteConnection(DbPath))
                 {
-                    return db.Query<CacheItem<T>>($"select * from cache_items where key like '{ToKey(typeof(T))}%'");
+                    return db.Query<CacheItem<T>>($"select * from cache_items where key like '{ToKey(typeof(T))}:%'");
                 }
             }
             catch { }
@@ -101,7 +101,7 @@ namespace com.paralib.Xandroid.Cache
             return null;
         }
 
-        public static CacheItem<T> Get<T>(int? id = null)
+        public static CacheItem<T> Get<T>(long? id = null)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace com.paralib.Xandroid.Cache
             return null;
         }
 
-        public static CacheItem<T> Save<T>(T value, bool? dirty = null, int? id = null)
+        public static CacheItem<T> Save<T>(T value, bool? dirty = null, long? id = null)
         {
             DateTime now = DateTime.Now;
 
@@ -170,7 +170,7 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-        public static void SetModified<T>(bool dirty, int? id = null)
+        public static void SetModified<T>(bool dirty, long? id = null)
         {
             DateTime now = DateTime.Now;
 
@@ -197,7 +197,7 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
-        public static bool? IsDirty<T>(int? id = null)
+        public static bool? IsDirty<T>(long? id = null)
         {
             using (var db = new SQLiteConnection(DbPath))
             {
