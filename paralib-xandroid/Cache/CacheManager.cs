@@ -66,7 +66,7 @@ namespace com.paralib.Xandroid.Cache
             }
             else
             {
-                return $"{type.Name}";
+                return $"{type.Name}:null";
             }
         }
 
@@ -93,7 +93,7 @@ namespace com.paralib.Xandroid.Cache
             {
                 using (var db = new SQLiteConnection(DbPath))
                 {
-                    return db.Query<CacheItem<T>>($"select * from cache_items where key like '{ToKey(typeof(T))}:%'");
+                    return db.Query<CacheItem<T>>($"select * from cache_items where key like '{typeof(T).Name}:%'");
                 }
             }
             catch { }
