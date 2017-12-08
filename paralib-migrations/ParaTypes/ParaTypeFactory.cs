@@ -50,6 +50,10 @@ namespace com.paralib.Migrations.ParaTypes
             {
                 return fluent.AsInt32();
             }
+            else if (paraType.Type == typeof(long))
+            {
+                return fluent.AsInt64();
+            }
             else if (paraType.Type == typeof(byte[]))
             {
                 return fluent.AsBinary();

@@ -14,6 +14,13 @@ namespace com.paralib.DataAnnotations
             _paraType = Paralib.ParaTypes[typeName];
         }
 
+        public ParaType ParaType
+        {
+            get
+            {
+                return _paraType;
+            }
+        }
 
         protected override NET.ValidationResult IsValid(object value, NET.ValidationContext validationContext)
         {

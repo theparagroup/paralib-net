@@ -11,11 +11,26 @@ namespace com.paralib.Xandroid.Utils
 {
     public class MessageBox
     {
-        public static void Show(Context context, string title, string message, string okText = "Ok", EventHandler<DialogClickEventArgs> okHandler = null,string cancelText=null, EventHandler<DialogClickEventArgs> cancelHandler = null, bool modal=false)
+        public static void Show(Context context, string title, string message, string okText = "Ok", EventHandler<DialogClickEventArgs> okHandler = null,string cancelText=null, EventHandler<DialogClickEventArgs> cancelHandler = null, bool modal=false, float? scale=null, int? width=null, int? height=null)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(context);
-            alert.SetTitle(title);
-            alert.SetMessage(message);
+
+            if (scale.HasValue)
+            {
+                var titleSpan = new Android.Text.SpannableString(title);
+                titleSpan.SetSpan(new Android.Text.Style.RelativeSizeSpan(scale.Value), 0, titleSpan.Length(), 0);
+                alert.SetTitle(titleSpan);
+
+                var messageSpan = new Android.Text.SpannableString(message);
+                messageSpan.SetSpan(new Android.Text.Style.RelativeSizeSpan(scale.Value), 0, messageSpan.Length(), 0);
+                alert.SetMessage(messageSpan);
+            }
+            else
+            {
+                alert.SetTitle(title);
+                alert.SetMessage(message);
+            }
+
             alert.SetPositiveButton(okText, okHandler?? ((senderAlert, args) => { }));
 
             if (cancelText != null)
@@ -39,6 +54,11 @@ namespace com.paralib.Xandroid.Utils
 
 
             dialog.Show();
+
+            if (width.HasValue && height.HasValue)
+            {
+                dialog.Window.SetLayout(width.Value, height.Value);
+            }
         }
 
         private static Toast _lastToast;

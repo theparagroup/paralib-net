@@ -16,6 +16,7 @@ namespace com.paralib.DataAnnotations
         public const string Bool = nameof(Bool);
         public const string Decimal = nameof(Decimal);
         public const string Int32 = nameof(Int32);
+        public const string Int64 = nameof(Int64);
         public const string Guid = nameof(Guid);
 
         public const string Email= nameof(Email);
@@ -47,6 +48,7 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Bool), new BoolType(nameof(Bool)));
             _paraTypes.Add(nameof(Decimal), new DecimalType(nameof(Decimal)));
             _paraTypes.Add(nameof(Int32), new Int32Type(nameof(Int32)));
+            _paraTypes.Add(nameof(Int64), new Int64Type(nameof(Int64)));
             _paraTypes.Add(nameof(Guid), new GuidType(nameof(Guid)));
 
 
