@@ -38,16 +38,38 @@ namespace com.paralib.DataAnnotations
                     metadataType = mta.MetadataClassType;
                 }
 
-                var mmis = metadataType.GetMembers().Where(mi => Attribute.IsDefined(mi, typeof(ParaTypeAttribute), true));
+                //TODO should we check both the object and the metadata object?
+                var mmis = metadataType.GetMembers().Where(mi => Attribute.IsDefined(mi, typeof(ParaTypeAttribute), true) || Attribute.IsDefined(mi, typeof(NET.StringLengthAttribute), true));
 
                 foreach (var mmi in mmis)
                 {
+                    int? maxLength = null;
+
+                    //this will get ParaString as well
                     var pta = mmi.GetCustomAttribute<ParaTypeAttribute>();
 
-                    //support for parastring (inherits?), [StringLength]
-                    if (pta.ParaType is Data.StringType)
+                    if (pta!=null)
                     {
-                        int maxLength = ((Data.StringType)pta.ParaType).MaximumLength;
+                        if (pta.ParaType is Data.StringType)
+                        {
+                            maxLength = ((Data.StringType)pta.ParaType).MaximumLength;
+                        }
+                    }
+
+                    if (!maxLength.HasValue)
+                    {
+                        var sla = mmi.GetCustomAttribute<NET.StringLengthAttribute>();
+
+                        if (sla!=null)
+                        {
+                            maxLength = sla.MaximumLength;
+                        }
+
+                    }
+
+
+                    if (maxLength.HasValue)
+                    {
 
                         //match the metadata member with the object member 
                         //(this code should work for properties and fields which can't be overloaded)
@@ -61,7 +83,7 @@ namespace com.paralib.DataAnnotations
                                 if (pi.PropertyType == typeof(string))
                                 {
                                     var value = (string)pi.GetValue(obj);
-                                    value = Truncate(value, maxLength);
+                                    value = Truncate(value, maxLength.Value);
                                     pi.SetValue(obj, value);
                                 }
 
@@ -72,7 +94,7 @@ namespace com.paralib.DataAnnotations
                                 if (fi.FieldType == typeof(string))
                                 {
                                     var value = (string)fi.GetValue(obj);
-                                    value = Truncate(value, maxLength);
+                                    value = Truncate(value, maxLength.Value);
                                     fi.SetValue(obj, value);
                                 }
 
