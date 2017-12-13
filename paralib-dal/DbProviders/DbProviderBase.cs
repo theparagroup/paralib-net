@@ -469,7 +469,7 @@ namespace com.paralib.Dal.DbProviders
 
                     if (table.Columns.ContainsKey(column))
                     {
-                        table.Columns[reader.GetValue<string>("COLUMN_NAME")].Properties = (new Properties(){ ParaType = reader.GetValue<string>("PARA_TYPE"), Description = reader.GetValue<string>("DESCRIPTION") });
+                        table.Columns[reader.GetValue<string>("COLUMN_NAME")].Properties = (new Properties(){ ParaType = reader.GetValue<string>("PARA_TYPE"), Description = reader.GetValue<string>("DESCRIPTION"), Extended = reader.GetValue<string>("EXTENDED") });
                     }
                 }
 

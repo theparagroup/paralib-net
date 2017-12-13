@@ -19,8 +19,8 @@ namespace com.paralib.DataAnnotations
         public const string Int64 = nameof(Int64);
         public const string Guid = nameof(Guid);
 
-        public const string Email= nameof(Email);
-        public const string Url = nameof(Url);
+        public const string ParaString = nameof(ParaString);
+
         public const string Address = nameof(Address);
         public const string City = nameof(City);
         public const string State = nameof(State);
@@ -36,11 +36,13 @@ namespace com.paralib.DataAnnotations
         public const string MaxText = nameof(MaxText);
         public const string Password = nameof(Password);
         public const string Currency = nameof(Currency);
-
+        public const string Url = nameof(Url);
+        public const string Email = nameof(Email);
         public const string Path = nameof(Path);
 
         private ParaTypes()
         {
+            //basic types
             _paraTypes.Add(nameof(Key), new KeyType(nameof(Key)));
             _paraTypes.Add(nameof(Blob), new BlobType(nameof(Blob)));
             _paraTypes.Add(nameof(DateTime), new DateTimeType(nameof(DateTime)));
@@ -51,27 +53,34 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Int64), new Int64Type(nameof(Int64)));
             _paraTypes.Add(nameof(Guid), new GuidType(nameof(Guid)));
 
+            //pseudo types
+            _paraTypes.Add(nameof(ParaString), null);
 
-            //more complicated and supposedly 99%
-            //@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" }
-            _paraTypes.Add(nameof(Email), new StringType(nameof(Email)) { MaximumLength = 254, RegEx = @".+\@.+\..+" });
 
-            _paraTypes.Add(nameof(Url), new StringType(nameof(Url)) { MaximumLength = 2000});
-            _paraTypes.Add(nameof(Address), new StringType(nameof(Address)) { MaximumLength = 256});
-            _paraTypes.Add(nameof(City), new StringType(nameof(City)) { MaximumLength = 128});
-            _paraTypes.Add(nameof(State), new StringType(nameof(State)) { MaximumLength = 2});
-            _paraTypes.Add(nameof(Zip), new StringType(nameof(Zip)) { MaximumLength = 5, RegEx= @"^[0-9]{5}$", BadFormatErrorMessage="'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
-            _paraTypes.Add(nameof(Zip4), new StringType(nameof(Zip4)) { MaximumLength = 10, RegEx=@"^[0-9]{5}(-[0-9]{4})?$", BadFormatErrorMessage = "'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
-            _paraTypes.Add(nameof(Phone), new StringType(nameof(Phone)) { MaximumLength = 13 });
-            _paraTypes.Add(nameof(Name), new StringType(nameof(Name)) { MaximumLength = 64});
-            _paraTypes.Add(nameof(Description), new StringType(nameof(Description)) { MaximumLength = 128});
-            _paraTypes.Add(nameof(Comment), new StringType(nameof(Comment)) { MaximumLength = 256 });
-            _paraTypes.Add(nameof(Note), new StringType(nameof(Note)) { MaximumLength = 512 });
-            _paraTypes.Add(nameof(Text), new StringType(nameof(Text)) { MaximumLength = 1024});
-            _paraTypes.Add(nameof(LongText), new StringType(nameof(LongText)) { MaximumLength = 2048 });
-            _paraTypes.Add(nameof(MaxText), new StringType(nameof(MaxText)) { MaximumLength = int.MaxValue});
-            _paraTypes.Add(nameof(Password), new StringType(nameof(Password)) { MaximumLength = 128 });
-            _paraTypes.Add(nameof(Currency), new StringType(nameof(Currency)) { MaximumLength = 10, RegEx= @"^\$?(\d{1,3},?(\d{3},?)*\d{3}(.\d{0,3})?|\d{1,3}(.\d{2})?)$", BadFormatErrorMessage = "'{0}' must be a currency value.", TooLongErrorMessage = "'{0}' is too large." });
+            //string types
+            _paraTypes.Add(nameof(Address), new StringType(nameof(Address), 256));
+            _paraTypes.Add(nameof(City), new StringType(nameof(City), 128));
+            _paraTypes.Add(nameof(State), new StringType(nameof(State), 2));
+            _paraTypes.Add(nameof(Zip), new StringType(nameof(Zip), 5) { RegEx = @"^[0-9]{5}$", BadFormatErrorMessage = "'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
+            _paraTypes.Add(nameof(Zip4), new StringType(nameof(Zip4), 10) { RegEx = @"^[0-9]{5}(-[0-9]{4})?$", BadFormatErrorMessage = "'{0}' must be a valid ZIP code", TooLongErrorMessage = "'{0}' must be a valid ZIP code" });
+            _paraTypes.Add(nameof(Phone), new StringType(nameof(Phone), 13));
+            _paraTypes.Add(nameof(Name), new StringType(nameof(Name), 64));
+            _paraTypes.Add(nameof(Description), new StringType(nameof(Description), 128));
+            _paraTypes.Add(nameof(Comment), new StringType(nameof(Comment), 256));
+            _paraTypes.Add(nameof(Note), new StringType(nameof(Note), 512));
+            _paraTypes.Add(nameof(Text), new StringType(nameof(Text), 1024));
+            _paraTypes.Add(nameof(LongText), new StringType(nameof(LongText), 2048));
+            _paraTypes.Add(nameof(MaxText), new StringType(nameof(MaxText), int.MaxValue));
+            _paraTypes.Add(nameof(Password), new StringType(nameof(Password), 128));
+            _paraTypes.Add(nameof(Currency), new StringType(nameof(Currency), 10) { RegEx = @"^\$?(\d{1,3},?(\d{3},?)*\d{3}(.\d{0,3})?|\d{1,3}(.\d{2})?)$", BadFormatErrorMessage = "'{0}' must be a currency value.", TooLongErrorMessage = "'{0}' is too large." });
+            _paraTypes.Add(nameof(Url), new StringType(nameof(Url), 2000));
+
+            /*
+            Email:
+                more complicated and supposedly 99%
+                @"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?" }
+            */
+            _paraTypes.Add(nameof(Email), new StringType(nameof(Email), 254) { RegEx = @".+\@.+\..+" });
 
 
             /*
@@ -85,7 +94,7 @@ namespace com.paralib.DataAnnotations
                 For cross-platform purposes, we use the Win32 length.
 
             */
-            _paraTypes.Add(nameof(Path), new StringType(nameof(Path)) { MaximumLength = 260 });
+            _paraTypes.Add(nameof(Path), new StringType(nameof(Path), 260));
 
 
         }

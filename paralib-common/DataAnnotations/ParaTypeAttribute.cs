@@ -9,8 +9,18 @@ namespace com.paralib.DataAnnotations
     {
         protected ParaType _paraType;
 
+        protected ParaTypeAttribute()
+        {
+
+        }
+
         public ParaTypeAttribute(string typeName)
         {
+            if (typeName==ParaTypes.ParaString)
+            {
+                throw new Exception("Use [ParaString] attribute instead of [ParaType(ParaTypes.ParaString)]");
+            }
+
             _paraType = Paralib.ParaTypes[typeName];
         }
 

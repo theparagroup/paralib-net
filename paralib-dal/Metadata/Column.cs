@@ -8,7 +8,7 @@ namespace com.paralib.Dal.Metadata
         public int Ordinal { get; set; }
         public string DbType { get; set; }
         public Type ClrType { get; set; }
-        public string ParaType { get; set; }
+        //public string ParaType { get; set; }
         public bool IsPrimary { get; set; }
         public bool IsForeign { get; set; }
         public bool IsNullable { get; set; }

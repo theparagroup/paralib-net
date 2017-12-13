@@ -253,7 +253,17 @@ namespace com.paralib.Migrations.CodeGen
                 //paratype?
                 if (column.Properties?.ParaType != null)
                 {
-                    WriteLine($"\t\t[ParaType(ParaTypes.{column.Properties?.ParaType})]");
+                    //parastring?
+                    if (column.Properties.ParaType==DataAnnotations.ParaTypes.ParaString)
+                    {
+                        //pull the [ParaString] attribute from metadata
+                        WriteLine($"\t\t{column.Properties.Extended}");
+                    }
+                    else
+                    {
+                        WriteLine($"\t\t[ParaType(ParaTypes.{column.Properties.ParaType})]");
+                    }
+
                 }
                 else
                 {

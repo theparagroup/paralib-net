@@ -44,6 +44,7 @@ namespace com.paralib.DataAnnotations
                 {
                     var pta = mmi.GetCustomAttribute<ParaTypeAttribute>();
 
+                    //support for parastring (inherits?), [StringLength]
                     if (pta.ParaType is Data.StringType)
                     {
                         int maxLength = ((Data.StringType)pta.ParaType).MaximumLength;

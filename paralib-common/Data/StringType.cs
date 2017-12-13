@@ -6,7 +6,7 @@ namespace com.paralib.Data
     public class StringType : ParaType
     {
         public int? MinimumLength { get; internal set; }
-        public int MaximumLength { get; internal set; }
+        public int MaximumLength { get; protected set; }
         public string RegEx { get; internal set; }
 
         private static readonly string _tooLongErrorMessage = "'{0}' must be {1} characters or shorter";
@@ -18,13 +18,15 @@ namespace com.paralib.Data
         private static readonly string _badFormatErrorMessage = "'{0}' is invalid";
         public string BadFormatErrorMessage { get; set; }
 
-        public StringType(string name) : base(name, typeof(string)) { }
+        public StringType(string name, int maximumLength) : base(name, typeof(string))
+        {
+            MaximumLength = maximumLength;
+        }
 
         public override string Validate(string displayName, object value)
         {
 
             //we want to pass null values (use [Required] for that) and throw if value is not a string
-
 
             if (value != null && ((string)value).Length > MaximumLength)
             {

@@ -18,6 +18,11 @@ namespace com.paralib.Migrations
             return ParaTypes.ParaTypeFactory.AsParaType<TNext>(fluent, name, description);
         }
 
+        public static TNext AsParaString<TNext>(this FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, int maximumLength, string description = null, int? minimumLength = null, string regEx = null, string tooLongErrorMessage = null, string tooShortErrorMessage = null, string badFormatErrorMessage = null) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        {
+            return ParaTypes.ParaTypeFactory.AsParaString<TNext>(fluent, maximumLength, description, minimumLength, regEx, tooLongErrorMessage, tooShortErrorMessage, badFormatErrorMessage);
+        }
+
         public static void StandardLogTable(this FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = Logging.StandardLog.DefaultTableName)
         {
             Logging.StandardLog.CreateTable(create, tableName);
