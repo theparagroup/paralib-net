@@ -6,7 +6,7 @@ namespace com.paralib.Data
     public class KeyType : ParaType
     {
 
-        public KeyType(string name) : base(name, typeof(int)) { }
+        public KeyType(string name) : base(name, typeof(Int64)) { }
 
     }
 

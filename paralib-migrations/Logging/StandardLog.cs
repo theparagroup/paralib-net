@@ -13,7 +13,7 @@ namespace com.paralib.Migrations.Logging
         public static void CreateTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = DefaultTableName)
         {
             create.Table(tableName)
-            .WithColumn("id").AsInt32().PrimaryKey().NotNullable().Identity()
+            .WithColumn("id").AsInt64().PrimaryKey().NotNullable().Identity()
             .WithColumn("date").AsDateTime().NotNullable()
             .WithColumn("timestamp").AsInt32().NotNullable()
             .WithColumn("thread").AsString(32).NotNullable()

@@ -22,7 +22,7 @@ namespace com.paralib.Migrations.ParaTypes
         public static void CreateTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create)
         {
             create.Table(Paralib.Dal.ColumnMetadataTable)
-            .WithColumn("ID").AsInt32().PrimaryKey().Identity()
+            .WithColumn("ID").AsInt64().PrimaryKey().Identity()
             .WithColumn("TABLE_NAME").AsString(256)
             .WithColumn("COLUMN_NAME").AsString(256)
             .WithColumn("PARA_TYPE").AsString(256)

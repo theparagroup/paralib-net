@@ -20,7 +20,7 @@ namespace com.paralib.DataAnnotations
             return value?.Substring(0, Math.Min(value.Length, maxLength));
         }
 
-        public static void Truncate(object obj, TruncateTargets truncateTarget)
+        public static void Truncate(object obj, TruncateTargets truncateTarget=TruncateTargets.Both)
         {
             bool truncateProperties = (truncateTarget == TruncateTargets.Properties) || (truncateTarget == TruncateTargets.Both);
             bool truncateFields = (truncateTarget == TruncateTargets.Fields) || (truncateTarget == TruncateTargets.Both);

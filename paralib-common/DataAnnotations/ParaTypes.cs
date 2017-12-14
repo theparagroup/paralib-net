@@ -39,6 +39,7 @@ namespace com.paralib.DataAnnotations
         public const string Url = nameof(Url);
         public const string Email = nameof(Email);
         public const string Path = nameof(Path);
+        public const string GuidString = nameof(GuidString);
 
         private ParaTypes()
         {
@@ -74,6 +75,12 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Password), new StringType(nameof(Password), 128));
             _paraTypes.Add(nameof(Currency), new StringType(nameof(Currency), 10) { RegEx = @"^\$?(\d{1,3},?(\d{3},?)*\d{3}(.\d{0,3})?|\d{1,3}(.\d{2})?)$", BadFormatErrorMessage = "'{0}' must be a currency value.", TooLongErrorMessage = "'{0}' is too large." });
             _paraTypes.Add(nameof(Url), new StringType(nameof(Url), 2000));
+
+            /*
+             guidstring:
+                {12345678-1234-1234-1234-123456789abc}
+            */
+            _paraTypes.Add(nameof(GuidString), new StringType(nameof(GuidString), 38));
 
             /*
             Email:
