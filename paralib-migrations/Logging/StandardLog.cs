@@ -12,6 +12,8 @@ namespace com.paralib.Migrations.Logging
 
         public static void CreateTable(FluentMigrator.Builders.Create.ICreateExpressionRoot create, string tableName = DefaultTableName)
         {
+            //see ParaAdoNetAppender for how this table is used
+
             create.Table(tableName)
             .WithColumn("id").AsInt64().PrimaryKey().NotNullable().Identity()
             .WithColumn("date").AsDateTime().NotNullable()
