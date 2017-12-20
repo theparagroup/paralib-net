@@ -79,6 +79,14 @@ namespace com.paralib.Migrations.ParaTypes
             {
                 return fluent.AsGuid();
             }
+            else if (paraType.Type == typeof(float))
+            {
+                return fluent.AsFloat();
+            }
+            else if (paraType.Type == typeof(double))
+            {
+                return fluent.AsDouble();
+            }
             else
             {
                 throw new ParalibException($"ParaType \"{paraType.Type.Name}\" is not supported in migrations.");

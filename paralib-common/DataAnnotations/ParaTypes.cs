@@ -18,6 +18,8 @@ namespace com.paralib.DataAnnotations
         public const string Int32 = nameof(Int32);
         public const string Int64 = nameof(Int64);
         public const string Guid = nameof(Guid);
+        public const string Float = nameof(Float);
+        public const string Double = nameof(Double);
 
         public const string ParaString = nameof(ParaString);
 
@@ -31,9 +33,10 @@ namespace com.paralib.DataAnnotations
         public const string Description = nameof(Description);
         public const string Comment = nameof(Comment);
         public const string Note = nameof(Note);
-        public const string Text = nameof(Text);
         public const string LongText = nameof(LongText);
-        public const string MaxText = nameof(MaxText);
+        public const string LongerText = nameof(LongerText);
+        public const string LongestText = nameof(LongestText);
+        public const string Max = nameof(Max);
         public const string Password = nameof(Password);
         public const string Currency = nameof(Currency);
         public const string Url = nameof(Url);
@@ -53,6 +56,8 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Int32), new Int32Type(nameof(Int32)));
             _paraTypes.Add(nameof(Int64), new Int64Type(nameof(Int64)));
             _paraTypes.Add(nameof(Guid), new GuidType(nameof(Guid)));
+            _paraTypes.Add(nameof(Float), new FloatType(nameof(Float)));
+            _paraTypes.Add(nameof(Double), new DoubleType(nameof(Double)));
 
             //pseudo types
             _paraTypes.Add(nameof(ParaString), null);
@@ -69,9 +74,10 @@ namespace com.paralib.DataAnnotations
             _paraTypes.Add(nameof(Description), new StringType(nameof(Description), 128));
             _paraTypes.Add(nameof(Comment), new StringType(nameof(Comment), 256));
             _paraTypes.Add(nameof(Note), new StringType(nameof(Note), 512));
-            _paraTypes.Add(nameof(Text), new StringType(nameof(Text), 1024));
-            _paraTypes.Add(nameof(LongText), new StringType(nameof(LongText), 2048));
-            _paraTypes.Add(nameof(MaxText), new StringType(nameof(MaxText), int.MaxValue));
+            _paraTypes.Add(nameof(LongText), new StringType(nameof(LongText), 1024));
+            _paraTypes.Add(nameof(LongerText), new StringType(nameof(LongerText), 2048));
+            _paraTypes.Add(nameof(LongestText), new StringType(nameof(LongestText), 4000));
+            _paraTypes.Add(nameof(Max), new StringType(nameof(Max), int.MaxValue));
             _paraTypes.Add(nameof(Password), new StringType(nameof(Password), 128));
             _paraTypes.Add(nameof(Currency), new StringType(nameof(Currency), 10) { RegEx = @"^\$?(\d{1,3},?(\d{3},?)*\d{3}(.\d{0,3})?|\d{1,3}(.\d{2})?)$", BadFormatErrorMessage = "'{0}' must be a currency value.", TooLongErrorMessage = "'{0}' is too large." });
             _paraTypes.Add(nameof(Url), new StringType(nameof(Url), 2000));

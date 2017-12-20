@@ -71,7 +71,9 @@
     <Compile Include="Configuration\Mvc\MvcElement.cs" />
     <Compile Include="DataAnnotations\ObjectTruncator.cs" />
     <Compile Include="DataAnnotations\ParaStringAttribute.cs" />
+    <Compile Include="Data\FloatType.cs" />
     <Compile Include="Data\GuidType.cs" />
+    <Compile Include="Data\DoubleType.cs" />
     <Compile Include="Data\Int64Type.cs" />
     <Compile Include="Data\Int32Type.cs" />
     <Compile Include="Paralib\ParalibProperties\MigrationsProperties.cs" />
