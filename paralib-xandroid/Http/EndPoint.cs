@@ -72,13 +72,28 @@ namespace com.paralib.Xandroid.Http
 
             if (Method == HttpMethods.GET)
             {
+                if (Content!=null)
+                {
+                    throw new Exception("Can't send content on GET operation");
+                }
+
                 response = HttpClient.GetAsync(uri).Result;
             }
-            else if (Method == HttpMethods.PUT)
+            else if (Method == HttpMethods.PUT || Method == HttpMethods.POST)
             {
+                //TODO which http methods send content? all except for GET?
+
                 string jsonContent = Json.Serialize(Content);
                 HttpContent httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-                response = HttpClient.PutAsync(uri, httpContent).Result;
+
+                if (Method == HttpMethods.PUT)
+                {
+                    response = HttpClient.PutAsync(uri, httpContent).Result;
+                }
+                else if (Method == HttpMethods.POST)
+                {
+                    response = HttpClient.PostAsync(uri, httpContent).Result;
+                }
             }
             else
             {
@@ -95,10 +110,15 @@ namespace com.paralib.Xandroid.Http
                 var responseContent = response.Content;
                 ResponseJson = responseContent.ReadAsStringAsync().Result;
 
-                if (Method == HttpMethods.GET)
-                {
-                    Response = Json.DeSerialize<T>(ResponseJson);
-                }
+                //TODO which methods can return a response?
+
+                //if (Method == HttpMethods.GET)
+                //{
+                //    Response = Json.DeSerialize<T>(ResponseJson);
+                //}
+
+                //let's say all of them
+                Response = Json.DeSerialize<T>(ResponseJson);
 
             }
 
