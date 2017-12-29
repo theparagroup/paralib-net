@@ -572,6 +572,7 @@ namespace com.paralib.Migrations.CodeGen
             }
 
             bool lineBreak = false;
+            bool firstProperty = false;
 
             //Generate navigation properties (Collections or References) for when this class is the primary entity
             //note
@@ -582,7 +583,6 @@ namespace com.paralib.Migrations.CodeGen
                 if ((from t in _tables.Values where t.Name == r.OtherTable select t).Count() > 0)
                 {
                     Table otherTable = _tables[r.OtherTable];
-
 
                     //put a line break between references and inverses
                     if (!lineBreak && fkCount>0)
@@ -597,7 +597,14 @@ namespace com.paralib.Migrations.CodeGen
                     //link to the dependent entity's reference property
                     //created_by_user_id => [InverseProperty("CreatedByUser")]
                     //user_first_name, user_last_name => [InverseProperty("User")]
-                    //TODO put a space here
+
+                    if (firstProperty)
+                    {
+                        WriteLine();
+                    }
+
+                    firstProperty = true;
+
                     WriteLine($"\t\t[InverseProperty(\"{primaryPropertyName??MetadataGenerator.GetReferenceName(Convention, r, true)}\")]");
 
                     //see if there is an "InversePropertyName" specified on the other column, if so, use that for the property name
