@@ -422,6 +422,15 @@ namespace com.paralib.Migrations.CodeGen
 
             /*
 
+                Navigation properties: virtual properties used to navigate relationships.
+                Principal navigation property: the property on the primary key table that allows you to navigate to the table with the foreign key.
+                Dependednet navigation property: the property on the foreign key table that allow you to nvaigation to the table the primary key.
+                Reference property: a singled valued property. Principal properties are always reference properties, dependendants may be (one-to-one)
+                Collection property: a multi-value property (collection). Dependent properties usually are these (one-to-many)
+
+                Note: "Reference" can refer to "References" meaning "referring tables" (tables referring to this entity) or EF Reference Properties.
+
+
                 ForeignKeys
                     "on" table      -> this table              
                     "on" column     -> foreign key(s) in this table pointing to a primary or unique "other" column(s) in the "other" table
@@ -435,11 +444,110 @@ namespace com.paralib.Migrations.CodeGen
                     "other" column  -> foreign key(s) pointing to the "on" column(s)
 
 
+                We generate Principal Reference Navigation Properties for all the foriegn keys of this table first. They will be single valued as each
+                foriegn key value points to a single EF entity:
+
+                    Example 1:
+
+                        [jobs] table
+                            FK -> jobs.created_by_user_id
+
+                        Job:
+                            public long CreatedByUserId { get; set;}
+
+                        EfJob:
+                            public virtual EfUser CreatedByUser { get; set; } //nav property
+
+                        Job Metadata:
+            		        [ForeignKey("CreatedByUser")] //points to nav property above
+            		        public object CreatedByUserId;
+
+                    Example 2:
+
+                        [user_info] table
+                            PK, FK -> user_id
+
+                        UserInfo:
+                            public long UserId { get; set;} 
+
+                        EfUserInfo
+                            public virtual EfUser User { get; set; } //nav property
+
+                        Job Metadata:
+            		        [ForeignKey("User")] //points to above
+            		        public object UserId;
+
+
+                The FK Reference Navigation Property names are usually generated from the column name, which is descriptive. These names are used 
+                in the Ef and metadata classes. You can change this with PrincipalNavigationProperty column metadata on the first column of a foreign key,
+                you can specify the property name used when generating the Principal Reference Navigation properties on the primary table for the relationship.
+
+                This will change the property name in the following places:
+
+                    EfEntity class for principal entity (principal nav prop)
+                    Metadata class for principal entity ([ForeignKey] attribute)
+                    EfEntity class in the dependent entity ([InversePropertyAttribute])
+
+                For example:
+
+                    The metadata 
+                        {"PrincipalNavigationProperty", "Creator"}
+                    
+                    Generates
+
+                        EfJob:
+                            public virtual EfUser Creator { get; set; } //nav property
+
+                        Job Metadata:
+            		        [ForeignKey("Creator")] //points to nav property above
+            		        public object CreatedByUserId;
+
+                        EfUser
+                            [InverseProperty("Creator")] //must match nav property in principal entity
+                            public virtual List<EfUser> Users { get; set; }
+
+
+                Next we generate either Reference or Collection Navigation Properties for all the relationships where this table is the parent
+                table in the relationship (we're the primary key and the other table has the foreign key). This relationship could be either
+                a 1:1 or a 1:* where this table is always on a "1" side. In other words, the foreign key on the other table could also be the other
+                table's primary key. A 1:1 Reference Property will look like this in the Ef entity class (using the examples from above):
+
+                    //User Entity
+                    [InverseProperty("User")] //must match nav property in principal entity
+                    public virtual EfUser UserInfo { get; set; }
+
+                A 1:* Collection Property looks like this:
+
+                    //User Entity
+                    [InverseProperty("CreatedByUser")] //must match nav property in principal entity
+                    public virtual List<EfJob> Jobs { get; set; }
+
+                These property names aren't very descriptive and must be unique, so when you have multiple FKs to the same table you need to specify
+                the property name. By using "DependentNavigationProperty" column metadata on the first column of a foreign key, you can specify the property name used
+                when generating the Dependent Reference/Collection Navigation properties on the primary table for the relationship.
+
+                This will change the property name in the following places:
+
+                    EfEntity class in the dependent entity (dependent navigation property - the one with the [InversePropertyAttribute])
+
+
+                For example:
+
+                    The metadata 
+                        {"DependentNavigationProperty", "JobsCreatedByUser"}
+                    
+                    Generates
+
+                        //User Entity
+                        [InverseProperty("CreatedByUser")] //must match nav property in principal entity
+                        public virtual List<EfJob> JobsCreatedByUser { get; set; }
+
+
             */
 
             int fkCount = 0;
 
-            //Generate fkey navigation properties (References) for when this class is the dependent entity
+            //Generate fkey navigation properties (Reference Properties) for when this class is the dependent entity
             foreach (Relationship fk in table.ForeignKeys.Values)
             {
                 //is other table included in our table list (not 'skipped')?
@@ -447,15 +555,17 @@ namespace com.paralib.Migrations.CodeGen
                 {
                     /*
 
-                        Note: we create [ForeignKey("table")] attributes that refer to this property
-                        in the MetadataGenerator.
+                        Note: we create [ForeignKey("table")] attributes that refer to this property in the MetadataGenerator.
 
                     */
+
+                    //see if there is an "NavigationPropertyName" specified on the first column of the FK, if so, use that for the property name
+                    string propertyName = GetExtendedProperty(fk.OnTable, fk.Columns[0].OnColumn, nameof(ExtendedProperties.PrincipalNavigationProperty));
 
                     //single vs multi valued keys
                     //created_by_user_id => public virtual EfUser CreatedByUser { get; set; }
                     //user_first_name, user_last_name => public virtual EfUser User { get; set; }
-                    WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {MetadataGenerator.GetReferenceName(Convention, fk)} {{ get; set;}}");
+                    WriteLine($"\t\tpublic virtual {GetClassName(fk.OtherTable)} {propertyName??MetadataGenerator.GetReferenceName(Convention, fk)} {{ get; set;}}");
 
                     ++fkCount;
                 }
@@ -464,12 +574,15 @@ namespace com.paralib.Migrations.CodeGen
             bool lineBreak = false;
 
             //Generate navigation properties (Collections or References) for when this class is the primary entity
+            //note
             foreach (Relationship r in table.References.Values)
             {
 
                 //is other table included in our table list (not 'skipped')?
                 if ((from t in _tables.Values where t.Name == r.OtherTable select t).Count() > 0)
                 {
+                    Table otherTable = _tables[r.OtherTable];
+
 
                     //put a line break between references and inverses
                     if (!lineBreak && fkCount>0)
@@ -478,28 +591,28 @@ namespace com.paralib.Migrations.CodeGen
                         lineBreak = true;
                     }
 
+                    //see if there is an "NavigationPropertyName" specified on the other column, if so, use that for the property name
+                    string primaryPropertyName = GetExtendedProperty(otherTable.Columns[r.Columns[0].OtherColumn].Properties, nameof(ExtendedProperties.PrincipalNavigationProperty));
+
                     //link to the dependent entity's reference property
                     //created_by_user_id => [InverseProperty("CreatedByUser")]
                     //user_first_name, user_last_name => [InverseProperty("User")]
                     //TODO put a space here
-                    WriteLine($"\t\t[InverseProperty(\"{MetadataGenerator.GetReferenceName(Convention, r, true)}\")]");
-                    
-                    
+                    WriteLine($"\t\t[InverseProperty(\"{primaryPropertyName??MetadataGenerator.GetReferenceName(Convention, r, true)}\")]");
+
+                    //see if there is an "InversePropertyName" specified on the other column, if so, use that for the property name
+                    string propertyName = GetExtendedProperty(otherTable.Columns[r.Columns[0].OtherColumn].Properties, nameof(ExtendedProperties.DependentNavigationProperty));
+
                     /*
+
                         Is the relationship "[on] <1:*> [other]"  or  "[on] <1:1> [other]"? 
 
-                        TODO what we want:
+                        what we want:
                             1   test if the foreign keys (other columns) in the other table are also primary keys in that table 
                             2   test if the dual foreign/primary keys in the other table match our primary keys
-                        
-                        Until we support multi-valued keys, we're just going to
-                            1   test if the foreign key (other column) is also a primary key
-                            2   ensure the primary key in the other table is single-valued
 
                     */
 
-
-                    Table otherTable = _tables[r.OtherTable];
 
                     bool oneToOne = false;
 
@@ -520,12 +633,12 @@ namespace com.paralib.Migrations.CodeGen
                     if (oneToOne)
                     {
                         //public virtual EfUser User { get; set; }
-                        WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {Convention.GetClassName(r.OtherTable, Pluralities.Singular)} {{ get; set;}}");
+                        WriteLine($"\t\tpublic virtual {GetClassName(r.OtherTable)} {propertyName??Convention.GetClassName(r.OtherTable, Pluralities.Singular)} {{ get; set;}}");
                     }
                     else
                     {
                         //public virtual List<EfUser> Users { get; set; }
-                        WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {Convention.GetClassName(r.OtherTable, Pluralities.Plural)} {{ get; set;}}");
+                        WriteLine($"\t\tpublic virtual List<{GetClassName(r.OtherTable)}> {propertyName??Convention.GetClassName(r.OtherTable, Pluralities.Plural)} {{ get; set;}}");
                     }
 
                 }

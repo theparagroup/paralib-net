@@ -37,6 +37,53 @@ namespace com.paralib.Migrations.CodeGen
             ClassOptions = classOptions;
         }
 
+        protected virtual Properties GetProperties(string tableName, string columnName)
+        {
+            Table table = _tables[tableName];
+            Column column = table.Columns[columnName];
+            return column.Properties;
+        }
+
+        protected virtual Dictionary<string,string> GetExtendedProperties(Properties properties)
+        {
+            if (properties?.Extended != null)
+            {
+                string extendedJson = properties.Extended;
+                var extended = Utils.Json.DeSerialize<Dictionary<string, string>>(extendedJson);
+
+                return extended;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected virtual Dictionary<string, string> GetExtendedProperties(string tableName, string columnName)
+        {
+            return GetExtendedProperties(GetProperties(tableName, columnName));
+        }
+
+        protected virtual string GetExtendedProperty(Properties properties, string extendedPropertyName)
+        {
+            var extended = GetExtendedProperties(properties);
+
+            if (extended?.ContainsKey(extendedPropertyName)??false)
+            {
+                return extended[extendedPropertyName];
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        protected virtual string GetExtendedProperty(string tableName, string columnName, string extendedPropertyName)
+        {
+            return GetExtendedProperty(GetProperties(tableName, columnName), extendedPropertyName);
+        }
+
+
         protected virtual string GetClassName(string tableName)
         {
             return Convention.GetClassName(tableName, Pluralities.Singular);

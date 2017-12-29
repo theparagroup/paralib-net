@@ -235,9 +235,19 @@ namespace com.paralib.Migrations.CodeGen
                                     }
                                 }
 
+                                /*
+
+                                  see if there is an "NavigationPropertyName" specified on the first column of the FK, if so, use that for the property name
+
+                               */
+
+                                string propertyName = GetExtendedProperty(fk.OnTable, fk.Columns[0].OnColumn, nameof(ExtendedProperties.PrincipalNavigationProperty));
+
+
+
                                 //created_by_user_id => [ForeignKey("CreatedByUser")]
                                 //user_first_name, user_last_name => [ForeignKey("User")]
-                                WriteLine($"\t\t[ForeignKey(\"{GetReferenceName(Convention, fk)}\"){columnAttribute}]");
+                                WriteLine($"\t\t[ForeignKey(\"{propertyName??GetReferenceName(Convention, fk)}\"){columnAttribute}]");
                             }
                         }
                     }
@@ -253,11 +263,12 @@ namespace com.paralib.Migrations.CodeGen
                 //paratype?
                 if (column.Properties?.ParaType != null)
                 {
-                    //parastring?
-                    if (column.Properties.ParaType==DataAnnotations.ParaTypes.ParaString)
+                    //paratype attribute override?
+                    var paraTypeAttribute = GetExtendedProperty(column.Properties, nameof(ExtendedProperties.ParatypeAttribute));
+
+                    if (paraTypeAttribute != null)
                     {
-                        //pull the [ParaString] attribute from metadata
-                        WriteLine($"\t\t{column.Properties.Extended}");
+                        WriteLine($"\t\t{paraTypeAttribute}");
                     }
                     else
                     {
@@ -267,7 +278,7 @@ namespace com.paralib.Migrations.CodeGen
                 }
                 else
                 {
-                    //stringlength?
+                    //not a paratype. is this a string?
                     if (column.ClrType == typeof(string) && column.Length.HasValue) WriteLine($"\t\t[StringLength({column.Length})]");
                 }
 

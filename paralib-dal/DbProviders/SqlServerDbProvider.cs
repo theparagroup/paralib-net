@@ -15,5 +15,19 @@ namespace com.paralib.Dal.DbProviders
         {
             return new SqlConnection(connectionString);
         }
+
+        public override string Encode(DateTime? value)
+        {
+            if (value.HasValue)
+            {
+                return $"'{value.Value.ToString("yyyy-MM-dd HH:mm:ss.fff")}'";
+            }
+            else
+            {
+                return "NULL";
+            }
+
+        }
+
     }
 }

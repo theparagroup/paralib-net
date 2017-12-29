@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtendedProperties.cs" />
     <Compile Include="CodeGen\Generator.cs" />
     <Compile Include="CodeGen\EfContextGenerator.cs" />
     <Compile Include="CodeGen\FileOptions.cs" />

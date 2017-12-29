@@ -52,6 +52,8 @@ namespace com.paralib.Dal.DbProviders
             return (T) cmd.ExecuteScalar();
         }
 
+        public abstract string Encode(DateTime? value);
+
         public virtual string Encode(string value, int? length)
         {
             if (value == null)
@@ -469,7 +471,7 @@ namespace com.paralib.Dal.DbProviders
 
                     if (table.Columns.ContainsKey(column))
                     {
-                        table.Columns[reader.GetValue<string>("COLUMN_NAME")].Properties = (new Properties(){ ParaType = reader.GetValue<string>("PARA_TYPE"), Description = reader.GetValue<string>("DESCRIPTION"), Extended = reader.GetValue<string>("EXTENDED") });
+                        table.Columns[reader.GetValue<string>("COLUMN_NAME")].Properties = (new Properties(){ ParaType = reader.GetValue<string>("PARA_TYPE"), ClrType = reader.GetValue<string>("CLR_TYPE"), Description = reader.GetValue<string>("DESCRIPTION"), Extended = reader.GetValue<string>("EXTENDED") });
                     }
                 }
 

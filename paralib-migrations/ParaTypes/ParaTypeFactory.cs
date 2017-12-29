@@ -1,15 +1,73 @@
 ﻿using System;
+using System.Collections.Generic;
+using com.paralib.Utils;
 using com.paralib.Data;
 
 namespace com.paralib.Migrations.ParaTypes
 {
     public static class ParaTypeFactory
     {
-        private static void RecordMetadata<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, ParaType paraType, string description, string extended) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        public static Dictionary<string,string> GetValuesAsDictionary(object extended)
         {
-            ColumnMetadata cm = new ColumnMetadata() { ParaType = paraType, Description = description, Extended=extended };
+            //could be null, dictionary or anon type
+            var dictionary = extended as Dictionary<string, string>;
+
+            if (dictionary == null)
+            {
+                //value must be null or non-dictionary type
+
+                if (extended != null)
+                {
+
+                    //copy property value pairs to dictionary
+                    var properties = extended.GetType().GetProperties();
+
+                    if (properties.Length>0)
+                    {
+                        //must be non-dict type with some values
+                        dictionary = new Dictionary<string, string>();
+
+                        foreach (var property in properties)
+                        {
+                            dictionary.Add(property.Name, property.GetValue(extended)?.ToString());
+                        }
+
+                    }
+                }
+
+            }
+
+            //returns null if no values
+            return dictionary;
+        }
+
+        public static void RecordMetadata<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, ParaType paraType, string description, object extended) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        {
+            RecordMetadata<TNext>(fluent, paraType, paraType.Type, description, extended);
+        }
+
+        public static void RecordMetadata<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, Type clrType, string description, object extended) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        {
+            RecordMetadata<TNext>(fluent, null, clrType, description, extended);
+        }
+
+        private static void RecordMetadata<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, ParaType paraType, Type clrType, string description, object extended) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        {
+            //serialize extended metadata
+            string extendedJson = null;
+
+            var dictionary = GetValuesAsDictionary(extended);
+
+            if (dictionary != null)
+            {
+                //we want to serialize a dictionary here
+                extendedJson = Json.Serialize(dictionary);
+            }
+
 
             //record metadata
+            ColumnMetadata cm = new ColumnMetadata() { ClrType = clrType, ParaType = paraType, Description = description, Extended = extendedJson };
+
             if (fluent is FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder)
             {
                 var tableBuilder = (FluentMigrator.Builders.Create.Table.CreateTableExpressionBuilder)fluent;
@@ -94,46 +152,54 @@ namespace com.paralib.Migrations.ParaTypes
 
         }
 
-        public static TNext AsParaType<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, string paraTypeName, string description=null) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        public static TNext AsParaType<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, string paraTypeName, string description=null, object values=null) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
         {
             ParaType paraType = Paralib.ParaTypes[paraTypeName];
 
-            RecordMetadata<TNext>(fluent, paraType, description, null);
+            RecordMetadata<TNext>(fluent, paraType, description, values);
 
             return Decode<TNext>(fluent, paraType);
         }
 
-        public static TNext AsParaString<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, int maximumLength, string description = null, int? minimumLength = null, string regEx = null,  string tooShortMsg = null, string tooLongMsg = null, string formatMsg = null) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
+        public static TNext AsParaString<TNext>(FluentMigrator.Builders.IColumnTypeSyntax<TNext> fluent, int maximumLength, string description = null, int? minimumLength = null, string regEx = null,  string tooShortMsg = null, string tooLongMsg = null, string formatMsg = null, object values =null) where TNext : FluentMigrator.Infrastructure.IFluentSyntax
         {
             ParaType paraType = new StringType(DataAnnotations.ParaTypes.ParaString, maximumLength);
 
             //[ParaString(0, 5, regEx:"foo", tooShortMsg:"Too short!", tooLongMsg:"too long {0}", formatMsg:"bad")]
 
-            string extended = $"{minimumLength??0}, {maximumLength}";
+            string attribute = $"{minimumLength??0}, {maximumLength}";
             
             if (regEx!=null)
             {
-                extended += $", regEx:\"{regEx}\"";
+                attribute += $", regEx:\"{regEx}\"";
             }
 
             if (tooShortMsg != null)
             {
-                extended += $", tooShortMsg:\"{tooShortMsg}\"";
+                attribute += $", tooShortMsg:\"{tooShortMsg}\"";
             }
 
             if (tooLongMsg != null)
             {
-                extended += $", tooLongMsg:\"{tooLongMsg}\"";
+                attribute += $", tooLongMsg:\"{tooLongMsg}\"";
             }
 
             if (formatMsg != null)
             {
-                extended += $", formatMsg:\"{formatMsg}\"";
+                attribute += $", formatMsg:\"{formatMsg}\"";
             }
 
-            extended = $"[ParaString({extended})]";            
+            if (values==null)
+            {
+                values = new Dictionary<string, string>();
+            }
 
-            RecordMetadata<TNext>(fluent, paraType, description, extended);
+            //add parastring attribute to any existing attributes
+            var dictionary = GetValuesAsDictionary(values)??new Dictionary<string, string>();
+
+            dictionary.Add(nameof(ExtendedProperties.ParatypeAttribute), $"[ParaString({attribute})]");
+
+            RecordMetadata<TNext>(fluent, paraType, description, values);
 
             return Decode<TNext>(fluent, paraType);
         }

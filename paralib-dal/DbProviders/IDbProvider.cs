@@ -20,6 +20,7 @@ namespace com.paralib.Dal.DbProviders
         void Close();
 
         string Encode(string value, int? length=null);
+        string Encode(DateTime? value);
 
     }
 }

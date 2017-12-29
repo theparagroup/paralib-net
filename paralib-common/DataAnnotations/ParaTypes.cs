@@ -62,7 +62,6 @@ namespace com.paralib.DataAnnotations
             //pseudo types
             _paraTypes.Add(nameof(ParaString), null);
 
-
             //string types
             _paraTypes.Add(nameof(Address), new StringType(nameof(Address), 256));
             _paraTypes.Add(nameof(City), new StringType(nameof(City), 128));
