@@ -29,7 +29,7 @@ namespace com.paralib.Migrations.Runner
                 help += "\trollback [db] [steps]\n";
                 help += "\tgen [db]\n";
                 help += "\thash [password] [salt]\n";
-                help += "\tlist\n";
+                help += "\tlist [db]\n";
                 help += "\ttables [db]\n";
                 help += "\tschema [db] \n";
                 help += "\thelp\n";
@@ -187,7 +187,7 @@ namespace com.paralib.Migrations.Runner
                     string n = null;
                     if (parts.Length > 1)
                     {
-                        if (parts[0] == "up" || parts[0] == "down" || parts[0] == "rollback")
+                        if (parts[0] == "up" || parts[0] == "down" || parts[0] == "rollback" || parts[0] == "list")
                         {
                             //is arg2 a string
                             if ((from c in parts[1].ToCharArray() where !char.IsNumber(c) select c).Count() == 0)

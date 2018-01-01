@@ -105,7 +105,7 @@ namespace com.paralib.Xandroid
         public static Action<Context, EditText> EditTextStyling;
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null, bool enabled=true)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
@@ -159,6 +159,9 @@ namespace com.paralib.Xandroid
 
             //text is already set so the first time through doesn't fire the event
             if (onTextChanged != null) view.TextChanged += (senderAlert, args) => { onTextChanged(senderAlert, args); };
+
+            view.Enabled = enabled;
+
             return view;
         }
 
@@ -188,7 +191,7 @@ namespace com.paralib.Xandroid
             return view;
         }
 
-        public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int? srcId = null, Color? backgroundColor = null, int? id = null, string tag = null)
+        public static ImageView ImageView(Context context, ViewGroup.LayoutParams layoutParams, int? srcId = null, Color? backgroundColor = null, int? id = null, string tag = null, bool visible=true)
         {
             var view = new ImageView(context) { LayoutParameters = layoutParams };
 
@@ -201,6 +204,15 @@ namespace com.paralib.Xandroid
             if (srcId != null) view.SetImageResource(srcId.Value);
 
             if (backgroundColor.HasValue) view.SetBackgroundColor(backgroundColor.Value);
+
+            if (visible)
+            {
+                view.Visibility = ViewStates.Visible;
+            }
+            else
+            {
+                view.Visibility = ViewStates.Invisible;
+            }
 
             return view;
         }
@@ -238,7 +250,7 @@ namespace com.paralib.Xandroid
         public static Action<TextView> SpinnerButtonStyling;
         public static Action<TextView> SpinnerDropDownStyling;
 
-        public static Spinner Spinner(Context context, List<ISpinnerItem> items, object selectedValue=null, int? id = null, Action<Spinner, int, ISpinnerItem> onItemSelected = null) 
+        public static Spinner Spinner(Context context, List<ISpinnerItem> items, object selectedValue=null, int? id = null, Action<Spinner, int, ISpinnerItem> onItemSelected = null, bool enabled=true) 
         {
             Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
 
@@ -284,10 +296,12 @@ namespace com.paralib.Xandroid
                 SpinnerStyling(context, spinner);
             }
 
+            spinner.Enabled = enabled;
+
             return spinner;
 
         }
-        public static CheckBox CheckBox(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, bool @checked=false, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null)
+        public static CheckBox CheckBox(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, bool @checked=false, Color? color = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool enabled=true)
         {
             var view = new CheckBox(context) { LayoutParameters = layoutParams };
 
@@ -302,7 +316,7 @@ namespace com.paralib.Xandroid
 
             view.Checked = @checked;
 
-            
+            view.Enabled = enabled;
 
 
             return view;
