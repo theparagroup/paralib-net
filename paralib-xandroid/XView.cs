@@ -250,16 +250,9 @@ namespace com.paralib.Xandroid
         public static Action<TextView> SpinnerButtonStyling;
         public static Action<TextView> SpinnerDropDownStyling;
 
-        public static Spinner Spinner(Context context, List<ISpinnerItem> items, object selectedValue=null, int? id = null, Action<Spinner, int, ISpinnerItem> onItemSelected = null, bool enabled=true) 
+        public static void PopulateSpinner(Context context, Spinner spinner, List<ISpinnerItem> items, object selectedValue = null)
         {
-            Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
-
-            //this will create the StateListDrawable with the NinePatches loaded (which is the default):
-            //  spinner.SetBackgroundDrawable(context.Resources.GetDrawable(Android.Resource.Drawable.ButtonDropDown));
-
-            if (id != null) spinner.Id = id.Value;
-
-            ArrayAdapter adapterFrom = new SpinnerItemAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items, SpinnerButtonStyling, SpinnerDropDownStyling); 
+            ArrayAdapter adapterFrom = new SpinnerItemAdapter(context, Android.Resource.Layout.SimpleSpinnerItem, Android.Resource.Id.Text1, items, SpinnerButtonStyling, SpinnerDropDownStyling);
             adapterFrom.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
             spinner.Adapter = adapterFrom;
 
@@ -271,6 +264,19 @@ namespace com.paralib.Xandroid
                     spinner.SetSelection(i);
                 }
             }
+
+        }
+
+        public static Spinner Spinner(Context context, List<ISpinnerItem> items, object selectedValue=null, int? id = null, Action<Spinner, int, ISpinnerItem> onItemSelected = null, bool enabled=true) 
+        {
+            Spinner spinner = new Spinner(context, SpinnerMode.Dialog);
+
+            //this will create the StateListDrawable with the NinePatches loaded (which is the default):
+            //  spinner.SetBackgroundDrawable(context.Resources.GetDrawable(Android.Resource.Drawable.ButtonDropDown));
+
+            if (id != null) spinner.Id = id.Value;
+
+            PopulateSpinner(context, spinner, items, selectedValue);
 
             if (onItemSelected != null)
             {
