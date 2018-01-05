@@ -2,7 +2,28 @@
 ====	Xamarin Install
 =============================================================
 
+https://developer.xamarin.com/guides/android/getting_started/installation/windows/
 https://developer.xamarin.com/guides/android/getting_started/installation/windows/manual_installation/
+
+
+
+Xamarin Stand-alone Installers
+	They hide everything
+		
+		https://releases.xamarin.com/category/stable
+		http://download.xamarin.com/XamarinforVisualStudio/Windows/Xamarin.VisualStudio_4.2.1.62.msi		
+
+		sample links
+		http://download.xamarin.com/studio/Mac/XamarinStudio-4.0.12-3.dmg
+		http://download.xamarin.com/studio/Windows/XamarinStudio-4.0.12-3.msi
+		http://download.xamarin.com/studio/Windows/XamarinStudio-6.1.1.15-0.msi 
+		
+Installing through Visual Studio
+		Uninstall Programs/modify
+		or run the installer
+
+
+
 
 install java 1.7 32 bit
 install android sdk
