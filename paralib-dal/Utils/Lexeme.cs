@@ -58,6 +58,7 @@ namespace com.paralib.Dal.Utils
             if (IsOverride(ref value, "status$", m => m.Value + "es")) return value;
             if (IsOverride(ref value, "info$", m => m.Value)) return value;
             if (IsOverride(ref value, "course$", m => m.Value + "s")) return value;
+            if (IsOverride(ref value, "log$", m => m.Value)) return value;
 
             string result = _pluralizer.Pluralize(value);
             return result;
@@ -70,6 +71,7 @@ namespace com.paralib.Dal.Utils
             IsPluralOverride(ref plural, value, "statuses$", "status$");
             IsPluralOverride(ref plural, value, "info$", "info$");
             IsPluralOverride(ref plural, value, "courses$", "course$");
+            IsPluralOverride(ref plural, value, "log$", "log$");
 
             return plural;
         }
@@ -79,6 +81,7 @@ namespace com.paralib.Dal.Utils
             if (IsOverride(ref value, "statuses$", m => m.Value.Substring(0, 6))) return value;
             if (IsOverride(ref value, "info$", m => m.Value)) return value;
             if (IsOverride(ref value, "courses$", m => m.Value.Substring(0, 6))) return value;
+            if (IsOverride(ref value, "log$", m => m.Value)) return value;
 
             string result = _pluralizer.Singularize(value);
             return result;
@@ -91,6 +94,7 @@ namespace com.paralib.Dal.Utils
             if (IsPluralOverride(ref singular, value, "statuses$", "status$")) return !singular;
             if (IsPluralOverride(ref singular, value, "info$", "info$")) return !singular;
             if (IsPluralOverride(ref singular, value, "courses$", "course$")) return !singular;
+            if (IsPluralOverride(ref singular, value, "log$", "log$")) return !singular;
 
             return singular;
 

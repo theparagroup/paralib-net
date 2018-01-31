@@ -396,7 +396,10 @@ namespace com.paralib.Logging
             if ((parameterName == "date") || (parameterName == "d"))
             {
                 param.DbType = System.Data.DbType.DateTime;
-                param.Layout = new log4net.Layout.RawUtcTimeStampLayout();
+
+                //TODO should this be an option?                    
+                //param.Layout = new log4net.Layout.RawUtcTimeStampLayout();
+                param.Layout = new log4net.Layout.RawTimeStampLayout();
             }
             else
             {
