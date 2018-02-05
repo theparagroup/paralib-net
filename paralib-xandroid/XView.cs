@@ -146,6 +146,10 @@ namespace com.paralib.Xandroid
             {
                 view.InputType = InputTypes.ClassNumber | InputTypes.NumberFlagDecimal;
             }
+            else if (inputType==XInputTypes.Text)
+            {
+                view.InputType = InputTypes.ClassText | InputTypes.TextFlagCapSentences;
+            }
 
             if (maxLength.HasValue)
             {
