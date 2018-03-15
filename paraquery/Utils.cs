@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paralib.Utils;
 
 namespace com.paraquery
 {
@@ -41,6 +40,23 @@ namespace com.paraquery
             }
 
             return parameter;
+
+        }
+
+        public static class Json
+        {
+            public static string Serialize(object value, bool ignoreLoops = true)
+            {
+                return com.paralib.Utils.Json.Serialize(value, ignoreLoops);
+            }
+        }
+
+        public class Resources
+        {
+            public static string ReadManifestResouceString(System.Reflection.Assembly assembly, string name)
+            {
+                return com.paralib.Utils.Resources.ReadManifestResouceString(assembly, name);
+            }
 
         }
     }

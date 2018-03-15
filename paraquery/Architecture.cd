@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="com.paraquery.Utils">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="com.paraquery.Utils.Json">
+        <TypeIdentifier>
+          <NewMemberFileName>Utils.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="com.paraquery.Utils.Resources">
+        <TypeIdentifier>
+          <NewMemberFileName>Utils.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBAAAAAAAA=</HashCode>
+      <FileName>Utils.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.pQuery">
+    <Position X="3" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEBmBAEoAAAAAAIAAAAAAAAAgAACAAEgQgI=</HashCode>
+      <FileName>pQuery.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Core.ResponseBase">
+    <Position X="10" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAEAnAAAIAAIAIAAKAoAEAAAAAAACAgEARAA=</HashCode>
+      <FileName>Core\ResponseBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.paraquery.Core.ContextBase">
+    <Position X="6.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAQAAAAgAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Core\ContextBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.paraquery.Core.Block">
+    <Position X="4.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAiAEAAAAAAAAAAAAAgAAEAAACAAAAAAAAAA=</HashCode>
+      <FileName>Core\Block.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.paraquery.Html.Blocks.HtmlBlock">
+    <Position X="0.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html\Blocks\HtmlBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Html.Blocks.Div">
+    <Position X="0.5" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Html\Blocks\Div.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Html.Blocks.Script">
+    <Position X="2.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Html\Blocks\Script.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.jQuery.AjaxSettings">
+    <Position X="7.5" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\AjaxSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.jQuery.Blocks.JsBlock">
+    <Position X="5.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\Blocks\JsBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.jQuery.Blocks.Click">
+    <Position X="4.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAABAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\Blocks\Click.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.jQuery.Blocks.Function">
+    <Position X="6.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAEAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\Blocks\Function.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.jQuery.Blocks.Ready">
+    <Position X="8.25" Y="13.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\Blocks\Ready.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="com.paraquery.Core.IContext">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAAAAAAQAAAAgAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Core\IContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.paraquery.Core.IRequest">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IRequest.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.paraquery.Core.IResponse">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAEAnAAAIAAIAIAAKAIAAAAAAAAACAgEARAA=</HashCode>
+      <FileName>Core\IResponse.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.paraquery.Core.IServer">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IServer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="com.paraquery.jQuery.Methods">
+    <Position X="5" Y="16.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\Methods.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -10,7 +10,7 @@ namespace com.paraquery.Html.Blocks
     public class Div : HtmlBlock
     {
 
-        public Div(Context context, object attributes = null) : base(context, attributes)
+        public Div(IContext context, object attributes = null) : base(context, attributes)
         {
             Begin();
         }

@@ -9,7 +9,7 @@ namespace com.paraquery.Html.Blocks
 {
     public class Script : HtmlBlock
     {
-        public Script(Context context, object attributes = null) : base(context, attributes)
+        public Script(IContext context, object attributes = null) : base(context, attributes)
         {
             Begin();
         }

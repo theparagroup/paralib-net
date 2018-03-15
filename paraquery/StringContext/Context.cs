@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.StringContext
 {
-    public class Context:Core.Context
+    public class Context:Core.ContextBase
     {
         public Context(Server server, Request request, Response response, string @namespace, Dictionary<string, string> namespaceVars):base (server,request,response,@namespace,namespaceVars)
         {

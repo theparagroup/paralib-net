@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Core;
-using com.paralib.Utils;
 
 namespace com.paraquery.jQuery.Blocks
 {
@@ -18,7 +17,7 @@ namespace com.paraquery.jQuery.Blocks
         protected string _selector;
         protected object _data;
 
-        public Click(Context context, string selector, object data=null) : base(context)
+        public Click(IContext context, string selector, object data=null) : base(context)
         {
             _selector = selector;
             _data = data;

@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Blocks;
 using com.paraquery.Core;
-using com.paralib.Utils;
 using com.paraquery.jQuery.Blocks;
 
 namespace com.paraquery
 {
     public class pQuery
     {
-        protected Context _context { private set; get; }
+        protected IContext _context { private set; get; }
 
-        public pQuery(Context context)
+        public pQuery(IContext context)
         {
             _context = context;
         }
@@ -101,7 +100,7 @@ namespace com.paraquery
         {
             //TODO razor option
             //TODO error checking and caching
-            return Resources.ReadManifestResouceString(name);
+            return Utils.Resources.ReadManifestResouceString(System.Reflection.Assembly.GetCallingAssembly(), name);
         }
 
         public void Alert(string message)
@@ -118,7 +117,7 @@ namespace com.paraquery
             string dataString = "data";
             if (data!=null)
             {
-                dataString = Json.Serialize(data, true);
+                dataString = Utils.Json.Serialize(data, true);
             }
             
             string template=Template("com.paraquery.jQuery.Js.ajax.js");

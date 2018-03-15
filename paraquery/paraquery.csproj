@@ -40,11 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\IContext.cs" />
     <Compile Include="Html\Attribute.cs" />
     <Compile Include="Core\Block.cs" />
     <Compile Include="Html\Blocks\HtmlBlock.cs" />
     <Compile Include="Html\Blocks\Script.cs" />
-    <Compile Include="Core\Context.cs" />
+    <Compile Include="Core\ContextBase.cs" />
     <Compile Include="Html\Blocks\Div.cs" />
     <Compile Include="Core\IRequest.cs" />
     <Compile Include="Core\IResponse.cs" />

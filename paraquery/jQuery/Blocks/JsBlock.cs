@@ -9,7 +9,7 @@ namespace com.paraquery.jQuery.Blocks
 {
     public abstract class JsBlock : Block
     {
-        public JsBlock(Context context, object attributes = null) : base(context)
+        public JsBlock(IContext context, object attributes = null) : base(context)
         {
         }
     }

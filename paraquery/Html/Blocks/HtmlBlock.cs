@@ -11,7 +11,7 @@ namespace com.paraquery.Html.Blocks
     {
         protected object _attributes;
 
-        public HtmlBlock(Context context, object attributes = null) : base(context)
+        public HtmlBlock(IContext context, object attributes = null) : base(context)
         {
             _attributes = attributes;
         }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Core
 {
-    public class Context
+    public abstract class ContextBase:IContext
     {
         public IServer Server { private set; get; }
         public IRequest Request { private set; get; }
@@ -14,7 +14,7 @@ namespace com.paraquery.Core
         //namespace stack
         //namespace vars
 
-        public Context(IServer server, IRequest request, IResponse response, string @namespace, Dictionary<string,string> namespaceVars)
+        public ContextBase(IServer server, IRequest request, IResponse response, string @namespace, Dictionary<string,string> namespaceVars)
         {
             Server = server;
             Request = request;

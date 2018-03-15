@@ -10,9 +10,9 @@ namespace com.paraquery.Core
     public abstract class Block : IDisposable
     {
         private bool _disposed;
-        public Context Context { private set; get; }
+        public IContext Context { private set; get; }
 
-        protected Block(Context context)
+        protected Block(IContext context)
         {
             Context = context;
         }
