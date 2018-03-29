@@ -109,6 +109,13 @@
       <FileName>jQuery\Blocks\Ready.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="com.paraquery.Html.Attribute">
+    <Position X="0.5" Y="15.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Html\Attribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Interface Name="com.paraquery.Core.IContext">
     <Position X="6.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>

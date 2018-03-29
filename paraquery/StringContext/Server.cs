@@ -8,13 +8,13 @@ using com.paraquery.Core;
 
 namespace com.paraquery.StringContext
 {
-    public class Server : IServer
+    public class Server : ServerBase
     {
         protected string _urlPrefix;
 
-        public Server(string urlPrefix)
+        public Server(IContext context, string urlPrefix) : base(context)
         {
-            if (!(urlPrefix??"/").StartsWith("/"))
+            if (!(urlPrefix ?? "/").StartsWith("/"))
             {
                 throw Utils.Exception($"Url Prefix '{urlPrefix}' must start with a '/'");
             }
@@ -22,14 +22,14 @@ namespace com.paraquery.StringContext
             _urlPrefix = urlPrefix;
         }
 
-        public string UrlPrefix(string url)
+        public override string UrlPrefix(string url)
         {
             // prefix= "/prefix", "~/foobar" -> "/prefix/foobar"
             // prefix= null, "~/foobar" -> "/foobar"
 
-            if (url?.StartsWith("~")??false)
+            if (url?.StartsWith("~") ?? false)
             {
-                return url?.Replace("~", _urlPrefix??"");
+                return url?.Replace("~", _urlPrefix ?? "");
             }
             else
             {

@@ -18,7 +18,7 @@ namespace com.paraquery.Html.Blocks
         protected override void OnBegin()
         {
             Context.Response.StartBlock("div");
-            Context.Attributes(_attributes);
+            Context.Response.Attributes(_attributes);
             Context.Response.EndBlock();
         }
 

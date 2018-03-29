@@ -5,3 +5,5 @@
 3] Fluent syntax options
 
 x] T4/Razor support library?
+
+blocks need to nest for better reusable components and correct indenting

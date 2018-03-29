@@ -8,58 +8,81 @@ namespace com.paraquery.Html
 {
     public class Attribute
     {
-        public string Name { set; get; }
-        public string Value { set; get; }
-
-        public Attribute(string name,string value)
-        {
-            Name = name;
-            Value = value;
-        }
 
         public static Dictionary<string, string> ToDictionary(object attributes)
         {
+            //the idea here is to accept
+            //  a string, which is assumed to a list of classes (shorthand)
+            //  an (anonymous) object
+            //      containing either string properties
+            //      or a nested (anonymous) object
+            //
+            //  the string properties will be used for name value pairs
+            //  string properties on additional objects will be used as "defaults" (not added if they already exist)
+            //      unless the property is "class" then it will be merged
+
+
             if (attributes != null)
             {
                 var atts = new Dictionary<string, string>();
 
-                var t = attributes.GetType();
-
-                foreach (var pi in t.GetProperties())
+                if (attributes is string)
                 {
-                    object value = pi.GetValue(attributes);
+                    //short hand for classes
+                    atts.Add("class", (string)attributes);
+                }
+                else
+                {
+                    //some kind of object (probably anoymous)
+                    var t = attributes.GetType();
 
-                    if (value != null)
+                    foreach (var pi in t.GetProperties())
                     {
+                        object value = pi.GetValue(attributes);
 
-                        if (pi.PropertyType == typeof(string))
+                        if (value != null)
                         {
-                            atts.Add(pi.Name.ToLower(), (string)value);
-                        }
-                        else if (pi.PropertyType == typeof(Attribute))
-                        {
-                            atts.Add(((Attribute)value).Name.ToLower(), ((Attribute)value).Value);
-                        }
-                        else
-                        {
-                            var additional = ToDictionary(value);
+                            //always lower case!
+                            string name = pi.Name.ToLower();
 
-                            if (additional != null)
+                            if (pi.PropertyType == typeof(string))
                             {
-                                foreach (var key in additional.Keys)
+                                //this is name value pair
+                                atts.Add(name, (string)value);
+                            }
+                            else
+                            {
+                                //some other kind of object, let make a dictionary
+                                var additional = ToDictionary(value);
+
+                                if (additional != null)
                                 {
-                                    //we don't replace an existing with an additional attribute!
-                                    if (!atts.ContainsKey(key))
+                                    foreach (var key in additional.Keys)
                                     {
-                                        atts.Add(key.ToLower(), additional[key]);
+                                        if (key == "class")
+                                        {
+                                            if (atts.ContainsKey(key))
+                                            {
+                                                //TODO this could be more sophisticated (parse and don't duplicate class names)
+                                                atts[key] = $"{atts["class"]} {additional[key]}";
+                                            }
+                                        }
+
+                                        //we don't replace an existing with an additional attribute!
+                                        //note if "class" didn't exist above it will get added now
+                                        if (!atts.ContainsKey(key))
+                                        {
+                                            atts.Add(key, additional[key]);
+                                        }
+
                                     }
+
                                 }
                             }
 
                         }
 
                     }
-
                 }
 
                 return atts;

@@ -8,8 +8,10 @@ using com.paraquery.Core;
 
 namespace com.paraquery.StringContext
 {
-    public class Request : IRequest
+    public class Request : RequestBase
     {
-
+        public Request(IContext context) : base(context)
+        {
+        }
     }
 }

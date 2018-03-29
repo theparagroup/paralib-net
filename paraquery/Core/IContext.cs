@@ -12,6 +12,6 @@ namespace com.paraquery.Core
         IRequest Request { get; }
         IResponse Response { get; }
 
-        void Attributes(object attributes = null);
+        
     }
 }

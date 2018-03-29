@@ -9,21 +9,36 @@ namespace com.paraquery.Core
 {
     public abstract class Block : IDisposable
     {
+        private bool _autoIndent;
         private bool _disposed;
         public IContext Context { private set; get; }
 
-        protected Block(IContext context)
+        protected Block(IContext context, bool autoIndent=true)
         {
             Context = context;
+            _autoIndent = autoIndent;
         }
 
         protected virtual void Begin()
         {
+            OnPreBegin();
             OnBegin();
-            Context.Response.Indent();
+            OnPostBegin();
+        }
+
+        protected virtual void OnPreBegin()
+        {
         }
 
         protected abstract void OnBegin();
+
+        protected virtual void OnPostBegin()
+        {
+            if (_autoIndent)
+            {
+                Context.Response.Indent();
+            }
+        }
 
         public void End()
         {
@@ -35,12 +50,28 @@ namespace com.paraquery.Core
             if (!_disposed)
             {
                 _disposed = true;
-                Context.Response.Dedent();
+
+                OnPreEnd();
                 OnEnd();
+                OnPostEnd();
             }
         }
 
+        protected virtual void OnPreEnd()
+        {
+            if (_autoIndent)
+            {
+                Context.Response.Dedent();
+            }
+        }
+
+
         protected abstract void OnEnd();
+
+        protected virtual void OnPostEnd()
+        {
+        }
+
 
     }
 }

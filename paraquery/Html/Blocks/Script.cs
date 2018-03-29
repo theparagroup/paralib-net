@@ -17,7 +17,7 @@ namespace com.paraquery.Html.Blocks
         protected override void OnBegin()
         {
             Context.Response.StartBlock("script");
-            Context.Attributes(new { _attributes, defaults = new { type = "text/javascript" } });
+            Context.Response.Attributes(new { _attributes, defaults = new { type = "text/javascript" } });
             Context.Response.EndBlock();
         }
 

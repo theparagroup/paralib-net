@@ -41,6 +41,9 @@ namespace com.paralib.Mvc.Infrastructure
                     FormsAuthentication.EnableFormsAuthentication(forms);
                 }
 
+                //you can do this, but intellisense won't work
+                //System.Web.WebPages.Razor.WebPageRazorHost.AddGlobalImport("com.paralib.Mvc.Infrastructure.ExtensionMethods");
+
 
                 //register our paralib MVC module (which will continue configuring things)
                 DynamicModuleUtility.RegisterModule(typeof(ParaMvcModule));

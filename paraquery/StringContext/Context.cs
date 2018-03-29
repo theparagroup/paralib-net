@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Core;
 
 namespace com.paraquery.StringContext
 {
-    public class Context:Core.ContextBase
+    public class Context:ContextBase
     {
-        public Context(Server server, Request request, Response response, string @namespace, Dictionary<string, string> namespaceVars):base (server,request,response,@namespace,namespaceVars)
+        public Context(string urlPrefix, string @namespace, Dictionary<string, string> namespaceVars) : base(@namespace, namespaceVars)
         {
-
-        }
-
-        public Context(string urlPrefix, string @namespace, Dictionary<string, string> namespaceVars) : base(new Server(urlPrefix), new Request(), new Response(), @namespace, namespaceVars)
-        {
-
+            Server = new Server(this, urlPrefix);
+            Request= new Request(this);
+            Response= new Response(this);
         }
 
     }

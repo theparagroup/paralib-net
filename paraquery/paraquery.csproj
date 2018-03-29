@@ -40,7 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\Grids\IContainer.cs" />
     <Compile Include="Core\IContext.cs" />
+    <Compile Include="Bootstrap\Grids\IRow.cs" />
+    <Compile Include="Bootstrap\Grids\IGrid.cs" />
+    <Compile Include="Bootstrap\Grids\IColumn.cs" />
+    <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
+    <Compile Include="Core\RequestBase.cs" />
+    <Compile Include="Core\ServerBase.cs" />
     <Compile Include="Html\Attribute.cs" />
     <Compile Include="Core\Block.cs" />
     <Compile Include="Html\Blocks\HtmlBlock.cs" />
@@ -78,6 +85,7 @@
   <ItemGroup>
     <None Include="Architecture.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

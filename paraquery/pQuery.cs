@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.paraquery.Html.Blocks;
 using com.paraquery.Core;
 using com.paraquery.jQuery.Blocks;
+using com.paraquery.Bootstrap.Grids;
 
 namespace com.paraquery
 {
@@ -61,10 +62,17 @@ namespace com.paraquery
             Response.NewLine();
         }
 
-        public Html.Attribute Attribute(string name, string value)
+        //public Html.Attribute Attribute(string name, string value)
+        //{
+        //    return new Html.Attribute(name, value);
+        //}
+
+
+        public FluentGrid Grid()
         {
-            return new Html.Attribute(name, value);
+            return new FluentGrid(_context);
         }
+
 
         public Div Div(object attributes=null)
         {

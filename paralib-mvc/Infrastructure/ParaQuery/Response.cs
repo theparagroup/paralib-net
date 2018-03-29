@@ -10,12 +10,9 @@ namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
     public class Response : ResponseBase
     {
-        protected WebViewPage _view;
-        protected int _tabLevel = 0;
-        protected string _tabCache;
+        protected WebViewPage _view { get; private set; }
 
-
-        public Response(WebViewPage view)
+        public Response(IContext context, WebViewPage view) :base(context)
         {
             _view = view;
         }
@@ -26,35 +23,5 @@ namespace com.paralib.Mvc.Infrastructure.ParaQuery
             _view.WriteLiteral(text);
         }
 
-        protected override string _tabs
-        {
-            get
-            {
-                return _tabCache;
-            }
-
-        }
-
-        public override void NewLine()
-        {
-            _write("\n");
-        }
-
-        public override void Tab()
-        {
-            _write("\t");
-        }
-
-        public override void Indent()
-        {
-            ++_tabLevel;
-            _tabCache = new string('\t', _tabLevel);
-        }
-
-        public override void Dedent()
-        {
-            --_tabLevel;
-            _tabCache = new string('\t', _tabLevel);
-        }
     }
 }

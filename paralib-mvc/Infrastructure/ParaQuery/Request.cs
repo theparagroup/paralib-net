@@ -8,11 +8,11 @@ using System.Web.Mvc;
 
 namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
-    public class Request : IRequest
+    public class Request : RequestBase
     {
         protected WebViewPage _view;
 
-        public Request(WebViewPage view)
+        public Request(IContext context, WebViewPage view):base(context)
         {
             _view = view;
         }

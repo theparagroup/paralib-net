@@ -8,18 +8,19 @@ using System.Web.Mvc;
 
 namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
-    public class Server : IServer
+    public class Server : ServerBase
     {
-        protected WebViewPage _view;
+        protected WebViewPage _view { get; private set; }
 
-        public Server(WebViewPage view)
+        public Server(IContext context, WebViewPage view) :base(context)
         {
             _view = view;
         }
 
-        public string UrlPrefix(string url)
+        public override string UrlPrefix(string url)
         {
             return _view.Url.Content(url);
         }
+
     }
 }
