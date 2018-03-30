@@ -41,36 +41,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
-    <Compile Include="Core\IContext.cs" />
+    <Compile Include="IContext.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
     <Compile Include="Bootstrap\Grids\IColumn.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
-    <Compile Include="Core\RequestBase.cs" />
-    <Compile Include="Core\ServerBase.cs" />
-    <Compile Include="Html\Attribute.cs" />
-    <Compile Include="Core\Block.cs" />
+    <Compile Include="Engines\Base\Request.cs" />
+    <Compile Include="Engines\Base\Server.cs" />
+    <Compile Include="Block.cs" />
     <Compile Include="Html\Blocks\HtmlBlock.cs" />
     <Compile Include="Html\Blocks\Script.cs" />
-    <Compile Include="Core\ContextBase.cs" />
+    <Compile Include="Engines\Base\Context.cs" />
     <Compile Include="Html\Blocks\Div.cs" />
-    <Compile Include="Core\IRequest.cs" />
-    <Compile Include="Core\IResponse.cs" />
-    <Compile Include="Core\IServer.cs" />
+    <Compile Include="IRequest.cs" />
+    <Compile Include="IResponse.cs" />
+    <Compile Include="IServer.cs" />
+    <Compile Include="Html\Tag.cs" />
     <Compile Include="jQuery\AjaxSettings.cs" />
     <Compile Include="jQuery\Blocks\Click.cs" />
     <Compile Include="jQuery\Blocks\JsBlock.cs" />
     <Compile Include="jQuery\Blocks\Function.cs" />
     <Compile Include="jQuery\Blocks\Ready.cs" />
     <Compile Include="jQuery\Methods.cs" />
-    <Compile Include="StringContext\Context.cs" />
-    <Compile Include="StringContext\Request.cs" />
-    <Compile Include="StringContext\Server.cs" />
+    <Compile Include="Engines\String\Context.cs" />
+    <Compile Include="Engines\String\Request.cs" />
+    <Compile Include="Engines\String\Server.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="pQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\ResponseBase.cs" />
-    <Compile Include="StringContext\Response.cs" />
+    <Compile Include="Engines\Base\Response.cs" />
+    <Compile Include="Engines\String\Response.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jQuery\Js\ajax.js" />

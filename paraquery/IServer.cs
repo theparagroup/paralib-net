@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Core
+namespace com.paraquery
 {
-    public interface IRequest
+    public interface IServer
     {
+        string UrlPrefix(string url);
     }
 }

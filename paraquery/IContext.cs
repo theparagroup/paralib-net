@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Core
+namespace com.paraquery
 {
     public interface IContext
     {
@@ -12,6 +12,5 @@ namespace com.paraquery.Core
         IRequest Request { get; }
         IResponse Response { get; }
 
-        
     }
 }

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Core;
-
 
 namespace com.paraquery.StringContext
 {
-    public class Server : ServerBase
+    public class Server : Engines.Base.Server
     {
         protected string _urlPrefix;
 

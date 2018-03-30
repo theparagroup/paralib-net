@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Core;
 
 namespace com.paraquery.StringContext
 {
-    public class Context:ContextBase
+    public class Context: Engines.Base.Context
     {
         public Context(string urlPrefix, string @namespace, Dictionary<string, string> namespaceVars) : base(@namespace, namespaceVars)
         {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Core;
 using System.Web.Mvc;
+using com.paraquery;
 
 namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
-    public class Server : ServerBase
+    public class Server : paraquery.Engines.Base.Server
     {
         protected WebViewPage _view { get; private set; }
 

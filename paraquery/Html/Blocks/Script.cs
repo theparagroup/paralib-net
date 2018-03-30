@@ -3,27 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Core;
 
 namespace com.paraquery.Html.Blocks
 {
     public class Script : HtmlBlock
     {
-        public Script(IContext context, object attributes = null) : base(context, attributes)
+        public Script(IContext context, Tag tag, object attributes = null) : base(context, tag, attributes)
         {
             Begin();
         }
 
         protected override void OnBegin()
         {
-            Context.Response.StartBlock("script");
-            Context.Response.Attributes(new { _attributes, defaults = new { type = "text/javascript" } });
-            Context.Response.EndBlock();
+            _tag.Open("script", new { _attributes, defaults = new { type = "text/javascript" } });
         }
 
         protected override void OnEnd()
         {
-            Context.Response.CloseBlock("script");
+            _tag.Close("script");
         }
 
 

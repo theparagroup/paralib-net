@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Html;
 using com.paraquery.Html.Blocks;
-using com.paraquery.Core;
 using com.paraquery.jQuery.Blocks;
 using com.paraquery.Bootstrap.Grids;
 
@@ -13,24 +13,16 @@ namespace com.paraquery
     public class pQuery
     {
         protected IContext _context { private set; get; }
+        protected Tag _tag { private set; get; }
 
-        public pQuery(IContext context)
+        public pQuery(IContext context, Tag tag)
         {
             _context = context;
+            _tag = tag;
         }
 
-        public pQuery(string urlPrefix = null, string @namespace=null, Dictionary<string, string> namespaceVars=null)
-        {
-            _context = new StringContext.Context(urlPrefix,@namespace,namespaceVars);
-        }
+        /* ---------------------------------- do we want these right off of pquery? fluent? ---------------------------------------- */
 
-        public IResponse Response
-        {
-            get
-            {
-                return _context.Response;
-            }
-        }
 
         public void Write(string text)
         {
@@ -45,6 +37,11 @@ namespace com.paraquery
         public void Tab()
         {
             Response.Tab();
+        }
+
+        public void Tabs()
+        {
+            Response.Tabs();
         }
 
         public void Indent()
@@ -62,21 +59,42 @@ namespace com.paraquery
             Response.NewLine();
         }
 
-        //public Html.Attribute Attribute(string name, string value)
-        //{
-        //    return new Html.Attribute(name, value);
-        //}
+        /* ---------------------------------- this needs to be fluent ---------------------------------------- */
 
-
-        public FluentGrid Grid()
+        public IContext Context
         {
-            return new FluentGrid(_context);
+            get
+            {
+                return _context;
+            }
+        }
+
+        // want this?
+        public IResponse Response
+        {
+            get
+            {
+                return _context.Response;
+            }
         }
 
 
+        public Tag Tag
+        {
+            get
+            {
+                return _tag;
+            }
+        }
+
+        public FluentGrid Grid()
+        {
+            return new FluentGrid(_context, _tag);
+        }
+
         public Div Div(object attributes=null)
         {
-            return new Div(_context, attributes);
+            return new Div(_context, _tag, attributes);
         }
 
         public Function Function(string name, params string[] parameters)
@@ -96,7 +114,7 @@ namespace com.paraquery
 
         public Script Script(object attributes = null)
         {
-            return new Script(_context, attributes);
+            return new Script(_context, _tag, attributes);
         }
 
         public Ready Ready()
@@ -131,6 +149,7 @@ namespace com.paraquery
             string template=Template("com.paraquery.jQuery.Js.ajax.js");
             string script = template.Replace("{0}", url).Replace("{1}", dataString).Replace("{2}", targetId);
             Response.Snippet("ajax", script);
+            Response.NewLine();
         }
 
     }

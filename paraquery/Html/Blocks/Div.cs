@@ -3,28 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Core;
 
 namespace com.paraquery.Html.Blocks
 {
     public class Div : HtmlBlock
     {
 
-        public Div(IContext context, object attributes = null) : base(context, attributes)
+        public Div(IContext context, Tag tag, object attributes = null) : base(context, tag, attributes)
         {
             Begin();
         }
 
         protected override void OnBegin()
         {
-            Context.Response.StartBlock("div");
-            Context.Response.Attributes(_attributes);
-            Context.Response.EndBlock();
+            _tag.Open("div", _attributes);
         }
 
         protected override void OnEnd()
         {
-            Context.Response.CloseBlock("div");
+            _tag.Close("div");
         }
 
 

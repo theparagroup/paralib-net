@@ -3,7 +3,7 @@ using System.Web.Mvc;
 
 namespace com.paralib.Mvc.Infrastructure
 {
-    public abstract class ParaView<TModel, TBaseController> : WebViewPage<TModel> where TBaseController:ParaController
+    public abstract class ParaView<TModel, TBaseController> : WebViewPage<TModel> where TBaseController : ParaController
     {
         public ParaViewHelper<TModel> Para { private set; get; }
         private paraquery.pQuery _pQuery;
@@ -27,7 +27,10 @@ namespace com.paralib.Mvc.Infrastructure
             {
                 if (_pQuery == null)
                 {
-                    _pQuery = new paraquery.pQuery(new ParaQuery.Context(this));
+                    var context = new ParaQuery.Context(this);
+                    var tag = new paraquery.Html.Tag(context);
+
+                    _pQuery = new paraquery.pQuery(context, tag);
                 }
 
                 return _pQuery;
@@ -36,6 +39,6 @@ namespace com.paralib.Mvc.Infrastructure
 
     }
 
-   
+
 
 }

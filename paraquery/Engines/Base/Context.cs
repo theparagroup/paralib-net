@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Core
+namespace com.paraquery.Engines.Base
 {
-    public abstract class ContextBase:IContext
+    public abstract class Context:IContext
     {
         public IServer Server { protected set; get; }
         public IRequest Request { protected set; get; }
@@ -14,7 +14,7 @@ namespace com.paraquery.Core
         //namespace stack
         //namespace vars
 
-        public ContextBase(string @namespace, Dictionary<string, string> namespaceVars)
+        public Context(string @namespace, Dictionary<string, string> namespaceVars)
         {
             //derived classes create the other components
 

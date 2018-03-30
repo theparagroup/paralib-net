@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using com.paraquery.Core;
 
 namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
-    public class Context: com.paraquery.Core.ContextBase
+    public class Context: paraquery.Engines.Base.Context
     {
         protected WebViewPage _view { get; private set; }
 

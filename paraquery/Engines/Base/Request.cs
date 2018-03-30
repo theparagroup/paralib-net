@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Core
+namespace com.paraquery.Engines.Base
 {
-    public abstract class RequestBase : IRequest
+    public abstract class Request : IRequest
     {
         protected IContext _context;
 
-        public RequestBase(IContext context)
+        public Request(IContext context)
         {
             _context = context;
         }
