@@ -20,12 +20,12 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void OnBegin()
         {
-            Context.Response.Write("$(document).ready(function() {");
+            _response.Write("$(document).ready(function() {");
         }
 
         protected override void OnEnd()
         {
-            Context.Response.Write("}); //end ready");
+            _response.Write("}); //end ready");
         }
 
     }

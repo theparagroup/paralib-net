@@ -14,9 +14,9 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void OnPreBegin()
         {
-            if (!Context.Response.IsSpaced)
+            if (!_response.IsSpaced)
             {
-                Context.Response.NewLine();
+                _response.NewLine();
             }
 
             base.OnPreBegin();
@@ -26,9 +26,9 @@ namespace com.paraquery.jQuery.Blocks
         {
             base.OnPostEnd();
 
-            if (!Context.Response.IsSpaced)
+            if (!_response.IsSpaced)
             {
-                Context.Response.NewLine();
+                _response.NewLine();
             }
         }
 

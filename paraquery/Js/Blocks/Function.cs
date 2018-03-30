@@ -25,12 +25,12 @@ namespace com.paraquery.Js.Blocks
 
         protected override void OnBegin()
         {
-            Context.Response.Write($"function {_name}({Utils.Parameters(_parameters)}) {{");
+            _response.Write($"function {_name}({Utils.Parameters(_parameters)}) {{");
         }
 
         protected override void OnEnd()
         {
-            Context.Response.Write($"}} //end {_name}");
+            _response.Write($"}} //end {_name}");
         }
 
     }

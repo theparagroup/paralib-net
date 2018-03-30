@@ -10,12 +10,20 @@ namespace com.paraquery
     {
         private bool _autoIndent;
         private bool _disposed;
-        public IContext Context { private set; get; }
+        public IContext _context { private set; get; }
 
         protected Block(IContext context, bool autoIndent=true)
         {
-            Context = context;
+            _context = context;
             _autoIndent = autoIndent;
+        }
+
+        protected IResponse _response
+        {
+            get
+            {
+                return _context.Response;
+            }
         }
 
         protected virtual void Begin()
@@ -35,8 +43,8 @@ namespace com.paraquery
         {
             if (_autoIndent)
             {
-                Context.Response.NewLine();
-                Context.Response.Indent();
+               _response.NewLine();
+               _response.Indent();
             }
         }
 
@@ -62,14 +70,14 @@ namespace com.paraquery
             if (_autoIndent)
             {
                 //this should be conditional on if newline was called last
-                if (!Context.Response.IsNewLine)
+                if (!_response.IsNewLine)
                 {
-                    Context.Response.Tab();
-                    Context.Response.Write("<!-- newlined -->",false);
-                    Context.Response.NewLine();
+                    _response.Tab();
+                    _response.Write("<!-- newlined -->",false);
+                    _response.NewLine();
                 }
 
-                Context.Response.Dedent();
+                _response.Dedent();
             }
         }
 
@@ -77,7 +85,7 @@ namespace com.paraquery
 
         protected virtual void OnPostEnd()
         {
-            Context.Response.NewLine();
+            _response.NewLine();
         }
 
 

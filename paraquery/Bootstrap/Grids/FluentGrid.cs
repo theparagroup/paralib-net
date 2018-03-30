@@ -191,13 +191,13 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IColumn Write(string content)
         {
-            Context.Response.Write(content);
+            _response.Write(content);
             return this;
         }
 
         public IColumn WriteLine(string content)
         {
-            Context.Response.WriteLine(content);
+            _response.WriteLine(content);
             return this;
         }
 
@@ -208,7 +208,7 @@ namespace com.paraquery.Bootstrap.Grids
                 throw new InvalidOperationException("No Column open");
             }
 
-            return new FluentGrid(Context, _tag, this);
+            return new FluentGrid(_context, _tag, this);
         }
 
         IGrid IColumn.End()
