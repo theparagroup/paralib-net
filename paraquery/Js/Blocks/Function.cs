@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.jQuery.Blocks
+namespace com.paraquery.Js.Blocks
 {
     /*
         $(document).ready(function() {
@@ -25,12 +25,12 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void OnBegin()
         {
-            Context.Response.WriteLine($"function {_name}({Utils.Parameters(_parameters)}) {{");
+            Context.Response.Write($"function {_name}({Utils.Parameters(_parameters)}) {{");
         }
 
         protected override void OnEnd()
         {
-            Context.Response.WriteLine($"}} //end {_name}");
+            Context.Response.Write($"}} //end {_name}");
         }
 
     }

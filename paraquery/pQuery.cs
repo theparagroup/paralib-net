@@ -7,6 +7,7 @@ using com.paraquery.Html;
 using com.paraquery.Html.Blocks;
 using com.paraquery.jQuery.Blocks;
 using com.paraquery.Bootstrap.Grids;
+using com.paraquery.Js.Blocks;
 
 namespace com.paraquery
 {
@@ -146,10 +147,9 @@ namespace com.paraquery
                 dataString = Utils.Json.Serialize(data, true);
             }
             
-            string template=Template("com.paraquery.jQuery.Js.ajax.js");
+            string template=Template("com.paraquery.jQuery.Templates.ajax.js");
             string script = template.Replace("{0}", url).Replace("{1}", dataString).Replace("{2}", targetId);
             Response.Snippet("ajax", script);
-            Response.NewLine();
         }
 
     }

@@ -11,7 +11,7 @@ namespace com.paraquery.jQuery.Blocks
         ...
         );
     */
-    public class Ready : JsBlock
+    public class Ready : jQueryBlock
     {
         public Ready(IContext context) : base(context)
         {
@@ -20,12 +20,12 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void OnBegin()
         {
-            Context.Response.WriteLine("$(document).ready(function() {");
+            Context.Response.Write("$(document).ready(function() {");
         }
 
         protected override void OnEnd()
         {
-            Context.Response.WriteLine("}); //end ready");
+            Context.Response.Write("}); //end ready");
         }
 
     }

@@ -16,12 +16,12 @@ namespace com.paraquery.Html.Blocks
 
         protected override void OnBegin()
         {
-            _tag.Open("div", _attributes);
+            _tag.Open("div", _attributes,true);
         }
 
         protected override void OnEnd()
         {
-            _tag.Close("div");
+            _tag.Close("div", true);
         }
 
 

@@ -35,6 +35,7 @@ namespace com.paraquery
         {
             if (_autoIndent)
             {
+                Context.Response.NewLine();
                 Context.Response.Indent();
             }
         }
@@ -60,15 +61,23 @@ namespace com.paraquery
         {
             if (_autoIndent)
             {
+                //this should be conditional on if newline was called last
+                if (!Context.Response.IsNewLine)
+                {
+                    Context.Response.Tab();
+                    Context.Response.Write("<!-- newlined -->",false);
+                    Context.Response.NewLine();
+                }
+
                 Context.Response.Dedent();
             }
         }
-
 
         protected abstract void OnEnd();
 
         protected virtual void OnPostEnd()
         {
+            Context.Response.NewLine();
         }
 
 

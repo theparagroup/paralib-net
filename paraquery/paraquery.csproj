@@ -59,8 +59,9 @@
     <Compile Include="Html\Tag.cs" />
     <Compile Include="jQuery\AjaxSettings.cs" />
     <Compile Include="jQuery\Blocks\Click.cs" />
-    <Compile Include="jQuery\Blocks\JsBlock.cs" />
-    <Compile Include="jQuery\Blocks\Function.cs" />
+    <Compile Include="jQuery\Blocks\jQueryBlock.cs" />
+    <Compile Include="Js\Blocks\JsBlock.cs" />
+    <Compile Include="Js\Blocks\Function.cs" />
     <Compile Include="jQuery\Blocks\Ready.cs" />
     <Compile Include="jQuery\Methods.cs" />
     <Compile Include="Engines\String\Context.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Engines\String\Response.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="jQuery\Js\ajax.js" />
+    <EmbeddedResource Include="jQuery\Templates\ajax.js" />
     <Content Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
