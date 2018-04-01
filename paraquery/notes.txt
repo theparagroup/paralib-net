@@ -1,4 +1,12 @@
-﻿Design Goals & Notes
+﻿todo
+
+move grid into html
+move pquery extension methods and attribute enums into common space (root?) for razor views
+
+
+
+
+Design Goals & Notes
 
 1] Build web pages in C# without Razor/Mvc/ASP
 2] Create re-usable javascript snippet library in C#
@@ -6,4 +14,3 @@
 
 x] T4/Razor support library?
 
-blocks need to nest for better reusable components and correct indenting

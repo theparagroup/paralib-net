@@ -3,16 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Html
 {
-    public class Tag
+    /*
+
+        list of empty elements
+
+        <area />
+        <base />
+        <br />
+        <col />
+        <command />
+        <embed />
+        <hr />
+        <img />
+        <input />
+        <keygen />
+        <link />
+        <menuitem />
+        <meta />
+        <param />
+        <source />
+        <track />
+        <wbr />
+
+    */
+
+    public class TagBuilder
     {
         protected IContext _context;
 
-        public Tag(IContext context)
+        public TagBuilder(IContext context)
         {
             _context = context;
+        }
+
+        public IContext Context
+        {
+            get
+            {
+                return _context;
+            }
         }
 
         protected virtual void Write(string text, bool indent=false)
@@ -56,7 +89,7 @@ namespace com.paraquery.Html
             // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
             // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
 
-            var atts = Utils.ToDictionary(attributes);
+            var atts = Html.Attributes.AttributeDictionary.Build(attributes);
 
             if (atts != null)
             {
@@ -82,6 +115,34 @@ namespace com.paraquery.Html
 
             }
         }
+
+        public object Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
+        {
+
+            if (init != null)
+            {
+                T attributes = new T();
+                init(attributes);
+
+                if (additional != null)
+                {
+                    //note we double nest here to ensure the "additional" are secondary to the "attributes"
+                    return new { attributes = attributes, additional = new { additional = additional } };
+                }
+                else
+                {
+                    return attributes;
+                }
+
+            }
+            else
+            {
+                return additional;
+            }
+
+        }
+
+
 
         public virtual void Start(string name, object attributes = null, bool indent=false)
         {
@@ -111,6 +172,51 @@ namespace com.paraquery.Html
             Attributes(attributes);
             Write(" />");
         }
+
+
+        // ******************************************************************* boiler plate signatures - these could be code generated
+
+        public virtual Element Div(object additional = null)
+        {
+            return Div(null, additional);
+        }
+
+        public virtual Element Div(Action<GlobalAttributes> attributes, object additional = null)
+        {
+            return new BlockElement(_context, this, "div", Attributes<GlobalAttributes>(attributes, additional));
+        }
+
+        public virtual Element Span(object additional = null)
+        {
+            return Span(null, additional);
+        }
+
+        public virtual Element Span(Action<GlobalAttributes> attributes, object additional = null)
+        {
+            return new InlineElement(_context, this, "span", Attributes<GlobalAttributes>(attributes, additional));
+        }
+
+        public virtual Element Hr(object additional = null)
+        {
+            return Hr(null, additional);
+        }
+
+        public virtual Element Hr(Action<HrAttributes> attributes, object additional = null)
+        {
+            return new BlockElement(_context, this, "hr", Attributes<HrAttributes>(attributes, additional), true);
+        }
+
+
+        public virtual Element Script(object additional = null)
+        {
+            return Script(null, additional);
+        }
+
+        public virtual Element Script(Action<ScriptAttributes> attributes, object additional = null)
+        {
+            return new BlockElement(_context, this, "script", Attributes<ScriptAttributes>(attributes, new { additional, defaults = new { type = "application/javascript" } }));
+        }
+
 
 
     }

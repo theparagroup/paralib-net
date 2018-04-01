@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Bootstrap.Grids;
 
-namespace com.paralib.Mvc.Infrastructure.ParaQuery.ExtensionMethods
+namespace com.paraquery
 {
     public static class FluentGridExtensions
     {

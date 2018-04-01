@@ -4,63 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html;
-using com.paraquery.Html.Blocks;
 using com.paraquery.jQuery.Blocks;
 using com.paraquery.Bootstrap.Grids;
 using com.paraquery.Js.Blocks;
+using com.paraquery.Html.Fluent;
 
 namespace com.paraquery
 {
     public class pQuery
     {
         protected IContext _context { private set; get; }
-        protected Tag _tag { private set; get; }
+        protected TagBuilder _tagBuilder { private set; get; }
 
-        public pQuery(IContext context, Tag tag)
+        public pQuery(IContext context, TagBuilder tagBuilder)
         {
             _context = context;
-            _tag = tag;
+            _tagBuilder = tagBuilder;
         }
-
-        /* ---------------------------------- do we want these right off of pquery? fluent? ---------------------------------------- */
-
-
-        public void Write(string text)
-        {
-            Response.Write(text);
-        }
-
-        public void WriteLine(string text)
-        {
-            Response.WriteLine(text);
-        }
-
-        public void Tab()
-        {
-            Response.Tab();
-        }
-
-        public void Tabs()
-        {
-            Response.Tabs();
-        }
-
-        public void Indent()
-        {
-            Response.Indent();
-        }
-
-        public void Dedent()
-        {
-            Response.Dedent();
-        }
-
-        public void NewLine()
-        {
-            Response.NewLine();
-        }
-
-        /* ---------------------------------- this needs to be fluent ---------------------------------------- */
 
         public IContext Context
         {
@@ -70,7 +30,6 @@ namespace com.paraquery
             }
         }
 
-        // want this?
         public IResponse Response
         {
             get
@@ -79,50 +38,42 @@ namespace com.paraquery
             }
         }
 
-
-        public Tag Tag
+        public IRequest Request
         {
             get
             {
-                return _tag;
+                return _context.Request;
             }
         }
 
+        public IServer Server
+        {
+            get
+            {
+                return _context.Server;
+            }
+        }
+
+        public TagBuilder TagBuilder
+        {
+            get
+            {
+                return _tagBuilder;
+            }
+        }
+
+        public FluentHtml Html()
+        {
+            return new FluentHtml(_context, _tagBuilder);
+        }
+
+        //fold into html
         public FluentGrid Grid()
         {
-            return new FluentGrid(_context, _tag);
+            return new FluentGrid(_context, _tagBuilder);
         }
 
-        public Div Div(object attributes=null)
-        {
-            return new Div(_context, _tag, attributes);
-        }
-
-        public Function Function(string name, params string[] parameters)
-        {
-            return new Function(_context, name, parameters);
-        }
-
-        public Click Click(string selector, object data=null)
-        {
-            return new Click(_context, selector, data);
-        }
-
-        public void Click(string selector, string js, object data = null)
-        {
-            WriteLine($"$('{selector}').click({Utils.Parameters(data)}function(event){{ {js} }} );");
-        }
-
-        public Script Script(object attributes = null)
-        {
-            return new Script(_context, _tag, attributes);
-        }
-
-        public Ready Ready()
-        {
-            return new Ready(_context);
-        }
-
+        //fold into utils
         public string Template(string name)
         {
             //TODO razor option
@@ -130,9 +81,31 @@ namespace com.paraquery
             return Utils.Resources.ReadManifestResouceString(System.Reflection.Assembly.GetCallingAssembly(), name);
         }
 
+        //fold into Js
+        public Function Function(string name, params string[] parameters)
+        {
+            return new Function(_context, name, parameters);
+        }
+
         public void Alert(string message)
         {
             Response.WriteLine($"alert('{message}');");
+        }
+
+        //fold into jquery/js
+        public Click Click(string selector, object data=null)
+        {
+            return new Click(_context, selector, data);
+        }
+
+        public void Click(string selector, string js, object data = null)
+        {
+            Response.WriteLine($"$('{selector}').click({Utils.Parameters(data)}function(event){{ {js} }} );");
+        }
+
+        public Ready Ready()
+        {
+            return new Ready(_context);
         }
 
         public void Ajax(string url, string targetId, object data=null)

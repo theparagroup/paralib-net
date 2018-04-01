@@ -21,7 +21,7 @@ namespace com.paraquery
         int TabLevel { get; }
 
         void Tab();
-        void Tabs();
+        void Tabs(int? level=null);
 
 
     }

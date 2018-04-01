@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html;
-using com.paraquery.Html.Blocks;
+using com.paraquery.Blocks;
 
 namespace com.paraquery.Bootstrap.Grids
 { 
@@ -35,25 +35,22 @@ namespace com.paraquery.Bootstrap.Grids
     public class FluentGrid: Block, IGrid, IContainer, IRow, IColumn
     {
         private FluentGrid _parent;
-        private IContext _context;
-        private Tag _tag;
-        private Div _container;
-        private Div _row;
-        private Div _column;
+        private TagBuilder _tagBuilder;
+        private Element _container;
+        private Element _row;
+        private Element _column;
         private IList<string> _classes;
         private int _columnNumber;
 
-        internal FluentGrid(IContext context, Tag tag) : base(context, false)
+        internal FluentGrid(IContext context, TagBuilder tagBuilder) : base(context, false)
         {
-            _context = context;
-            _tag = tag;
+            _tagBuilder = tagBuilder;
             Begin();
         }
 
-        internal FluentGrid(IContext context, Tag tag, FluentGrid parent = null) : base(context, false)
+        internal FluentGrid(IContext context, TagBuilder tagBuilder, FluentGrid parent = null) : base(context, false)
         {
-            _context = context;
-            _tag = tag;
+            _tagBuilder = tagBuilder;
             _parent = parent;
             Begin();
         }
@@ -89,7 +86,8 @@ namespace com.paraquery.Bootstrap.Grids
                 throw new InvalidOperationException("Container already open");
             }
 
-            _container = new Div(_context, _tag, new { @class = fluid ? "container-fluid" : "container", attributes = attributes });
+            _container = _tagBuilder.Div(new { @class = fluid ? "container-fluid" : "container", attributes = attributes });
+
         }
 
         private void _EndContainer()
@@ -123,7 +121,8 @@ namespace com.paraquery.Bootstrap.Grids
                 _EndRow();
             }
 
-            _row = new Div(_context, _tag, new { @class = "row", attributes = attributes });
+            _row = _tagBuilder.Div(new { @class = "row", attributes = attributes });
+
         }
 
         private void _EndRow()
@@ -166,7 +165,7 @@ namespace com.paraquery.Bootstrap.Grids
                 columnClasses = _classes[_columnNumber];
             }
 
-            _column = new Div(_context, _tag, new { @class = columnClasses, attributes = attributes });
+            _column = _tagBuilder.Div(new { @class = columnClasses, attributes = attributes });
 
             //this points to the next column number
             ++_columnNumber;
@@ -208,7 +207,7 @@ namespace com.paraquery.Bootstrap.Grids
                 throw new InvalidOperationException("No Column open");
             }
 
-            return new FluentGrid(_context, _tag, this);
+            return new FluentGrid(_context, _tagBuilder, this);
         }
 
         IGrid IColumn.End()

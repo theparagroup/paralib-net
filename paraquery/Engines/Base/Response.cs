@@ -38,12 +38,22 @@ namespace com.paraquery.Engines.Base
 
         protected abstract void _write(string text);
 
-        protected string _tabs
+        protected string GetTabs(int? level=null)
         {
-            get
+            if (level == null)
             {
-                return _tabCache[_tabLevel];
+                level = _tabLevel;
             }
+            else
+            {
+                if (level.Value >= _tabCache.Count)
+                {
+                    //this is rare, so don't expand the cache, just generate
+                    return new string(_tab, level.Value);
+                }
+            }
+
+            return _tabCache[level.Value];
         }
 
 
@@ -51,7 +61,7 @@ namespace com.paraquery.Engines.Base
         {
             if (indent)
             {
-                _write($"{_tabs}");
+                _write($"{GetTabs()}");
             }
 
             _write(text);
@@ -63,7 +73,7 @@ namespace com.paraquery.Engines.Base
         {
             if (indent)
             {
-                _write($"{_tabs}");
+                _write($"{GetTabs()}");
             }
 
             _write(text);
@@ -81,8 +91,8 @@ namespace com.paraquery.Engines.Base
         {
             if (indent)
             {
-                text = text.Replace($"{_newline}", $"{_newline}{_tabs}");
-                _write($"{_tabs}");
+                text = text.Replace($"{_newline}", $"{_newline}{GetTabs()}");
+                _write($"{GetTabs()}");
             }
 
             _write(text);
@@ -107,9 +117,9 @@ namespace com.paraquery.Engines.Base
             _isNewLine = false;
         }
 
-        public void Tabs()
+        public void Tabs(int? level)
         {
-            _write($"{_tabs}");
+            _write($"{GetTabs(level)}");
             _isNewLine = false;
         }
 
@@ -126,10 +136,8 @@ namespace com.paraquery.Engines.Base
 
         public void Dedent()
         {
-            //this will throw an error, for example, if you call end without begin
-            //kind of confusing error so we just don't do it here
-            //TODO do it elsewhere (Block)
-            //if (_tabLevel>=0)
+            //obviously we can't have negative tabs
+            if (_tabLevel>0)
             {
                 --_tabLevel;
             }

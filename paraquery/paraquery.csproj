@@ -40,7 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blocks\BlockBase.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
+    <Compile Include="Html\Attributes\AttributeDictionary.cs" />
+    <Compile Include="Html\Attributes\HrAlignTypes.cs" />
+    <Compile Include="Html\Attributes\ButtonTypes.cs" />
+    <Compile Include="Html\Attributes\GlobalAttributes.cs" />
+    <Compile Include="Html\Attributes\HrAttributes.cs" />
+    <Compile Include="Html\Attributes\ScriptAttributes.cs" />
+    <Compile Include="Html\Attributes\ImgAttributes.cs" />
+    <Compile Include="Html\Attributes\Style.cs" />
+    <Compile Include="Html\Fluent\FluentHtml.cs" />
+    <Compile Include="Html\Fluent\TagMethods.cs" />
+    <Compile Include="Html\InlineElement.cs" />
+    <Compile Include="Html\BlockElement.cs" />
+    <Compile Include="Html\ElementTypes.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
@@ -48,15 +62,13 @@
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Engines\Base\Request.cs" />
     <Compile Include="Engines\Base\Server.cs" />
-    <Compile Include="Block.cs" />
-    <Compile Include="Html\Blocks\HtmlBlock.cs" />
-    <Compile Include="Html\Blocks\Script.cs" />
+    <Compile Include="Blocks\Block.cs" />
+    <Compile Include="Html\Element.cs" />
     <Compile Include="Engines\Base\Context.cs" />
-    <Compile Include="Html\Blocks\Div.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IResponse.cs" />
     <Compile Include="IServer.cs" />
-    <Compile Include="Html\Tag.cs" />
+    <Compile Include="Html\TagBuilder.cs" />
     <Compile Include="jQuery\AjaxSettings.cs" />
     <Compile Include="jQuery\Blocks\Click.cs" />
     <Compile Include="jQuery\Blocks\jQueryBlock.cs" />
