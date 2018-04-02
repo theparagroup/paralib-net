@@ -89,7 +89,7 @@ namespace com.paraquery.Html
             // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
             // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
 
-            var atts = Html.Attributes.AttributeDictionary.Build(attributes);
+            var atts = AttributeDictionary.Build(attributes);
 
             if (atts != null)
             {

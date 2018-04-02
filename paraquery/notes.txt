@@ -1,7 +1,7 @@
 ﻿todo
 
 move grid into html
-move pquery extension methods and attribute enums into common space (root?) for razor views
+expand out style class and recursivily hyphenate over class and property
 
 
 

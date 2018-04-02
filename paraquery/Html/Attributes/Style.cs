@@ -6,8 +6,34 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Html.Attributes
 {
-    public class Style
+    public class Style:IComplexAttribute
     {
-        public string BackgroundColor { get; set; }
+        public string background { get; set; }
+        public string backgroundColor { get; set; }
+        public Color? BackgroundColor { get; set; }
+
+        public string color { get; set; }
+        public Color? Color { get; set; }
+
+        //TODO expand out border class and recursivily hyphenate over class and property
+        public string border { get; set; }
+
+
+        string IComplexAttribute.Value
+        {
+            get
+            {
+                var dictionary = AttributeDictionary.Build(this, true);
+                string style = null;
+
+                if (dictionary.Count > 0)
+                {
+                    style = string.Join(";", dictionary.Select(e => $"{e.Key}:{e.Value}").ToArray());
+                    style = $"{style};";
+                }
+
+                return style;
+            }
+        }
     }
 }

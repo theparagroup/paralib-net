@@ -43,10 +43,12 @@
     <Compile Include="Blocks\BlockBase.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
     <Compile Include="Html\Attributes\AttributeDictionary.cs" />
+    <Compile Include="Html\Attributes\Color.cs" />
     <Compile Include="Html\Attributes\HrAlignTypes.cs" />
     <Compile Include="Html\Attributes\ButtonTypes.cs" />
     <Compile Include="Html\Attributes\GlobalAttributes.cs" />
     <Compile Include="Html\Attributes\HrAttributes.cs" />
+    <Compile Include="Html\Attributes\IComplexAttribute.cs" />
     <Compile Include="Html\Attributes\ScriptAttributes.cs" />
     <Compile Include="Html\Attributes\ImgAttributes.cs" />
     <Compile Include="Html\Attributes\Style.cs" />
