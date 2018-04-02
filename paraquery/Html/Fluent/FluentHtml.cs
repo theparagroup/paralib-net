@@ -11,6 +11,7 @@ namespace com.paraquery.Html.Fluent
     {
         protected TagBuilder _tagBuilder;
         protected Stack<Element> _stack = new Stack<Element>();
+        protected bool _inlining;
 
         public FluentHtml(IContext context, TagBuilder tagBuilder) : base(context)
         {
@@ -47,36 +48,67 @@ namespace com.paraquery.Html.Fluent
 
         protected void NewBlock()
         {
-            //if current is inline, pop all inlines until we get to a block and pop that too
-            //else nest
+            //reset inline content flag
+            _inlining = false;
 
-            bool topInline = false;
+            //if current is inline, close the current block
+            //else nest
 
             if (_stack.Count > 0)
             {
                 Element top = _stack.Peek();
-                topInline = top.ElementType == ElementTypes.Inline;
+                if (top.ElementType == ElementTypes.Inline)
+                {
+                    CloseBlock();
+                }
             }
+        }
 
-            if (topInline)
+        protected void NewInline()
+        {
+            //if we're putting an inline directly under a block for the first time, 
+            //we need to tab manually,
+            //as inline elements are not formatted
+
+            if (!_inlining)
             {
 
-                while (_stack.Count > 0)
+                _inlining = true;
+
+                if (_stack.Count > 0)
                 {
                     Element top = _stack.Peek();
 
-                    if (top.ElementType == ElementTypes.Inline)
+                    if (top.ElementType == ElementTypes.Block)
                     {
-                        Pop();
-                    }
-                    else
-                    {
-                        Pop();
-                        break;
+                        _response.Tabs();
                     }
 
                 }
+
             }
+
+        }
+
+        public FluentHtml CloseBlock()
+        {
+            //end all inline elements up to and including the last block
+            while (_stack.Count > 0)
+            {
+                Element top = _stack.Peek();
+
+                if (top.ElementType == ElementTypes.Inline)
+                {
+                    Pop();
+                }
+                else
+                {
+                    Pop();
+                    break;
+                }
+            }
+
+            return this;
         }
 
         public FluentHtml CloseAll()

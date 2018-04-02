@@ -124,6 +124,9 @@ namespace com.paraquery.Html
                 T attributes = new T();
                 init(attributes);
 
+                //TODO process known nested objects such as style
+
+
                 if (additional != null)
                 {
                     //note we double nest here to ensure the "additional" are secondary to the "attributes"
