@@ -9,7 +9,7 @@ namespace com.paraquery.Html
 {
     public class BlockElement : Element
     {
-        public BlockElement(IContext context, TagBuilder tagBuilder, string name, object attributes = null, bool empty = false) : base(context, tagBuilder, ElementTypes.Block, name, attributes, empty)
+        public BlockElement(IContext context, TagBuilder tagBuilder, string name, object attributes = null, bool empty = false, bool render=true) : base(context, tagBuilder, ElementTypes.Block, name, attributes, empty, render)
         {
             Begin();
         }

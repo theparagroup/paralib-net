@@ -14,7 +14,6 @@ namespace com.paraquery
             return new System.Exception(message);
         }
 
-
         public static string Parameters(string[] parameters)
         {
             string parameterList = "";
@@ -42,6 +41,13 @@ namespace com.paraquery
 
             return parameter;
 
+        }
+
+        public static string Template(string name)
+        {
+            //TODO razor option
+            //TODO error checking and caching
+            return Resources.ReadManifestResouceString(System.Reflection.Assembly.GetCallingAssembly(), name);
         }
 
         public static class Json

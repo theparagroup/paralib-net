@@ -4,245 +4,179 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html;
-using com.paraquery.Blocks;
+using com.paraquery.Html.Attributes;
+using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Bootstrap.Grids
-{ 
-    /*
-
-        This fluent interface allows you build a bootstrap grid structure like this
-
-
-        grid (virtual block)
-            container (optional)
-                row
-                    column
-                        nested grid
-                            container (optional)
-
-
-        You can use "using" syntax or call Begin/End methods.
-
-        You can't nest <div> or other elements using the fluent interface (yet - we would need generic nesting of blocks)
-        but you can do that with razor html or just by calling Response.Write.
-
-        You *can* have nested containers (for that rare occasion) by nesting "using" statements and using Begin/End container calls,
-        or by calling Container() in a nested grid in a column.
-
-    */
-
-
-    public class FluentGrid: Block, IGrid, IContainer, IRow, IColumn
+{
+    public partial class FluentGrid:FluentHtml, IGrid, IContainer, IRow, IColumn
     {
-        private FluentGrid _parent;
-        private TagBuilder _tagBuilder;
-        private Element _container;
-        private Element _row;
-        private Element _column;
-        private IList<string> _classes;
-        private int _columnNumber;
+        protected IList<string> _classes;
+        protected int _columnNumber;
 
-        internal FluentGrid(IContext context, TagBuilder tagBuilder) : base(context, false)
+        public FluentGrid(IContext context, TagBuilder tagBuilder) : base(context, tagBuilder)
         {
-            _tagBuilder = tagBuilder;
-            Begin();
-        }
-
-        internal FluentGrid(IContext context, TagBuilder tagBuilder, FluentGrid parent = null) : base(context, false)
-        {
-            _tagBuilder = tagBuilder;
-            _parent = parent;
-            Begin();
-        }
-
-        protected override void OnBegin()
-        {
-            //nothing to do here
-            //WriteLine($"<!--gridstart  {_context.Response.TabLevel}-->");
-        }
-
-        protected override void OnPreEnd()
-        {
-            //end anything we have open
-            _EndContainer();
-        }
-
-        protected override void OnEnd()
-        {
-            //nothing to do here
-            //WriteLine($"<!--gridend {_context.Response.TabLevel}-->");
-        }
-
-        public IContainer Container(object attributes = null, bool fluid = false)
-        {
-            BeginContainer(attributes, fluid);
-            return this;
-        }
-
-        public void BeginContainer(object attributes = null, bool fluid = false)//IList<string> classes = null)
-        {
-            if (_container != null)
-            {
-                throw new InvalidOperationException("Container already open");
-            }
-
-            _container = _tagBuilder.Div(new { @class = fluid ? "container-fluid" : "container", attributes = attributes });
-
-        }
-
-        private void _EndContainer()
-        {
-            _EndRow();
-
-            _container?.End();
-            _container = null;
-        }
-
-        public void EndContainer()
-        {
-            if (_container == null)
-            {
-                throw new InvalidOperationException("No container is open");
-            }
-
-            _EndContainer();
-        }
-
-        public IRow Row(object attributes = null)
-        {
-            BeginRow(attributes);
-            return this;
-        }
-
-        public void BeginRow(object attributes = null)
-        {
-            if (_row != null)
-            {
-                _EndRow();
-            }
-
-            _row = _tagBuilder.Div(new { @class = "row", attributes = attributes });
-
-        }
-
-        private void _EndRow()
-        {
-            _EndColumn();
-
-            _row?.End();
-            _row = null;
-
-            _columnNumber = 0;
-        }
-
-        public void EndRow()
-        {
-            if (_row == null)
-            {
-                throw new InvalidOperationException("No row is open");
-            }
-
-            _EndRow();
-        }
-
-        public IColumn Column(object attributes = null)
-        {
-            BeginColumn(attributes);
-            return this;
-        }
-
-        public void BeginColumn(object attributes = null)
-        {
-            if (_column != null)
-            {
-                _EndColumn();
-            }
-
-            object columnClasses = new { };
-
-            if (_classes!=null && _columnNumber<_classes.Count)
-            {
-                columnClasses = _classes[_columnNumber];
-            }
-
-            _column = _tagBuilder.Div(new { @class = columnClasses, attributes = attributes });
-
-            //this points to the next column number
-            ++_columnNumber;
-
-        }
-
-        private void _EndColumn()
-        {
-            _column?.End();
-            _column = null;
-        }
-
-        public void EndColumn()
-        {
-            if (_column == null)
-            {
-                throw new InvalidOperationException("No column is open");
-            }
-
-            _EndColumn();
-        }
-
-        public IColumn Write(string content)
-        {
-            _response.Write(content);
-            return this;
-        }
-
-        public IColumn WriteLine(string content)
-        {
-            _response.WriteLine(content);
-            return this;
-        }
-
-        IGrid IColumn.Grid()
-        {
-            if (_column == null)
-            {
-                throw new InvalidOperationException("No Column open");
-            }
-
-            return new FluentGrid(_context, _tagBuilder, this);
-        }
-
-        IGrid IColumn.End()
-        {
-
-            if (_parent==null)
-            {
-                throw new InvalidOperationException("Not a nested grid");
-            }
-
-            End();
-
-            return _parent;
-        }
-
-        public void SetClasses(IList<string> classes = null)
-        {
-            _classes = classes;
         }
 
         IGrid IGrid.SetClasses(IList<string> classes)
         {
-            SetClasses(classes);
+            _classes = classes;
             return this;
         }
 
         IContainer IContainer.SetClasses(IList<string> classes)
         {
-            SetClasses(classes);
+            _classes = classes;
             return this;
         }
 
         IRow IRow.SetClasses(IList<string> classes)
         {
-            SetClasses(classes);
+            _classes = classes;
+            return this;
+        }
+
+
+        public IContainer Container(bool fluid = false)
+        {
+            return Container(null, null, fluid);
+        }
+
+        public IContainer Container(object attributes, bool fluid = false)
+        {
+            return Container(null, attributes, fluid);
+        }
+
+        public IContainer Container(Action<GlobalAttributes> attributes, object additional = null, bool fluid = false)
+        {
+            Div(attributes, new { @class = fluid ? "container-fluid" : "container", additional = additional });
+            _stack.Peek().Extra = "container";
+            return this;
+        }
+        
+
+        protected void CloseRow()
+        {
+            //end all elements up to last row or grid/container
+            //end last (current) row
+            //do not end container
+            while (_stack.Count > 0)
+            {
+                Element top = _stack.Peek();
+
+                if (top.Extra=="row")
+                {
+                    Pop();
+                    break;
+                }
+                else if(top.Extra == "grid" || top.Extra=="container")
+                {
+                    break;
+                }
+                else
+                {
+                    Pop();
+                }
+            }
+
+            _columnNumber = 0;
+
+        }
+
+        public IRow Row(object attributes = null)
+        {
+            return Row(null, attributes);
+        }
+
+        public IRow Row(Action<GlobalAttributes> attributes, object additional = null)
+        {
+            CloseRow();
+            Div(attributes, new { @class =  "row", additional = additional });
+            _stack.Peek().Extra = "row";
+            return this;
+        }
+
+        protected void CloseColumn()
+        {
+            //end all elements up to last column
+            //end last (current) column
+            //don't end grids, row or containers
+            while (_stack.Count > 0)
+            {
+                Element top = _stack.Peek();
+
+                if (top.Extra == "column")
+                {
+                    Pop();
+                    break;
+                }
+                else if (top.Extra == "grid" || top.Extra == "container" || top.Extra == "row")
+                {
+                    break;
+                }
+                else
+                {
+                    Pop();
+                }
+            }
+
+        }
+
+
+        public IColumn Column(object attributes = null)
+        {
+            return Column(null, attributes);
+        }
+
+        public IColumn Column(Action<GlobalAttributes> attributes, object additional = null)
+        {
+            CloseColumn();
+
+            string columnClasses = null;
+
+            if (_classes != null && _columnNumber < _classes.Count)
+            {
+                columnClasses = _classes[_columnNumber];
+            }
+
+            Div(attributes, new { @class = columnClasses, additional = additional });
+            _stack.Peek().Extra = "column";
+
+            ++_columnNumber;
+
+            return this;
+        }
+
+        public IGrid Grid()
+        {
+            var grid=new BlockElement(_context, _tagBuilder, "div", render:false );
+            grid.Extra = "grid";
+            NewBlock();
+            Push(grid);
+            return this;
+        }
+
+
+        public IGrid EndGrid()
+        {
+            //end all elements up to last grid, if any
+            //end last (current) grid
+            while (_stack.Count > 0)
+            {
+                Element top = _stack.Peek();
+
+                if (top.Extra == "grid")
+                {
+                    Pop();
+                    break;
+                }
+                else
+                {
+                    Pop();
+                }
+            }
+
+
             return this;
         }
 

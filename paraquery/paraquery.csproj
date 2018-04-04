@@ -41,7 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blocks\BlockBase.cs" />
+    <Compile Include="Bootstrap\Bs.cs" />
+    <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
+    <Compile Include="Bootstrap\Grids\ColumnMethods.cs" />
     <Compile Include="Html\Attributes\AttributeDictionary.cs" />
     <Compile Include="Html\Attributes\Color.cs" />
     <Compile Include="Html\Attributes\HrAlignTypes.cs" />
@@ -61,7 +64,6 @@
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
     <Compile Include="Bootstrap\Grids\IColumn.cs" />
-    <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Engines\Base\Request.cs" />
     <Compile Include="Engines\Base\Server.cs" />
     <Compile Include="Blocks\Block.cs" />
