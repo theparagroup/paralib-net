@@ -36,6 +36,12 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
+        IColumn IColumn.SetClasses(IList<string> classes)
+        {
+            _classes = classes;
+            return this;
+        }
+
 
         public IContainer Container(bool fluid = false)
         {

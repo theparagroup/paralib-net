@@ -9,6 +9,8 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public interface IColumn
     {
+        IColumn SetClasses(IList<string> classes = null);
+
         IRow Row(object attributes = null);
         IRow Row(Action<GlobalAttributes> attributes, object additional = null);
 

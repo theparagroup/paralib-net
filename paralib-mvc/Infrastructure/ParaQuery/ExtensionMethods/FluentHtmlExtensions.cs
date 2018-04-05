@@ -34,13 +34,13 @@ namespace com.paraquery
 
         public static FluentHtml Write(this FluentHtml fluentHtml, System.Web.Mvc.MvcHtmlString content, bool? indent = null)
         {
-            fluentHtml.Write(content.ToHtmlString(), indent);
+            fluentHtml.Write(content?.ToHtmlString(), indent);
             return fluentHtml;
         }
 
         public static FluentHtml WriteLine(this FluentHtml fluentHtml, System.Web.Mvc.MvcHtmlString content, bool? indent = null)
         {
-            fluentHtml.WriteLine(content.ToHtmlString(), indent);
+            fluentHtml.WriteLine(content?.ToHtmlString(), indent);
             return fluentHtml;
         }
 

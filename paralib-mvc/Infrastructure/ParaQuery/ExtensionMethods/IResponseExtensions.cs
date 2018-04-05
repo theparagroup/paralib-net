@@ -31,12 +31,12 @@ namespace com.paraquery
 
         public static void Write(this IResponse response, System.Web.Mvc.MvcHtmlString content, bool indent = true)
         {
-            response.Write(content.ToHtmlString(), indent);
+            response.Write(content?.ToHtmlString(), indent);
         }
 
         public static void WriteLine(this IResponse response, System.Web.Mvc.MvcHtmlString content, bool indent = true)
         {
-            response.WriteLine(content.ToHtmlString(), indent);
+            response.WriteLine(content?.ToHtmlString(), indent);
         }
 
     }
