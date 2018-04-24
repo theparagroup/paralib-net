@@ -25,7 +25,7 @@ namespace com.paralib.Mvc.Authentication
             bool persistCookie = false;
 
             //create ticket and encrypt
-            NET.FormsAuthenticationTicket ticket= new NET.FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(30), persistCookie, data);
+            NET.FormsAuthenticationTicket ticket= new NET.FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(60), persistCookie, data);
             string encryptedTicket = NET.FormsAuthentication.Encrypt(ticket);
 
             //save cookie
