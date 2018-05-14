@@ -59,6 +59,10 @@ namespace com.paralib.Xandroid
 
             switch (size)
             {
+                case XSizes.XXSmall:
+                    return 10 * scale;
+                case XSizes.XSmall:
+                    return 12 * scale;
                 case XSizes.Small:
                     return 14 * scale;
                 case XSizes.Medium:
@@ -228,6 +232,8 @@ namespace com.paralib.Xandroid
 
             switch (size)
             {
+                case XSizes.XXSmall:
+                case XSizes.XSmall:
                 case XSizes.Small:
                     height = 1;
                     break;
@@ -235,6 +241,7 @@ namespace com.paralib.Xandroid
                     height = 2;
                     break;
                 case XSizes.Large:
+                case XSizes.XLarge:
                     height = 3;
                     break;
                 default:

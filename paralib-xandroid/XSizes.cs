@@ -8,6 +8,8 @@ namespace com.paralib.Xandroid
 {
     public enum XSizes
     {
+        XXSmall,
+        XSmall,
         Small,
         Medium,
         Large,
