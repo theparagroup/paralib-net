@@ -10,6 +10,7 @@ namespace com.paralib.Xandroid
     public enum XInputTypes
     {
         Text,
+        UserName,
         Password,
         Integer,
         Decimal
