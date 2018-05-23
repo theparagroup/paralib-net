@@ -109,7 +109,7 @@ namespace com.paralib.Xandroid
         public static Action<Context, EditText> EditTextStyling;
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null, bool enabled=true)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null, bool enabled=true, bool multiline=false)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
@@ -157,6 +157,11 @@ namespace com.paralib.Xandroid
             else if (inputType==XInputTypes.Text)
             {
                 view.InputType = InputTypes.ClassText | InputTypes.TextFlagCapSentences;
+            }
+
+            if (multiline)
+            {
+                view.InputType = view.InputType | InputTypes.TextFlagMultiLine;
             }
 
             if (maxLength.HasValue)
