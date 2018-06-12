@@ -109,7 +109,7 @@ namespace com.paralib.Xandroid
         public static Action<Context, EditText> EditTextStyling;
 
 
-        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null, bool enabled=true, bool multiline=false)
+        public static EditText EditText(Context context, ViewGroup.LayoutParams layoutParams, XSizes size = XSizes.Medium, string text = null, Color? color = null, XInputTypes inputType = XInputTypes.Text, XImeActions? imeAction = null, GravityFlags? textGravity = null, int? id = null, string tag = null, bool? selectOnFocus = false, int? maxLength=null, EventHandler onTextChanged = null, bool enabled=true, bool multiline=false, bool signed=true)
         {
             var view = new EditText(context) { LayoutParameters = layoutParams };
 
@@ -145,10 +145,21 @@ namespace com.paralib.Xandroid
             else if (inputType == XInputTypes.Integer)
             {
                 view.InputType = InputTypes.ClassNumber;
+
+                if (signed)
+                {
+                    view.InputType |= InputTypes.NumberFlagSigned;
+                }
+
             }
             else if (inputType == XInputTypes.Decimal)
             {
                 view.InputType = InputTypes.ClassNumber | InputTypes.NumberFlagDecimal;
+
+                if (signed)
+                {
+                    view.InputType |= InputTypes.NumberFlagSigned;
+                }
             }
             else if (inputType == XInputTypes.UserName)
             {
