@@ -9,9 +9,14 @@ namespace com.paralib.Xandroid.Utils
 {
     public static class PackageInfo
     {
-        public static string GetVersion(Context context)
+        public static string GetVersionName(Context context)
         {
             return context.PackageManager.GetPackageInfo(context.PackageName,0).VersionName;
+        }
+
+        public static int GetVersionCode(Context context)
+        {
+            return context.PackageManager.GetPackageInfo(context.PackageName, 0).VersionCode;
         }
 
     }
