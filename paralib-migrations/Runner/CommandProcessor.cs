@@ -180,37 +180,45 @@ namespace com.paralib.Migrations.Runner
                     }
 
 
-                    //commands that use a database
+                    //commands that use a database 
 
                     //(poor attempt at parsing this shit)
                     string db = null;
                     string n = null;
                     if (parts.Length > 1)
                     {
-                        if (parts[0] == "up" || parts[0] == "down" || parts[0] == "rollback" || parts[0] == "list")
+                        //commands that use a database and a numeric
+                        if (parts[0] == "up" || parts[0] == "down" || parts[0] == "rollback" )
                         {
-                            //is arg2 a string
-                            if ((from c in parts[1].ToCharArray() where !char.IsNumber(c) select c).Count() == 0)
-                            {
-                                if (parts.Length == 2)
-                                {
-                                    n = parts[1];
-                                }
-                                else if (parts.Length == 3)
-                                {
-                                    //okay, a numeric database name
-                                    db = parts[1];
-                                    n = parts[2];
-                                }
-                            }
-                            else
+
+                            if (parts.Length == 2)
                             {
                                 db = parts[1];
                             }
+                            else if (parts.Length == 3)
+                            {
+                                db = parts[1];
+                                n = parts[2];
+                            }
+                            else
+                            {
+                                sayError($"Too many arguments");
+                                continue;
+                            }
+
+
                         }
-                        else
+                        else if(parts[0]=="refresh" || parts[0] == "drop" || parts[0] == "gen" || parts[0] == "list" || parts[0] == "tables" || parts[0] == "schema")
                         {
-                            db = parts[1];
+                            if (parts.Length == 2)
+                            {
+                                db = parts[1];
+                            }
+                            else
+                            {
+                                sayError($"Too many arguments");
+                                continue;
+                            }
                         }
 
                     }
