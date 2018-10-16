@@ -24,8 +24,10 @@ namespace com.paralib.Mvc.Authentication
             //TODO make this an option
             bool persistCookie = false;
 
+            //Note: FormsAuthentication.SlidingExpiration defaults to true, so the expiration will reset when more than half the time has expired
+
             //create ticket and encrypt
-            NET.FormsAuthenticationTicket ticket= new NET.FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(60), persistCookie, data);
+            NET.FormsAuthenticationTicket ticket= new NET.FormsAuthenticationTicket(1, userName, DateTime.Now, DateTime.Now.AddMinutes(Paralib.Mvc.Authentication.Timeout), persistCookie, data);
             string encryptedTicket = NET.FormsAuthentication.Encrypt(ticket);
 
             //save cookie

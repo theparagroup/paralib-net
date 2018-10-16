@@ -35,6 +35,12 @@ namespace com.paralib.Configuration.Mvc
             set { base["global"] = value; }
         }
 
+        [ConfigurationProperty("timeout", DefaultValue = 60)]
+        public int Timeout
+        {
+            get { return (int)base["timeout"]; }
+            set { base["timeout"] = value; }
+        }
 
 
     }

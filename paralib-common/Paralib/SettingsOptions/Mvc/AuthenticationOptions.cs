@@ -8,5 +8,6 @@ namespace com.paralib.SettingsOptions.Mvc
         public string LoginUrl { get; set; }
         public string DefaultUrl { get; set; }
         public bool Global { get; set; }
+        public int Timeout { get; set; }
     }
 }
