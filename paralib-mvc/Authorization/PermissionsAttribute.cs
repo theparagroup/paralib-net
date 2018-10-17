@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -27,6 +28,8 @@ namespace com.paralib.Mvc.Authorization
                     {
                         if (!filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
                         {
+                            //Note: Roles are built into the framework via IPrincipal and IsInRole()
+
                             base.OnAuthorization(filterContext);
 
                             if (filterContext.Result is HttpUnauthorizedResult)
@@ -37,32 +40,46 @@ namespace com.paralib.Mvc.Authorization
 
                                 if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
                                 {
-
                                     loginUrl += "?ReturnUrl=" + filterContext.HttpContext.Server.UrlEncode(filterContext.HttpContext.Request.RawUrl);
                                     filterContext.Result = new RedirectResult(loginUrl);
                                 }
                                 else
                                 {
-                                    filterContext.Result = new RedirectResult(UnauthorizedUrl??loginUrl);
+                                    filterContext.Result = new RedirectResult(UnauthorizedUrl ?? loginUrl);
                                 }
 
                             }
-                            else
-                            {
-                                //TODO roles? is this built-in?
-                            }
-
-
                         }
-
-
                     }
+                }
+            }
+        }
 
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+            //we don't want to send a 302 redirect for Ajax calls
+
+            var request = filterContext.HttpContext.Request;
+            var response = filterContext.HttpContext.Response;
+            var user = filterContext.HttpContext.User;
+
+            //"X-Requested-With" == "XMLHttpRequest"
+            if (request.IsAjaxRequest())
+            {
+                if (user.Identity.IsAuthenticated == false)
+                {
+                    response.StatusCode = (int)HttpStatusCode.Unauthorized; //401
+                }
+                else
+                {
+                    response.StatusCode = (int)HttpStatusCode.Forbidden; //403
                 }
 
+                response.SuppressFormsAuthenticationRedirect = true;
+                response.End();
             }
 
-
+            base.HandleUnauthorizedRequest(filterContext);
         }
     }
 }
