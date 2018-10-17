@@ -10,5 +10,6 @@ namespace com.paralib.ParalibProperties.Mvc
         public string DefaultUrl { get; internal set; }
         public bool Global { get; internal set; }
         public int Timeout { get; internal set; }
+        public bool Persist { get; internal set; }
     }
 }

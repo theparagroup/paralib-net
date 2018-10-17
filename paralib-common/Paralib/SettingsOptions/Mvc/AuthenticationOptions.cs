@@ -10,5 +10,6 @@ namespace com.paralib.SettingsOptions.Mvc
         public string DefaultUrl { get; set; }
         public bool Global { get; set; }
         public int Timeout { get; set; }
+        public bool Persist { get; set; }
     }
 }

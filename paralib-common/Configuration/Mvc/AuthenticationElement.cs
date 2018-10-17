@@ -49,6 +49,13 @@ namespace com.paralib.Configuration.Mvc
             set { base["timeout"] = value; }
         }
 
+        [ConfigurationProperty("persist", DefaultValue = false)]
+        public bool Persist
+        {
+            get { return (bool)base["persist"]; }
+            set { base["persist"] = value; }
+        }
+
 
     }
 }

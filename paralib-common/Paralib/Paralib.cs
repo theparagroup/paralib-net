@@ -212,6 +212,7 @@ namespace com.paralib
             Mvc.Authentication.DefaultUrl = _settings.Mvc.Authentication.DefaultUrl;
             Mvc.Authentication.Global = _settings.Mvc.Authentication.Global;
             Mvc.Authentication.Timeout = _settings.Mvc.Authentication.Timeout;
+            Mvc.Authentication.Persist = _settings.Mvc.Authentication.Persist;
 
 
             _logger.Info("settings loaded");
