@@ -61,6 +61,8 @@ namespace com.paralib.Mvc.Authentication
 
         public static ParaPrinciple GetParaPrinciple(NET.FormsAuthenticationTicket ticket)
         {
+            //note: this is called in the ParaMvcModule HttpModule to recreate the ParaPrincipal for each request
+
             string[] roles = null;
 
             try

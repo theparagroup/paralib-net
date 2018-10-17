@@ -116,6 +116,8 @@ namespace com.paralib.Mvc.Infrastructure
                     {
                         try
                         {
+                            //note: the ticket was created in the Forms.Authenticate() method
+
                             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(context.Request.Cookies[FormsAuthentication.FormsCookieName].Value);
 
                             IPrincipal principle = Forms.GetParaPrinciple(ticket);
