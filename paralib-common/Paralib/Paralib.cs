@@ -208,6 +208,7 @@ namespace com.paralib
             //mvc
             Mvc.Authentication.Enabled = _settings.Mvc.Authentication.Enabled;
             Mvc.Authentication.LoginUrl = _settings.Mvc.Authentication.LoginUrl;
+            Mvc.Authentication.UnauthorizedUrl = _settings.Mvc.Authentication.UnauthorizedUrl;
             Mvc.Authentication.DefaultUrl = _settings.Mvc.Authentication.DefaultUrl;
             Mvc.Authentication.Global = _settings.Mvc.Authentication.Global;
             Mvc.Authentication.Timeout = _settings.Mvc.Authentication.Timeout;

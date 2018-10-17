@@ -157,6 +157,7 @@ namespace com.paralib
                 {
                     settings.Mvc.Authentication.Enabled = paralibSection.Mvc.Authentication.Enabled;
                     settings.Mvc.Authentication.LoginUrl = Nullify(paralibSection.Mvc.Authentication.LoginUrl);
+                    settings.Mvc.Authentication.UnauthorizedUrl = Nullify(paralibSection.Mvc.Authentication.UnauthorizedUrl);
                     settings.Mvc.Authentication.DefaultUrl = Nullify(paralibSection.Mvc.Authentication.DefaultUrl);
                     settings.Mvc.Authentication.Global = paralibSection.Mvc.Authentication.Global;
                     settings.Mvc.Authentication.Timeout = paralibSection.Mvc.Authentication.Timeout;

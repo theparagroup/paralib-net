@@ -21,6 +21,13 @@ namespace com.paralib.Configuration.Mvc
             set { base["loginUrl"] = value; }
         }
 
+        [ConfigurationProperty("unauthorizedUrl")]
+        public string UnauthorizedUrl
+        {
+            get { return (string)base["unauthorizedUrl"]; }
+            set { base["unauthorizedUrl"] = value; }
+        }
+
         [ConfigurationProperty("defaultUrl")]
         public string DefaultUrl
         {
