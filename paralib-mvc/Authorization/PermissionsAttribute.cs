@@ -13,19 +13,20 @@ namespace com.paralib.Mvc.Authorization
     public class PermissionsAttribute : AuthorizeAttribute
     {
         public bool Anonymous { get; set; }
-        public string UnauthenticatedUrl { get; set; }
+        public string LoginUrl { get; set; }
         public string UnauthorizedUrl { get; set; }
-
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-
-            if (Paralib.Mvc.Authentication.Enabled)
+            if (FormsAuthentication.IsEnabled)
             {
+                //provide a simple way to bypass authentication/authorization via the attribute
                 if (!Anonymous)
                 {
+                    //respect this on action
                     if (!filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
                     {
+                        //respect this on controller
                         if (!filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true))
                         {
                             //Note: Roles are built into the framework via IPrincipal and IsInRole()
@@ -34,18 +35,23 @@ namespace com.paralib.Mvc.Authorization
 
                             if (filterContext.Result is HttpUnauthorizedResult)
                             {
-                                string loginUrl = UnauthenticatedUrl;
-                                if (loginUrl == null) loginUrl = Paralib.Mvc.Authentication.LoginUrl;
-                                if (loginUrl == null) loginUrl = FormsAuthentication.LoginUrl;
+
+                                //allow loginUrl to be overridden in attribute
+                                string loginUrl = LoginUrl ?? FormsAuthentication.LoginUrl;
+
+                                //allow unauthrorizedUrl to be overridden in attribute
+                                string unauthrorizedUrl = UnauthorizedUrl ?? Paralib.Mvc.Authentication.UnauthorizedUrl ?? loginUrl;
 
                                 if (!filterContext.HttpContext.User.Identity.IsAuthenticated)
                                 {
+                                    //continue to redirect to login page
                                     loginUrl += "?ReturnUrl=" + filterContext.HttpContext.Server.UrlEncode(filterContext.HttpContext.Request.RawUrl);
                                     filterContext.Result = new RedirectResult(loginUrl);
                                 }
                                 else
                                 {
-                                    filterContext.Result = new RedirectResult(UnauthorizedUrl ?? loginUrl);
+                                    //provide an alternate url for unauthorized in attribute
+                                    filterContext.Result = new RedirectResult(unauthrorizedUrl);
                                 }
 
                             }
