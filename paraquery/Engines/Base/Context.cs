@@ -10,7 +10,9 @@ namespace com.paraquery.Engines.Base
     {
         public IServer Server { protected set; get; }
         public IRequest Request { protected set; get; }
-        public IResponse Response { protected set; get; }
+        public IWriter Writer { protected set; get; }
+
+
         //namespace stack
         //namespace vars
 
@@ -21,8 +23,6 @@ namespace com.paraquery.Engines.Base
             //add initial namespace
 
         }
-
-        
 
 
     }

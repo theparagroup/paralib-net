@@ -10,7 +10,7 @@ namespace com.paraquery.Blocks
     {
         private bool _disposed;
         protected IContext _context { private set; get; }
-        protected IResponse _response  => _context.Response;
+        protected IWriter _writer  => _context.Writer;
 
         protected SimpleBlock(IContext context)
         {

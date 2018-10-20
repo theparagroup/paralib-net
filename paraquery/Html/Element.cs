@@ -34,7 +34,7 @@ namespace com.paraquery.Html
                 if (IsEmpty)
                 {
                     _tagBuilder.Empty(Name, Attributes, (ElementType == ElementTypes.Block));
-                    _response.Dedent();
+                    _writer.Dedent();
                 }
                 else
                 {

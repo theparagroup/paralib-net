@@ -10,11 +10,15 @@ namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
     public class Request : paraquery.Engines.Base.Request
     {
-        protected WebViewPage _view;
+        protected ViewContext _viewContext;
 
-        public Request(IContext context, WebViewPage view):base(context)
+        public Request(IContext context, ViewContext viewContext):base(context)
         {
-            _view = view;
+            _viewContext = viewContext;
+
+            _form = _viewContext.RequestContext.HttpContext.Request.Form;
+            _queryString = _viewContext.RequestContext.HttpContext.Request.QueryString;
+
         }
 
     }

@@ -50,7 +50,7 @@ namespace com.paraquery.Html
 
         protected virtual void Write(string text, bool indent=false)
         {
-            _context.Response.Write(text, indent);
+            _context.Writer.Write(text, indent);
         }
 
         public virtual void Attribute(string name, string value=null)

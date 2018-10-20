@@ -80,12 +80,12 @@
     <Compile Include="Infrastructure\ParaControllerHelper.cs" />
     <Compile Include="Infrastructure\ParaQuery\ExtensionMethods\FluentGridExtensions.cs" />
     <Compile Include="Infrastructure\ParaQuery\ExtensionMethods\FluentHtmlExtensions.cs" />
-    <Compile Include="Infrastructure\ParaQuery\ExtensionMethods\IResponseExtensions.cs" />
+    <Compile Include="Infrastructure\ParaQuery\ExtensionMethods\IWriterExtensions.cs" />
+    <Compile Include="Infrastructure\ParaQuery\Writer.cs" />
     <Compile Include="Infrastructure\ParaViewHelper.cs" />
     <Compile Include="Infrastructure\ParaQuery\Context.cs" />
     <Compile Include="Infrastructure\ParaQuery\Request.cs" />
     <Compile Include="Infrastructure\ParaQuery\Server.cs" />
-    <Compile Include="Infrastructure\ParaQuery\Response.cs" />
     <Compile Include="Infrastructure\WebApi2\ParaDirectRouteProvider.cs" />
     <Compile Include="Infrastructure\ParaView[TModel,TBaseController].cs" />
     <Compile Include="Infrastructure\ParaMvcModule.cs" />

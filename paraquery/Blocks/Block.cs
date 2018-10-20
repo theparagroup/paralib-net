@@ -48,14 +48,14 @@ namespace com.paraquery.Blocks
             if (_format)
             {
                 //this should be conditional on if newline was called last
-                if (!_response.IsNewLine)
+                if (!_writer.IsNewLine)
                 {
                     if (_debug)
                     {
-                        _response.Write("<!-- newlined prebegin -->", false);
+                        _writer.Write("<!-- newlined prebegin -->", false);
                     }
 
-                    _response.NewLine();
+                    _writer.NewLine();
                 }
             }
         }
@@ -66,12 +66,12 @@ namespace com.paraquery.Blocks
         {
             if (_format)
             {
-               _response.NewLine();
+                _writer.NewLine();
 
                 if (!_empty)
                 {
                     //any content should be indented
-                    _response.Indent();
+                    _writer.Indent();
                 }
             }
         }
@@ -81,20 +81,20 @@ namespace com.paraquery.Blocks
             if (_format)
             {
                 //this should be conditional on if newline was called last
-                if (!_response.IsNewLine)
+                if (!_writer.IsNewLine)
                 {
                     if (_debug)
                     {
-                        _response.Write("<!-- newlined preend -->", false);
+                        _writer.Write("<!-- newlined preend -->", false);
                     }
 
-                    _response.NewLine();
+                    _writer.NewLine();
                 }
 
                 if (!_empty)
                 {
                     //undo the indent
-                    _response.Dedent();
+                    _writer.Dedent();
                 }
             }
         }
@@ -106,7 +106,7 @@ namespace com.paraquery.Blocks
                 if(!_empty)
                 {
                     //we already newlined in PostBegin()
-                    _response.NewLine();
+                    _writer.NewLine();
                 }
             }
         }

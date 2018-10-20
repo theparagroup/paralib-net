@@ -9,17 +9,18 @@ namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
     public class Context: paraquery.Engines.Base.Context
     {
-        protected WebViewPage _view { get; private set; }
+        protected ViewContext _viewContext { get; private set; }
 
-        public Context(WebViewPage view, string @namespace=null, Dictionary<string, string> namespaceVars=null) : base(@namespace, namespaceVars)
+        public Context(ViewContext viewContext, string @namespace=null, Dictionary<string, string> namespaceVars=null) : base(@namespace, namespaceVars)
         {
-            _view = view;
+            _viewContext = viewContext;
 
-            Server = new Server(this, view);
-            Request = new Request(this, view);
-            Response = new Response(this, view);
+            Server = new Server(this, viewContext);
+            Request = new Request(this, viewContext);
+            Writer = new Writer(this, viewContext.Writer);
 
         }
+
 
     }
 }

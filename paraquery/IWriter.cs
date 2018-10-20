@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.paraquery
 {
-    public interface IResponse
+    public interface IWriter
     {
-        void Write(string text, bool indent=true);
+        void Write(string text, bool indent = true);
         void WriteLine(string text, bool indent = true);
-        void Snippet(string name, string text, bool indent = true);
+        void Snippet(string name, string text, bool indent = true, string newline="\n");
 
         void NewLine();
         bool IsNewLine { get; }
@@ -21,8 +21,7 @@ namespace com.paraquery
         int TabLevel { get; }
 
         void Tab();
-        void Tabs(int? level=null);
-
+        void Tabs(int? level = null);
 
     }
 }

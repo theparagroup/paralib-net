@@ -18,32 +18,16 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAIBAAAAAAAA=</HashCode>
       <FileName>Utils.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.pQuery">
     <Position X="3" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAEBkBAEoAAAAAAIAAAAAAAAAgAACAAEgQgI=</HashCode>
+      <HashCode>AAAAAAAAAgBABAEAAAAAIAIAAAAAjAAAgEAAAgAAAgI=</HashCode>
       <FileName>pQuery.cs</FileName>
     </TypeIdentifier>
-  </Class>
-  <Class Name="com.paraquery.BaseContext.ResponseBase">
-    <Position X="10" Y="5.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CAAAAAAACAAkBAAIAAAAAAAgAgCEAEAEAAACAgEAQAA=</HashCode>
-      <FileName>BaseContext\ResponseBase.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.paraquery.BaseContext.ContextBase">
-    <Position X="6.5" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAgAAAAAAAAgAAAAA=</HashCode>
-      <FileName>BaseContext\ContextBase.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="com.paraquery.Block">
     <Position X="4.25" Y="7.25" Width="1.5" />
@@ -126,7 +110,7 @@
   <Interface Name="com.paraquery.IResponse">
     <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAkAAAIAAAAAAAAAACAAEAAAAACAgEAQAA=</HashCode>
+      <HashCode>AAgAAAAAAAAkAAAIAAEAAAAAAACAAEAAAAACAgEAQAA=</HashCode>
       <FileName>IResponse.cs</FileName>
     </TypeIdentifier>
   </Interface>

@@ -10,16 +10,18 @@ namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
     public class Server : paraquery.Engines.Base.Server
     {
-        protected WebViewPage _view { get; private set; }
+        protected ViewContext _viewContext;
+        protected UrlHelper _url { get; set; }
 
-        public Server(IContext context, WebViewPage view) :base(context)
+        public Server(Context context, ViewContext viewContext) :base(context)
         {
-            _view = view;
+            _viewContext = viewContext;
+            _url = new UrlHelper(viewContext.RequestContext, System.Web.Routing.RouteTable.Routes);
         }
 
         public override string UrlPrefix(string url)
         {
-            return _view.Url.Content(url);
+            return _url.Content(url);
         }
 
     }

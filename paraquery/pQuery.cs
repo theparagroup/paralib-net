@@ -34,14 +34,6 @@ namespace com.paraquery
             }
         }
 
-        public IResponse Response
-        {
-            get
-            {
-                return _context.Response;
-            }
-        }
-
         public IRequest Request
         {
             get
@@ -55,6 +47,14 @@ namespace com.paraquery
             get
             {
                 return _context.Server;
+            }
+        }
+
+        public IWriter Writer
+        {
+            get
+            {
+                return _context.Writer;
             }
         }
 
@@ -88,7 +88,7 @@ namespace com.paraquery
 
         public void Alert(string message)
         {
-            Response.WriteLine($"alert('{message}');");
+            Writer.WriteLine($"alert('{message}');");
         }
 
         //fold into jquery/js
@@ -99,7 +99,7 @@ namespace com.paraquery
 
         public void Click(string selector, string js, object data = null)
         {
-            Response.WriteLine($"$('{selector}').click({Utils.Parameters(data)}function(event){{ {js} }} );");
+            Writer.WriteLine($"$('{selector}').click({Utils.Parameters(data)}function(event){{ {js} }} );");
         }
 
         public Ready Ready()
@@ -121,7 +121,7 @@ namespace com.paraquery
             
             string template=Utils.Template("com.paraquery.jQuery.Templates.ajax.js");
             string script = template.Replace("{0}", url).Replace("{1}", dataString).Replace("{2}", targetId);
-            Response.Snippet("ajax", script);
+            Writer.Snippet("ajax", script);
         }
 
     }

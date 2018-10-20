@@ -6,23 +6,27 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Engines.Base
 {
-    public abstract class Response : IResponse
+
+    public abstract class Writer : IWriter
     {
         protected IContext _context;
         protected int _tabLevel = 0;
         protected List<string> _tabCache;
-        protected char _newline;
         protected char _tab;
         protected bool _isNewLine;
         protected bool _isSpaced;
 
-        public Response(IContext context)
+        protected abstract void _write(string text);
+        protected abstract void _writeLine();
+        protected abstract void _writeLine(string text);
+        protected abstract string _newline { get; }
+
+        public Writer(IContext context)
         {
             _context = context;
 
-            //these can be overridden in derived classes
+            //these can be changed in derived classes
             _tab = '\t';
-            _newline = '\n';
 
             //init tab cache
             _tabCache = new List<string>();
@@ -36,9 +40,7 @@ namespace com.paraquery.Engines.Base
 
         }
 
-        protected abstract void _write(string text);
-
-        protected string GetTabs(int? level=null)
+        protected string GetTabs(int? level = null)
         {
             if (level == null)
             {
@@ -69,7 +71,7 @@ namespace com.paraquery.Engines.Base
             _isSpaced = false;
         }
 
-        public virtual void WriteLine(string text, bool indent=true)
+        public virtual void WriteLine(string text, bool indent = true)
         {
             if (indent)
             {
@@ -83,15 +85,15 @@ namespace com.paraquery.Engines.Base
                 _isSpaced = true;
             }
 
-            _write($"{_newline}");
+            _writeLine("");
             _isNewLine = true;
         }
 
-        public virtual void Snippet(string name, string text, bool indent = true)
+        public virtual void Snippet(string name, string text, bool indent = true, string newline = "\n")
         {
             if (indent)
             {
-                text = text.Replace($"{_newline}", $"{_newline}{GetTabs()}");
+                text = text.Replace($"{newline}", $"{_newline}{GetTabs()}");
                 _write($"{GetTabs()}");
             }
 
@@ -107,7 +109,7 @@ namespace com.paraquery.Engines.Base
                 _isSpaced = true;
             }
 
-            _write($"{_newline}");
+            _writeLine("");
             _isNewLine = true;
         }
 
@@ -127,7 +129,7 @@ namespace com.paraquery.Engines.Base
         {
             ++_tabLevel;
 
-            if (_tabLevel>=_tabCache.Count)
+            if (_tabLevel >= _tabCache.Count)
             {
                 _tabCache.Add(new string(_tab, _tabLevel));
             }
@@ -137,7 +139,7 @@ namespace com.paraquery.Engines.Base
         public void Dedent()
         {
             //obviously we can't have negative tabs
-            if (_tabLevel>0)
+            if (_tabLevel > 0)
             {
                 --_tabLevel;
             }
@@ -169,3 +171,4 @@ namespace com.paraquery.Engines.Base
 
     }
 }
+

@@ -12,7 +12,7 @@ namespace com.paraquery.StringContext
         {
             Server = new Server(this, urlPrefix);
             Request= new Request(this);
-            Response= new Response(this);
+            Writer= new Writer(this);
         }
 
     }

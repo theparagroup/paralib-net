@@ -81,7 +81,7 @@ namespace com.paraquery.Html.Fluent
 
                     if (top.ElementType == ElementTypes.Block)
                     {
-                        _response.Tabs();
+                        _writer.Tabs();
                     }
 
                 }
@@ -140,7 +140,7 @@ namespace com.paraquery.Html.Fluent
                 }
             }
 
-            _context.Response.Write(content, indent.Value);
+            _context.Writer.Write(content, indent.Value);
 
             return this;
         }
@@ -157,7 +157,7 @@ namespace com.paraquery.Html.Fluent
                 }
             }
 
-            _context.Response.WriteLine(content, indent.Value);
+            _context.Writer.WriteLine(content, indent.Value);
 
             return this;
         }
