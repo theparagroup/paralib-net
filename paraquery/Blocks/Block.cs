@@ -19,7 +19,7 @@ namespace com.paraquery.Blocks
             _empty = empty;
         }
 
-        public bool IsFormat
+        public bool IsFormatted
         {
             get
             {

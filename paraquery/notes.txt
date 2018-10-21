@@ -9,8 +9,23 @@ expand out style class and recursivily hyphenate over class and property
 Design Goals & Notes
 
 1] Build web pages in C# without Razor/Mvc/ASP
-2] Create re-usable javascript snippet library in C#
+2] Create re-usable html/javascript snippet library in C#
+	<Action> syntax
+	better templating
+		reflection to do substitutions, attribute to override '{_FooBar_}' => 'whatever'
+	reusable js functions, c# settings => json => function
+	better formatting for attribute names
+	have fluenthtml tagmethods just use the tagbuilder directly, skip the helper methods
+
 3] Fluent syntax options
 
 x] T4/Razor support library?
+
+
+--[todo]
+test project
+fix isspaced
+page, body, layout
+script management
+built in onready
 
