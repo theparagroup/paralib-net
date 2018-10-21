@@ -10,8 +10,6 @@ namespace com.paraquery.Blocks
     {
         private bool _format;
         private bool _empty;
-        private bool _debug = true;
-
 
         protected Block(IContext context, bool format = true, bool empty = false) : base(context)
         {
@@ -19,7 +17,7 @@ namespace com.paraquery.Blocks
             _empty = empty;
         }
 
-        protected virtual string Name
+        protected virtual string Description
         {
             get
             {
@@ -51,6 +49,18 @@ namespace com.paraquery.Blocks
             }
         }
 
+        protected virtual bool DebugSourceFormatting
+        {
+            get
+            {
+                return _context.Options.DebugSourceFormatting;
+            }
+        }
+
+        protected virtual void Comment(string text)
+        {
+            _writer.Write($" <!-- {text} {Description} {Id} -->", false);
+        }
 
         protected virtual void Begin()
         {
@@ -66,9 +76,9 @@ namespace com.paraquery.Blocks
                 //this should be conditional on if newline was called last before this block started
                 if (!_writer.IsNewLine)
                 {
-                    if (_debug)
+                    if (DebugSourceFormatting)
                     {
-                        _writer.Write($" <!-- nl prebegin {Name} {Id} -->", false);
+                        Comment("nl prebegin {text} {Description} {Id}");
                     }
 
                     _writer.NewLine();
@@ -85,9 +95,9 @@ namespace com.paraquery.Blocks
                 //this should be conditional on if newline was called last in OnBegin
                 if (!_writer.IsNewLine)
                 {
-                    if (_debug)
+                    if (DebugSourceFormatting)
                     {
-                        _writer.Write($" <!-- nl postbegin {Name} {Id} -->", false);
+                        Comment("nl postbegin {text} {Description} {Id}");
                     }
 
                     _writer.NewLine();
@@ -111,9 +121,9 @@ namespace com.paraquery.Blocks
                     //this should be conditional on if newline was called last in the content
                     if (!_writer.IsNewLine)
                     {
-                        if (_debug)
+                        if (DebugSourceFormatting)
                         {
-                            _writer.Write($" <!-- nl preend {Name} {Id} -->", false);
+                            Comment("nl preend {text} {Description} {Id}");
                         }
 
                         _writer.NewLine();
@@ -136,9 +146,9 @@ namespace com.paraquery.Blocks
                     //this should be conditional on if newline was called last in OnEnd
                     if (!_writer.IsNewLine)
                     {
-                        if (_debug)
+                        if (DebugSourceFormatting)
                         {
-                            _writer.Write($" <!-- nl postend {Name} {Id} -->", false);
+                            Comment("nl postend {text} {Description} {Id}");
                         }
 
                         _writer.NewLine();

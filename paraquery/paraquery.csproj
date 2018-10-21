@@ -85,6 +85,7 @@
     <Compile Include="Engines\String\Context.cs" />
     <Compile Include="Engines\String\Request.cs" />
     <Compile Include="Engines\String\Server.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="pQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

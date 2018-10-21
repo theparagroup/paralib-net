@@ -13,6 +13,11 @@ namespace com.paraquery.Js.Blocks
         {
         }
 
+        protected override void Comment(string text)
+        {
+            _writer.Write($" // {text}", false);
+        }
+
         protected override void OnPreBegin()
         {
             if (!_writer.IsSpaced)

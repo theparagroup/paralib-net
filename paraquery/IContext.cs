@@ -10,6 +10,7 @@ namespace com.paraquery
         IServer Server { get; }
         IRequest Request { get; }
         IWriter Writer { get; }
+        Options Options { get; }
 
     }
 }

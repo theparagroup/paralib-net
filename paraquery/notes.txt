@@ -17,7 +17,8 @@ Design Goals & Notes
 	better formatting for attribute names
 	have fluenthtml tagmethods just use the tagbuilder directly, skip the helper methods
 	by the time attributes get to Element, it should be a simple dictionary - this whole thing needs to be refactored
-	remove html comments in javascript (debugging)
+	make debug a config option
+
 
 3] Fluent syntax options
 

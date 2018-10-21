@@ -26,7 +26,7 @@ namespace com.paraquery.Html
             Render = render;
         }
 
-        protected override string Name
+        protected override string Description
         {
             get
             {
