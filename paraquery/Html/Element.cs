@@ -12,7 +12,7 @@ namespace com.paraquery.Html
     {
         protected TagBuilder _tagBuilder;
         public ElementTypes ElementType { private set; get; }
-        public string Name { private set; get; }
+        protected string _name;
         public object Attributes { private set; get; }
         public bool Render { private set; get; }
         public string Extra { set; get; }
@@ -21,9 +21,26 @@ namespace com.paraquery.Html
         {
             _tagBuilder = tagBuilder;
             ElementType = elementType;
-            Name = name;
+            _name = name;
             Attributes =attributes;
             Render = render;
+        }
+
+        protected override string Name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
+        protected override string Id
+        {
+            get
+            {
+                //TODO make this work
+                return _tagBuilder.GetAttribute(Attributes, "id");
+            }
         }
 
         protected override void OnBegin()
@@ -33,12 +50,11 @@ namespace com.paraquery.Html
             {
                 if (IsEmpty)
                 {
-                    _tagBuilder.Empty(Name, Attributes, (ElementType == ElementTypes.Block));
-                    _writer.Dedent();
+                    _tagBuilder.Empty(_name, Attributes, (ElementType == ElementTypes.Block));
                 }
                 else
                 {
-                    _tagBuilder.Open(Name, Attributes, (ElementType == ElementTypes.Block));
+                    _tagBuilder.Open(_name, Attributes, (ElementType == ElementTypes.Block));
                 }
             }
         }
@@ -49,7 +65,7 @@ namespace com.paraquery.Html
             {
                 if (!IsEmpty)
                 {
-                    _tagBuilder.Close(Name, (ElementType == ElementTypes.Block));
+                    _tagBuilder.Close(_name, (ElementType == ElementTypes.Block));
                 }
             }
         }

@@ -10,7 +10,7 @@ namespace com.paraquery
     {
         void Write(string text, bool indent = true);
         void WriteLine(string text, bool indent = true);
-        void Snippet(string name, string text, bool indent = true, string newline="\n");
+        void Snippet(string name, string text, bool indent = true, string newline="\r\n");
 
         void NewLine();
         bool IsNewLine { get; }

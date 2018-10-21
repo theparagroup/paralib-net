@@ -13,8 +13,8 @@ namespace com.paraquery.Engines.Base
         protected int _tabLevel = 0;
         protected List<string> _tabCache;
         protected char _tab;
-        protected bool _isNewLine;
-        protected bool _isSpaced;
+        protected bool _isNewLine; //we are at the start of a new line
+        protected bool _isSpaced; //last output was blank line
 
         protected abstract void _write(string text);
         protected abstract void _writeLine();
@@ -27,6 +27,9 @@ namespace com.paraquery.Engines.Base
 
             //these can be changed in derived classes
             _tab = '\t';
+
+            //we start off with a newline
+            _isNewLine = true;
 
             //init tab cache
             _tabCache = new List<string>();
@@ -80,16 +83,21 @@ namespace com.paraquery.Engines.Base
 
             _write(text);
 
-            if (_isNewLine)
+            if (_isNewLine && text=="")
             {
+                //this is the same as NewLine()
                 _isSpaced = true;
+            }
+            else
+            {
+                _isSpaced = false;
             }
 
             _writeLine("");
             _isNewLine = true;
         }
 
-        public virtual void Snippet(string name, string text, bool indent = true, string newline = "\n")
+        public virtual void Snippet(string name, string text, bool indent = true, string newline = "\r\n")
         {
             if (indent)
             {

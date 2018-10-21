@@ -13,10 +13,26 @@ namespace com.paraquery.Blocks
         private bool _debug = true;
 
 
-        protected Block(IContext context, bool format=true, bool empty=false):base(context)
+        protected Block(IContext context, bool format = true, bool empty = false) : base(context)
         {
             _format = format;
             _empty = empty;
+        }
+
+        protected virtual string Name
+        {
+            get
+            {
+                return "";
+            }
+        }
+
+        protected virtual string Id
+        {
+            get
+            {
+                return "";
+            }
         }
 
         public bool IsFormatted
@@ -47,12 +63,12 @@ namespace com.paraquery.Blocks
         {
             if (_format)
             {
-                //this should be conditional on if newline was called last
+                //this should be conditional on if newline was called last before this block started
                 if (!_writer.IsNewLine)
                 {
                     if (_debug)
                     {
-                        _writer.Write("<!-- newlined prebegin -->", false);
+                        _writer.Write($" <!-- nl prebegin {Name} {Id} -->", false);
                     }
 
                     _writer.NewLine();
@@ -66,7 +82,16 @@ namespace com.paraquery.Blocks
         {
             if (_format)
             {
-                _writer.NewLine();
+                //this should be conditional on if newline was called last in OnBegin
+                if (!_writer.IsNewLine)
+                {
+                    if (_debug)
+                    {
+                        _writer.Write($" <!-- nl postbegin {Name} {Id} -->", false);
+                    }
+
+                    _writer.NewLine();
+                }
 
                 if (!_empty)
                 {
@@ -80,19 +105,20 @@ namespace com.paraquery.Blocks
         {
             if (_format)
             {
-                //this should be conditional on if newline was called last
-                if (!_writer.IsNewLine)
-                {
-                    if (_debug)
-                    {
-                        _writer.Write("<!-- newlined preend -->", false);
-                    }
-
-                    _writer.NewLine();
-                }
-
                 if (!_empty)
                 {
+
+                    //this should be conditional on if newline was called last in the content
+                    if (!_writer.IsNewLine)
+                    {
+                        if (_debug)
+                        {
+                            _writer.Write($" <!-- nl preend {Name} {Id} -->", false);
+                        }
+
+                        _writer.NewLine();
+                    }
+
                     //undo the indent
                     _writer.Dedent();
                 }
@@ -103,10 +129,21 @@ namespace com.paraquery.Blocks
         {
             if (_format)
             {
-                if(!_empty)
+                //if this is an empty element, we already newlined in PostBegin(), so no need to do it again
+                if (!_empty)
                 {
-                    //we already newlined in PostBegin()
-                    _writer.NewLine();
+
+                    //this should be conditional on if newline was called last in OnEnd
+                    if (!_writer.IsNewLine)
+                    {
+                        if (_debug)
+                        {
+                            _writer.Write($" <!-- nl postend {Name} {Id} -->", false);
+                        }
+
+                        _writer.NewLine();
+                    }
+
                 }
             }
         }

@@ -145,6 +145,17 @@ namespace com.paraquery.Html
 
         }
 
+        public string GetAttribute(object attributes, string name)
+        {
+            //TODO make this work
+
+            if (attributes is GlobalAttributes)
+            {
+                return ((GlobalAttributes)attributes).Id ?? "";
+            }
+
+            return "";
+        }
 
 
         public virtual void Start(string name, object attributes = null, bool indent=false)

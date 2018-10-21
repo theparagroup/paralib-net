@@ -15,12 +15,13 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void OnPreBegin()
         {
+            base.OnPreBegin();
+
             if (!_writer.IsSpaced)
             {
                 _writer.NewLine();
             }
 
-            base.OnPreBegin();
         }
 
         protected override void OnPostEnd()
