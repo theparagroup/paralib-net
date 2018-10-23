@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.paraquery.Html;
 using com.paraquery.Html.Attributes;
 using com.paraquery.Html.Fluent;
+using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Bootstrap.Grids
 {

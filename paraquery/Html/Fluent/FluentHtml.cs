@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Blocks;
+using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html.Fluent
 {

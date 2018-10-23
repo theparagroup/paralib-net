@@ -65,6 +65,7 @@
     <Compile Include="Html\InlineElement.cs" />
     <Compile Include="Html\BlockElement.cs" />
     <Compile Include="Html\ElementTypes.cs" />
+    <Compile Include="Html\Tags\TagMethods.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Html\Element.cs" />
     <Compile Include="Engines\Base\Context.cs" />
-    <Compile Include="Html\TagBuilder.cs" />
+    <Compile Include="Html\Tags\TagBuilder.cs" />
     <Compile Include="IRequest.cs" />
     <Compile Include="IServer.cs" />
     <Compile Include="IWriter.cs" />

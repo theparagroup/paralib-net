@@ -8,6 +8,7 @@ using com.paraquery.jQuery.Blocks;
 using com.paraquery.Bootstrap;
 using com.paraquery.Js.Blocks;
 using com.paraquery.Html.Fluent;
+using com.paraquery.Html.Tags;
 
 namespace com.paraquery
 {
