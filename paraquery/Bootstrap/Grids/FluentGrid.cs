@@ -157,7 +157,6 @@ namespace com.paraquery.Bootstrap.Grids
         {
             var grid=new BlockElement(_context, _tagBuilder, "div", render:false );
             grid.Extra = "grid";
-            NewBlock();
             Push(grid);
             return this;
         }

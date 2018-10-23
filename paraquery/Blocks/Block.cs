@@ -59,7 +59,7 @@ namespace com.paraquery.Blocks
 
         protected virtual void Comment(string text)
         {
-            _writer.Write($" <!-- {text} {Description} {Id} -->", false);
+            _writer.Write($" <!-- {text} -->", false);
         }
 
         protected virtual void Begin()
@@ -78,7 +78,7 @@ namespace com.paraquery.Blocks
                 {
                     if (DebugSourceFormatting)
                     {
-                        Comment("nl prebegin {text} {Description} {Id}");
+                        Comment($"nl prebegin {Description} {Id}");
                     }
 
                     _writer.NewLine();
@@ -97,7 +97,7 @@ namespace com.paraquery.Blocks
                 {
                     if (DebugSourceFormatting)
                     {
-                        Comment("nl postbegin {text} {Description} {Id}");
+                        Comment($"nl postbegin {Description} {Id}");
                     }
 
                     _writer.NewLine();
@@ -123,7 +123,7 @@ namespace com.paraquery.Blocks
                     {
                         if (DebugSourceFormatting)
                         {
-                            Comment("nl preend {text} {Description} {Id}");
+                            Comment($"nl preend {Description} {Id}");
                         }
 
                         _writer.NewLine();
@@ -148,7 +148,7 @@ namespace com.paraquery.Blocks
                     {
                         if (DebugSourceFormatting)
                         {
-                            Comment("nl postend {text} {Description} {Id}");
+                            Comment($"nl postend {Description} {Id}");
                         }
 
                         _writer.NewLine();

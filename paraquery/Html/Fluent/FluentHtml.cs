@@ -10,6 +10,7 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml : ElementContainer
     {
         protected TagBuilder _tagBuilder;
+        protected bool _writeIndented; 
 
         public FluentHtml(IContext context, TagBuilder tagBuilder) : base(context)
         {
@@ -49,36 +50,61 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
+        protected override void OnPush(Element element)
+        {
+            //clear write indented if starting a new block
+            if (element.ElementType == ElementTypes.Block)
+            {
+                _writeIndented = false;
+            }
+        }
+
         public FluentHtml Write(string content, bool? indent = null)
         {
-            if (!indent.HasValue)
+            //if we haven't already indented during a write and caller doesn't specify, let's see if we're under a block and auto indent
+            if (!_writeIndented)
             {
-                indent = false;
-
-                if (_stack.Count > 0)
+                if (!indent.HasValue)
                 {
-                    indent = _stack.Peek().ElementType == ElementTypes.Block;
+                    indent = false;
+
+                    if (_stack.Count > 0)
+                    {
+                        indent = (_stack.Peek().ElementType == ElementTypes.Block);
+                    }
                 }
+
+                //save state for future writes/writelines
+                _writeIndented = indent.Value;
+
             }
 
-            _context.Writer.Write(content, indent.Value);
+            _context.Writer.Write(content, indent??false);
+
 
             return this;
         }
 
         public FluentHtml WriteLine(string content, bool? indent = null)
         {
-            if (!indent.HasValue)
+            //if we haven't already indented during a write and caller doesn't specify, let's see if we're under a block and auto indent
+            if (!_writeIndented)
             {
-                indent = false;
-
-                if (_stack.Count > 0)
+                if (!indent.HasValue)
                 {
-                    indent = _stack.Peek().ElementType == ElementTypes.Block;
+                    indent = false;
+
+                    if (_stack.Count > 0)
+                    {
+                        indent = (_stack.Peek().ElementType == ElementTypes.Block);
+                    }
                 }
             }
 
-            _context.Writer.WriteLine(content, indent.Value);
+            _context.Writer.WriteLine(content, indent??false);
+
+            //newline, so from here on we're not "write indented"
+            _writeIndented = false;
 
             return this;
         }
@@ -86,6 +112,10 @@ namespace com.paraquery.Html.Fluent
         public FluentHtml NewLine()
         {
             _context.Writer.NewLine();
+
+            //newline, so from here on we're not "write indented"
+            _writeIndented = false;
+
             return this;
         }
 

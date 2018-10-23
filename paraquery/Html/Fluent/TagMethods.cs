@@ -18,7 +18,6 @@ namespace com.paraquery.Html.Fluent
 
         public virtual FluentHtml Div(Action<GlobalAttributes> attributes, object additional = null)
         {
-            NewBlock();
             return Push(_tagBuilder.Div(attributes, additional));
         }
 
@@ -31,7 +30,6 @@ namespace com.paraquery.Html.Fluent
 
         public virtual FluentHtml Span(Action<GlobalAttributes> attributes, object additional = null)
         {
-            NewInline();
             return Push(_tagBuilder.Span(attributes, additional));
         }
 
@@ -44,7 +42,6 @@ namespace com.paraquery.Html.Fluent
 
         public virtual FluentHtml Hr(Action<HrAttributes> attributes, object additional = null)
         {
-            NewBlock();
             return Push(_tagBuilder.Hr(attributes, additional));
         }
 
@@ -57,7 +54,6 @@ namespace com.paraquery.Html.Fluent
 
         public virtual FluentHtml Script(Action<ScriptAttributes> attributes, object additional = null)
         {
-            NewBlock();
             return Push(_tagBuilder.Script(attributes, additional));
         }
 
