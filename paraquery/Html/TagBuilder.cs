@@ -190,6 +190,9 @@ namespace com.paraquery.Html
 
         // ******************************************************************* boiler plate signatures - these could be code generated
 
+
+        /*  -------------------------------- DIV -------------------------------------- */
+
         public virtual Element Div(object additional = null)
         {
             return Div(null, additional);
@@ -197,8 +200,10 @@ namespace com.paraquery.Html
 
         public virtual Element Div(Action<GlobalAttributes> attributes, object additional = null)
         {
-            return new BlockElement(_context, this, "div", Attributes<GlobalAttributes>(attributes, additional));
+            return new BlockElement(_context, this, "div", Attributes(attributes, additional));
         }
+
+        /*  -------------------------------- SPAN -------------------------------------- */
 
         public virtual Element Span(object additional = null)
         {
@@ -207,8 +212,10 @@ namespace com.paraquery.Html
 
         public virtual Element Span(Action<GlobalAttributes> attributes, object additional = null)
         {
-            return new InlineElement(_context, this, "span", Attributes<GlobalAttributes>(attributes, additional));
+            return new InlineElement(_context, this, "span", Attributes(attributes, additional));
         }
+
+        /*  -------------------------------- HR -------------------------------------- */
 
         public virtual Element Hr(object additional = null)
         {
@@ -217,9 +224,10 @@ namespace com.paraquery.Html
 
         public virtual Element Hr(Action<HrAttributes> attributes, object additional = null)
         {
-            return new BlockElement(_context, this, "hr", Attributes<HrAttributes>(attributes, additional), true);
+            return new BlockElement(_context, this, "hr", Attributes(attributes, additional), true);
         }
 
+        /*  -------------------------------- SCRIPT -------------------------------------- */
 
         public virtual Element Script(object additional = null)
         {
@@ -228,7 +236,7 @@ namespace com.paraquery.Html
 
         public virtual Element Script(Action<ScriptAttributes> attributes, object additional = null)
         {
-            return new BlockElement(_context, this, "script", Attributes<ScriptAttributes>(attributes, new { additional, defaults = new { type = "application/javascript" } }));
+            return new BlockElement(_context, this, "script", Attributes(attributes, new { additional, defaults = new { type = "application/javascript" } }));
         }
 
 

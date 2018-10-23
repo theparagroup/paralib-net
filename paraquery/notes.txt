@@ -14,8 +14,7 @@ Design Goals & Notes
 	better templating
 		reflection to do substitutions, attribute to override '{_FooBar_}' => 'whatever'
 	reusable js functions, c# settings => json => function
-	better formatting for attribute names
-	have fluenthtml tagmethods just use the tagbuilder directly, skip the helper methods
+	better formatting for attribute names, underscores, etc
 	by the time attributes get to Element, it should be a simple dictionary - this whole thing needs to be refactored
 	make debug a config option
 
