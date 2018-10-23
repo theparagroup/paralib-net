@@ -14,12 +14,11 @@ namespace com.paraquery
         void Space();
         void Snippet(string text, string newline = null);
 
-        bool IsNewLine { get; }
-        bool IsSpaced { get; } //probably don't need this
-
         void Indent();
         void Dedent();
+
         int TabLevel { get; }
+        bool IsNewLine { get; }
 
     }
 }

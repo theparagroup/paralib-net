@@ -67,14 +67,6 @@ namespace com.paraquery.Engines.Base
             }
         }
 
-        public bool IsSpaced
-        {
-            get
-            {
-                return _isSpaced;
-            }
-        }
-
         protected string GetTabs(int? level = null)
         {
             if (level == null)
