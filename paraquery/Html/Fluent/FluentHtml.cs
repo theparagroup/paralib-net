@@ -7,20 +7,13 @@ using com.paraquery.Blocks;
 
 namespace com.paraquery.Html.Fluent
 {
-    public partial class FluentHtml : SimpleBlock
+    public partial class FluentHtml : ElementContainer
     {
         protected TagBuilder _tagBuilder;
-        protected Stack<Element> _stack = new Stack<Element>();
-        protected bool _inlining;
 
         public FluentHtml(IContext context, TagBuilder tagBuilder) : base(context)
         {
             _tagBuilder = tagBuilder;
-        }
-
-        protected override void OnEnd()
-        {
-            CloseAll();
         }
 
         protected TagBuilder TagBuilder
@@ -31,100 +24,28 @@ namespace com.paraquery.Html.Fluent
             }
         }
 
-        protected FluentHtml Push(Element element)
+        protected new FluentHtml Push(Element element)
         {
-            _stack.Push(element);
+            base.Push(element);
             return this;
         }
 
-        protected void Pop()
+
+        public new FluentHtml CloseBlock()
         {
-            if (_stack.Count > 0)
-            {
-                Element element = _stack.Pop();
-                element.End();
-            }
-        }
-
-        protected void NewBlock()
-        {
-            //reset inline content flag
-            _inlining = false;
-
-            //if current is inline, close the current block
-            //else nest
-
-            if (_stack.Count > 0)
-            {
-                Element top = _stack.Peek();
-                if (top.ElementType == ElementTypes.Inline)
-                {
-                    CloseBlock();
-                }
-            }
-        }
-
-        protected void NewInline()
-        {
-            //if we're putting an inline directly under a block for the first time, 
-            //we need to tab manually,
-            //as inline elements are not formatted
-
-            if (!_inlining)
-            {
-
-                _inlining = true;
-
-                if (_stack.Count > 0)
-                {
-                    Element top = _stack.Peek();
-
-                    if (top.ElementType == ElementTypes.Block)
-                    {
-                        _writer.Tabs();
-                    }
-
-                }
-
-            }
-
-        }
-
-        public FluentHtml CloseBlock()
-        {
-            //end all inline elements up to and including the last block
-            while (_stack.Count > 0)
-            {
-                Element top = _stack.Peek();
-
-                if (top.ElementType == ElementTypes.Inline)
-                {
-                    Pop();
-                }
-                else
-                {
-                    Pop();
-                    break;
-                }
-            }
-
+            base.CloseBlock();
             return this;
         }
 
-        public FluentHtml CloseAll()
+        public new FluentHtml CloseAll()
         {
-            //end all elements on stack
-            while (_stack.Count > 0)
-            {
-                Pop();
-            }
-
+            base.CloseAll();
             return this;
         }
 
-        public FluentHtml Close()
+        public new FluentHtml Close()
         {
-            Pop();
+            base.Close();
             return this;
         }
 
@@ -164,6 +85,7 @@ namespace com.paraquery.Html.Fluent
 
         public FluentHtml NewLine()
         {
+            _context.Writer.NewLine();
             return this;
         }
 

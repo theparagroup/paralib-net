@@ -59,6 +59,7 @@
     <Compile Include="Html\Attributes\ScriptAttributes.cs" />
     <Compile Include="Html\Attributes\ImgAttributes.cs" />
     <Compile Include="Html\Attributes\Style.cs" />
+    <Compile Include="Html\ElementContainer.cs" />
     <Compile Include="Html\Fluent\FluentHtml.cs" />
     <Compile Include="Html\Fluent\TagMethods.cs" />
     <Compile Include="Html\InlineElement.cs" />
