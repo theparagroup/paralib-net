@@ -18,6 +18,10 @@ Design Goals & Notes
 	by the time attributes get to Element, it should be a simple dictionary - this whole thing needs to be refactored
 	make debug a config option
 
+	should be able to nest elementcontainers
+		merge element and elementcontainer (elements can have children)
+	remove "render" concept
+
 
 3] Fluent syntax options
 
