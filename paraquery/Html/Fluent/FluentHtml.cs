@@ -49,33 +49,33 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
-        public new FluentHtml Write(string content, bool? indent = null)
+        public FluentHtml Write(string content)
         {
-            base.Write(content, indent);
+            _context.Writer.Write(content);
             return this;
         }
 
-        public new FluentHtml WriteLine(string content, bool? indent = null)
+        public FluentHtml WriteLine(string content)
         {
-            base.WriteLine(content, indent);
+            _context.Writer.WriteLine(content);
             return this;
         }
 
-        public new FluentHtml NewLine()
+        public FluentHtml NewLine()
         {
-            base.NewLine();
+            _context.Writer.NewLine();
             return this;
         }
 
-        public new FluentHtml Space()
+        public FluentHtml Space()
         {
-            base.Space();
+            _context.Writer.Space();
             return this;
         }
 
-        public new FluentHtml Snippet(string name, string text, bool indent = true, string newline = null)
+        public FluentHtml Snippet(string text, string newline = null)
         {
-            base.Snippet(name, text, indent, newline);
+            _context.Writer.Snippet(text, newline);
             return this;
         }
 

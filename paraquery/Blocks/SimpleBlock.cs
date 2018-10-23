@@ -6,6 +6,16 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Blocks
 {
+    /*
+
+        SimpleBlock defines the basics of the IDisposable interface and provides for context and a writer.
+
+        Block derived from this class, but this class is also useful for non-html containers such as the ElementContainer.
+
+        It is up to the instatiator wrap the instance in a using statement, or to call End() explicitly.
+
+    */
+
     public abstract class SimpleBlock : IDisposable
     {
         private bool _disposed;

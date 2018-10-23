@@ -15,28 +15,21 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void Comment(string text)
         {
-            _writer.Write($" // {text}", false);
+            _writer.Write($" // {text}");
         }
 
         protected override void OnPreBegin()
         {
+            _writer.Space();
+
             base.OnPreBegin();
-
-            if (!_writer.IsSpaced)
-            {
-                _writer.NewLine();
-            }
-
         }
 
         protected override void OnPostEnd()
         {
             base.OnPostEnd();
 
-            if (!_writer.IsSpaced)
-            {
-                _writer.NewLine();
-            }
+            _writer.Space();
         }
 
     }

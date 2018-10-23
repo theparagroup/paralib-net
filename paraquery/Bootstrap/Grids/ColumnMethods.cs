@@ -9,15 +9,15 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public partial class FluentGrid 
     {
-        IColumn IColumn.Write(string content, bool? indent)
+        IColumn IColumn.Write(string content)
         {
-            Write(content, indent);
+            Write(content);
             return this;
         }
 
-        IColumn IColumn.WriteLine(string content, bool? indent)
+        IColumn IColumn.WriteLine(string content)
         {
-            Write(content, indent);
+            Write(content);
             return this;
         }
 

@@ -21,8 +21,8 @@ namespace com.paraquery.Bootstrap.Grids
 
         IGrid EndGrid();
 
-        IColumn Write(string content, bool? indent = null);
-        IColumn WriteLine(string content, bool? indent = null);
+        IColumn Write(string content);
+        IColumn WriteLine(string content);
 
         IColumn Div(object additional = null);
         IColumn Div(Action<GlobalAttributes> attributes, object additional = null);

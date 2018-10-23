@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blocks\BlockBase.cs" />
+    <Compile Include="Blocks\SimpleBlock.cs" />
     <Compile Include="Bootstrap\Bs.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />

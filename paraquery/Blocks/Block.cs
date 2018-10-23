@@ -6,6 +6,22 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Blocks
 {
+    /*
+
+        Block provides "Begin semantics". It is up to the instatiator or subclass to call begin.
+
+        Block also provides for basic formatting, which can be toggled.
+
+        When on, Block will ensure that start tags end with a newline, and that the tab level is maintained.
+
+        Note, Block generates newlines but does NOT generate the tabs... this is up to the caller.
+
+        Block understands the concept of Empty tags, and formats newlines and adjusts the tab level accordingly.
+
+        The Writer is responsible for ensuring that the first content on a line is tabbed out per the tab level.
+
+    */
+
     public abstract class Block : SimpleBlock
     {
         private bool _format;
@@ -59,10 +75,10 @@ namespace com.paraquery.Blocks
 
         protected virtual void Comment(string text)
         {
-            _writer.Write($" <!-- {text} -->", false);
+            _writer.Write($" <!-- {text} -->");
         }
 
-        protected virtual void Begin()
+        public virtual void Begin()
         {
             OnPreBegin();
             OnBegin();

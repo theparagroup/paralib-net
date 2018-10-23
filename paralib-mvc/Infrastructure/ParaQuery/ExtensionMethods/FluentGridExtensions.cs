@@ -10,27 +10,27 @@ namespace com.paraquery
     public static class FluentGridExtensions
     {
 
-        public static IColumn Write(this IColumn column, Func<dynamic, System.Web.WebPages.HelperResult> content, bool? indent = null)
+        public static IColumn Write(this IColumn column, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
-            column.Write(content(null).ToHtmlString(), indent);
+            column.Write(content(null).ToHtmlString());
             return column;
         }
 
-        public static IColumn WriteLine(this IColumn column, Func<dynamic, System.Web.WebPages.HelperResult> content, bool? indent = null)
+        public static IColumn WriteLine(this IColumn column, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
-            column.WriteLine(content(null).ToHtmlString(), indent);
+            column.WriteLine(content(null).ToHtmlString());
             return column;
         }
 
-        public static IColumn Write(this IColumn column, System.Web.Mvc.MvcHtmlString content, bool? indent = null)
+        public static IColumn Write(this IColumn column, System.Web.Mvc.MvcHtmlString content)
         {
-            column.Write(content?.ToHtmlString(), indent);
+            column.Write(content?.ToHtmlString());
             return column;
         }
 
-        public static IColumn WriteLine(this IColumn column, System.Web.Mvc.MvcHtmlString content, bool? indent = null)
+        public static IColumn WriteLine(this IColumn column, System.Web.Mvc.MvcHtmlString content)
         {
-            column.WriteLine(content?.ToHtmlString(), indent);
+            column.WriteLine(content?.ToHtmlString());
             return column;
         }
 

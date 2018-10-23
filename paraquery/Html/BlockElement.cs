@@ -13,7 +13,6 @@ namespace com.paraquery.Html
     {
         public BlockElement(IContext context, TagBuilder tagBuilder, string name, object attributes = null, bool empty = false, bool render=true) : base(context, tagBuilder, ElementTypes.Block, name, attributes, empty, render)
         {
-            Begin();
         }
     }
 }

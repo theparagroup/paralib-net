@@ -25,9 +25,9 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        protected virtual void Write(string text, bool indent=false)
+        protected virtual void Write(string text)
         {
-            _context.Writer.Write(text, indent);
+            _context.Writer.Write(text);
         }
 
         public virtual void Attribute(string name, string value=null)
@@ -39,11 +39,11 @@ namespace com.paraquery.Html.Tags
                 if (value==null)
                 {
                     //boolean
-                    Write($" {name}", false);
+                    Write($" {name}");
                 }
                 else
                 {
-                    Write($" {name}=\"{value}\"", false);
+                    Write($" {name}=\"{value}\"");
                 }
 
             }
@@ -135,31 +135,31 @@ namespace com.paraquery.Html.Tags
         }
 
 
-        public virtual void Start(string name, object attributes = null, bool indent=false)
+        public virtual void Start(string name, object attributes = null)
         {
-            Write($"<{name}", indent);
+            Write($"<{name}");
             Attributes(attributes);
         }
 
         public virtual void End()
         {
-            Write(">", false);
+            Write(">");
         }
 
-        public virtual void Open(string name, object attributes = null, bool indent = false)
+        public virtual void Open(string name, object attributes = null)
         {
-            Start(name, attributes, indent);
+            Start(name, attributes);
             End();
         }
 
-        public virtual void Close(string name, bool indent = false)
+        public virtual void Close(string name)
         {
-            Write($"</{name}>", indent);
+            Write($"</{name}>");
         }
 
-        public virtual void Empty(string name, object attributes = null, bool indent = false)
+        public virtual void Empty(string name, object attributes = null)
         {
-            Write($"<{name}", indent);
+            Write($"<{name}");
             Attributes(attributes);
             Write(" />");
         }

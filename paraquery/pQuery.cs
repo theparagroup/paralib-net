@@ -122,7 +122,7 @@ namespace com.paraquery
             
             string template=Utils.Template("com.paraquery.jQuery.Templates.ajax.js");
             string script = template.Replace("{0}", url).Replace("{1}", dataString).Replace("{2}", targetId);
-            Writer.Snippet("ajax", script);
+            Writer.Snippet(script);
         }
 
     }

@@ -8,21 +8,18 @@ namespace com.paraquery
 {
     public interface IWriter
     {
-        void Write(string text, bool indent = true);
-        void WriteLine(string text, bool indent = true);
+        void Write(string text);
+        void WriteLine(string text);
         void NewLine();
         void Space();
-        void Snippet(string name, string text, bool indent = true, string newline = null);
+        void Snippet(string text, string newline = null);
 
         bool IsNewLine { get; }
-        bool IsSpaced { get; }
+        bool IsSpaced { get; } //probably don't need this
 
         void Indent();
         void Dedent();
         int TabLevel { get; }
-
-        void Tab();
-        void Tabs(int? level = null);
 
     }
 }

@@ -19,24 +19,24 @@ namespace com.paraquery
 
         */
 
-        public static void Write(this IWriter writer, Func<dynamic, System.Web.WebPages.HelperResult> content, bool indent = true)
+        public static void Write(this IWriter writer, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
-            writer.Write(content(null).ToHtmlString(), indent);
+            writer.Write(content(null).ToHtmlString());
         }
 
-        public static void WriteLine(this IWriter writer, Func<dynamic, System.Web.WebPages.HelperResult> content, bool indent = true)
+        public static void WriteLine(this IWriter writer, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
-            writer.WriteLine(content(null).ToHtmlString(), indent);
+            writer.WriteLine(content(null).ToHtmlString());
         }
 
-        public static void Write(this IWriter writer, System.Web.Mvc.MvcHtmlString content, bool indent = true)
+        public static void Write(this IWriter writer, System.Web.Mvc.MvcHtmlString content)
         {
-            writer.Write(content?.ToHtmlString(), indent);
+            writer.Write(content?.ToHtmlString());
         }
 
-        public static void WriteLine(this IWriter writer, System.Web.Mvc.MvcHtmlString content, bool indent = true)
+        public static void WriteLine(this IWriter writer, System.Web.Mvc.MvcHtmlString content)
         {
-            writer.WriteLine(content?.ToHtmlString(), indent);
+            writer.WriteLine(content?.ToHtmlString());
         }
 
     }

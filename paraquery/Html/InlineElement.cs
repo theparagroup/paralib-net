@@ -13,7 +13,6 @@ namespace com.paraquery.Html
     {
         public InlineElement(IContext context, TagBuilder tagBuilder, string name, object attributes = null, bool empty = false, bool render=true) : base(context, tagBuilder, ElementTypes.Inline, name, attributes, empty, render)
         {
-            Begin();
         }
     }
 }

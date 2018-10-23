@@ -20,27 +20,27 @@ namespace com.paraquery
 
         */
 
-        public static FluentHtml Write(this FluentHtml fluentHtml, Func<dynamic, System.Web.WebPages.HelperResult> content, bool? indent = null)
+        public static FluentHtml Write(this FluentHtml fluentHtml, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
-            fluentHtml.Write(content(null).ToHtmlString(), indent);
+            fluentHtml.Write(content(null).ToHtmlString());
             return fluentHtml;
         }
 
-        public static FluentHtml WriteLine(this FluentHtml fluentHtml, Func<dynamic, System.Web.WebPages.HelperResult> content, bool? indent = null)
+        public static FluentHtml WriteLine(this FluentHtml fluentHtml, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
-            fluentHtml.WriteLine(content(null).ToHtmlString(), indent);
+            fluentHtml.WriteLine(content(null).ToHtmlString());
             return fluentHtml;
         }
 
-        public static FluentHtml Write(this FluentHtml fluentHtml, System.Web.Mvc.MvcHtmlString content, bool? indent = null)
+        public static FluentHtml Write(this FluentHtml fluentHtml, System.Web.Mvc.MvcHtmlString content)
         {
-            fluentHtml.Write(content?.ToHtmlString(), indent);
+            fluentHtml.Write(content?.ToHtmlString());
             return fluentHtml;
         }
 
-        public static FluentHtml WriteLine(this FluentHtml fluentHtml, System.Web.Mvc.MvcHtmlString content, bool? indent = null)
+        public static FluentHtml WriteLine(this FluentHtml fluentHtml, System.Web.Mvc.MvcHtmlString content)
         {
-            fluentHtml.WriteLine(content?.ToHtmlString(), indent);
+            fluentHtml.WriteLine(content?.ToHtmlString());
             return fluentHtml;
         }
 

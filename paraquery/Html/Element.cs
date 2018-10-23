@@ -51,11 +51,11 @@ namespace com.paraquery.Html
             {
                 if (IsEmpty)
                 {
-                    _tagBuilder.Empty(_name, Attributes, (ElementType == ElementTypes.Block));
+                    _tagBuilder.Empty(_name, Attributes);
                 }
                 else
                 {
-                    _tagBuilder.Open(_name, Attributes, (ElementType == ElementTypes.Block));
+                    _tagBuilder.Open(_name, Attributes);
                 }
             }
         }
@@ -66,7 +66,7 @@ namespace com.paraquery.Html
             {
                 if (!IsEmpty)
                 {
-                    _tagBuilder.Close(_name, (ElementType == ElementTypes.Block));
+                    _tagBuilder.Close(_name);
                 }
             }
         }
