@@ -19,7 +19,14 @@ namespace com.paraquery.Engines.Base
         protected abstract void _write(string text);
         protected abstract void _writeLine();
         protected abstract void _writeLine(string text);
-        protected abstract string _newline { get; }
+
+        protected virtual string _newline
+        {
+            get
+            {
+                return Environment.NewLine;
+            }
+        }
 
         public Writer(IContext context)
         {
@@ -70,6 +77,7 @@ namespace com.paraquery.Engines.Base
             }
 
             _write(text);
+
             _isNewLine = false;
             _isSpaced = false;
         }
@@ -94,30 +102,62 @@ namespace com.paraquery.Engines.Base
             }
 
             _writeLine("");
+
             _isNewLine = true;
         }
 
-        public virtual void Snippet(string name, string text, bool indent = true, string newline = "\r\n")
+        public void Space()
+        {
+            if (!_isSpaced)
+            {
+                if (!_isNewLine)
+                {
+                    NewLine();
+                }
+
+                NewLine();
+
+                //the second NewLine() will set _isSpaced
+            }
+        }
+
+
+        public virtual void Snippet(string name, string text, bool indent = true, string newline = null)
         {
             if (indent)
             {
+                //tabify
+
+                if (newline==null)
+                {
+                    newline = Environment.NewLine;
+                }
+
                 text = text.Replace($"{newline}", $"{_newline}{GetTabs()}");
                 _write($"{GetTabs()}");
             }
 
             _write(text);
+
             _isNewLine = false;
+            _isSpaced = false;
         }
 
         public void NewLine()
         {
-
+            //if we are already at a newline, then another newline will space things out
+            //otherwise we're just newline and not spaced
             if (_isNewLine)
             {
                 _isSpaced = true;
             }
+            else
+            {
+                _isSpaced = false;
+            }
 
             _writeLine("");
+
             _isNewLine = true;
         }
 

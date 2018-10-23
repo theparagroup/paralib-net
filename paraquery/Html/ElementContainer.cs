@@ -11,6 +11,8 @@ namespace com.paraquery.Html.Fluent
     {
         protected Stack<Element> _stack = new Stack<Element>();
         protected bool _inlining;
+        protected bool _writeIndented;
+
 
         public ElementContainer(IContext context) : base(context)
         {
@@ -19,11 +21,6 @@ namespace com.paraquery.Html.Fluent
         protected override void OnEnd()
         {
             CloseAll();
-        }
-
-        protected virtual void OnPush(Element element)
-        {
-
         }
 
         protected void Push(Element element)
@@ -71,14 +68,16 @@ namespace com.paraquery.Html.Fluent
                 }
             }
 
+            //push it
             _stack.Push(element);
-            OnPush(element);
+
+            //clear write indented if starting a new block
+            if (element.ElementType == ElementTypes.Block)
+            {
+                _writeIndented = false;
+            }
         }
 
-        protected virtual void OnPop(Element element)
-        {
-
-        }
 
         protected void Pop()
         {
@@ -86,7 +85,6 @@ namespace com.paraquery.Html.Fluent
             {
                 Element element = _stack.Pop();
                 element.End();
-                OnPop(element);
             }
         }
        
@@ -123,7 +121,73 @@ namespace com.paraquery.Html.Fluent
         {
             Pop();
         }
-       
+
+        public void Write(string content, bool? indent = null)
+        {
+            //if we haven't already indented during a write and caller doesn't specify, let's see if we're under a block and auto indent
+            if (!_writeIndented)
+            {
+                if (!indent.HasValue)
+                {
+                    indent = false;
+
+                    if (_stack.Count > 0)
+                    {
+                        indent = (_stack.Peek().ElementType == ElementTypes.Block);
+                    }
+                }
+
+                //save state for future writes/writelines
+                _writeIndented = indent.Value;
+
+            }
+
+            _context.Writer.Write(content, indent ?? false);
+        }
+
+        public void WriteLine(string content, bool? indent = null)
+        {
+            //if we haven't already indented during a write and caller doesn't specify, let's see if we're under a block and auto indent
+            if (!_writeIndented)
+            {
+                if (!indent.HasValue)
+                {
+                    indent = false;
+
+                    if (_stack.Count > 0)
+                    {
+                        indent = (_stack.Peek().ElementType == ElementTypes.Block);
+                    }
+                }
+            }
+
+            _context.Writer.WriteLine(content, indent ?? false);
+
+            //newline, so from here on we're not "write indented"
+            _writeIndented = false;
+
+        }
+
+        public void NewLine()
+        {
+            _context.Writer.NewLine();
+
+            //newline, so from here on we're not "write indented"
+            _writeIndented = false;
+        }
+
+        public void Space()
+        {
+            _context.Writer.Space();
+
+            //space ends on a newline, so from here on we're not "write indented"
+            _writeIndented = false;
+        }
+
+        public virtual void Snippet(string name, string text, bool indent = true, string newline = null)
+        {
+            _context.Writer.Snippet(name, text, indent, newline);
+        }
 
     }
 }

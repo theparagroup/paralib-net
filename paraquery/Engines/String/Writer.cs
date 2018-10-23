@@ -14,14 +14,6 @@ namespace com.paraquery.StringContext
         {
         }
 
-        protected override string _newline
-        {
-            get
-            {
-                return Environment.NewLine;
-            }
-        }
-
         protected override void _write(string text)
         {
             _sb.Append(text);
