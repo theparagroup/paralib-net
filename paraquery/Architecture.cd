@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="com.paraquery.Utils">
-    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Position X="4.5" Y="4.75" Width="2.25" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
@@ -23,214 +23,208 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.pQuery">
-    <Position X="3" Y="0.5" Width="3" />
+    <Position X="7" Y="4.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAABAEAAAAAIAIAAAAAjAAAgEAAAgEAAgI=</HashCode>
       <FileName>pQuery.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paraquery.Html.Blocks.HtmlBlock">
-    <Position X="0.75" Y="11.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Html\Blocks\HtmlBlock.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.paraquery.Html.Blocks.Div">
-    <Position X="0.5" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>Html\Blocks\Div.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.paraquery.Html.Blocks.Script">
-    <Position X="2.25" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>Html\Blocks\Script.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.paraquery.jQuery.AjaxSettings">
-    <Position X="7.5" Y="16.25" Width="1.5" />
+    <Position X="8" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAgAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>jQuery\AjaxSettings.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paraquery.jQuery.Blocks.JsBlock">
-    <Position X="5.75" Y="11.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>jQuery\Blocks\JsBlock.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.paraquery.jQuery.Blocks.Click">
-    <Position X="4.25" Y="13.5" Width="1.5" />
+    <Position X="13.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEAAAAAABAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>jQuery\Blocks\Click.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paraquery.jQuery.Blocks.Function">
-    <Position X="6.25" Y="13.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAEAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>jQuery\Blocks\Function.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.paraquery.jQuery.Blocks.Ready">
-    <Position X="8.25" Y="13.5" Width="1.5" />
+    <Position X="11.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>jQuery\Blocks\Ready.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.Html.Element">
-    <Position X="14.75" Y="0.5" Width="1.5" />
+    <Position X="24.25" Y="11.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAAABAAAAAQQAgAAAAAACFAAAAAAAAA=</HashCode>
+      <HashCode>AAACIAAAAAAAAIAAAAAAAAAQAgAAAAAACEAAAAAAAAA=</HashCode>
       <FileName>Html\Element.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paraquery.Html.BlockElement">
-    <Position X="13.25" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Html\BlockElement.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.paraquery.Html.InlineElement">
-    <Position X="16.5" Y="5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Html\InlineElement.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.paraquery.Html.Fluent.FluentHtml">
-    <Position X="21" Y="0.5" Width="2" />
+    <Position X="30.5" Y="15" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAABAAoAAAAAAAAAoCAAAgAAUAiAAOgCBI=</HashCode>
+      <HashCode>AAAAACAAAAAABIAoAAAAAAAAAoAAAAAACUACAgOgCAI=</HashCode>
       <FileName>Html\Fluent\FluentHtml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.Html.Attributes.AttributeDictionary">
-    <Position X="23.25" Y="0.5" Width="1.75" />
+    <Position X="37.25" Y="15" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
       <FileName>Html\Attributes\AttributeDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paraquery.Html.TagBuilder">
-    <Position X="18.75" Y="0.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAiACJAAgAAIAAAAQAAAAAAAAAQAAAAOgAAA=</HashCode>
-      <FileName>Html\TagBuilder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.paraquery.Html.Attributes.GlobalAttributes">
-    <Position X="25.75" Y="0.5" Width="1.5" />
+    <Position X="35.25" Y="15" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAMAAAAIAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Html\Attributes\GlobalAttributes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.Html.Attributes.ScriptAttributes">
-    <Position X="24" Y="3.75" Width="1.5" />
+    <Position X="33.5" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAIAAAAAAAAAAAAEAAAAAAAQIAAAAAAAA=</HashCode>
       <FileName>Html\Attributes\ScriptAttributes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.Html.Attributes.HrAttributes">
-    <Position X="25.75" Y="3.75" Width="1.5" />
+    <Position X="35.25" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAAAAAAEAAAAQAAAAEAAAAAAgAAAA=</HashCode>
       <FileName>Html\Attributes\HrAttributes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.Html.Attributes.ImgAttributes">
-    <Position X="27.5" Y="3.75" Width="1.5" />
+    <Position X="37" Y="18.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA=</HashCode>
       <FileName>Html\Attributes\ImgAttributes.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paraquery.Bootstrap.Grids.FluentGrid">
-    <Position X="21" Y="8.25" Width="2.25" />
+    <Position X="30.5" Y="22.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AQAIAgQAAAAAACDgAABEAAAAABAAAgCgBABAAAAAAAE=</HashCode>
       <FileName>Bootstrap\Grids\ColumnMethods.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Interface Name="com.paraquery.IContext">
-    <Position X="6.5" Y="0.5" Width="1.5" />
+  <Class Name="com.paraquery.Html.Tags.TagBuilder">
+    <Position X="28.25" Y="15" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAgEAAAA=</HashCode>
+      <HashCode>AAIAAAAAAiACJAAgAAIAAAAQAAAAAAIAAQAAAAOgAAA=</HashCode>
+      <FileName>Html\Tags\TagBuilder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Js.Blocks.JsBlock">
+    <Position X="16.25" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Js\Blocks\JsBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.jQuery.Blocks.jQueryBlock">
+    <Position X="12.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAEAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>jQuery\Blocks\jQueryBlock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Js.Blocks.Function">
+    <Position X="16.25" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAEAAAAAAAAAAAAAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Js\Blocks\Function.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Rendering.RendererBase">
+    <Position X="19.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMEAAEAACAEBIAgAAAAAAAgAgAAEAAACAAAAAQAAIA=</HashCode>
+      <FileName>Rendering\RendererBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.paraquery.Rendering.Renderer">
+    <Position X="19.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEFEQAEAAAAAAAAABAAAAAAgAAAAAAQAAAAAAEAAAAA=</HashCode>
+      <FileName>Rendering\Renderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paraquery.Rendering.RendererStack">
+    <Position X="30.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAoCAAAAAAAAAAACACBI=</HashCode>
+      <FileName>Rendering\RendererStack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="com.paraquery.IContext">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAgFAAAA=</HashCode>
       <FileName>IContext.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.IRequest">
-    <Position X="8.25" Y="0.5" Width="1.5" />
+    <Position X="12.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>IRequest.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.IWriter">
-    <Position X="10" Y="0.5" Width="1.5" />
+    <Position X="14" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAAAAAkAAAIAAEAAAAAAACAAEAAAAACAgEAQAA=</HashCode>
+      <HashCode>AAgAACAAAAAEAAAIAAAAAAAAAACAAAAAAAACAgEAQAA=</HashCode>
       <FileName>IWriter.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.IServer">
-    <Position X="11.75" Y="0.5" Width="1.5" />
+    <Position X="15.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IServer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.Bootstrap.Grids.IGrid">
-    <Position X="19" Y="8.25" Width="1.5" />
+    <Position X="28.5" Y="22.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAQAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Bootstrap\Grids\IGrid.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.Bootstrap.Grids.IContainer">
-    <Position X="19" Y="10.25" Width="1.5" />
+    <Position X="28.5" Y="24.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Bootstrap\Grids\IContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.Bootstrap.Grids.IRow">
-    <Position X="23.75" Y="8.25" Width="1.5" />
+    <Position X="33.25" Y="22.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAEAAABAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>Bootstrap\Grids\IRow.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paraquery.Bootstrap.Grids.IColumn">
-    <Position X="23.75" Y="10.25" Width="1.5" />
+    <Position X="33.25" Y="24.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAgAAAAAAAAEoAABAAAAAAAAAAgAAAAAAAAMAAAA=</HashCode>
       <FileName>Bootstrap\Grids\IColumn.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="com.paraquery.jQuery.Methods">
-    <Position X="5" Y="16.25" Width="1.5" />
+    <Position X="8" Y="14.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>jQuery\Methods.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="com.paraquery.Html.ElementTypes">
-    <Position X="16.75" Y="0.5" Width="1.5" />
+  <Enum Name="com.paraquery.Rendering.RendererTypes">
+    <Position X="22" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Html\ElementTypes.cs</FileName>
+      <HashCode>AAAEAAQAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\RendererTypes.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

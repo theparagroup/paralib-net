@@ -18,14 +18,6 @@ namespace com.paraquery.jQuery.Blocks
             Begin();
         }
 
-        protected override string Description
-        {
-            get
-            {
-                return "Ready";
-            }
-        }
-
         protected override void OnBegin()
         {
             _writer.Write("$(document).ready(function() {");

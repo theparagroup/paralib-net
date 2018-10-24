@@ -23,22 +23,6 @@ namespace com.paraquery.Js.Blocks
             Begin();
         }
 
-        protected override string Description
-        {
-            get
-            {
-                return "Function";
-            }
-        }
-
-        protected override string Id
-        {
-            get
-            {
-                return _name;
-            }
-        }
-
         protected override void OnBegin()
         {
             _writer.Write($"function {_name}({Utils.Parameters(_parameters)}) {{");

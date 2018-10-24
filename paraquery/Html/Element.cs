@@ -3,74 +3,57 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Attributes;
 using com.paraquery.Html.Tags;
-using com.paraquery.Blocks;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Html
 {
-    public abstract class Element : Block
+    public class Element : Renderer
     {
         protected TagBuilder _tagBuilder;
-        public ElementTypes ElementType { private set; get; }
-        protected string _name;
+        protected string _tagName;
         public object Attributes { private set; get; }
-        public bool Render { private set; get; }
-        public string Extra { set; get; }
 
-        public Element(IContext context, TagBuilder tagBuilder, ElementTypes elementType, string name, object attributes, bool empty, bool render) : base(context, (elementType==ElementTypes.Block), empty)
+        public Element(TagBuilder tagBuilder, RendererTypes rendererType, string tagName, object attributes, bool empty=false) : base(tagBuilder.Context, rendererType, empty)
         {
             _tagBuilder = tagBuilder;
-            ElementType = elementType;
-            _name = name;
-            Attributes =attributes;
-            Render = render;
+            _tagName = tagName;
+            Attributes = attributes;
         }
 
-        protected override string Description
+        protected override void Debug(string message)
+        {
+            _writer.Write($" <!-- {message} {_tagName} {Id} -->");
+        }
+
+        public string Id
         {
             get
             {
-                return _name;
-            }
-        }
-
-        protected override string Id
-        {
-            get
-            {
-                //TODO make this work
+                //TODO make this work correctly with anonymous objects, etc
                 return _tagBuilder.GetAttribute(Attributes, "id");
             }
         }
 
         protected override void OnBegin()
         {
-            //sometimes it is useful to have "invisible" elements, like in the fluentgrid
-            if (Render)
+            if (IsEmpty)
             {
-                if (IsEmpty)
-                {
-                    _tagBuilder.Empty(_name, Attributes);
-                }
-                else
-                {
-                    _tagBuilder.Open(_name, Attributes);
-                }
+                _tagBuilder.Empty(_tagName, Attributes);
+            }
+            else
+            {
+                _tagBuilder.Open(_tagName, Attributes);
             }
         }
 
         protected override void OnEnd()
         {
-            if (Render)
+            if (!IsEmpty)
             {
-                if (!IsEmpty)
-                {
-                    _tagBuilder.Close(_name);
-                }
+                _tagBuilder.Close(_tagName);
             }
         }
-
 
     }
 }

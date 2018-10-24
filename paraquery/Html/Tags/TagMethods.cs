@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Tags
 {
@@ -46,7 +47,7 @@ namespace com.paraquery.Html.Tags
 
         public virtual Element Div(Action<GlobalAttributes> attributes, object additional = null)
         {
-            return new BlockElement(_context, this, "div", Attributes(attributes, additional));
+            return new Element(this, RendererTypes.Block, "div", Attributes(attributes, additional));
         }
 
         /*  -------------------------------- SPAN -------------------------------------- */
@@ -58,7 +59,7 @@ namespace com.paraquery.Html.Tags
 
         public virtual Element Span(Action<GlobalAttributes> attributes, object additional = null)
         {
-            return new InlineElement(_context, this, "span", Attributes(attributes, additional));
+            return new Element(this, RendererTypes.Inline, "span", Attributes(attributes, additional));
         }
 
         /*  -------------------------------- HR -------------------------------------- */
@@ -70,7 +71,7 @@ namespace com.paraquery.Html.Tags
 
         public virtual Element Hr(Action<HrAttributes> attributes, object additional = null)
         {
-            return new BlockElement(_context, this, "hr", Attributes(attributes, additional), true);
+            return new Element(this, RendererTypes.Block, "hr", Attributes(attributes, additional), true);
         }
 
         /*  -------------------------------- SCRIPT -------------------------------------- */
@@ -82,7 +83,7 @@ namespace com.paraquery.Html.Tags
 
         public virtual Element Script(Action<ScriptAttributes> attributes, object additional = null)
         {
-            return new BlockElement(_context, this, "script", Attributes(attributes, new { additional, defaults = new { type = "application/javascript" } }));
+            return new Element(this, RendererTypes.Block, "script", Attributes(attributes, new { additional, defaults = new { type = "application/javascript" } }));
         }
 
 

@@ -7,6 +7,7 @@ using com.paraquery.Html;
 using com.paraquery.Html.Attributes;
 using com.paraquery.Html.Fluent;
 using com.paraquery.Html.Tags;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Bootstrap.Grids
 {
@@ -69,7 +70,7 @@ namespace com.paraquery.Bootstrap.Grids
             //do not end container
             while (_stack.Count > 0)
             {
-                Element top = _stack.Peek();
+                Renderer top = _stack.Peek();
 
                 if (top.Extra=="row")
                 {
@@ -110,7 +111,7 @@ namespace com.paraquery.Bootstrap.Grids
             //don't end grids, row or containers
             while (_stack.Count > 0)
             {
-                Element top = _stack.Peek();
+                Renderer top = _stack.Peek();
 
                 if (top.Extra == "column")
                 {
@@ -156,7 +157,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IGrid Grid()
         {
-            var grid=new BlockElement(_context, _tagBuilder, "div", render:false );
+            var grid=new Element(_tagBuilder, RendererTypes.Container, "div", null);
             grid.Extra = "grid";
             Push(grid);
             return this;
@@ -169,7 +170,7 @@ namespace com.paraquery.Bootstrap.Grids
             //end last (current) grid
             while (_stack.Count > 0)
             {
-                Element top = _stack.Peek();
+                Renderer top = _stack.Peek();
 
                 if (top.Extra == "grid")
                 {

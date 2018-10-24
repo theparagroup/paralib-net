@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Html
+namespace com.paraquery.Rendering
 {
-    public enum ElementTypes
+    public enum RendererTypes
     {
         Block,
-        Inline
+        Inline,
+        Container
     }
 }

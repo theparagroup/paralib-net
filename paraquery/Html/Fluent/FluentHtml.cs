@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Blocks;
 using com.paraquery.Html.Tags;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Fluent
 {
-    public partial class FluentHtml : ElementContainer
+    public partial class FluentHtml : RendererStack
     {
         protected TagBuilder _tagBuilder;
 
-        public FluentHtml(IContext context, TagBuilder tagBuilder) : base(context)
+        public FluentHtml(IContext context, TagBuilder tagBuilder) : base(context, RendererTypes.Container, false)
         {
             _tagBuilder = tagBuilder;
         }
@@ -25,9 +25,24 @@ namespace com.paraquery.Html.Fluent
             }
         }
 
-        protected new FluentHtml Push(Element element)
+        protected override void Debug(string message)
         {
-            base.Push(element);
+            _writer.Write($" <!-- {message} -->");
+        }
+
+        protected override void OnBegin()
+        {
+            
+        }
+
+        protected override void OnEnd()
+        {
+            CloseAll();
+        }
+
+        protected new FluentHtml Push(Renderer renderer)
+        {
+            base.Push(renderer);
             return this;
         }
 
@@ -79,5 +94,6 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
+      
     }
 }

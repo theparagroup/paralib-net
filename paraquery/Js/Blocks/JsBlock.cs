@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Blocks;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Js.Blocks
 {
-    public abstract class JsBlock : Block
+    public abstract class JsBlock : Renderer
     {
-        public JsBlock(IContext context) : base(context)
+        public JsBlock(IContext context) : base(context, RendererTypes.Block, false)
         {
         }
 
-        protected override void Comment(string text)
+        protected override void Debug(string message)
         {
-            _writer.Write($" // {text}");
+            _writer.Write($" // {message}");
         }
 
         protected override void OnPreBegin()
