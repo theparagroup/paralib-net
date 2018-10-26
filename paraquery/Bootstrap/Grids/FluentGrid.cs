@@ -16,7 +16,7 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _classes;
         protected int _columnNumber;
 
-        public FluentGrid(IContext context, TagBuilder tagBuilder) : base(context, tagBuilder)
+        public FluentGrid(TagBuilder tagBuilder) : base(tagBuilder)
         {
         }
 

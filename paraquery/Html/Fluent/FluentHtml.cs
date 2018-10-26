@@ -11,10 +11,14 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml : RendererStack
     {
         protected TagBuilder _tagBuilder;
+        protected IContext _context;
+        protected IWriter _writer;
 
-        public FluentHtml(IContext context, TagBuilder tagBuilder) : base(context, RendererTypes.Container, false)
+        public FluentHtml(TagBuilder tagBuilder) 
         {
             _tagBuilder = tagBuilder;
+            _context = _tagBuilder.Context;
+            _writer = _context.Writer;
         }
 
         protected TagBuilder TagBuilder
@@ -23,16 +27,6 @@ namespace com.paraquery.Html.Fluent
             {
                 return _tagBuilder;
             }
-        }
-
-        protected override void Debug(string message)
-        {
-            _writer.Write($" <!-- {message} -->");
-        }
-
-        protected override void OnBegin()
-        {
-            
         }
 
         protected override void OnEnd()

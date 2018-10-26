@@ -11,18 +11,18 @@ namespace com.paraquery.Bootstrap
 {
     public class Bs
     {
-        protected IContext _context { private set; get; }
-        protected TagBuilder _tagBuilder { private set; get; }
+        protected TagBuilder _tagBuilder;
+        protected IContext _context;
 
-        public Bs(IContext context, TagBuilder tagBuilder)
+        public Bs(TagBuilder tagBuilder)
         {
-            _context = context;
             _tagBuilder = tagBuilder;
+            _context = _tagBuilder.Context;
         }
 
         public IGrid Grid()
         {
-            return new FluentGrid(_context, _tagBuilder);
+            return new FluentGrid(_tagBuilder);
         }
     }
 }

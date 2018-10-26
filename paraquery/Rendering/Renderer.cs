@@ -44,18 +44,31 @@ namespace com.paraquery.Rendering
 
     */
 
-    public abstract class Renderer : RendererBase
+    public abstract class Renderer : BeginBase
     {
+        protected IContext _context { private set; get; }
+        protected IWriter _writer;
         private RendererTypes _rendererType;
         private bool _empty;
 
         public string Extra { set; get; }
 
-        protected Renderer(IContext context, RendererTypes rendererType, bool empty) : base(context)
+        protected Renderer(IContext context, RendererTypes rendererType, bool empty)
         {
+            _context = context;
+            _writer = _context.Writer;
             _rendererType = rendererType;
             _empty = empty;
         }
+
+
+        protected abstract void Debug(string message);
+
+
+        //protected override void Debug(string message)
+        //{
+        //    _writer.Write($" <!-- {message} -->");
+        //}
 
         public RendererTypes RendererType
         {
@@ -67,11 +80,6 @@ namespace com.paraquery.Rendering
 
         public bool IsEmpty
         {
-            set
-            {
-                //if setting, must be set before Begin() is called
-                _empty = true;
-            }
             get
             {
                 return _empty;

@@ -20,17 +20,10 @@ namespace com.paraquery.Rendering
 
     */
 
-    public abstract class RendererStack : Renderer
+    public abstract class RendererStack : EndBase
     {
-        protected Stack<Renderer> _stack;
+        protected Stack<Renderer> _stack = new Stack<Renderer>();
 
-        public RendererStack(IContext context, RendererTypes rendererType, bool empty) : base(context, rendererType, empty)
-        {
-            if (!empty)
-            {
-                _stack = new Stack<Renderer>();
-            }
-        }
 
         protected override void OnEnd()
         {
@@ -39,7 +32,7 @@ namespace com.paraquery.Rendering
 
         protected void Push(Renderer renderer)
         {
-            if (_stack!=null)
+            if (_stack != null)
             {
                 //if we're putting a block under an inline, close the last block and start a new one
                 //else nest this renderer inside the last one

@@ -40,8 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
-    <Compile Include="Rendering\RendererBase.cs" />
+    <Compile Include="Rendering\BeginBase.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Bootstrap\Bs.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />

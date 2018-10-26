@@ -23,19 +23,8 @@ namespace com.paraquery.Rendering
 
    */
 
-    public abstract class RendererBase : IDisposable
+    public abstract class BeginBase : EndBase
     {
-        private bool _disposed;
-        protected IContext _context { private set; get; }
-        protected IWriter _writer;
-
-        protected RendererBase(IContext context)
-        {
-            _context = context;
-            _writer = _context.Writer;
-        }
-
-        protected abstract void Debug(string message);
 
         public void Begin()
         {
@@ -54,33 +43,6 @@ namespace com.paraquery.Rendering
         protected abstract void OnBegin();
 
         protected virtual void OnPostBegin() { }
-
-        public void End()
-        {
-            Dispose();
-        }
-
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                _disposed = true;
-                _end();
-            }
-        }
-
-        protected virtual void _end()
-        {
-            OnPreEnd();
-            OnEnd();
-            OnPostEnd();
-        }
-
-        protected virtual void OnPreEnd() { }
-
-        protected abstract void OnEnd();
-
-        protected virtual void OnPostEnd() { }
 
 
     }

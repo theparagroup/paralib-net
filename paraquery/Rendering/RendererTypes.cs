@@ -9,7 +9,6 @@ namespace com.paraquery.Rendering
     public enum RendererTypes
     {
         Block,
-        Inline,
-        Container
+        Inline
     }
 }

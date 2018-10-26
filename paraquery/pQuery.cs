@@ -14,16 +14,16 @@ namespace com.paraquery
 {
     public class pQuery
     {
-        protected IContext _context { set; get; }
-        protected TagBuilder _tagBuilder { set; get; }
+        protected TagBuilder _tagBuilder;
+        protected IContext _context;
         protected Bs _bs { set; get; }
 
-        public pQuery(IContext context, TagBuilder tagBuilder)
+        public pQuery(TagBuilder tagBuilder)
         {
-            _context = context;
             _tagBuilder = tagBuilder;
+            _context = _tagBuilder.Context;
 
-            _bs = new Bs(_context, _tagBuilder);
+            _bs = new Bs(_tagBuilder);
 
         }
 
@@ -69,7 +69,7 @@ namespace com.paraquery
 
         public FluentHtml Html()
         {
-            return new FluentHtml(_context, _tagBuilder);
+            return new FluentHtml(_tagBuilder);
         }
 
         public Bs Bs

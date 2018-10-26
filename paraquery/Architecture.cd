@@ -53,7 +53,7 @@
   <Class Name="com.paraquery.Html.Element">
     <Position X="24.25" Y="11.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACIAAAAAAAAIAAAAAAAAAQAgAAAAAACEAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAIAAAAAAAAAQAgAAAAAACEAAAAAAAAA=</HashCode>
       <FileName>Html\Element.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -135,18 +135,10 @@
       <FileName>Js\Blocks\Function.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paraquery.Rendering.RendererBase">
-    <Position X="19.75" Y="0.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAMEAAEAACAEBIAgAAAAAAAgAgAAEAAACAAAAAQAAIA=</HashCode>
-      <FileName>Rendering\RendererBase.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="com.paraquery.Rendering.Renderer">
     <Position X="19.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEFEQAEAAAAAAAAABAAAAAAgAAAAAAQAAAAAAEAAAAA=</HashCode>
+      <HashCode>AEFEQAEAAAAABIAABAAAAAAgAAAAAAQAAAAAAEAAAIA=</HashCode>
       <FileName>Rendering\Renderer.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -223,7 +215,7 @@
   <Enum Name="com.paraquery.Rendering.RendererTypes">
     <Position X="22" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEAAQAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\RendererTypes.cs</FileName>
     </TypeIdentifier>
   </Enum>
