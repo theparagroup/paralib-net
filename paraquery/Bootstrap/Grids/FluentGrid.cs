@@ -10,7 +10,45 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public partial class FluentGrid:FluentHtml, IGrid, IContainer, IRow, IColumn
+    /*
+        FluentGrid.
+
+        We derive from FluentHtml, which is a RendererStack, so we can wrap standard HTML content inside our grid tags.
+
+        We use the interfaces to control what kind of content can be pushed onto various other content.
+
+        IGrid
+            IContainer    
+            IRow
+
+        IContainer
+            IRow
+
+        IRow
+            IRow
+            IColumn
+
+        IColumn
+            IGrid
+            IRow
+            IColumn
+            HTML
+
+        When you add a Row to a Row, the last Row is closed. 
+         
+        When you add a Column to a Column, the last Column is closed.
+        
+        Grids don't render, but are used as "markers" in the stack for when we call EndGrid(), we know when to stop.
+        
+        You can define the container div outside of paraquery, such as in a Razor layout.   
+            
+        Using SetClasses(), when columns are generated under a row, the classes can be automatically populated. This
+        is helpful when generating uniform grids, such as edit forms with labels and controls.
+
+
+    */
+
+    public partial class FluentGrid : FluentHtml, IGrid, IContainer, IRow, IColumn
     {
         protected IList<string> _classes;
         protected int _columnNumber;
@@ -64,7 +102,7 @@ namespace com.paraquery.Bootstrap.Grids
         {
             return Push(new Container(_tagBuilder, new { @class = fluid ? "container-fluid" : "container", additional = additional }));
         }
-        
+
 
         protected void CloseRow()
         {
@@ -80,7 +118,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if(top is Grid || top is Container)
+                else if (top is Grid || top is Container)
                 {
                     break;
                 }
@@ -155,7 +193,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IGrid Grid()
         {
-            var grid=new Grid(_context);
+            var grid = new Grid(_context);
             //grid.Extra = "grid";
             Push(grid);
             return this;

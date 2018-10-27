@@ -11,14 +11,19 @@ namespace com.paraquery.Engines.Base
         public IServer Server { protected set; get; }
         public IRequest Request { protected set; get; }
         public IWriter Writer { protected set; get; }
-        public Options Options { get; set; } = new Options();
+        public Options Options { get; set; }=new Options();
 
         //namespace stack
         //namespace vars
 
-        public Context(string @namespace, Dictionary<string, string> namespaceVars)
+        public Context(string @namespace, Dictionary<string, string> namespaceVars, Action<Options> init=null)
         {
-            Options.DebugSourceFormatting = true;
+
+            if (init!=null)
+            {
+                init(Options);                
+            }
+
 
             //derived classes create the other components
 

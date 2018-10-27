@@ -30,6 +30,5 @@ namespace com.paraquery.Bootstrap.Grids
         IColumn Span(object additional = null);
         IColumn Span(Action<GlobalAttributes> attributes, object additional = null);
 
-
     }
 }

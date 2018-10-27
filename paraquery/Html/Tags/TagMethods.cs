@@ -8,29 +8,6 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Tags
 {
-    /*
-
-            list of empty elements
-
-            <area />
-            <base />
-            <br />
-            <col />
-            <command />
-            <embed />
-            <hr />
-            <img />
-            <input />
-            <keygen />
-            <link />
-            <menuitem />
-            <meta />
-            <param />
-            <source />
-            <track />
-            <wbr />
-
-        */
 
     public partial class TagBuilder
     {

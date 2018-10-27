@@ -7,6 +7,12 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Tags
 {
+    /*
+        
+        Since we derive from BlockRenderer, we want to set "offsetContent" if this is not an empty element.
+
+    */
+
     public class BlockTag : BlockRenderer, ITag, ICommentator
     {
         protected Tag _tag;

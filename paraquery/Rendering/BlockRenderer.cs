@@ -8,7 +8,30 @@ namespace com.paraquery.Rendering
 {
     /*
 
-        BlockRenders are formatted, getting thier own line. Content can be optionally "offset" (on a new line an indented).
+        BlockRenders are formatted, with start (and optionally end) tags getting thier own line. 
+        
+        Content can be optionally "offset" (on a new line an indented).
+
+        Example:
+
+            block1-start
+                block2-start
+                    unformatted-block-start...unformatted-block-end
+                block2-end
+            block1-end
+
+        Of course, for HTML it will look more like this
+
+            <div>
+                <div>
+                    <span>content <strong>is</strong> king</span></br>
+                </div>
+            </div>
+
+        Start tags would be generated in the OnBegin, end tags in the OnEnd.
+
+        Note, Blocks generate newlines and controls the tab level, but does NOT generate the tabs...  this is handled by the Writer
+        based on the indent level (the first content after a newline is tabbed out per the tab level, subsequent content is not.)
 
         With content offset:
 

@@ -7,7 +7,7 @@ using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public interface IGrid:IDisposable
+    public interface IGrid : IDisposable
     {
         IGrid SetClasses(IList<string> classes = null);
 

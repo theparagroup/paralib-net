@@ -8,7 +8,7 @@ namespace com.paraquery.StringContext
 {
     public class Context: Engines.Base.Context
     {
-        public Context(string urlPrefix="/", string @namespace=null, Dictionary<string, string> namespaceVars=null) : base(@namespace, namespaceVars)
+        public Context(string urlPrefix="/", string @namespace=null, Dictionary<string, string> namespaceVars=null, Action<Options> init = null) : base(@namespace, namespaceVars, init)
         {
             Server = new Server(this, urlPrefix);
             Request= new Request(this);

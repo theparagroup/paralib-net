@@ -19,6 +19,5 @@ namespace com.paraquery.Bootstrap.Grids
 
         IGrid EndGrid();
 
-
     }
 }

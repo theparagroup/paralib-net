@@ -8,15 +8,28 @@ namespace com.paraquery.Rendering
 {
     /*
 
-        RendererStack provides a stack of child Renderers.
+        RendererStack provides a stack of Renderers.
 
-        Begin() is called on Renderers when Pushed(), and End() is called when Popped().
+        Renderers at the top are "nested" inside lower Renderers.
+
+        div - top
+        span
+        strong
+
+        Would be rendered:
+
+            <div>
+                <span><strong>content</strong></span>
+            </div>
+
+
+        Begin() is called on Renderers when they are Pushed(), and End() is called when Popped().
+
+        In between Push/Begin and Pop/End calls, you can push more renderers or generate content with the Writer.
 
         If you Push() a Block under an Inline, all the Renderers up to and including the last Block are Closed()/Ended().
 
         Otherwise, Renderers are nested.
-
-        TODO what happens when you push a container? So far containers are simply unformatted renders that aren't inline. But what to do?
 
     */
 
