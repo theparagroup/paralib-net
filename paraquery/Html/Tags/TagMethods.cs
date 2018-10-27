@@ -12,55 +12,24 @@ namespace com.paraquery.Html.Tags
     public partial class TagBuilder
     {
 
-        // ******************************************************************* boiler plate signatures - these could be code generated
-
-
-        /*  -------------------------------- DIV -------------------------------------- */
-
-        public virtual Renderer Div(object additional = null)
+        public virtual Renderer Div(Action<GlobalAttributes> attributes=null)
         {
-            return Div(null, additional);
+            return new BlockTag(this, "div", Attributes(attributes));
         }
 
-        public virtual Renderer Div(Action<GlobalAttributes> attributes, object additional = null)
+        public virtual Renderer Span(Action<GlobalAttributes> attributes=null)
         {
-            return new BlockTag(this, "div", Attributes(attributes, additional));
+            return new InlineTag(this, "span", Attributes(attributes));
         }
 
-        /*  -------------------------------- SPAN -------------------------------------- */
-
-        public virtual Renderer Span(object additional = null)
+        public virtual Renderer Hr(Action<HrAttributes> attributes = null)
         {
-            return Span(null, additional);
+            return new BlockTag(this, "hr", Attributes(attributes), true);
         }
 
-        public virtual Renderer Span(Action<GlobalAttributes> attributes, object additional = null)
+        public virtual Renderer Script(Action<ScriptAttributes> attributes = null)
         {
-            return new InlineTag(this, "span", Attributes(attributes, additional));
-        }
-
-        /*  -------------------------------- HR -------------------------------------- */
-
-        public virtual Renderer Hr(object additional = null)
-        {
-            return Hr(null, additional);
-        }
-
-        public virtual Renderer Hr(Action<HrAttributes> attributes, object additional = null)
-        {
-            return new BlockTag(this, "hr", Attributes(attributes, additional), true);
-        }
-
-        /*  -------------------------------- SCRIPT -------------------------------------- */
-
-        public virtual Renderer Script(object additional = null)
-        {
-            return Script(null, additional);
-        }
-
-        public virtual Renderer Script(Action<ScriptAttributes> attributes, object additional = null)
-        {
-            return new BlockTag(this, "script", Attributes(attributes, new { additional, defaults = new { type = "application/javascript" } }));
+            return new BlockTag(this, "script", Attributes(attributes));
         }
 
 

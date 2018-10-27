@@ -5,9 +5,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Html.Attributes
+namespace com.paraquery.Html.Tags
 {
-    public class AttributeDictionary:Dictionary<string,string>
+    public class AttributeDictionary : Dictionary<string, string>
+    {
+    }
+    
+    public class AttributeDictionary2:Dictionary<string,string>
     {
         public static string Hyphenate(string name)
         {

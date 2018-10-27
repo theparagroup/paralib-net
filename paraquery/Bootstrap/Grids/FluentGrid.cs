@@ -87,20 +87,9 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-
-        public IContainer Container(bool fluid = false)
+        public IContainer Container(Action<GlobalAttributes> init = null, bool fluid = false)
         {
-            return Container(null, null, fluid);
-        }
-
-        public IContainer Container(object attributes, bool fluid = false)
-        {
-            return Container(null, attributes, fluid);
-        }
-
-        public IContainer Container(Action<GlobalAttributes> attributes, object additional = null, bool fluid = false)
-        {
-            return Push(new Container(_tagBuilder, new { @class = fluid ? "container-fluid" : "container", additional = additional }));
+            return Push(new Container(_tagBuilder, TagBuilder.Attributes(init, new { @class = fluid ? "container-fluid" : "container" })));
         }
 
 
@@ -132,15 +121,10 @@ namespace com.paraquery.Bootstrap.Grids
 
         }
 
-        public IRow Row(object attributes = null)
-        {
-            return Row(null, attributes);
-        }
-
-        public IRow Row(Action<GlobalAttributes> attributes, object additional = null)
+        public IRow Row(Action<GlobalAttributes> init)
         {
             CloseRow();
-            return Push(new Row(_tagBuilder, new { @class = "row", additional = additional }));
+            return Push(new Row(_tagBuilder, TagBuilder.Attributes(init, new { @class = "row"})));
         }
 
         protected void CloseColumn()
@@ -169,13 +153,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         }
 
-
-        public IColumn Column(object attributes = null)
+        public IColumn Column(string classes)
         {
-            return Column(null, attributes);
+            return Column(a => a.Class = classes);
         }
 
-        public IColumn Column(Action<GlobalAttributes> attributes, object additional = null)
+        public IColumn Column(Action<GlobalAttributes> init = null)
         {
             CloseColumn();
 
@@ -188,7 +171,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new Column(_tagBuilder, new { @class = columnClasses, additional = additional }));
+            return Push(new Column(_tagBuilder, TagBuilder.Attributes(init, new { @class = columnClasses })));
         }
 
         public IGrid Grid()

@@ -11,7 +11,7 @@ namespace com.paraquery.Html.Tags
     {
         protected Tag _tag;
 
-        public InlineTag(TagBuilder tagBuilder, string tagName, object attributes, bool empty = false) : base(tagBuilder.Context)
+        public InlineTag(TagBuilder tagBuilder, string tagName, AttributeDictionary attributes, bool empty = false) : base(tagBuilder.Context)
         {
             _tag = new Tag(tagBuilder, tagName, attributes, empty);
         }

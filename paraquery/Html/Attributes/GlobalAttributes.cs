@@ -18,8 +18,21 @@ namespace com.paraquery.Html.Attributes
 
         //TODO this is a whole thing
         //public string Style { get; set; }
-        public Style Style { get; set; } = new Style();
+        protected Style _style;
+        public Style Style
+        {
+            get
+            {
+                if (_style==null)
+                {
+                    _style = new Style();
+                }
 
+                return _style;
+            }
+        }
+
+        public object Additional { get; set; }
 
     }
 }

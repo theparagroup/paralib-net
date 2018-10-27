@@ -21,30 +21,15 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-
-        /*  -------------------------------- DIV -------------------------------------- */
-
-        IColumn IColumn.Div(object additional)
+        IColumn IColumn.Div(Action<GlobalAttributes> attributes)
         {
-            return ((IColumn)this).Div(null, additional);
-        }
-
-        IColumn IColumn.Div(Action<GlobalAttributes> attributes, object additional)
-        {
-            Div(attributes, additional);
+            Div(attributes);
             return this;
         }
 
-        /*  -------------------------------- SPAN -------------------------------------- */
-
-        IColumn IColumn.Span(object additional)
+        IColumn IColumn.Span(Action<GlobalAttributes> attributes)
         {
-            return ((IColumn)this).Span(null, additional);
-        }
-
-        IColumn IColumn.Span(Action<GlobalAttributes> attributes, object additional)
-        {
-            Span(attributes, additional);
+            Span(attributes);
             return this;
         }
 

@@ -9,7 +9,7 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public class Column : BlockTag
     {
-        public Column(TagBuilder tagBuilder, object attributes) : base(tagBuilder, "div", attributes)
+        public Column(TagBuilder tagBuilder, AttributeDictionary attributes) : base(tagBuilder, "div", attributes)
         {
         }
     }

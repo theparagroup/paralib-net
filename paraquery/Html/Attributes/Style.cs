@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html.Attributes
 {
@@ -18,12 +19,12 @@ namespace com.paraquery.Html.Attributes
         //TODO expand out border class and recursivily hyphenate over class and property
         public string border { get; set; }
 
-
         string IComplexAttribute.Value
         {
             get
             {
-                var dictionary = AttributeDictionary.Build(this, true);
+                var dictionary = new AttributeDictionary();
+                TagBuilder.BuildAttributeDictionary(dictionary, this, typeof(Style));
                 string style = null;
 
                 if (dictionary.Count > 0)

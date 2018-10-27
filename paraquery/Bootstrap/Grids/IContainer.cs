@@ -11,8 +11,7 @@ namespace com.paraquery.Bootstrap.Grids
     {
         IContainer SetClasses(IList<string> classes = null);
 
-        IRow Row(object attributes = null);
-        IRow Row(Action<GlobalAttributes> attributes, object additional = null);
+        IRow Row(Action<GlobalAttributes> attributes = null);
 
         IGrid EndGrid();
 

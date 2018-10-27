@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Html.Tags
@@ -30,25 +31,9 @@ namespace com.paraquery.Html.Tags
             _context.Writer.Write(text);
         }
 
-        public virtual void Attribute(string name, string value=null)
-        {
-            //TODO escaping quotes? escaping in general?
+       
 
-            if (name != null)
-            {
-                if (value==null)
-                {
-                    //boolean
-                    Write($" {name}");
-                }
-                else
-                {
-                    Write($" {name}=\"{value}\"");
-                }
-
-            }
-        }
-
+        /*
         public void Attributes(object attributes = null)
         {
             //namespace state should be over in context
@@ -92,50 +77,160 @@ namespace com.paraquery.Html.Tags
 
             }
         }
+        */
 
-        public object Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
+        public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes) where T : GlobalAttributes
         {
+            BuildAttributeDictionary(dictionary, attributes, typeof(T));
+        }
+
+        public static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, Type type) 
+        {
+            if (type==null)
+            {
+                type=attributes.GetType();
+            }
+
+            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
+
+            //this includes inherited properties
+            foreach (var pi in type.GetProperties(bindingFlags))
+            {
+                object v = pi.GetValue(attributes);
+
+                if (v != null)
+                {
+                    //if you have two properties with same name but different case, results are undefined
+                    string name = pi.Name.ToLower();
+                    string value = null;
+
+                    if (typeof(IComplexAttribute).IsAssignableFrom(pi.PropertyType))
+                    {
+                        //very important that this interface is implemented explicitly or you will recurse endlessly
+                        value = ((IComplexAttribute)v).Value;
+                    }
+                    else if (pi.PropertyType == typeof(string))
+                    {
+                        value = (string)v;
+                    }
+                    else if (pi.PropertyType == typeof(int?))
+                    {
+                        int? i = (int?)v;
+                        if (i.HasValue)
+                        {
+                            value = i.ToString();
+                        }
+                    }
+                    else if (pi.PropertyType == typeof(bool?))
+                    {
+                        bool? b = (bool?)v;
+                        if (b.HasValue)
+                        {
+                            value = b.ToString(); //tolower?
+                        }
+                    }
+                    else if (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false)
+                    {
+                        //this is name value pair
+                        dictionary.Add(name, v.ToString().ToLower());
+                    }
+                    else
+                    {
+                        //ignore unknown types
+                    }
+
+                    if (value != null)
+                    {
+                        if (!dictionary.ContainsKey(name))
+                        {
+                            dictionary.Add(name, value);
+                        }
+                        else
+                        {
+                            dictionary[name] = value;
+                        }
+                    }
+
+                }
+            }
+
+            //process "additional" attributes
+            {
+                var pi = type.GetProperty("Attributes", bindingFlags);
+
+                if (pi==null)
+                {
+                    pi = type.GetProperty("attributes", bindingFlags);
+                }
+
+                if (pi!=null)
+                {
+                    object v = pi.GetValue(attributes);
+                    BuildAttributeDictionary(dictionary, v, null);
+                }
+            }
+        }
+
+        public static AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
+        {
+            T attributes = new T();
 
             if (init != null)
             {
-                T attributes = new T();
                 init(attributes);
+            }
 
-                //TODO process known nested objects such as style
+            AttributeDictionary dictionary = new AttributeDictionary();
 
+            BuildAttributeDictionary<T>(dictionary, attributes);
 
-                if (additional != null)
-                {
-                    //note we double nest here to ensure the "additional" are secondary to the "attributes"
-                    return new { attributes = attributes, additional = new { additional = additional } };
-                }
-                else
-                {
-                    return attributes;
-                }
+            if (additional!=null)
+            {
+                BuildAttributeDictionary(dictionary, additional, null);
+            }
 
+            if (dictionary.Count>0)
+            {
+                return dictionary;
             }
             else
             {
-                return additional;
+                return null;
             }
 
         }
 
-        public string GetAttribute(object attributes, string name)
+        public virtual void Attributes(AttributeDictionary dictionary)
         {
-            //TODO make this work
-
-            if (attributes is GlobalAttributes)
+            if (dictionary!=null)
             {
-                return ((GlobalAttributes)attributes).Id ?? "";
+                foreach (var name in dictionary.Keys)
+                {
+                    Attribute(name, dictionary[name]);
+                }
             }
-
-            return "";
         }
 
+        public virtual void Attribute(string name, string value = null)
+        {
+            //TODO escaping quotes? escaping in general?
 
-        public virtual void Start(string name, object attributes = null)
+            if (name != null)
+            {
+                if (value == null)
+                {
+                    //boolean
+                    Write($" {name}");
+                }
+                else
+                {
+                    Write($" {name}=\"{value}\"");
+                }
+
+            }
+        }
+
+        public virtual void Start(string name, AttributeDictionary attributes = null)
         {
             Write($"<{name}");
             Attributes(attributes);
@@ -146,7 +241,7 @@ namespace com.paraquery.Html.Tags
             Write(">");
         }
 
-        public virtual void Open(string name, object attributes = null)
+        public virtual void Open(string name, AttributeDictionary attributes = null)
         {
             Start(name, attributes);
             End();
@@ -157,7 +252,7 @@ namespace com.paraquery.Html.Tags
             Write($"</{name}>");
         }
 
-        public virtual void Empty(string name, object attributes = null)
+        public virtual void Empty(string name, AttributeDictionary attributes = null)
         {
             Write($"<{name}");
             Attributes(attributes);

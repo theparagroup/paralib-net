@@ -11,24 +11,19 @@ namespace com.paraquery.Bootstrap.Grids
     {
         IColumn SetClasses(IList<string> classes = null);
 
-        IRow Row(object attributes = null);
-        IRow Row(Action<GlobalAttributes> attributes, object additional = null);
+        IRow Row(Action<GlobalAttributes> attributes = null);
 
-        IColumn Column(object attributes = null);
-        IColumn Column(Action<GlobalAttributes> attributes, object additional = null);
+        IColumn Column(string classes);
+        IColumn Column(Action<GlobalAttributes> attributes = null);
 
         IGrid Grid();
-
         IGrid EndGrid();
 
         IColumn Write(string content);
         IColumn WriteLine(string content);
 
-        IColumn Div(object additional = null);
-        IColumn Div(Action<GlobalAttributes> attributes, object additional = null);
-
-        IColumn Span(object additional = null);
-        IColumn Span(Action<GlobalAttributes> attributes, object additional = null);
+        IColumn Div(Action<GlobalAttributes> attributes = null);
+        IColumn Span(Action<GlobalAttributes> attributes = null);
 
     }
 }

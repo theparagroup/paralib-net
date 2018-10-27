@@ -62,13 +62,13 @@
     <Compile Include="Engines\Base\Server.cs" />
     <Compile Include="Engines\Base\Writer.cs" />
     <Compile Include="Engines\String\Writer.cs" />
-    <Compile Include="Html\Attributes\AttributeDictionary.cs" />
+    <Compile Include="Html\Tags\AttributeDictionary.cs" />
     <Compile Include="Html\Attributes\Color.cs" />
     <Compile Include="Html\Attributes\HrAlignTypes.cs" />
     <Compile Include="Html\Attributes\ButtonTypes.cs" />
     <Compile Include="Html\Attributes\GlobalAttributes.cs" />
     <Compile Include="Html\Attributes\HrAttributes.cs" />
-    <Compile Include="Html\Attributes\IComplexAttribute.cs" />
+    <Compile Include="Html\Tags\IComplexAttribute.cs" />
     <Compile Include="Html\Attributes\ScriptAttributes.cs" />
     <Compile Include="Html\Attributes\ImgAttributes.cs" />
     <Compile Include="Html\Attributes\Style.cs" />

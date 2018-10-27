@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Html.Tags
 {
@@ -49,9 +50,9 @@ namespace com.paraquery.Html.Tags
         public TagBuilder TagBuilder { protected set; get; }
         public string TagName { protected set; get; }
         public bool Empty { protected set; get; } 
-        public object Attributes { protected set; get; }
+        public AttributeDictionary Attributes { protected set; get; }
 
-        public Tag(TagBuilder tagBuilder, string tagName, object attributes, bool empty = false)
+        public Tag(TagBuilder tagBuilder, string tagName, AttributeDictionary attributes, bool empty = false)
         {
             TagBuilder = tagBuilder;
             TagName = tagName;

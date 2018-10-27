@@ -17,7 +17,7 @@ namespace com.paraquery.Html.Tags
     {
         protected Tag _tag;
 
-        public BlockTag(TagBuilder tagBuilder, string tagName, object attributes, bool empty = false) : base(tagBuilder.Context, !empty)
+        public BlockTag(TagBuilder tagBuilder, string tagName, AttributeDictionary attributes, bool empty = false) : base(tagBuilder.Context, !empty)
         {
             _tag = new Tag(tagBuilder, tagName, attributes, empty);
         }
