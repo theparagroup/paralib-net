@@ -7,15 +7,15 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Js.Blocks
 {
-    public abstract class JsBlock : Renderer
+    public abstract class JsBlock : BlockRenderer, ICommentator
     {
-        public JsBlock(IContext context) : base(context, RendererTypes.Block, false)
+        public JsBlock(IContext context) : base(context, true)
         {
         }
 
-        protected override void Debug(string message)
+        public void Comment(string text)
         {
-            _writer.Write($" // {message}");
+            _writer.Write($" // {text}");
         }
 
         protected override void OnPreBegin()

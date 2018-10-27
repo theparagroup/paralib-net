@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html;
 using com.paraquery.Html.Attributes;
 using com.paraquery.Html.Fluent;
 using com.paraquery.Html.Tags;
@@ -18,6 +17,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         public FluentGrid(TagBuilder tagBuilder) : base(tagBuilder)
         {
+        }
+
+        protected new FluentGrid Push(Renderer renderer)
+        {
+            base.Push(renderer);
+            return this;
         }
 
         IGrid IGrid.SetClasses(IList<string> classes)
@@ -57,9 +62,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IContainer Container(Action<GlobalAttributes> attributes, object additional = null, bool fluid = false)
         {
-            Div(attributes, new { @class = fluid ? "container-fluid" : "container", additional = additional });
-            _stack.Peek().Extra = "container";
-            return this;
+            return Push(new Container(_tagBuilder, new { @class = fluid ? "container-fluid" : "container", additional = additional }));
         }
         
 
@@ -72,12 +75,12 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = _stack.Peek();
 
-                if (top.Extra=="row")
+                if (top is Row)
                 {
                     Pop();
                     break;
                 }
-                else if(top.Extra == "grid" || top.Extra=="container")
+                else if(top is Grid || top is Container)
                 {
                     break;
                 }
@@ -99,9 +102,7 @@ namespace com.paraquery.Bootstrap.Grids
         public IRow Row(Action<GlobalAttributes> attributes, object additional = null)
         {
             CloseRow();
-            Div(attributes, new { @class =  "row", additional = additional });
-            _stack.Peek().Extra = "row";
-            return this;
+            return Push(new Row(_tagBuilder, new { @class = "row", additional = additional }));
         }
 
         protected void CloseColumn()
@@ -113,12 +114,12 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = _stack.Peek();
 
-                if (top.Extra == "column")
+                if (top is Column)
                 {
                     Pop();
                     break;
                 }
-                else if (top.Extra == "grid" || top.Extra == "container" || top.Extra == "row")
+                else if (top is Grid || top is Container || top is Row)
                 {
                     break;
                 }
@@ -147,18 +148,15 @@ namespace com.paraquery.Bootstrap.Grids
                 columnClasses = _classes[_columnNumber];
             }
 
-            Div(attributes, new { @class = columnClasses, additional = additional });
-            _stack.Peek().Extra = "column";
-
             ++_columnNumber;
 
-            return this;
+            return Push(new Column(_tagBuilder, new { @class = columnClasses, additional = additional }));
         }
 
         public IGrid Grid()
         {
-            var grid=new Element(_tagBuilder, RendererTypes.Container, "div", null);
-            grid.Extra = "grid";
+            var grid=new Grid(_context);
+            //grid.Extra = "grid";
             Push(grid);
             return this;
         }
@@ -172,7 +170,7 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = _stack.Peek();
 
-                if (top.Extra == "grid")
+                if (top is Grid)
                 {
                     Pop();
                     break;

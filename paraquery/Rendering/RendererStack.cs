@@ -34,15 +34,15 @@ namespace com.paraquery.Rendering
         {
             if (_stack != null)
             {
-                //if we're putting a block under an inline, close the last block and start a new one
-                //else nest this renderer inside the last one
-                if (renderer.RendererType == RendererTypes.Block)
+                //if we're putting a block under a non-block, close all renderers up to and including the last block and start a new one
+                //else nest this renderer inside the last renderer
+                if (renderer is BlockRenderer)
                 {
                     if (_stack.Count > 0)
                     {
                         Renderer top = _stack.Peek();
 
-                        if (top.RendererType == RendererTypes.Inline)
+                        if (!(top is BlockRenderer))
                         {
                             CloseBlock();
                         }
@@ -73,19 +73,19 @@ namespace com.paraquery.Rendering
 
         public void Close()
         {
-            //close last element
+            //close last renderer
             Pop();
         }
 
 
         public void CloseBlock()
         {
-            //end all inline elements up to and including the last block
+            //end all non-block renderer up to and including the last block
             while (_stack?.Count > 0)
             {
                 Renderer top = _stack.Peek();
 
-                if (top.RendererType == RendererTypes.Inline)
+                if (top is BlockRenderer)
                 {
                     Pop();
                 }
@@ -99,7 +99,7 @@ namespace com.paraquery.Rendering
 
         public void CloseAll()
         {
-            //end all elements on stack
+            //end all renderers on stack
             while (_stack?.Count > 0)
             {
                 Pop();

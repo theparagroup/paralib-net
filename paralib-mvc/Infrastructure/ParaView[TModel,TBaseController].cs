@@ -28,9 +28,9 @@ namespace com.paralib.Mvc.Infrastructure
                 if (_pQuery == null)
                 {
                     var context = new ParaQuery.Context(ViewContext);
-                    var tag = new paraquery.Html.Tags.TagBuilder(context);
+                    var tagBuilder = new paraquery.Html.Tags.TagBuilder(context);
 
-                    _pQuery = new paraquery.pQuery(context, tag);
+                    _pQuery = new paraquery.pQuery(tagBuilder);
                 }
 
                 return _pQuery;

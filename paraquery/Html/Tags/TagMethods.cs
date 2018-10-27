@@ -40,50 +40,50 @@ namespace com.paraquery.Html.Tags
 
         /*  -------------------------------- DIV -------------------------------------- */
 
-        public virtual Element Div(object additional = null)
+        public virtual Renderer Div(object additional = null)
         {
             return Div(null, additional);
         }
 
-        public virtual Element Div(Action<GlobalAttributes> attributes, object additional = null)
+        public virtual Renderer Div(Action<GlobalAttributes> attributes, object additional = null)
         {
-            return new Element(this, RendererTypes.Block, "div", Attributes(attributes, additional));
+            return new BlockTag(this, "div", Attributes(attributes, additional));
         }
 
         /*  -------------------------------- SPAN -------------------------------------- */
 
-        public virtual Element Span(object additional = null)
+        public virtual Renderer Span(object additional = null)
         {
             return Span(null, additional);
         }
 
-        public virtual Element Span(Action<GlobalAttributes> attributes, object additional = null)
+        public virtual Renderer Span(Action<GlobalAttributes> attributes, object additional = null)
         {
-            return new Element(this, RendererTypes.Inline, "span", Attributes(attributes, additional));
+            return new InlineTag(this, "span", Attributes(attributes, additional));
         }
 
         /*  -------------------------------- HR -------------------------------------- */
 
-        public virtual Element Hr(object additional = null)
+        public virtual Renderer Hr(object additional = null)
         {
             return Hr(null, additional);
         }
 
-        public virtual Element Hr(Action<HrAttributes> attributes, object additional = null)
+        public virtual Renderer Hr(Action<HrAttributes> attributes, object additional = null)
         {
-            return new Element(this, RendererTypes.Block, "hr", Attributes(attributes, additional), true);
+            return new BlockTag(this, "hr", Attributes(attributes, additional), true);
         }
 
         /*  -------------------------------- SCRIPT -------------------------------------- */
 
-        public virtual Element Script(object additional = null)
+        public virtual Renderer Script(object additional = null)
         {
             return Script(null, additional);
         }
 
-        public virtual Element Script(Action<ScriptAttributes> attributes, object additional = null)
+        public virtual Renderer Script(Action<ScriptAttributes> attributes, object additional = null)
         {
-            return new Element(this, RendererTypes.Block, "script", Attributes(attributes, new { additional, defaults = new { type = "application/javascript" } }));
+            return new BlockTag(this, "script", Attributes(attributes, new { additional, defaults = new { type = "application/javascript" } }));
         }
 
 

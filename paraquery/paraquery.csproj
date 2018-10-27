@@ -40,7 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\Grids\Column.cs" />
+    <Compile Include="Bootstrap\Grids\Row.cs" />
+    <Compile Include="Bootstrap\Grids\Container.cs" />
+    <Compile Include="Bootstrap\Grids\Grid.cs" />
+    <Compile Include="Html\Tags\BlockTag.cs" />
+    <Compile Include="Html\Tags\InlineTag.cs" />
+    <Compile Include="Html\Tags\ITag.cs" />
+    <Compile Include="Html\Tags\Tag.cs" />
+    <Compile Include="Rendering\BlockRenderer.cs" />
     <Compile Include="Rendering\EndBase.cs" />
+    <Compile Include="Rendering\ICommentator.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
     <Compile Include="Rendering\BeginBase.cs" />
     <Compile Include="Rendering\Renderer.cs" />
@@ -64,7 +74,6 @@
     <Compile Include="Html\Attributes\Style.cs" />
     <Compile Include="Html\Fluent\FluentHtml.cs" />
     <Compile Include="Html\Fluent\TagMethods.cs" />
-    <Compile Include="Html\Element.cs" />
     <Compile Include="Html\Tags\TagMethods.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
@@ -86,7 +95,6 @@
     <Compile Include="Engines\String\Request.cs" />
     <Compile Include="Engines\String\Server.cs" />
     <Compile Include="Options.cs" />
-    <Compile Include="Rendering\RendererTypes.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="pQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

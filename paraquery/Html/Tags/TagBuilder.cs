@@ -161,7 +161,16 @@ namespace com.paraquery.Html.Tags
         {
             Write($"<{name}");
             Attributes(attributes);
-            Write(" />");
+
+            if (_context.Options.SelfClosingTags)
+            {
+                Write(" />");
+            }
+            else
+            {
+                Write(">");
+            }
+
         }
 
 

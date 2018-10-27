@@ -22,6 +22,16 @@ Design Goals & Notes
 		merge element and elementcontainer (elements can have children)
 	remove "render" concept
 
+	create IHtml interface for fluent
+	interfaces for each element that shows what's allowed under what?
+	IColumn inherits from IHtml? (simplify code)
+
+	support for html5 void elements
+
+	OnPostEnd in BlockRenderer isn't quite right
+
+	lets support some other grid systems
+
 
 3] Fluent syntax options
 

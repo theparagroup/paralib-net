@@ -8,6 +8,7 @@ namespace com.paraquery
 {
     public class Options
     {
-        public bool DebugSourceFormatting { get; set; }
+        public bool SelfClosingTags { get; set; } = true;
+        public bool DebugSourceFormatting { get; set; } = false;
     }
 }
