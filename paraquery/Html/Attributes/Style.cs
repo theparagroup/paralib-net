@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using com.paraquery.Html.Tags;
 
@@ -19,12 +20,18 @@ namespace com.paraquery.Html.Attributes
         //TODO expand out border class and recursivily hyphenate over class and property
         public string border { get; set; }
 
+        protected string Hyphenate(string name)
+        {
+            //mixed case should be replaced with hyphens (but not first letter)
+            return Regex.Replace(name, @"([a-z])([A-Z])", "$1-$2").ToLower();
+        }
+
         string IComplexAttribute.Value
         {
             get
             {
                 var dictionary = new AttributeDictionary();
-                TagBuilder.BuildAttributeDictionary(dictionary, this, typeof(Style));
+                AttributeDictionary.BuildAttributeDictionary(dictionary, this, typeof(Style));
                 string style = null;
 
                 if (dictionary.Count > 0)

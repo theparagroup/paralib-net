@@ -89,7 +89,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IContainer Container(Action<GlobalAttributes> init = null, bool fluid = false)
         {
-            return Push(new Container(_tagBuilder, TagBuilder.Attributes(init, new { @class = fluid ? "container-fluid" : "container" })));
+            return Push(new Container(_tagBuilder, _tagBuilder.Attributes(init, new { @class = fluid ? "container-fluid" : "container" })));
         }
 
 
@@ -124,7 +124,7 @@ namespace com.paraquery.Bootstrap.Grids
         public IRow Row(Action<GlobalAttributes> init)
         {
             CloseRow();
-            return Push(new Row(_tagBuilder, TagBuilder.Attributes(init, new { @class = "row"})));
+            return Push(new Row(_tagBuilder, _tagBuilder.Attributes(init, new { @class = "row"})));
         }
 
         protected void CloseColumn()
@@ -171,7 +171,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new Column(_tagBuilder, TagBuilder.Attributes(init, new { @class = columnClasses })));
+            return Push(new Column(_tagBuilder, _tagBuilder.Attributes(init, new { @class = columnClasses })));
         }
 
         public IGrid Grid()
