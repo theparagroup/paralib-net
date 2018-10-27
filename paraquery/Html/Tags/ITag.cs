@@ -8,6 +8,7 @@ namespace com.paraquery.Html.Tags
 {
     public interface ITag
     {
-        
+        string TagName { get; }
+        string Id { get; }   
     }
 }

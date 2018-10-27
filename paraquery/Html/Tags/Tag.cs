@@ -45,11 +45,11 @@ namespace com.paraquery.Html.Tags
     */
 
 
-    public class Tag
+    public class Tag : ITag
     {
         public TagBuilder TagBuilder { protected set; get; }
         public string TagName { protected set; get; }
-        public bool Empty { protected set; get; } 
+        public bool Empty { protected set; get; }
         public AttributeDictionary Attributes { protected set; get; }
 
         public Tag(TagBuilder tagBuilder, string tagName, AttributeDictionary attributes, bool empty = false)
@@ -60,9 +60,17 @@ namespace com.paraquery.Html.Tags
             Attributes = attributes;
         }
 
+        public string Id
+        {
+            get
+            {
+                return Attributes["id"];
+            }
+        }
+
         public void Comment(string text)
         {
-            TagBuilder.Context.Writer.Write($" <!-- {text} -->");
+            TagBuilder.Context.Writer.Write($" <!-- {text} {TagName} {Id} -->");
         }
 
         public void OnBegin()

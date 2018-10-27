@@ -22,6 +22,22 @@ namespace com.paraquery.Html.Tags
             _tag = new Tag(tagBuilder, tagName, attributes, empty);
         }
 
+        public string TagName
+        {
+            get
+            {
+                return _tag.TagName;
+            }
+        }
+
+        public string Id
+        {
+            get
+            {
+                return _tag.Id;
+            }
+        }
+
         public void Comment(string text)
         {
             _tag.Comment(text);
