@@ -33,10 +33,13 @@ namespace com.paraquery.Rendering
 
     */
 
-    public class RendererStack : EndBase
+    public abstract class RendererStack : Renderer
     {
         protected Stack<Renderer> _stack = new Stack<Renderer>();
 
+        public RendererStack(IContext context, RenderModes renderMode, bool visible = true) : base(context, renderMode, visible)
+        {
+        }
 
         protected override void OnEnd()
         {
@@ -45,39 +48,32 @@ namespace com.paraquery.Rendering
 
         protected void Push(Renderer renderer)
         {
-            if (_stack != null)
-            {
-                //if we're putting a non-inline under an inline,
-                //or anything under a line,
-                //close all renderers up to and including the last non-inline and start a new one
-                //else nest this renderer inside the last renderer
+            //if we're putting a non-inline under an inline,
+            //or anything under a line,
+            //close all renderers up to and including the last non-inline and start a new one
+            //else nest this renderer inside the last renderer
 
-                if (_stack.Count > 0)
+            if (_stack.Count > 0)
+            {
+                Renderer top = _stack.Peek();
+
+                if ((renderer.RenderMode != RenderModes.Inline && top.RenderMode == RenderModes.Inline) || top.RenderMode == RenderModes.Line)
                 {
-                    Renderer top = _stack.Peek();
-
-                    if ((renderer.RenderMode != RenderModes.Inline && top.RenderMode == RenderModes.Inline) || top.RenderMode== RenderModes.Line)
-                    {
-                        CloseBlock();
-                    }
+                    CloseBlock();
                 }
-
-                //begin it
-                renderer.Begin();
-
-                //push it
-                _stack.Push(renderer);
             }
-            else
-            {
-                throw new Exception("Can't add renderers to an empty renderer");
-            }
+
+            //begin it
+            renderer.Begin();
+
+            //push it
+            _stack.Push(renderer);
         }
 
 
         protected virtual void Pop()
         {
-            if (_stack?.Count > 0)
+            if (_stack.Count > 0)
             {
                 Renderer top = _stack.Pop();
                 top.End();
@@ -99,7 +95,7 @@ namespace com.paraquery.Rendering
         public virtual void CloseBlock()
         {
             //end all inline renderers up to and including the last non-inline
-            while (_stack?.Count > 0)
+            while (_stack.Count > 0)
             {
                 Renderer top = _stack.Peek();
 
@@ -118,7 +114,7 @@ namespace com.paraquery.Rendering
         public virtual void CloseAll()
         {
             //end all renderers on stack
-            while (_stack?.Count > 0)
+            while (_stack.Count > 0)
             {
                 Pop();
             }

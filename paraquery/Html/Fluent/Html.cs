@@ -5,22 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Rendering;
 
-namespace com.paraquery.Bootstrap.Grids
+namespace com.paraquery.Html.Fluent
 {
-    public class Grid : Renderer
+    public class Html : Renderer
     {
-        public Grid(IContext context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
+        public Html(IContext context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
         }
 
         protected override void OnBegin()
         {
-            _writer.Write("<!-- grid start -->");
+            _writer.Write("<!-- html start -->");
         }
 
         protected override void OnEnd()
         {
-            _writer.Write("<!-- grid end -->");
+            _writer.Write("<!-- html end -->");
         }
     }
 }

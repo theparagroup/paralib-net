@@ -84,7 +84,7 @@ namespace com.paraquery.Html.Tags
         void ICommentator.Comment(string text)
         {
             //TODO this isn't really a comment
-            _tagBuilder.Context.Writer.Write($" <!-- {text} {_tagName} {_attributes["id"]} -->");
+            _tagBuilder.Context.Writer.Write($" <!-- {text} {_tagName} {_attributes?["id"]} -->");
         }
 
         protected override void OnBegin()

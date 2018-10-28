@@ -89,7 +89,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public FluentGrid(TagBuilder tagBuilder) : base(tagBuilder)
         {
-            //let's always start with a grid
+            //let's always start with a grid marker
             Grid();
         }
 

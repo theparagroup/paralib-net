@@ -44,8 +44,10 @@
     <Compile Include="Bootstrap\Grids\RowTag.cs" />
     <Compile Include="Bootstrap\Grids\ContainerTag.cs" />
     <Compile Include="Bootstrap\Grids\Grid.cs" />
+    <Compile Include="Html\Fluent\Html.cs" />
     <Compile Include="Html\Tags\Tag.cs" />
     <Compile Include="Rendering\BlockRenderer.cs" />
+    <Compile Include="Rendering\Component.cs" />
     <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\ICommentator.cs" />
     <Compile Include="Rendering\RendererStack.cs" />

@@ -11,22 +11,13 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml : RendererStack
     {
         protected TagBuilder _tagBuilder;
-        protected IContext _context;
-        protected IWriter _writer;
 
-        public FluentHtml(TagBuilder tagBuilder) 
+        public FluentHtml(TagBuilder tagBuilder) : base(tagBuilder.Context, RenderModes.Inline, true)
         {
             _tagBuilder = tagBuilder;
-            _context = _tagBuilder.Context;
-            _writer = _context.Writer;
-        }
 
-        protected TagBuilder TagBuilder
-        {
-            get
-            {
-                return _tagBuilder;
-            }
+            //let's start with an html marker
+            Push(new Html(_context));
         }
 
         protected new FluentHtml Push(Renderer renderer)
@@ -34,6 +25,11 @@ namespace com.paraquery.Html.Fluent
             //this method is just to simplify fluent methods...
             base.Push(renderer);
             return this;
+        }
+
+        protected override void OnBegin()
+        {
+            //do nothing here
         }
 
         protected override void OnEnd()
@@ -94,6 +90,6 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
-      
+       
     }
 }
