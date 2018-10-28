@@ -15,12 +15,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         protected override void OnBegin()
         {
-            _writer.Write("<!-- grid start -->");
+            _writer.Write("<!-- fluent bootstrap grid start -->");
         }
 
         protected override void OnEnd()
         {
-            _writer.Write("<!-- grid end -->");
+            _writer.Write("<!-- fluent bootstrap grid end -->");
         }
     }
 }

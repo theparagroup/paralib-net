@@ -8,7 +8,7 @@ namespace com.paraquery.Rendering
 {
     /*
 
-        If a Renderer implements this, then other classes (such as BlockRenderer) can use
+        If a Renderer implements this, then other classes (such as Renderer) can use
         this method to output debug info and other comments into the rendered source.
 
         We do it this way because HTML comments are different from, say, JavaScript comments.

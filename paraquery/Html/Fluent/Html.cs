@@ -15,12 +15,12 @@ namespace com.paraquery.Html.Fluent
 
         protected override void OnBegin()
         {
-            _writer.Write("<!-- html start -->");
+            _writer.Write("<!-- fluent html start -->");
         }
 
         protected override void OnEnd()
         {
-            _writer.Write("<!-- html end -->");
+            _writer.Write("<!-- fluent html end -->");
         }
     }
 }

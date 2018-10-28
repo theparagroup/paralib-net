@@ -16,8 +16,44 @@ namespace com.paraquery.Rendering
 
         Using Begin and End semantics you can build custom renderers, as we do with HTML tags.
 
-        Some renderers are just containers, and do not render, usefull for creating controls and other
-        logical components such as the Grid class.
+        Renderers can be visible or invisible. This refers to the block start and end, not 
+        content. Content is always visible if present, and is not completely under the control
+        of the block at any rate (an instantiater can always inject into the writer stream between
+        Begin() and End() calls). Having an invisible Renderer is usefull for creating controls and 
+        other logical components such as the Grid class, which generally doesn't generate output,
+        but may wish to in a debugging mode.
+
+        Renderers are formatted (pretty-printed) based on thier RenderMode:
+
+            Inline:
+
+                {outside content}[start]{inside content}[end]{outside content}
+
+            Line:
+            
+                {outside content}
+                    [start]{inside content}[end]
+                {outside content}
+
+            Block:
+
+                {outside content}
+                    [start]
+                        {inside content}
+                    [end]
+                {outside content}
+
+
+        Note, Renderer generate newlines and controls the tab level, but does NOT generate the tabs...  
+        this is handled by the Writer based on the indent level (the first content after a newline is 
+        tabbed out per the tab level, subsequent content is not.)
+
+        It is totally possible to screw up the formatting with spurious newlines or changing the tab
+        level, so care should be taken to structure your code with that in mind. The RendererStack
+        solves this problem by putting Renderers on a stack and imposing certain rules. For example,
+        pushing a block on top of an inline (i.e., trying to nest a block inside an inline) would close 
+        all the inline renderers up to and including the last block, before pushing the new block.
+
 
     */
 

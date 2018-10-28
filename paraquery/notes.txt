@@ -1,45 +1,68 @@
-﻿todo
-
-move grid into html
-expand out style class and recursivily hyphenate over class and property
-
-
-
-
+﻿
 Design Goals & Notes
 
-1] Build web pages in C# without Razor/Mvc/ASP
+1] Build web pages 100% in C# without Razor/Mvc/ASP
+		writer-based, no direct access to "Response"
 2] Create re-usable html/javascript snippet library in C#
+3] Build web sites with a "component" philosophy
+4] Provide fluent interfaces
+5] Advanced features
+		"Modules"
+			Type/Alias
+			Set of integrated Components (custom renderers)
+			Optional JavaScript (code-generated)
+				javascript "module" pattern
+				hide shit from global scope
+				register alias for module so dependent modules can use the alias
+				register script dependencies
+					throw error if script hasn't been added
+					implementor controls ordering of scripts
+					allow implementor to change script location/filename
+		JQuery support/integration
+			treat jquery as just another module
+		Namespacing/aliasing for css classes used programmatically in script
+		Namespacing of ids for nested elements
+			integration with ajax calls	
+6] More complicated libaries can build on paraquery
+		ParaTables
 
-	let's build some components and templating/snippet
+
+--[todo]
+
+	tidy up this commentator/debug thing
+
+	better formatting for attribute names, underscores, etc
+		data-
+		other html5 things
+		style
+
+	create some components to be used int ttb
+		Page
+		Page[TModel]
+			OnPreamble
+			OnHead
+			OnBody
+		View
+		View[TModel]
+
+	start converting ttb
+
+	scrap templating/snippet support in favor of 100% generated
 		more use of <Action> syntax
 		reflection to do substitutions, attribute to override '{_FooBar_}' => 'whatever'
 		reusable js functions, c# settings => json => function
 
-	page, body, layout
 	script management
 	built in onready
 
-	better formatting for attribute names, underscores, etc
-	data-
-	other html5 things
-	style
-
 	lets support some other grid systems
+	make universal if possible, don't tie to bootstrap
+	fold fluentgrid into fluenthtml?
 	refactor SetClasses
 
 	make debug a config option
 
 
-	create various IHtml interfaces that shows what's allowed under what?
-
-
-
-
-
-3] Fluent syntax options
-
-x] T4/Razor support library?
 
 
 

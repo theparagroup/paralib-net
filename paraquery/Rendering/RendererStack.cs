@@ -10,11 +10,25 @@ namespace com.paraquery.Rendering
 
         RendererStack provides a stack of Renderers.
 
-        Renderers at the top are "nested" inside lower Renderers.
+        RenderStack is itself a Renderer, so RendererStacks can be pushed into other RendererStacks.
 
-        div - top
-        span
-        strong
+        RendererStack is abstract, and therefore doesn't implement OnBegin(). Dervived classes may,
+        of course, do something there if they want to. It's not required however, and, as it explained
+        below, Renderers added to the stack will render thier start content (Begin() will be called)
+        as they are added to the stack. As other Renderers are added, end content will be rendered (End()
+        will be called) according to various rules (also described below). Finally the RendererStack's
+        End() method should be called, and all lingering end content will be rendered.
+
+        It is up to the instatiator to wrap the RendererStack in a using() statement or else call End()
+        explicitly.
+
+        Renderers at the top are "nested" inside lower Renderers when rendered to the writer stream.
+
+        This stack (div at top):
+
+            div
+            span
+            strong
 
         Would be rendered:
 
@@ -23,13 +37,18 @@ namespace com.paraquery.Rendering
             </div>
 
 
-        Begin() is called on Renderers when they are Pushed(), and End() is called when Popped().
+        Semantics/Rules:
 
-        In between Push/Begin and Pop/End calls, you can push more renderers or generate content with the Writer.
+            Begin() is called on Renderers when they are Pushed(), and End() is called when Popped().
 
-        If you Push() a Block under an Inline, all the Renderers up to and including the last Block are Closed()/Ended().
+            In between Push/Begin and Pop/End calls, you can push more renderers or generate content with the Writer.
 
-        Otherwise, Renderers are nested.
+            If you Push() a Block or a Line (i.e., a non-Inline) under an Inline, all the Renderers up to and including 
+            the last Block are Closed()/Ended() first.
+
+            If you Push() anything under a Line, Close()/End() the Line first.
+
+            Otherwise, Renderers are nested.
 
     */
 
