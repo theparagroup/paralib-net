@@ -27,6 +27,12 @@ namespace com.paraquery.Html.Tags
             }
         }
 
+        protected virtual AttributeDictionary Attributes<T>(Action<T> init = null) where T : GlobalAttributes, new()
+        {
+            //this method is just to simplify tag methods...
+            return AttributeDictionary.Attributes(init, null);
+        }
+
         public virtual void Attribute(string name, string value = null)
         {
             //TODO escaping quotes? escaping in general?
@@ -55,12 +61,6 @@ namespace com.paraquery.Html.Tags
                     Attribute(name, dictionary[name]);
                 }
             }
-        }
-
-        public virtual AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
-        {
-            //makes the tagmethods simpler...
-            return AttributeDictionary.Attributes(init, additional);
         }
 
         public virtual void Start(string name, AttributeDictionary attributes = null)

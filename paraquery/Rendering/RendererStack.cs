@@ -33,7 +33,7 @@ namespace com.paraquery.Rendering
 
     */
 
-    public abstract class RendererStack : EndBase
+    public class RendererStack : EndBase
     {
         protected Stack<Renderer> _stack = new Stack<Renderer>();
 
@@ -75,7 +75,7 @@ namespace com.paraquery.Rendering
         }
 
 
-        protected void Pop()
+        protected virtual void Pop()
         {
             if (_stack?.Count > 0)
             {
@@ -84,14 +84,19 @@ namespace com.paraquery.Rendering
             }
         }
 
-        public void Close()
+        public virtual void Open(Renderer renderer)
+        {
+            Push(renderer);
+        }
+
+        public virtual void Close()
         {
             //close last renderer
             Pop();
         }
 
 
-        public void CloseBlock()
+        public virtual void CloseBlock()
         {
             //end all non-block renderer up to and including the last block
             while (_stack?.Count > 0)
@@ -110,7 +115,7 @@ namespace com.paraquery.Rendering
             }
         }
 
-        public void CloseAll()
+        public virtual void CloseAll()
         {
             //end all renderers on stack
             while (_stack?.Count > 0)

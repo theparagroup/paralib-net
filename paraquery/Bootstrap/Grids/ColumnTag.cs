@@ -7,9 +7,9 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public class Column : BlockTag
+    public class ColumnTag : BlockTag
     {
-        public Column(TagBuilder tagBuilder, AttributeDictionary attributes) : base(tagBuilder, "div", attributes)
+        public ColumnTag(TagBuilder tagBuilder, AttributeDictionary attributes) : base(tagBuilder, "div", attributes)
         {
         }
     }

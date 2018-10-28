@@ -8,8 +8,11 @@ namespace com.paraquery.Rendering
 {
     /*
 
-        BlockRenders are formatted, with start (and optionally end) tags getting thier own line. 
+        BlockRenderers are formatted, with start (and optionally end) tags getting thier own line. 
         
+        BlockRenderers can be visible or invisible. This refers to the block start and end, not 
+        content. Content is always visible if present, and is not under the control of the block anyway.
+
         Content can be optionally "offset" (on a new line an indented).
 
         Example:
@@ -50,11 +53,21 @@ namespace com.paraquery.Rendering
     */
     public abstract class BlockRenderer : Renderer
     {
+        private bool _visible;
         private bool _offsetContent;
 
-        protected BlockRenderer(IContext context, bool offsetContent) : base(context)
+        protected BlockRenderer(IContext context, bool offsetContent, bool visible = true) : base(context)
         {
             _offsetContent = offsetContent;
+            _visible = visible;
+        }
+
+        public bool IsVisible
+        {
+            get
+            {
+                return _visible;
+            }
         }
 
         public bool IsContentOffset
@@ -76,6 +89,16 @@ namespace com.paraquery.Rendering
             }
         }
 
+        protected override void _begin()
+        { 
+            //don't call OnPreBegin, Begin, or OnPostBegin if we're not visible
+
+            if (_visible)
+            {
+                base._begin();
+            }
+        }
+
         protected override void OnPreBegin()
         {
             //make sure new blocks start on a newline
@@ -87,7 +110,6 @@ namespace com.paraquery.Rendering
                 _writer.NewLine();
             }
         }
-
 
         protected override void OnPostBegin()
         {
@@ -106,6 +128,16 @@ namespace com.paraquery.Rendering
             {
                 //any content should be indented
                 _writer.Indent();
+            }
+        }
+
+        protected override void _end()
+        {
+            //don't call OnPreEnd, End, or OnPostEnd if we're not visible
+
+            if (_visible)
+            {
+                base._end();
             }
         }
 

@@ -10,27 +10,33 @@ Design Goals & Notes
 
 1] Build web pages in C# without Razor/Mvc/ASP
 2] Create re-usable html/javascript snippet library in C#
-	<Action> syntax
-	better templating
-		reflection to do substitutions, attribute to override '{_FooBar_}' => 'whatever'
-	reusable js functions, c# settings => json => function
-	better formatting for attribute names, underscores, etc
-	by the time attributes get to Element, it should be a simple dictionary - this whole thing needs to be refactored
-	make debug a config option
-
-	should be able to nest elementcontainers
-		merge element and elementcontainer (elements can have children)
-	remove "render" concept
-
-	create IHtml interface for fluent
-	interfaces for each element that shows what's allowed under what?
-	IColumn inherits from IHtml? (simplify code)
-
-	support for html5 void elements
 
 	OnPostEnd in BlockRenderer isn't quite right
 
+	let's build some components and templating/snippet
+		more use of <Action> syntax
+		reflection to do substitutions, attribute to override '{_FooBar_}' => 'whatever'
+		reusable js functions, c# settings => json => function
+
+	page, body, layout
+	script management
+	built in onready
+
+	better formatting for attribute names, underscores, etc
+	data-
+	other html5 things
+	style
+
 	lets support some other grid systems
+	refactor SetClasses
+
+	make debug a config option
+
+
+	create various IHtml interfaces that shows what's allowed under what?
+
+
+
 
 
 3] Fluent syntax options
@@ -38,9 +44,4 @@ Design Goals & Notes
 x] T4/Razor support library?
 
 
---[todo]
-templating/snippet
-page, body, layout
-script management
-built in onready
 

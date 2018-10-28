@@ -29,15 +29,21 @@ namespace com.paraquery.Html.Fluent
             }
         }
 
+        protected new FluentHtml Push(Renderer renderer)
+        {
+            //this method is just to simplify fluent methods...
+            base.Push(renderer);
+            return this;
+        }
+
         protected override void OnEnd()
         {
             CloseAll();
         }
 
-        protected new FluentHtml Push(Renderer renderer)
+        public new FluentHtml Open(Renderer renderer)
         {
-            base.Push(renderer);
-            return this;
+            return Push(renderer);
         }
 
         public new FluentHtml CloseBlock()

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Fluent
 {
     public partial class FluentHtml 
     {
+
         public virtual FluentHtml Div(Action<GlobalAttributes> attributes)
         {
             return Push(_tagBuilder.Div(attributes));

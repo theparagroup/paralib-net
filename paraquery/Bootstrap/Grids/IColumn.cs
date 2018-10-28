@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Bootstrap.Grids
 {
@@ -18,6 +19,9 @@ namespace com.paraquery.Bootstrap.Grids
 
         IGrid Grid();
         IGrid EndGrid();
+
+        IColumn Open(Renderer renderer);
+        IColumn Close();
 
         IColumn Write(string content);
         IColumn WriteLine(string content);

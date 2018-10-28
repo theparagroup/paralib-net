@@ -12,6 +12,6 @@ namespace com.paraquery.Html.Attributes
         public string Charset { get; set; }
         public string Defer { get; set; }
         public string Src { get; set; }
-        public string Type { get; set; } = "application/javascript";
+        public string Type { get; set; } //= "application/javascript";
     }
 }
