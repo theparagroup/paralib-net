@@ -47,18 +47,18 @@ namespace com.paraquery.Rendering
         {
             if (_stack != null)
             {
-                //if we're putting a block under a non-block, close all renderers up to and including the last block and start a new one
+                //if we're putting a non-inline under an inline,
+                //or anything under a line,
+                //close all renderers up to and including the last non-inline and start a new one
                 //else nest this renderer inside the last renderer
-                if (renderer is BlockRenderer)
-                {
-                    if (_stack.Count > 0)
-                    {
-                        Renderer top = _stack.Peek();
 
-                        if (!(top is BlockRenderer))
-                        {
-                            CloseBlock();
-                        }
+                if (_stack.Count > 0)
+                {
+                    Renderer top = _stack.Peek();
+
+                    if ((renderer.RenderMode != RenderModes.Inline && top.RenderMode == RenderModes.Inline) || top.RenderMode== RenderModes.Line)
+                    {
+                        CloseBlock();
                     }
                 }
 
@@ -98,12 +98,12 @@ namespace com.paraquery.Rendering
 
         public virtual void CloseBlock()
         {
-            //end all non-block renderer up to and including the last block
+            //end all inline renderers up to and including the last non-inline
             while (_stack?.Count > 0)
             {
                 Renderer top = _stack.Peek();
 
-                if (top is BlockRenderer)
+                if (top.RenderMode!=RenderModes.Inline)
                 {
                     Pop();
                     break;

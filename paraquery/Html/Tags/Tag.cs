@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
+using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Tags
 {
@@ -45,54 +46,56 @@ namespace com.paraquery.Html.Tags
     */
 
 
-    public class Tag : ITag
+    public class Tag : Renderer, ICommentator
     {
-        public TagBuilder TagBuilder { protected set; get; }
-        public string TagName { protected set; get; }
-        public bool Empty { protected set; get; }
-        public AttributeDictionary Attributes { protected set; get; }
+        protected TagBuilder _tagBuilder;
+        protected string _tagName;
+        protected bool _empty;
+        protected AttributeDictionary _attributes;
 
-        public Tag(TagBuilder tagBuilder, string tagName, AttributeDictionary attributes, bool empty = false)
+        public Tag(TagBuilder tagBuilder, string tagName, bool block, bool empty, AttributeDictionary attributes):base(tagBuilder.Context, GetRenderMode(block, empty))
         {
-            TagBuilder = tagBuilder;
-            TagName = tagName;
-            Empty = empty;
-            Attributes = attributes;
+            _tagBuilder = tagBuilder;
+            _tagName = tagName;
+            _empty = empty;
+            _attributes = attributes;
         }
 
-        public string Id
+        private static RenderModes GetRenderMode(bool block, bool empty)
         {
-            get
+            if (block)
             {
-                return Attributes["id"];
-            }
-        }
-
-        public void Comment(string text)
-        {
-            TagBuilder.Context.Writer.Write($" <!-- {text} {TagName} {Id} -->");
-        }
-
-        public void OnBegin()
-        {
-            if (Empty)
-            {
-                TagBuilder.Empty(TagName, Attributes);
+                if (empty)
+                {
+                    return RenderModes.Line;
+                }
+                else
+                {
+                    return RenderModes.Block;
+                }
             }
             else
             {
-                TagBuilder.Open(TagName, Attributes);
+                return RenderModes.Inline;
             }
+
         }
 
-        public void OnEnd()
+        void ICommentator.Comment(string text)
         {
-            if (!Empty)
-            {
-                TagBuilder.Close(TagName);
-            }
+            //TODO this isn't really a comment
+            _tagBuilder.Context.Writer.Write($" <!-- {text} {_tagName} {_attributes["id"]} -->");
         }
 
+        protected override void OnBegin()
+        {
+            _tagBuilder.Open(_tagName, _empty, _attributes);
+        }
+
+        protected override void OnEnd()
+        {
+            _tagBuilder.Close(_tagName, _empty);
+        }
 
     }
 }

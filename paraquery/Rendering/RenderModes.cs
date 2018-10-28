@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Html.Tags
+namespace com.paraquery.Rendering
 {
-    public interface ITag
+    public enum RenderModes
     {
-        string TagName { get; }
-        string Id { get; }   
+        Inline,
+        Line,
+        Block
     }
 }

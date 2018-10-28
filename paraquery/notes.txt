@@ -11,8 +11,6 @@ Design Goals & Notes
 1] Build web pages in C# without Razor/Mvc/ASP
 2] Create re-usable html/javascript snippet library in C#
 
-	OnPostEnd in BlockRenderer isn't quite right
-
 	let's build some components and templating/snippet
 		more use of <Action> syntax
 		reflection to do substitutions, attribute to override '{_FooBar_}' => 'whatever'

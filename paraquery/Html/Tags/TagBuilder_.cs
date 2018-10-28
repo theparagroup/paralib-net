@@ -14,22 +14,22 @@ namespace com.paraquery.Html.Tags
 
         public virtual Renderer Div(Action<GlobalAttributes> attributes=null)
         {
-            return new BlockTag(this, "div", Attributes(attributes));
+            return new Tag(this, "div", true, false, Attributes(attributes));
         }
 
         public virtual Renderer Span(Action<GlobalAttributes> attributes=null)
         {
-            return new InlineTag(this, "span", Attributes(attributes));
+            return new Tag(this, "span", false, false, Attributes(attributes));
         }
 
         public virtual Renderer Hr(Action<HrAttributes> attributes = null)
         {
-            return new BlockTag(this, "hr", Attributes(attributes), true);
+            return new Tag(this, "hr", true, true, Attributes(attributes));
         }
 
         public virtual Renderer Script(Action<ScriptAttributes> attributes = null)
         {
-            return new BlockTag(this, "script", Attributes(attributes));
+            return new Tag(this, "script", true, false, Attributes(attributes));
         }
 
 

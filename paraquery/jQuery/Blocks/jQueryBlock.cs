@@ -7,9 +7,9 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.jQuery.Blocks
 {
-    public abstract class jQueryBlock : BlockRenderer, ICommentator
+    public abstract class jQueryBlock : Renderer, ICommentator
     {
-        public jQueryBlock(IContext context) : base(context, true)
+        public jQueryBlock(IContext context) : base(context, RenderModes.Block)
         {
         }
 

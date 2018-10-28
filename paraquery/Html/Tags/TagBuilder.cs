@@ -63,48 +63,38 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        public virtual void Start(string name, AttributeDictionary attributes = null)
-        {
-            _writer.Write($"<{name}");
-            Attributes(attributes);
-        }
-
-        public virtual void End()
-        {
-            _writer.Write(">");
-        }
-
-        public virtual void Open(string name, AttributeDictionary attributes = null)
-        {
-            Start(name, attributes);
-            End();
-        }
-
-        public virtual void Close(string name)
-        {
-            _writer.Write($"</{name}>");
-        }
-
-        public virtual void Empty(string name, AttributeDictionary attributes = null)
+        public virtual void Open(string name, bool empty, AttributeDictionary attributes = null)
         {
             _writer.Write($"<{name}");
 
             Attributes(attributes);
 
-            if (_context.Options.SelfClosingTags)
-            {
-                _writer.Write(" />");
-            }
-            else
+            if (!empty)
             {
                 _writer.Write(">");
             }
 
         }
 
+        public virtual void Close(string name, bool empty)
+        {
+            if (empty)
+            {
+                if (_context.Options.SelfClosingTags)
+                {
+                    _writer.Write(" />");
+                }
+                else
+                {
+                    _writer.Write(">");
+                }
+            }
+            else
+            {
+                _writer.Write($"</{name}>");
+            }
 
-       
-
+        }
 
     }
 }

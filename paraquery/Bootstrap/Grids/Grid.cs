@@ -7,9 +7,9 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public class Grid : BlockRenderer
+    public class Grid : Renderer
     {
-        public Grid(IContext context) : base(context, true, true)
+        public Grid(IContext context) : base(context, RenderModes.Block, true)
         {
         }
 
