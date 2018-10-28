@@ -106,11 +106,11 @@ namespace com.paraquery.Rendering
                 if (top is BlockRenderer)
                 {
                     Pop();
+                    break;
                 }
                 else
                 {
                     Pop();
-                    break;
                 }
             }
         }

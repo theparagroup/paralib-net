@@ -7,6 +7,14 @@ using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Bootstrap.Grids
 {
+    /*
+
+        Note: because we are excplitly implementing this interface, we don't need to include
+                optional parameters here. They are optional in the IColumn interface, however.
+
+
+    */
+
     public partial class FluentGrid 
     {
         IColumn IColumn.Write(string content)
