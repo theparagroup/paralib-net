@@ -26,8 +26,11 @@ namespace com.paraquery.Bootstrap.Grids
         IColumn Write(string content);
         IColumn WriteLine(string content);
 
+        IColumn Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false);
+        IColumn Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false);
         IColumn Div(Action<GlobalAttributes> attributes = null);
         IColumn Span(Action<GlobalAttributes> attributes = null);
+        IColumn Hr(Action<HrAttributes> attributes = null);
 
     }
 }

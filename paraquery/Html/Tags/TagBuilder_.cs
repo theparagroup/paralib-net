@@ -12,6 +12,16 @@ namespace com.paraquery.Html.Tags
     public partial class TagBuilder
     {
 
+        public virtual Renderer Block(string name, Action<GlobalAttributes> attributes = null, bool empty=false)
+        {
+            return new Tag(this, name, true, empty, Attributes(attributes));
+        }
+
+        public virtual Renderer Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        {
+            return new Tag(this, name, false, empty, Attributes(attributes));
+        }
+
         public virtual Renderer Div(Action<GlobalAttributes> attributes=null)
         {
             return new Tag(this, "div", true, false, Attributes(attributes));

@@ -30,9 +30,19 @@ Design Goals & Notes
 --[todo]
 
 	better formatting for attribute names, underscores, etc
+		review case sensitivity (only id and class?, quirks mode?)
+		reify "shorthand properties"? or avoid them altogether? ordering issues?
+			Style.Background.Color=""
+			Style.BackgroundColor=""
+			Style.backgroundColor=""
+			Style.Background(b=>b.Color="")
+			Style.background=""
+		merge? like for style and additional = new {style="foo"}?
+			simple concat instead of parse?
 		data-
 		other html5 things
 		style
+		review use of mixed and lower case in attribute properties
 
 	create some components to be used int ttb
 		Page

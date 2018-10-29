@@ -29,6 +29,16 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
+        IColumn IColumn.Block(string name, Action<GlobalAttributes> attributes, bool empty)
+        {
+            return Push(_tagBuilder.Block(name, attributes, empty));
+        }
+
+        IColumn IColumn.Inline(string name, Action<GlobalAttributes> attributes, bool empty)
+        {
+            return Push(_tagBuilder.Inline(name, attributes, empty));
+        }
+
         IColumn IColumn.Div(Action<GlobalAttributes> attributes)
         {
             Div(attributes);
@@ -41,6 +51,11 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
+        IColumn IColumn.Hr(Action<HrAttributes> attributes)
+        {
+            Hr(attributes);
+            return this;
+        }
 
 
     }

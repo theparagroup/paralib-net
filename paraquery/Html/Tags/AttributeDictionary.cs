@@ -8,6 +8,34 @@ using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Html.Tags
 {
+    /*
+
+        case sensitivity
+
+        CSS is case insensitive
+
+        however, the following things are case sensitive:
+
+            ids
+            class names
+            urls
+            font names/families?
+
+
+        in html, tag names are case insensitive
+
+        tag names in html5?
+
+        in xhtml, tag names are case sensitive
+
+
+
+
+        anything else?
+
+
+    */
+
     //examples
     // "class1 class2"
     // new { id="div1", @class="class1 class2"}
@@ -90,7 +118,7 @@ namespace com.paraquery.Html.Tags
             {
                 if (ContainsKey(index))
                 {
-                    base[index]=value;
+                    base[index] = value;
                 }
                 else
                 {
@@ -110,12 +138,25 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes) where T : GlobalAttributes
+        public new void Add(string name, string value)
         {
-            BuildAttributeDictionary(dictionary, attributes, typeof(T));
+            if (ContainsKey(name))
+            {
+                base[name] = value;
+            }
+            else
+            {
+                base.Add(name, value);
+            }
         }
 
-        public static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, Type type)
+
+        public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool preserveCase = false) where T : GlobalAttributes
+        {
+            BuildAttributeDictionary(dictionary, attributes, typeof(T), preserveCase);
+        }
+
+        public static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, Type type, bool preserveCase = false)
         {
             if (type == null)
             {
@@ -132,8 +173,18 @@ namespace com.paraquery.Html.Tags
                 if (v != null)
                 {
                     //if you have two properties with same name but different case, results are undefined
-                    string name = pi.Name.ToLower();
+
+                    string name;
                     string value = null;
+
+                    if (!preserveCase)
+                    {
+                        name = pi.Name.ToLower();
+                    }
+                    else
+                    {
+                        name = pi.Name;
+                    }
 
                     if (typeof(IComplexAttribute).IsAssignableFrom(pi.PropertyType))
                     {

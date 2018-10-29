@@ -31,17 +31,21 @@ namespace com.paraquery.Html.Attributes
             get
             {
                 var dictionary = new AttributeDictionary();
-                AttributeDictionary.BuildAttributeDictionary(dictionary, this, typeof(Style));
+
+                //note: we preserve case so we can hyphenate
+                AttributeDictionary.BuildAttributeDictionary(dictionary, this, typeof(Style), true);
+
                 string style = null;
 
                 if (dictionary.Count > 0)
                 {
-                    style = string.Join(";", dictionary.Select(e => $"{e.Key}:{e.Value}").ToArray());
+                    style = string.Join(";", dictionary.Select(e => $"{Hyphenate(e.Key)}:{e.Value}").ToArray());
                     style = $"{style};";
                 }
 
                 return style;
             }
         }
+
     }
 }
