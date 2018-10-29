@@ -7,13 +7,13 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.jQuery.Blocks
 {
-    public abstract class jQueryBlock : Renderer, ICommentator
+    public abstract class jQueryBlock : Renderer
     {
         public jQueryBlock(IContext context) : base(context, RenderModes.Block)
         {
         }
 
-        public void Comment(string text)
+        protected override void Comment(string text)
         {
             _writer.Write($" // {text}");
         }

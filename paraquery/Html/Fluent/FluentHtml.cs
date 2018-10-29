@@ -20,6 +20,11 @@ namespace com.paraquery.Html.Fluent
             Push(new Html(_context));
         }
 
+        protected override void Comment(string text)
+        {
+            HtmlRenderer.HtmlComment(_writer, text);
+        }
+
         protected new FluentHtml Push(Renderer renderer)
         {
             //this method is just to simplify fluent methods...

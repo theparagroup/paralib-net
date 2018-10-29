@@ -88,14 +88,13 @@ namespace com.paraquery.Rendering
             }
         }
 
-        protected void Debug(string text)
+        protected abstract void Comment(string text);
+
+        protected virtual void Debug(string text)
         {
-            if (this is ICommentator)
+            if (_context.Options.DebugSourceFormatting)
             {
-                if (_context.Options.DebugSourceFormatting)
-                {
-                    ((ICommentator)this).Comment(text);
-                }
+                Comment($" {text}");
             }
         }
 

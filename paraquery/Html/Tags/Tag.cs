@@ -46,7 +46,7 @@ namespace com.paraquery.Html.Tags
     */
 
 
-    public class Tag : Renderer, ICommentator
+    public class Tag : HtmlRenderer
     {
         protected TagBuilder _tagBuilder;
         protected string _tagName;
@@ -81,10 +81,9 @@ namespace com.paraquery.Html.Tags
 
         }
 
-        void ICommentator.Comment(string text)
+        protected override void Debug(string text)
         {
-            //TODO this isn't really a comment
-            _tagBuilder.Context.Writer.Write($" <!-- {text} {_tagName} {_attributes?["id"]} -->");
+            base.Debug($"{text} {_tagName} {_attributes?["id"]}");
         }
 
         protected override void OnBegin()

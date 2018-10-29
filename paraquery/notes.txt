@@ -29,8 +29,6 @@ Design Goals & Notes
 
 --[todo]
 
-	tidy up this commentator/debug thing
-
 	better formatting for attribute names, underscores, etc
 		data-
 		other html5 things

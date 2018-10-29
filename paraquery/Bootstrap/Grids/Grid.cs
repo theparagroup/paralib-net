@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Rendering;
+using com.paraquery.Html;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public class Grid : Renderer
+    public class Grid : HtmlRenderer
     {
         public Grid(IContext context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
@@ -15,12 +16,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         protected override void OnBegin()
         {
-            _writer.Write("<!-- fluent bootstrap grid start -->");
+            Comment("fluent bootstrap grid start -->");
         }
 
         protected override void OnEnd()
         {
-            _writer.Write("<!-- fluent bootstrap grid end -->");
+           Comment("<!-- fluent bootstrap grid end -->");
         }
     }
 }

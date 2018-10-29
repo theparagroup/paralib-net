@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Rendering;
+using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html.Fluent
 {
-    public class Html : Renderer
+    public class Html : HtmlRenderer
     {
         public Html(IContext context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
