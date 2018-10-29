@@ -29,6 +29,13 @@ Design Goals & Notes
 
 --[todo]
 
+	keep in mind, you can always drop into _writer.Write()
+	we are building components, not making razor great again
+	so maybe remove the backgroundColor type properties, everything mixed case, simplified
+	regardless, make it consistent, any string properties need to be lower case (id, class, title)
+
+	data- can be a collection, or just jam them in the additional
+
 	better formatting for attribute names, underscores, etc
 		review case sensitivity (only id and class?, quirks mode?)
 		reify "shorthand properties"? or avoid them altogether? ordering issues?
