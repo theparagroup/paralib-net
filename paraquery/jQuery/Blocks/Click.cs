@@ -25,12 +25,12 @@ namespace com.paraquery.jQuery.Blocks
 
         protected override void OnBegin()
         {
-            _writer.WriteLine($"$('{_selector}').click({Utils.Parameters(_data)}function(event) {{");
+            Writer.WriteLine($"$('{_selector}').click({Utils.Parameters(_data)}function(event) {{");
         }
 
         protected override void OnEnd()
         {
-            _writer.WriteLine($"}}); //end click");
+            Writer.WriteLine($"}}); //end click");
         }
 
     }

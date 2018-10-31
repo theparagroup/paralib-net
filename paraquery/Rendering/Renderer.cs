@@ -59,126 +59,110 @@ namespace com.paraquery.Rendering
 
     public abstract class Renderer : BeginBase
     {
-        protected IContext _context { private set; get; }
-        protected IWriter _writer;
-        private RenderModes _renderMode;
-        private bool _visible;
+        protected IContext Context { private set; get; }
+        protected IWriter Writer { private set; get; }
+        public RenderModes RenderMode { private set; get; }
+        public bool Visible { private set; get; }
 
         protected Renderer(IContext context, RenderModes renderMode, bool visible = true)
         {
-            _context = context;
-            _writer = _context.Writer;
-            _renderMode = renderMode;
-            _visible = visible;
-        }
-
-        public bool IsVisible
-        {
-            get
-            {
-                return _visible;
-            }
-        }
-
-        public RenderModes RenderMode
-        {
-            get
-            {
-                return _renderMode;
-            }
+            Context = context;
+            Writer = Context.Writer;
+            RenderMode = renderMode;
+            Visible = visible;
         }
 
         protected abstract void Comment(string text);
 
         protected virtual void Debug(string text)
         {
-            if (_context.Options.DebugSourceFormatting)
+            if (Context.Options.DebugSourceFormatting)
             {
                 Comment($" {text}");
             }
         }
 
-        protected override void _begin()
+        protected override void DoBegin()
         {
             //don't call OnPreBegin, Begin, or OnPostBegin if we're not visible
 
-            if (_visible)
+            if (Visible)
             {
-                base._begin();
+                base.DoBegin();
             }
         }
 
         protected override void OnPreBegin()
         {
-            if (_renderMode == RenderModes.Line || _renderMode == RenderModes.Block)
+            if (RenderMode == RenderModes.Line || RenderMode == RenderModes.Block)
             {
                 //make sure we start on a newline
                 //this should be conditional on if newline was called last before this block started
-                if (!_writer.IsNewLine)
+                if (!Writer.IsNewLine)
                 {
                     Debug($"nl prebegin");
-                    _writer.NewLine();
+                    Writer.NewLine();
                 }
             }
         }
 
         protected override void OnPostBegin()
         {
-            if (_renderMode == RenderModes.Block)
+            if (RenderMode == RenderModes.Block)
             {
                 //make sure content starts on a newline
                 //this should be conditional on if newline was called last in OnBegin
-                if (!_writer.IsNewLine)
+                if (!Writer.IsNewLine)
                 {
                     Debug($"nl postbegin");
-                    _writer.NewLine();
+                    Writer.NewLine();
                 }
 
                 //make sure content (for non-empty blocks) is indented
-                _writer.Indent();
+                Writer.Indent();
             }
 
         }
 
-        protected override void _end()
+        protected override void DoEnd()
         {
             //don't call OnPreEnd, End, or OnPostEnd if we're not visible
 
-            if (_visible)
+            if (Visible)
             {
-                base._end();
+                base.DoEnd();
             }
         }
 
         protected override void OnPreEnd()
         {
-            if (_renderMode == RenderModes.Block)
+            if (RenderMode == RenderModes.Block)
             {
                 //make sure blocks with endings (non-empty) end on a newline, and back out the ident level
                 //this should be conditional on if newline was called last in the content
-                if (!_writer.IsNewLine)
+                if (!Writer.IsNewLine)
                 {
                     Debug($"nl preend");
 
-                    _writer.NewLine();
+                    Writer.NewLine();
                 }
 
                 //undo the indent
-                _writer.Dedent();
+                Writer.Dedent();
             }
         }
 
         protected override void OnPostEnd()
         {
 
-            if (_renderMode == RenderModes.Line || _renderMode == RenderModes.Block)
+            if (RenderMode == RenderModes.Line || RenderMode == RenderModes.Block)
             {
                 //make sure we end with a newline
                 //this should be conditional on if newline was called last when this block ended
-                if (!_writer.IsNewLine)
+                if (!Writer.IsNewLine)
                 {
                     Debug($"nl postend");
-                    _writer.NewLine();
+                    Writer.NewLine();
                 }
             }
         }

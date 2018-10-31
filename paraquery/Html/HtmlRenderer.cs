@@ -20,7 +20,7 @@ namespace com.paraquery.Html
 
         protected override void Comment(string text)
         {
-            HtmlComment(_writer, text);
+            HtmlComment(Writer, text);
         }
 
 

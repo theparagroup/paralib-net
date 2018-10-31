@@ -15,12 +15,12 @@ namespace com.paraquery.Js.Blocks
 
         protected override void Comment(string text)
         {
-            _writer.Write($" // {text}");
+            Writer.Write($" // {text}");
         }
 
         protected override void OnPreBegin()
         {
-            _writer.Space();
+            Writer.Space();
 
             base.OnPreBegin();
         }
@@ -29,7 +29,7 @@ namespace com.paraquery.Js.Blocks
         {
             base.OnPostEnd();
 
-            _writer.Space();
+            Writer.Space();
         }
 
     }

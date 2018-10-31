@@ -29,11 +29,11 @@ namespace com.paraquery.Rendering
             if (!_disposed)
             {
                 _disposed = true;
-                _end();
+                DoEnd();
             }
         }
 
-        protected virtual void _end()
+        protected virtual void DoEnd()
         {
             OnPreEnd();
             OnEnd();

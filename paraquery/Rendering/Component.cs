@@ -18,32 +18,38 @@ namespace com.paraquery.Rendering
 
     */
 
-    public abstract class Component:RendererStack
+    public abstract class Component : RendererStack
     {
-        protected TagBuilder _tagBuilder;
+        protected TagBuilder TagBuilder { private set; get; }
 
         public Component(TagBuilder tagBuilder, RenderModes renderModes, bool visible) : base(tagBuilder.Context, renderModes, visible)
         {
-            _tagBuilder = tagBuilder;
+            TagBuilder = tagBuilder;
         }
 
         protected override void OnPostBegin()
         {
             base.OnPostBegin();
 
-            OnBeforeContent();
+            OnPreContent();
         }
 
-        protected abstract void OnBeforeContent();
+        protected virtual void OnPreContent()
+        {
+
+        }
 
         protected override void OnPreEnd()
         {
-            OnAfterContent();
+            OnPostContent();
 
             base.OnPreEnd();
         }
 
-        protected abstract void OnAfterContent();
+        protected virtual void OnPostContent()
+        {
+
+        }
 
 
     }

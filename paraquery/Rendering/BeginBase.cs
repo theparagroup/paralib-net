@@ -18,10 +18,10 @@ namespace com.paraquery.Rendering
 
         public void Begin()
         {
-            _begin();
+            DoBegin();
         }
 
-        protected virtual void _begin()
+        protected virtual void DoBegin()
         {
             OnPreBegin();
             OnBegin();

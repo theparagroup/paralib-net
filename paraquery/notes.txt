@@ -2,7 +2,7 @@
 Design Goals & Notes
 
 1] Build web pages 100% in C# without Razor/Mvc/ASP
-		writer-based, no direct access to "Response"
+		writer-based, no direct access to "Response" or other web server stuff
 2] Create re-usable html/javascript snippet library in C#
 3] Build web sites with a "component" philosophy
 4] Provide fluent interfaces
@@ -29,27 +29,8 @@ Design Goals & Notes
 
 --[todo]
 
-	keep in mind, you can always drop into _writer.Write()
-	we are building components, not making razor great again
-	so maybe remove the backgroundColor type properties, everything mixed case, simplified
-	regardless, make it consistent, any string properties need to be lower case (id, class, title)
-
-	data- can be a collection, or just jam them in the additional
-
-	better formatting for attribute names, underscores, etc
-		review case sensitivity (only id and class?, quirks mode?)
-		reify "shorthand properties"? or avoid them altogether? ordering issues?
-			Style.Background.Color=""
-			Style.BackgroundColor=""
-			Style.backgroundColor=""
-			Style.Background(b=>b.Color="")
-			Style.background=""
-		merge? like for style and additional = new {style="foo"}?
-			simple concat instead of parse?
-		data-
-		other html5 things
-		style
-		review use of mixed and lower case in attribute properties
+	de
+	remember, we're not replacing a web server or mvc in this project,
 
 	create some components to be used int ttb
 		Page
@@ -61,6 +42,30 @@ Design Goals & Notes
 		View[TModel]
 
 	start converting ttb
+		clean up cruft
+
+
+	better formatting for attribute names, underscores, etc
+		design goals
+			keep in mind, you can always drop into _writer.Write()
+			we are building components, not making razor great again
+			so maybe remove the backgroundColor type properties, everything mixed case, simplified
+			regardless, make it consistent, any string properties need to be lower case (id, class, title)
+		data- 
+			can be a collection, or just jam them in the additional
+		review case sensitivity (only id and class?, quirks mode?)
+		reify "shorthand properties"? or avoid them altogether? ordering issues?
+			Style.Background.Color=""
+			Style.BackgroundColor=""
+			Style.backgroundColor=""
+			Style.Background(b=>b.Color="")
+			Style.background=""
+		merge? like for style and additional = new {style="foo"}?
+			simple concat instead of parse?
+		other html5 things
+		style
+		review use of mixed and lower case in attribute properties
+
 
 	scrap templating/snippet support in favor of 100% generated
 		more use of <Action> syntax

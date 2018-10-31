@@ -136,9 +136,9 @@ namespace com.paraquery.Bootstrap.Grids
             //end all elements up to last row or grid/container
             //end last (current) row
             //do not end container
-            while (_stack.Count > 0)
+            while (Stack.Count > 0)
             {
-                Renderer top = _stack.Peek();
+                Renderer top = Stack.Peek();
 
                 if (top is RowTag)
                 {
@@ -170,9 +170,9 @@ namespace com.paraquery.Bootstrap.Grids
             //end all elements up to last column
             //end last (current) column
             //don't end grids, row or containers
-            while (_stack.Count > 0)
+            while (Stack.Count > 0)
             {
-                Renderer top = _stack.Peek();
+                Renderer top = Stack.Peek();
 
                 if (top is ColumnTag)
                 {
@@ -226,7 +226,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IGrid Grid()
         {
-            var grid = new Grid(_context);
+            var grid = new Grid(Context);
             return Push(grid);
         }
 
@@ -235,9 +235,9 @@ namespace com.paraquery.Bootstrap.Grids
         {
             //end all elements up to last grid, if any
             //end last (current) grid
-            while (_stack.Count > 0)
+            while (Stack.Count > 0)
             {
-                Renderer top = _stack.Peek();
+                Renderer top = Stack.Peek();
 
                 if (top is Grid)
                 {

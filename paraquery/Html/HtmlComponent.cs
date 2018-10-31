@@ -16,7 +16,7 @@ namespace com.paraquery.Html
 
         protected override void Comment(string text)
         {
-            HtmlRenderer.HtmlComment(_writer, text);
+            HtmlRenderer.HtmlComment(Writer, text);
         }
 
     }

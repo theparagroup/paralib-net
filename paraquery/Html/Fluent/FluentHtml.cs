@@ -17,12 +17,12 @@ namespace com.paraquery.Html.Fluent
             _tagBuilder = tagBuilder;
 
             //let's start with an html marker
-            Push(new Html(_context));
+            Push(new Html(Context));
         }
 
         protected override void Comment(string text)
         {
-            HtmlRenderer.HtmlComment(_writer, text);
+            HtmlRenderer.HtmlComment(Writer, text);
         }
 
         protected new FluentHtml Push(Renderer renderer)
@@ -67,31 +67,31 @@ namespace com.paraquery.Html.Fluent
 
         public FluentHtml Write(string content)
         {
-            _context.Writer.Write(content);
+            Context.Writer.Write(content);
             return this;
         }
 
         public FluentHtml WriteLine(string content)
         {
-            _context.Writer.WriteLine(content);
+            Context.Writer.WriteLine(content);
             return this;
         }
 
         public FluentHtml NewLine()
         {
-            _context.Writer.NewLine();
+            Context.Writer.NewLine();
             return this;
         }
 
         public FluentHtml Space()
         {
-            _context.Writer.Space();
+            Context.Writer.Space();
             return this;
         }
 
         public FluentHtml Snippet(string text, string newline = null)
         {
-            _context.Writer.Snippet(text, newline);
+            Context.Writer.Snippet(text, newline);
             return this;
         }
 
