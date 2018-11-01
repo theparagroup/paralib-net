@@ -16,8 +16,8 @@ namespace com.paraquery.Html.Fluent
         {
             _tagBuilder = tagBuilder;
 
-            //let's start with an html marker
-            Push(new Html(Context));
+            //let's start with a fluent html marker
+            Push(new FluentHtmlMarker(Context));
         }
 
         protected override void OnDebug(string text)

@@ -8,9 +8,9 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html.Fluent
 {
-    public class Html : HtmlRenderer
+    public class FluentHtmlMarker : HtmlRenderer
     {
-        public Html(Context context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
+        public FluentHtmlMarker(Context context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
         }
 

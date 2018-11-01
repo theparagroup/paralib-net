@@ -145,7 +145,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is Grid || top is ContainerTag)
+                else if (top is GridMarker || top is ContainerTag)
                 {
                     break;
                 }
@@ -179,7 +179,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is Grid || top is ContainerTag || top is RowTag)
+                else if (top is GridMarker || top is ContainerTag || top is RowTag)
                 {
                     break;
                 }
@@ -226,7 +226,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IGrid Grid()
         {
-            var grid = new Grid(Context);
+            var grid = new GridMarker(Context);
             return Push(grid);
         }
 
@@ -239,7 +239,7 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = Stack.Peek();
 
-                if (top is Grid)
+                if (top is GridMarker)
                 {
                     Pop();
                     break;

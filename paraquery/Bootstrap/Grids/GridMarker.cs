@@ -8,9 +8,9 @@ using com.paraquery.Html;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public class Grid : HtmlRenderer
+    public class GridMarker : HtmlRenderer
     {
-        public Grid(Context context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
+        public GridMarker(Context context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
         }
 
