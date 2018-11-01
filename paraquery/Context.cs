@@ -4,26 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Engines.Base
+namespace com.paraquery
 {
-    public abstract class Context:IContext
+    public class Context
     {
-        public IServer Server { protected set; get; }
-        public IRequest Request { protected set; get; }
-        public IWriter Writer { protected set; get; }
+        public IWriter Writer { private set; get; }
+
         public Options Options { get; set; }=new Options();
 
         //namespace stack
         //namespace vars
 
-        public Context(string @namespace, Dictionary<string, string> namespaceVars, Action<Options> init=null)
+        public Context(IWriter writer, Action<Options> init=null)
         {
-
             if (init!=null)
             {
                 init(Options);                
             }
 
+            Writer = writer;
 
             //derived classes create the other components
 

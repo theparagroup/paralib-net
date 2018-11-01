@@ -15,7 +15,7 @@ namespace com.paraquery
     public class pQuery
     {
         protected TagBuilder _tagBuilder;
-        protected IContext _context;
+        protected Context _context;
         protected Bs _bs { set; get; }
 
         public pQuery(TagBuilder tagBuilder)
@@ -27,27 +27,11 @@ namespace com.paraquery
 
         }
 
-        public IContext Context
+        public Context Context
         {
             get
             {
                 return _context;
-            }
-        }
-
-        public IRequest Request
-        {
-            get
-            {
-                return _context.Request;
-            }
-        }
-
-        public IServer Server
-        {
-            get
-            {
-                return _context.Server;
             }
         }
 
@@ -111,7 +95,9 @@ namespace com.paraquery
         public void Ajax(string url, string targetId, object data=null)
         {
             //prefix
-            url = _context.Server.UrlPrefix(url??"");
+            //url = _context.Server.UrlPrefix(url??"");
+
+            throw new Exception("we are no longer expanding url prefixes in paraquery");
 
             //default data
             string dataString = "data";

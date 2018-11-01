@@ -56,7 +56,7 @@ namespace com.paraquery.Rendering
     {
         protected Stack<Renderer> Stack { private set; get; } = new Stack<Renderer>();
 
-        public RendererStack(IContext context, RenderModes renderMode, bool visible = true) : base(context, renderMode, visible)
+        public RendererStack(Context context, RenderModes renderMode, bool visible = true) : base(context, renderMode, visible)
         {
         }
 

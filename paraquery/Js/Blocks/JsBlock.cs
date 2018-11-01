@@ -9,7 +9,7 @@ namespace com.paraquery.Js.Blocks
 {
     public abstract class JsBlock : Renderer
     {
-        public JsBlock(IContext context) : base(context, RenderModes.Block)
+        public JsBlock(Context context) : base(context, RenderModes.Block)
         {
         }
 

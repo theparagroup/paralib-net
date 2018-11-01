@@ -13,7 +13,7 @@ namespace com.paraquery.jQuery.Blocks
     */
     public class Ready : jQueryBlock
     {
-        public Ready(IContext context) : base(context)
+        public Ready(Context context) : base(context)
         {
             Begin();
         }

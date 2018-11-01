@@ -4,15 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.StringContext
+namespace com.paraquery.Writers
 {
-    public class Writer : Engines.Base.Writer
+    public class StringWriter : WriterBase
     {
         protected StringBuilder _sb { get; }= new StringBuilder();
-
-        public Writer(IContext context) : base(context)
-        {
-        }
 
         protected override void _write(string text)
         {
@@ -21,13 +17,13 @@ namespace com.paraquery.StringContext
 
         protected override void _writeLine()
         {
-            _sb.Append(Environment.NewLine);
+            _sb.Append(_newline);
         }
 
         protected override void _writeLine(string text)
         {
             _sb.Append(text);
-            _sb.Append(Environment.NewLine);
+            _sb.Append(_newline);
         }
 
         public override string ToString()

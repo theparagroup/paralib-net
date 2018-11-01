@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Engines.Base
+namespace com.paraquery.Writers
 {
 
-    public abstract class Writer : IWriter
+    public abstract class WriterBase: IWriter
     {
-        protected IContext _context;
         protected int _tabLevel = 0;
         protected List<string> _tabCache;
         protected char _tab;
@@ -29,10 +28,8 @@ namespace com.paraquery.Engines.Base
             }
         }
 
-        public Writer(IContext context)
+        public WriterBase()
         {
-            _context = context;
-
             //these can be changed in derived classes
             _tab = '\t';
 

@@ -16,7 +16,7 @@ namespace com.paraquery.jQuery.Blocks
         protected string _selector;
         protected object _data;
 
-        public Click(IContext context, string selector, object data=null) : base(context)
+        public Click(Context context, string selector, object data=null) : base(context)
         {
             _selector = selector;
             _data = data;

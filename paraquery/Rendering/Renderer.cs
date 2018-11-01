@@ -59,12 +59,12 @@ namespace com.paraquery.Rendering
 
     public abstract class Renderer : BeginBase
     {
-        protected IContext Context { private set; get; }
+        protected Context Context { private set; get; }
         protected IWriter Writer { private set; get; }
         public RenderModes RenderMode { private set; get; }
         public bool Visible { private set; get; }
 
-        protected Renderer(IContext context, RenderModes renderMode, bool visible = true)
+        protected Renderer(Context context, RenderModes renderMode, bool visible = true)
         {
             Context = context;
             Writer = Context.Writer;

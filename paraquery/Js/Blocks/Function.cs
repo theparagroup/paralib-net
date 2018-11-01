@@ -16,7 +16,7 @@ namespace com.paraquery.Js.Blocks
         protected string _name;
         protected string[] _parameters;
 
-        public Function(IContext context, string name, params string[] parameters) : base(context)
+        public Function(Context context, string name, params string[] parameters) : base(context)
         {
             _name = name;
             _parameters = parameters;

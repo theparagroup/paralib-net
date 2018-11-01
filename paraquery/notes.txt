@@ -29,8 +29,8 @@ Design Goals & Notes
 
 --[todo]
 
-	de
-	remember, we're not replacing a web server or mvc in this project,
+	remember, we're not replacing a web server or mvc in this project, just creating
+	a generation library with a focus on building components
 
 	create some components to be used int ttb
 		Page
@@ -42,6 +42,7 @@ Design Goals & Notes
 		View[TModel]
 
 	start converting ttb
+		fix pQuery.Ajax() call - no longer works
 		clean up cruft
 
 

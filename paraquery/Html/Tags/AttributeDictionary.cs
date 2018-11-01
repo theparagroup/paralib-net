@@ -109,47 +109,8 @@ namespace com.paraquery.Html.Tags
   }
   */
 
-    public class AttributeDictionary : Dictionary<string, string>
+    public class AttributeDictionary : NameValuePairs
     {
-
-        public new string this[string index]
-        {
-            set
-            {
-                if (ContainsKey(index))
-                {
-                    base[index] = value;
-                }
-                else
-                {
-                    Add(index, value);
-                }
-            }
-            get
-            {
-                if (ContainsKey(index))
-                {
-                    return base[index];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
-        public new void Add(string name, string value)
-        {
-            if (ContainsKey(name))
-            {
-                base[name] = value;
-            }
-            else
-            {
-                base.Add(name, value);
-            }
-        }
-
 
         public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool preserveCase = false) where T : GlobalAttributes
         {

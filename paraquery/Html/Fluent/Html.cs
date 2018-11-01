@@ -10,7 +10,7 @@ namespace com.paraquery.Html.Fluent
 {
     public class Html : HtmlRenderer
     {
-        public Html(IContext context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
+        public Html(Context context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
         }
 

@@ -10,7 +10,7 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public class Grid : HtmlRenderer
     {
-        public Grid(IContext context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
+        public Grid(Context context) : base(context, RenderModes.Block, context.Options.DebugSourceFormatting)
         {
         }
 

@@ -20,11 +20,8 @@ namespace com.paraquery.Rendering
 
     public abstract class Component : RendererStack
     {
-        protected TagBuilder TagBuilder { private set; get; }
-
-        public Component(TagBuilder tagBuilder, RenderModes renderModes, bool visible) : base(tagBuilder.Context, renderModes, visible)
+        public Component(Context context, RenderModes renderModes, bool visible) : base(context, renderModes, visible)
         {
-            TagBuilder = tagBuilder;
         }
 
         protected override void OnPostBegin()

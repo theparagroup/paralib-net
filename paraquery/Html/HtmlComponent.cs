@@ -10,8 +10,11 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlComponent : Component
     {
-        public HtmlComponent(TagBuilder tagBuilder, RenderModes renderModes, bool visible) : base(tagBuilder, renderModes, visible)
+        protected TagBuilder TagBuilder { private set; get; }
+
+        public HtmlComponent(TagBuilder tagBuilder, RenderModes renderModes, bool visible) : base(tagBuilder.Context, renderModes, visible)
         {
+            TagBuilder = tagBuilder;
         }
 
         protected override void Comment(string text)
