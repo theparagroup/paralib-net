@@ -81,9 +81,9 @@ namespace com.paraquery.Html.Tags
 
         }
 
-        protected override void Debug(string text)
+        protected override void OnDebug(string text)
         {
-            base.Debug($"{text} {_tagName} {_attributes?["id"]}");
+            Comment($"{text} {_tagName} {_attributes?["id"]}");
         }
 
         protected override void OnBegin()

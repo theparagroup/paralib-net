@@ -13,7 +13,7 @@ namespace com.paraquery.jQuery.Blocks
         {
         }
 
-        protected override void Comment(string text)
+        protected override void OnDebug(string text)
         {
             Writer.Write($" // {text}");
         }

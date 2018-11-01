@@ -13,14 +13,19 @@ namespace com.paraquery.Html
         {
         }
 
-        public static void HtmlComment(Writer writer, string text)
+        public static void Comment(Writer writer, string text)
         {
             writer.Write($"<!-- {text} -->");
         }
 
-        protected override void Comment(string text)
+        public void Comment(string text)
         {
-            HtmlComment(Writer, text);
+            Writer.Write($"<!-- {text} -->");
+        }
+
+        protected override void OnDebug(string text)
+        {
+            Comment(text);
         }
 
 

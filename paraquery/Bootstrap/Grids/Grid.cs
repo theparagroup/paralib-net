@@ -16,12 +16,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         protected override void OnBegin()
         {
-            Comment("fluent bootstrap grid start -->");
+            Comment("fluent bootstrap grid start");
         }
 
         protected override void OnEnd()
         {
-           Comment("<!-- fluent bootstrap grid end -->");
+            Comment("fluent bootstrap grid start");
         }
     }
 }

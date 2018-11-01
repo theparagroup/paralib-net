@@ -20,9 +20,9 @@ namespace com.paraquery.Html.Fluent
             Push(new Html(Context));
         }
 
-        protected override void Comment(string text)
+        protected override void OnDebug(string text)
         {
-            HtmlRenderer.HtmlComment(Writer, text);
+            HtmlRenderer.Comment(Writer, text);
         }
 
         protected new FluentHtml Push(Renderer renderer)

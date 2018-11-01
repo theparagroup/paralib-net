@@ -72,14 +72,16 @@ namespace com.paraquery.Rendering
             Visible = visible;
         }
 
-        protected abstract void Comment(string text);
-
-        protected virtual void Debug(string text)
+        protected void Debug(string text)
         {
             if (Context.Options.DebugSourceFormatting)
             {
-                Comment($" {text}");
+                OnDebug($" {text}");
             }
+        }
+
+        protected virtual void OnDebug(string text)
+        {
         }
 
         protected override void DoBegin()
