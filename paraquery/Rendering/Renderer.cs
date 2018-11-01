@@ -59,6 +59,7 @@ namespace com.paraquery.Rendering
 
     public abstract class Renderer : BeginBase
     {
+        private bool _debugSourceFormatting;
         protected Context Context { private set; get; }
         protected Writer Writer { private set; get; }
         public RenderModes RenderMode { private set; get; }
@@ -70,14 +71,13 @@ namespace com.paraquery.Rendering
             Writer = Context.Writer;
             RenderMode = renderMode;
             Visible = visible;
+
+            _debugSourceFormatting = Context.Options.DebugSourceFormatting;
         }
 
         protected void Debug(string text)
         {
-            if (Context.Options.DebugSourceFormatting)
-            {
-                OnDebug($" {text}");
-            }
+            OnDebug($" {text}");
         }
 
         protected virtual void OnDebug(string text)
@@ -102,7 +102,11 @@ namespace com.paraquery.Rendering
                 //this should be conditional on if newline was called last before this block started
                 if (!Writer.IsNewLine)
                 {
-                    Debug($"nl prebegin");
+                    if (_debugSourceFormatting)
+                    {
+                        Debug($"nl prebegin");
+                    }
+
                     Writer.NewLine();
                 }
             }
@@ -116,7 +120,11 @@ namespace com.paraquery.Rendering
                 //this should be conditional on if newline was called last in OnBegin
                 if (!Writer.IsNewLine)
                 {
-                    Debug($"nl postbegin");
+                    if (_debugSourceFormatting)
+                    {
+                        Debug($"nl postbegin");
+                    }
+
                     Writer.NewLine();
                 }
 
@@ -144,7 +152,10 @@ namespace com.paraquery.Rendering
                 //this should be conditional on if newline was called last in the content
                 if (!Writer.IsNewLine)
                 {
-                    Debug($"nl preend");
+                    if (_debugSourceFormatting)
+                    {
+                        Debug($"nl preend");
+                    }
 
                     Writer.NewLine();
                 }
@@ -163,7 +174,11 @@ namespace com.paraquery.Rendering
                 //this should be conditional on if newline was called last when this block ended
                 if (!Writer.IsNewLine)
                 {
-                    Debug($"nl postend");
+                    if (_debugSourceFormatting)
+                    {
+                        Debug($"nl postend");
+                    }
+
                     Writer.NewLine();
                 }
             }
