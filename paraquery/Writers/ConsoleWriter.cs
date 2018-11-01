@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Writers
 {
-    public class ConsoleWriter : WriterBase
+    public class ConsoleWriter : Writer
     {
 
         protected override void _write(string text)

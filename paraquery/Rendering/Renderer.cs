@@ -60,7 +60,7 @@ namespace com.paraquery.Rendering
     public abstract class Renderer : BeginBase
     {
         protected Context Context { private set; get; }
-        protected IWriter Writer { private set; get; }
+        protected Writer Writer { private set; get; }
         public RenderModes RenderMode { private set; get; }
         public bool Visible { private set; get; }
 

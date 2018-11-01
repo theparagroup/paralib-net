@@ -35,7 +35,7 @@ namespace com.paraquery
             }
         }
 
-        public IWriter Writer
+        public Writer Writer
         {
             get
             {

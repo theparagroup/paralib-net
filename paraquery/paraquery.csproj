@@ -48,7 +48,6 @@
     <Compile Include="Html\HtmlComponent.cs" />
     <Compile Include="Html\HtmlRenderer.cs" />
     <Compile Include="Html\Tags\Tag.cs" />
-    <Compile Include="IWriter.cs" />
     <Compile Include="NameValuePairs.cs" />
     <Compile Include="Rendering\BlockRenderer.cs" />
     <Compile Include="Rendering\Component.cs" />
@@ -61,7 +60,7 @@
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid_.cs" />
     <Compile Include="Writers\ConsoleWriter.cs" />
-    <Compile Include="Writers\WriterBase.cs" />
+    <Compile Include="Writer.cs" />
     <Compile Include="Writers\StringWriter.cs" />
     <Compile Include="Html\Tags\AttributeDictionary.cs" />
     <Compile Include="Html\Attributes\Color.cs" />

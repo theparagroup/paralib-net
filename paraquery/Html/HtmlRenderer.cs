@@ -13,7 +13,7 @@ namespace com.paraquery.Html
         {
         }
 
-        public static void HtmlComment(IWriter writer, string text)
+        public static void HtmlComment(Writer writer, string text)
         {
             writer.Write($"<!-- {text} -->");
         }

@@ -11,7 +11,7 @@ namespace com.paraquery.Html.Tags
     public partial class TagBuilder
     {
         protected Context _context;
-        protected IWriter _writer;
+        protected Writer _writer;
 
         public TagBuilder(Context context)
         {

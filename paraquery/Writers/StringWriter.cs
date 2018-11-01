@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Writers
 {
-    public class StringWriter : WriterBase
+    public class StringWriter : Writer
     {
         protected StringBuilder _sb { get; }= new StringBuilder();
 

@@ -8,14 +8,14 @@ namespace com.paraquery
 {
     public class Context
     {
-        public IWriter Writer { private set; get; }
+        public Writer Writer { private set; get; }
 
         public Options Options { get; set; }=new Options();
 
         //namespace stack
         //namespace vars
 
-        public Context(IWriter writer, Action<Options> init=null)
+        public Context(Writer writer, Action<Options> init=null)
         {
             if (init!=null)
             {
