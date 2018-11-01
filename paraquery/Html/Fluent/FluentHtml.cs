@@ -8,14 +8,11 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Fluent
 {
-    public partial class FluentHtml : RendererStack
+    public partial class FluentHtml : HtmlComponent
     {
-        protected TagBuilder _tagBuilder;
 
-        public FluentHtml(TagBuilder tagBuilder) : base(tagBuilder.Context, RenderModes.Inline, true)
+        public FluentHtml(Context context) : base(context, FormatModes.None, StackModes.Block)
         {
-            _tagBuilder = tagBuilder;
-
             //let's start with a fluent html marker
             Push(new FluentHtmlMarker(Context));
         }

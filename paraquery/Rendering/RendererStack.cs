@@ -56,7 +56,7 @@ namespace com.paraquery.Rendering
     {
         protected Stack<Renderer> Stack { private set; get; } = new Stack<Renderer>();
 
-        public RendererStack(Context context, RenderModes renderMode, bool visible = true) : base(context, renderMode, visible)
+        public RendererStack(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
         {
         }
 
@@ -73,12 +73,6 @@ namespace com.paraquery.Rendering
             }
         }
 
-
-        public virtual void Open(Renderer renderer)
-        {
-            Push(renderer);
-        }
-
         protected void Push(Renderer renderer)
         {
             //if we're putting a non-inline under an inline,
@@ -90,7 +84,7 @@ namespace com.paraquery.Rendering
             {
                 Renderer top = Stack.Peek();
 
-                if ((renderer.RenderMode != RenderModes.Inline && top.RenderMode == RenderModes.Inline) || top.RenderMode == RenderModes.Line)
+                if ((renderer.StackMode != StackModes.Inline && top.StackMode == StackModes.Inline) || top.StackMode == StackModes.Line)
                 {
                     CloseBlock();
                 }
@@ -103,10 +97,9 @@ namespace com.paraquery.Rendering
             Stack.Push(renderer);
         }
 
-        public virtual void Close()
+        public virtual void Open(Renderer renderer)
         {
-            //close last renderer
-            Pop();
+            Push(renderer);
         }
 
         protected virtual void Pop()
@@ -118,6 +111,33 @@ namespace com.paraquery.Rendering
             }
         }
 
+        public virtual void Close()
+        {
+            //close last renderer
+            Pop();
+        }
+
+        public virtual void Close(Renderer renderer)
+        {
+            //end all renderers up to and including the specified one
+            while (Stack.Count > 0)
+            {
+                Renderer top = Stack.Peek();
+
+                if (top == renderer)
+                {
+                    Pop();
+                    break;
+                }
+                else
+                {
+                    Pop();
+                }
+            }
+
+        }
+
+
         public virtual void CloseBlock()
         {
             //end all inline renderers up to and including the last non-inline
@@ -125,7 +145,7 @@ namespace com.paraquery.Rendering
             {
                 Renderer top = Stack.Peek();
 
-                if (top.RenderMode!=RenderModes.Inline)
+                if (top.StackMode != StackModes.Inline)
                 {
                     Pop();
                     break;
@@ -136,6 +156,7 @@ namespace com.paraquery.Rendering
                 }
             }
         }
+
 
         public virtual void CloseAll()
         {

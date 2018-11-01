@@ -26,6 +26,8 @@ namespace com.paraquery.Rendering
             OnPreBegin();
             OnBegin();
             OnPostBegin();
+            OnPreContent();
+
         }
 
         protected virtual void OnPreBegin() { }
@@ -34,6 +36,21 @@ namespace com.paraquery.Rendering
 
         protected virtual void OnPostBegin() { }
 
+        protected virtual void OnPreContent()
+        {
+
+        }
+
+        protected override void OnPreEnd()
+        {
+            OnPostContent();
+            base.OnPreEnd();
+        }
+
+        protected virtual void OnPostContent()
+        {
+
+        }
 
     }
 }

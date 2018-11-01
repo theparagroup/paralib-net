@@ -20,34 +20,9 @@ namespace com.paraquery.Rendering
 
     public abstract class Component : RendererStack
     {
-        public Component(Context context, RenderModes renderModes, bool visible) : base(context, renderModes, visible)
+        public Component(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
         {
         }
-
-        protected override void OnPostBegin()
-        {
-            base.OnPostBegin();
-
-            OnPreContent();
-        }
-
-        protected virtual void OnPreContent()
-        {
-
-        }
-
-        protected override void OnPreEnd()
-        {
-            OnPostContent();
-
-            base.OnPreEnd();
-        }
-
-        protected virtual void OnPostContent()
-        {
-
-        }
-
 
     }
 }

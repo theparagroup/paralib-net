@@ -11,20 +11,16 @@ namespace com.paraquery.Html.Tags
     public partial class TagBuilder
     {
         protected Context _context;
-        protected Writer _writer;
 
         public TagBuilder(Context context)
         {
             _context = context;
-            _writer = _context.Writer;
         }
 
-        public Context Context
+        protected virtual AttributeDictionary Attributes(object attributes)
         {
-            get
-            {
-                return _context;
-            }
+            //this method is just to simplify tag methods...
+            return AttributeDictionary.Attributes(attributes);
         }
 
         protected virtual AttributeDictionary Attributes<T>(Action<T> init = null) where T : GlobalAttributes, new()
@@ -33,67 +29,54 @@ namespace com.paraquery.Html.Tags
             return AttributeDictionary.Attributes(init, null);
         }
 
-        public virtual void Attribute(string name, string value = null)
+        public virtual Tag Block(string name, object attributes = null, bool empty = false)
         {
-            //TODO escaping quotes? escaping in general?
-
-            if (name != null)
-            {
-                if (value == null)
-                {
-                    //boolean
-                    _writer.Write($" {name}");
-                }
-                else
-                {
-                    _writer.Write($" {name}=\"{value}\"");
-                }
-
-            }
+            return new Tag(_context, name, true, empty, Attributes(attributes));
         }
 
-        public virtual void Attributes(AttributeDictionary dictionary)
+        public virtual Tag Inline(string name, object attributes = null, bool empty = false)
         {
-            if (dictionary != null)
-            {
-                foreach (var name in dictionary.Keys)
-                {
-                    Attribute(name, dictionary[name]);
-                }
-            }
+            return new Tag(_context, name, false, empty, Attributes(attributes));
         }
 
-        public virtual void Open(string name, bool empty, AttributeDictionary attributes = null)
+        public virtual Tag Html(object attributes = null)
         {
-            _writer.Write($"<{name}");
-
-            Attributes(attributes);
-
-            if (!empty)
-            {
-                _writer.Write(">");
-            }
-
+            return new Tag(_context, "html", true, false, Attributes(attributes));
         }
 
-        public virtual void Close(string name, bool empty)
+        public virtual Tag Head(object attributes = null)
         {
-            if (empty)
-            {
-                if (_context.Options.SelfClosingTags)
-                {
-                    _writer.Write(" />");
-                }
-                else
-                {
-                    _writer.Write(">");
-                }
-            }
-            else
-            {
-                _writer.Write($"</{name}>");
-            }
+            return new Tag(_context, "head", true, false, Attributes(attributes));
+        }
 
+        public virtual Tag Title(Action<GlobalAttributes> attributes = null)
+        {
+            return new Tag(_context, "title", false, false, Attributes(attributes));
+        }
+
+        public virtual Tag Body(object attributes = null)
+        {
+            return new Tag(_context, "body", true, false, Attributes(attributes));
+        }
+
+        public virtual Tag Div(Action<GlobalAttributes> attributes = null)
+        {
+            return new Tag(_context, "div", true, false, Attributes(attributes));
+        }
+
+        public virtual Tag Span(Action<GlobalAttributes> attributes = null)
+        {
+            return new Tag(_context, "span", false, false, Attributes(attributes));
+        }
+
+        public virtual Tag Hr(Action<HrAttributes> attributes = null)
+        {
+            return new Tag(_context, "hr", true, true, Attributes(attributes));
+        }
+
+        public virtual Tag Script(Action<ScriptAttributes> attributes = null)
+        {
+            return new Tag(_context, "script", true, false, Attributes(attributes));
         }
 
     }

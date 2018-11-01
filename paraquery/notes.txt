@@ -45,7 +45,9 @@ Design Goals & Notes
 		remove UrlPrefix() from context
 		refactor pQuery.Ajax() calls to do url resolution outside
 		clean up cruft
-
+		once razor is gone
+			remove paraviews, etc
+			re-org project to logically group controllers, pages, fragments
 
 	better formatting for attribute names, underscores, etc
 		design goals

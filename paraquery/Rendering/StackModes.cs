@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Rendering
 {
-    public enum RenderModes
+    public enum StackModes
     {
         Inline,
         Line,

@@ -12,9 +12,9 @@ namespace com.paraquery.Html
     {
         protected TagBuilder TagBuilder { private set; get; }
 
-        public HtmlComponent(TagBuilder tagBuilder, RenderModes renderModes, bool visible) : base(tagBuilder.Context, renderModes, visible)
+        public HtmlComponent(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
         {
-            TagBuilder = tagBuilder;
+            TagBuilder = new TagBuilder(context);
         }
 
         protected override void OnDebug(string text)

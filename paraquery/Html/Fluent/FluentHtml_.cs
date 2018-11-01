@@ -11,34 +11,34 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml
     {
 
-        public virtual FluentHtml Block(string name, Action<GlobalAttributes> attributes = null, bool empty=false)
+        public virtual FluentHtml Block(string name, object attributes = null, bool empty=false)
         {
-            return Push(_tagBuilder.Block(name, attributes, empty));
+            return Push(TagBuilder.Block(name, attributes, empty));
         }
 
-        public virtual FluentHtml Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        public virtual FluentHtml Inline(string name, object attributes = null, bool empty = false)
         {
-            return Push(_tagBuilder.Inline(name, attributes, empty));
+            return Push(TagBuilder.Inline(name, attributes, empty));
         }
 
         public virtual FluentHtml Div(Action<GlobalAttributes> attributes = null)
         {
-            return Push(_tagBuilder.Div(attributes));
+            return Push(TagBuilder.Div(attributes));
         }
 
         public virtual FluentHtml Span(Action<GlobalAttributes> attributes = null)
         {
-            return Push(_tagBuilder.Span(attributes));
+            return Push(TagBuilder.Span(attributes));
         }
 
         public virtual FluentHtml Hr(Action<HrAttributes> attributes = null)
         {
-            return Push(_tagBuilder.Hr(attributes));
+            return Push(TagBuilder.Hr(attributes));
         }
 
         public virtual FluentHtml Script(Action<ScriptAttributes> attributes = null)
         {
-            return Push(_tagBuilder.Script(attributes));
+            return Push(TagBuilder.Script(attributes));
         }
 
     }

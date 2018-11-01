@@ -48,35 +48,53 @@ namespace com.paraquery.Html.Tags
 
     public class Tag : HtmlRenderer
     {
-        protected TagBuilder _tagBuilder;
         protected string _tagName;
         protected bool _empty;
         protected AttributeDictionary _attributes;
 
-        public Tag(TagBuilder tagBuilder, string tagName, bool block, bool empty, AttributeDictionary attributes):base(tagBuilder.Context, GetRenderMode(block, empty))
+        public Tag(Context context, string tagName, bool block, bool empty, AttributeDictionary attributes):base(context, GetFormatMode(block, empty), GetStackMode(block, empty))
         {
-            _tagBuilder = tagBuilder;
             _tagName = tagName;
             _empty = empty;
             _attributes = attributes;
         }
 
-        private static RenderModes GetRenderMode(bool block, bool empty)
+        private static FormatModes GetFormatMode(bool block, bool empty)
         {
             if (block)
             {
                 if (empty)
                 {
-                    return RenderModes.Line;
+                    return FormatModes.Line;
                 }
                 else
                 {
-                    return RenderModes.Block;
+                    return FormatModes.Block;
                 }
             }
             else
             {
-                return RenderModes.Inline;
+                return FormatModes.None;
+            }
+
+        }
+
+        private static StackModes GetStackMode(bool block, bool empty)
+        {
+            if (block)
+            {
+                if (empty)
+                {
+                    return StackModes.Line;
+                }
+                else
+                {
+                    return StackModes.Block;
+                }
+            }
+            else
+            {
+                return StackModes.Inline;
             }
 
         }
@@ -86,14 +104,68 @@ namespace com.paraquery.Html.Tags
             Comment($"{text} {_tagName} {_attributes?["id"]}");
         }
 
+
+       
+
+        public virtual void Attribute(string name, string value = null)
+        {
+            //TODO escaping quotes? escaping in general?
+
+            if (name != null)
+            {
+                if (value == null)
+                {
+                    //boolean
+                    Writer.Write($" {name}");
+                }
+                else
+                {
+                    Writer.Write($" {name}=\"{value}\"");
+                }
+
+            }
+        }
+
+        public virtual void Attributes(AttributeDictionary dictionary)
+        {
+            if (dictionary != null)
+            {
+                foreach (var name in dictionary.Keys)
+                {
+                    Attribute(name, dictionary[name]);
+                }
+            }
+        }
+
         protected override void OnBegin()
         {
-            _tagBuilder.Open(_tagName, _empty, _attributes);
+            Writer.Write($"<{_tagName}");
+
+            Attributes(_attributes);
+
+            if (!_empty)
+            {
+                Writer.Write(">");
+            }
         }
 
         protected override void OnEnd()
         {
-            _tagBuilder.Close(_tagName, _empty);
+            if (_empty)
+            {
+                if (Context.Options.SelfClosingTags)
+                {
+                    Writer.Write(" />");
+                }
+                else
+                {
+                    Writer.Write(">");
+                }
+            }
+            else
+            {
+                Writer.Write($"</{_tagName}>");
+            }
         }
 
     }

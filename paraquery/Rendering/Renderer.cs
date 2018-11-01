@@ -16,16 +16,12 @@ namespace com.paraquery.Rendering
 
         Using Begin and End semantics you can build custom renderers, as we do with HTML tags.
 
-        Renderers can be visible or invisible. This refers to the block start and end, not 
-        content. Content is always visible if present, and is not completely under the control
-        of the block at any rate (an instantiater can always inject into the writer stream between
-        Begin() and End() calls). Having an invisible Renderer is usefull for creating controls and 
-        other logical components such as the Grid class, which generally doesn't generate output,
-        but may wish to in a debugging mode.
+        Renderers can be formatted or unformatted. Formatted Renderers use newlines and the indent
+        level to "pretty print", but otherwise all of the "OnXXX" methods are called, OnEnd(), etc.
 
         Renderers are formatted (pretty-printed) based on thier RenderMode:
 
-            Inline:
+            Inline (effectively the same as Component, except the RendererStack treats it differently):
 
                 {outside content}[start]{inside content}[end]{outside content}
 
@@ -62,17 +58,17 @@ namespace com.paraquery.Rendering
         private bool _debugSourceFormatting;
         protected Context Context { private set; get; }
         protected Writer Writer { private set; get; }
-        public RenderModes RenderMode { private set; get; }
-        public bool Visible { private set; get; }
+        public FormatModes FormatMode { private set; get; }
+        public StackModes StackMode { private set; get; }
 
-        protected Renderer(Context context, RenderModes renderMode, bool visible = true)
+        protected Renderer(Context context, FormatModes formatMode, StackModes stackMode)
         {
+            _debugSourceFormatting = context.Options.DebugSourceFormatting;
+
             Context = context;
             Writer = Context.Writer;
-            RenderMode = renderMode;
-            Visible = visible;
-
-            _debugSourceFormatting = Context.Options.DebugSourceFormatting;
+            FormatMode = formatMode;
+            StackMode = stackMode;
         }
 
         protected void Debug(string text)
@@ -84,19 +80,9 @@ namespace com.paraquery.Rendering
         {
         }
 
-        protected override void DoBegin()
-        {
-            //don't call OnPreBegin, Begin, or OnPostBegin if we're not visible
-
-            if (Visible)
-            {
-                base.DoBegin();
-            }
-        }
-
         protected override void OnPreBegin()
         {
-            if (RenderMode == RenderModes.Line || RenderMode == RenderModes.Block)
+            if (FormatMode == FormatModes.Line || FormatMode == FormatModes.Block)
             {
                 //make sure we start on a newline
                 //this should be conditional on if newline was called last before this block started
@@ -114,7 +100,7 @@ namespace com.paraquery.Rendering
 
         protected override void OnPostBegin()
         {
-            if (RenderMode == RenderModes.Block)
+            if (FormatMode == FormatModes.Block)
             {
                 //make sure content starts on a newline
                 //this should be conditional on if newline was called last in OnBegin
@@ -131,22 +117,11 @@ namespace com.paraquery.Rendering
                 //make sure content (for non-empty blocks) is indented
                 Writer.Indent();
             }
-
-        }
-
-        protected override void DoEnd()
-        {
-            //don't call OnPreEnd, End, or OnPostEnd if we're not visible
-
-            if (Visible)
-            {
-                base.DoEnd();
-            }
         }
 
         protected override void OnPreEnd()
         {
-            if (RenderMode == RenderModes.Block)
+            if (FormatMode == FormatModes.Block)
             {
                 //make sure blocks with endings (non-empty) end on a newline, and back out the ident level
                 //this should be conditional on if newline was called last in the content
@@ -167,8 +142,7 @@ namespace com.paraquery.Rendering
 
         protected override void OnPostEnd()
         {
-
-            if (RenderMode == RenderModes.Line || RenderMode == RenderModes.Block)
+            if (FormatMode == FormatModes.Line || FormatMode == FormatModes.Block)
             {
                 //make sure we end with a newline
                 //this should be conditional on if newline was called last when this block ended
@@ -183,8 +157,6 @@ namespace com.paraquery.Rendering
                 }
             }
         }
-
-
 
     }
 }

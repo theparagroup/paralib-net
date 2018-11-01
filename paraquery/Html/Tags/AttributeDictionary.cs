@@ -112,6 +112,13 @@ namespace com.paraquery.Html.Tags
     public class AttributeDictionary : NameValuePairs
     {
 
+        public static AttributeDictionary Attributes(object attributes)
+        {
+            AttributeDictionary dictionary = new AttributeDictionary();
+            BuildAttributeDictionary(dictionary, attributes, null);
+            return dictionary;
+        }
+
         public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool preserveCase = false) where T : GlobalAttributes
         {
             BuildAttributeDictionary(dictionary, attributes, typeof(T), preserveCase);
@@ -119,100 +126,106 @@ namespace com.paraquery.Html.Tags
 
         public static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, Type type, bool preserveCase = false)
         {
-            if (type == null)
+            if (attributes != null)
             {
-                type = attributes.GetType();
-            }
 
-            BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
-            //this includes inherited properties
-            foreach (var pi in type.GetProperties(bindingFlags))
-            {
-                object v = pi.GetValue(attributes);
-
-                if (v != null)
+                if (type == null)
                 {
-                    //if you have two properties with same name but different case, results are undefined
+                    type = attributes.GetType();
+                }
 
-                    string name;
-                    string value = null;
+                BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
-                    if (!preserveCase)
-                    {
-                        name = pi.Name.ToLower();
-                    }
-                    else
-                    {
-                        name = pi.Name;
-                    }
+                //this includes inherited properties
+                foreach (var pi in type.GetProperties(bindingFlags))
+                {
+                    object v = pi.GetValue(attributes);
 
-                    if (typeof(IComplexAttribute).IsAssignableFrom(pi.PropertyType))
+                    if (v != null)
                     {
-                        //very important that this interface is implemented explicitly or you will recurse endlessly
-                        value = ((IComplexAttribute)v).Value;
-                    }
-                    else if (pi.PropertyType == typeof(string))
-                    {
-                        value = (string)v;
-                    }
-                    else if (pi.PropertyType == typeof(int?))
-                    {
-                        int? i = (int?)v;
-                        if (i.HasValue)
+                        //if you have two properties with same name but different case, results are undefined
+
+                        string name;
+                        string value = null;
+
+                        if (!preserveCase)
                         {
-                            value = i.ToString();
-                        }
-                    }
-                    else if (pi.PropertyType == typeof(bool?))
-                    {
-                        bool? b = (bool?)v;
-                        if (b.HasValue)
-                        {
-                            value = b.ToString(); //tolower?
-                        }
-                    }
-                    else if (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false)
-                    {
-                        //this is name value pair
-                        dictionary.Add(name, v.ToString().ToLower());
-                    }
-                    else
-                    {
-                        //ignore unknown types
-                    }
-
-                    if (value != null)
-                    {
-                        if (!dictionary.ContainsKey(name))
-                        {
-                            dictionary.Add(name, value);
+                            name = pi.Name.ToLower();
                         }
                         else
                         {
-                            dictionary[name] = value;
+                            name = pi.Name;
                         }
+
+                        if (typeof(IComplexAttribute).IsAssignableFrom(pi.PropertyType))
+                        {
+                            //very important that this interface is implemented explicitly or you will recurse endlessly
+                            value = ((IComplexAttribute)v).Value;
+                        }
+                        else if (pi.PropertyType == typeof(string))
+                        {
+                            value = (string)v;
+                        }
+                        else if (pi.PropertyType == typeof(int?))
+                        {
+                            int? i = (int?)v;
+                            if (i.HasValue)
+                            {
+                                value = i.ToString();
+                            }
+                        }
+                        else if (pi.PropertyType == typeof(bool?))
+                        {
+                            bool? b = (bool?)v;
+                            if (b.HasValue)
+                            {
+                                value = b.ToString(); //tolower?
+                            }
+                        }
+                        else if (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false)
+                        {
+                            //this is name value pair
+                            dictionary.Add(name, v.ToString().ToLower());
+                        }
+                        else
+                        {
+                            //ignore unknown types
+                        }
+
+                        if (value != null)
+                        {
+                            if (!dictionary.ContainsKey(name))
+                            {
+                                dictionary.Add(name, value);
+                            }
+                            else
+                            {
+                                dictionary[name] = value;
+                            }
+                        }
+
+                    }
+                }
+
+                //process "additional" attributes
+                {
+                    var pi = type.GetProperty("Attributes", bindingFlags);
+
+                    if (pi == null)
+                    {
+                        pi = type.GetProperty("attributes", bindingFlags);
                     }
 
-                }
-            }
-
-            //process "additional" attributes
-            {
-                var pi = type.GetProperty("Attributes", bindingFlags);
-
-                if (pi == null)
-                {
-                    pi = type.GetProperty("attributes", bindingFlags);
-                }
-
-                if (pi != null)
-                {
-                    object v = pi.GetValue(attributes);
-                    BuildAttributeDictionary(dictionary, v, null);
+                    if (pi != null)
+                    {
+                        object v = pi.GetValue(attributes);
+                        BuildAttributeDictionary(dictionary, v, null);
+                    }
                 }
             }
         }
+       
 
         public static AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
         {

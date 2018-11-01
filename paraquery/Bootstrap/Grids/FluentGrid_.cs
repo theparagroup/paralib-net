@@ -31,12 +31,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         IColumn IColumn.Block(string name, Action<GlobalAttributes> attributes, bool empty)
         {
-            return Push(_tagBuilder.Block(name, attributes, empty));
+            return Push(TagBuilder.Block(name, attributes, empty));
         }
 
         IColumn IColumn.Inline(string name, Action<GlobalAttributes> attributes, bool empty)
         {
-            return Push(_tagBuilder.Inline(name, attributes, empty));
+            return Push(TagBuilder.Inline(name, attributes, empty));
         }
 
         IColumn IColumn.Div(Action<GlobalAttributes> attributes)

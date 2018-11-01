@@ -87,7 +87,7 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _classes;
         protected int _columnNumber;
 
-        public FluentGrid(TagBuilder tagBuilder) : base(tagBuilder)
+        public FluentGrid(Context context) : base(context)
         {
             //let's always start with a grid marker
             Grid();
@@ -127,7 +127,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IContainer Container(Action<GlobalAttributes> init = null, bool fluid = false)
         {
-            return Push(new ContainerTag(_tagBuilder, AttributeDictionary.Attributes(init, new { @class = fluid ? "container-fluid" : "container" })));
+            return Push(new ContainerTag(Context, AttributeDictionary.Attributes(init, new { @class = fluid ? "container-fluid" : "container" })));
         }
 
 
@@ -162,7 +162,7 @@ namespace com.paraquery.Bootstrap.Grids
         public IRow Row(Action<GlobalAttributes> init)
         {
             CloseRow();
-            return Push(new RowTag(_tagBuilder, AttributeDictionary.Attributes(init, new { @class = "row"})));
+            return Push(new RowTag(Context, AttributeDictionary.Attributes(init, new { @class = "row"})));
         }
 
         protected void CloseColumn()
@@ -209,7 +209,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new ColumnTag(_tagBuilder, AttributeDictionary.Attributes(init, new { @class = columnClasses })));
+            return Push(new ColumnTag(Context, AttributeDictionary.Attributes(init, new { @class = columnClasses })));
         }
 
         public new IColumn Open(Renderer renderer)

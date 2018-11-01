@@ -9,7 +9,7 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public class ColumnTag : Tag
     {
-        public ColumnTag(TagBuilder tagBuilder, AttributeDictionary attributes) : base(tagBuilder, "div", true, false, attributes)
+        public ColumnTag(Context context, AttributeDictionary attributes) : base(context, "div", true, false, attributes)
         {
         }
     }
