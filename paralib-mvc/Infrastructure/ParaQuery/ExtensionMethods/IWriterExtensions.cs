@@ -19,22 +19,22 @@ namespace com.paraquery
 
         */
 
-        public static void Write(this IWriter writer, Func<dynamic, System.Web.WebPages.HelperResult> content)
+        public static void Write(this Writer writer, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
             writer.Write(content(null).ToHtmlString());
         }
 
-        public static void WriteLine(this IWriter writer, Func<dynamic, System.Web.WebPages.HelperResult> content)
+        public static void WriteLine(this Writer writer, Func<dynamic, System.Web.WebPages.HelperResult> content)
         {
             writer.WriteLine(content(null).ToHtmlString());
         }
 
-        public static void Write(this IWriter writer, System.Web.Mvc.MvcHtmlString content)
+        public static void Write(this Writer writer, System.Web.Mvc.MvcHtmlString content)
         {
             writer.Write(content?.ToHtmlString());
         }
 
-        public static void WriteLine(this IWriter writer, System.Web.Mvc.MvcHtmlString content)
+        public static void WriteLine(this Writer writer, System.Web.Mvc.MvcHtmlString content)
         {
             writer.WriteLine(content?.ToHtmlString());
         }

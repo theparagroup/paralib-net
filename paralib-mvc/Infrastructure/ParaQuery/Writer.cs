@@ -8,11 +8,11 @@ using System.IO;
 
 namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
-    public class Writer : paraquery.Engines.Base.Writer
+    public class Writer : paraquery.Writer
     {
         protected TextWriter _writer { get; private set; }
 
-        public Writer(IContext context, TextWriter writer) : base(context)
+        public Writer(TextWriter writer)
         {
             _writer = writer;
         }

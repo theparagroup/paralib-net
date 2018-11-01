@@ -42,7 +42,8 @@ Design Goals & Notes
 		View[TModel]
 
 	start converting ttb
-		fix pQuery.Ajax() call - no longer works
+		remove UrlPrefix() from context
+		refactor pQuery.Ajax() calls to do url resolution outside
 		clean up cruft
 
 

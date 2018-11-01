@@ -94,10 +94,8 @@ namespace com.paraquery
 
         public void Ajax(string url, string targetId, object data=null)
         {
-            //prefix
-            //url = _context.Server.UrlPrefix(url??"");
-
-            throw new Exception("we are no longer expanding url prefixes in paraquery");
+            //prefix - TODO refactor this out
+            url = _context.UrlPrefix(url??"");
 
             //default data
             string dataString = "data";
