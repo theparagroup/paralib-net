@@ -75,26 +75,31 @@ namespace com.paraquery.Rendering
 
         protected void Push(Renderer renderer)
         {
-            //if we're putting a non-inline under an inline,
-            //or anything under a line,
-            //close all renderers up to and including the last non-inline and start a new one
-            //else nest this renderer inside the last renderer
-
-            if (Stack.Count > 0)
+            //we don't want nulls on the stack
+            if (renderer != null)
             {
-                Renderer top = Stack.Peek();
 
-                if ((renderer.StackMode != StackModes.Inline && top.StackMode == StackModes.Inline) || top.StackMode == StackModes.Line)
+                //if we're putting a non-inline under an inline,
+                //or anything under a line,
+                //close all renderers up to and including the last non-inline and start a new one
+                //else nest this renderer inside the last renderer
+
+                if (Stack.Count > 0)
                 {
-                    CloseBlock();
+                    Renderer top = Stack.Peek();
+
+                    if ((renderer.StackMode != StackModes.Inline && top.StackMode == StackModes.Inline) || top.StackMode == StackModes.Line)
+                    {
+                        CloseBlock();
+                    }
                 }
+
+                //begin it
+                renderer.Begin();
+
+                //push it
+                Stack.Push(renderer);
             }
-
-            //begin it
-            renderer.Begin();
-
-            //push it
-            Stack.Push(renderer);
         }
 
         public virtual void Open(Renderer renderer)
@@ -107,7 +112,12 @@ namespace com.paraquery.Rendering
             if (Stack.Count > 0)
             {
                 Renderer top = Stack.Pop();
-                top.End();
+
+                //derived classes can always bypass Push()
+                if (top!=null)
+                {
+                    top.End();
+                }
             }
         }
 

@@ -10,81 +10,83 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlPage : HtmlComponent
     {
-        protected DocTypes? _docType;
-
-        public HtmlPage(Context context, DocTypes? docType = null) : base(context, FormatModes.None, StackModes.Block)
+        public HtmlPage(Context context) : base(context, FormatModes.None, StackModes.Block)
         {
-            _docType = docType;
-
             Begin();
-        }
-
-        protected virtual string Title
-        {
-            get
-            {
-                return GetType().Name;
-            }
         }
 
         protected override void OnBegin()
         {
+
         }
 
         protected override void OnPreContent()
         {
-            OnDocType();
-
-            Html();
-
-            Writer.Space();
-
-            var head = Head();
-            //head content
-            Close(head);
-
-            Writer.Space();
-
-            var body = Body();
-            //content
-            //scripts
-            Close(body);
-
-            Writer.Space();
-
+            OnDocument();
         }
 
-        protected override void OnPostContent()
+        protected virtual void OnDocument()
         {
-        }
-
-        protected virtual void OnDocType()
-        {
-            //default is "quirks mode" - no doctype
-
-            if (_docType!=null)
+            //doctype
+            var docType = OnDOCTYPE();
+            if (docType != null)
             {
-                Push(new DocType(Context, _docType.Value));
-                Pop();
+                Open(docType);
+                Close(docType);
+
+                //space between doctype and html
                 Writer.Space();
+            }
+
+            //html
+            var html = OnHtml();
+            Open(html);
+
+            //head
+            Head();
+
+            //space between head and body
+            Writer.Space();
+
+            //body
+            var body = OnBody();
+            Open(body);
+
+            //content
+            OnContent();
+        }
+
+        protected virtual DOCTYPE OnDOCTYPE()
+        {
+            var documentType = DocumentType;
+
+            if (documentType != null)
+            {
+                return new DOCTYPE(Context, documentType.Value);
+            }
+            else
+            {
+                return null;
             }
         }
 
+        protected abstract DocumentTypes? DocumentType { get; }
 
-
-        protected virtual void Html()
+        protected virtual Tag OnHtml()
         {
-            Push(TagBuilder.Html());
+            return TagBuilder.Html(a=>a.Lang=Language);
         }
 
-        protected virtual Tag Head()
-        {
-            var head = TagBuilder.Head();
-            Push(head);
+        protected abstract string Language {get;}
 
-            Push(TagBuilder.Title());
+        protected virtual void Head()
+        {
+            var head = OnHead();
+            Open(head);
+
+            Open(TagBuilder.Title());
             Writer.Write(Title);
-            Pop();
+            Close();
 
             //script (inline or external src)
             //style (inline style)
@@ -93,28 +95,32 @@ namespace com.paraquery.Html
             //base
             //meta
             //noscript
+            Close(head);
 
-            OnHead();
-
-            return head;
         }
 
-        protected virtual void OnHead()
+        protected virtual Tag OnHead()
+        {
+            return TagBuilder.Head();
+        }
+
+        public abstract string Title { get; }
+
+        protected virtual void OnHeadContent()
         {
         }
 
-        protected virtual Tag Body()
+        protected virtual Tag OnBody()
         {
-            var body = TagBuilder.Body();
-            Push(body);
-
-            OnBody();
-
-            return body;
+            return TagBuilder.Body();
         }
 
-        protected virtual void OnBody()
+        protected abstract void OnContent();
+
+        protected override void OnPostContent()
         {
         }
+
+
     }
 }

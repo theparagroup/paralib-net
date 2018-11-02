@@ -8,7 +8,7 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html.Attributes
 {
-    public class Style:IComplexAttribute
+    public class Style : IComplexAttribute
     {
         public string background { get; set; }
         public string backgroundColor { get; set; }
@@ -32,8 +32,8 @@ namespace com.paraquery.Html.Attributes
             {
                 var dictionary = new AttributeDictionary();
 
-                //note: we preserve case so we can hyphenate
-                AttributeDictionary.BuildAttributeDictionary(dictionary, this, typeof(Style), true);
+                //note: we call this in case-sensitive mode so we can hyphenate mixed case
+                AttributeDictionary.BuildAttributeDictionary<Style>(dictionary, this, true);
 
                 string style = null;
 

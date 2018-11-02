@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Html
 {
-    public enum DocTypes
+    public enum DocumentTypes
     {
         Html2,
         Html32,

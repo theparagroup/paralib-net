@@ -8,8 +8,8 @@ namespace com.paraquery.Html.Attributes
 {
     public class HrAttributes : GlobalAttributes
     {
-        public string align { get; set; }
         public HrAlignTypes? Align { get; set; }
+        public string align { get; set; }
         public string Size { get; set; }
         public string Width { get; set; }
         public bool? NoShade { get; set; }

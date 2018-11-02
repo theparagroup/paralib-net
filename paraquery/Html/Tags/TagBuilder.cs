@@ -29,9 +29,19 @@ namespace com.paraquery.Html.Tags
             return AttributeDictionary.Attributes(init, null);
         }
 
+        public virtual Tag Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        {
+            return new Tag(_context, name, true, empty, Attributes(attributes));
+        }
+
         public virtual Tag Block(string name, object attributes = null, bool empty = false)
         {
             return new Tag(_context, name, true, empty, Attributes(attributes));
+        }
+
+        public virtual Tag Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        {
+            return new Tag(_context, name, false, empty, Attributes(attributes));
         }
 
         public virtual Tag Inline(string name, object attributes = null, bool empty = false)
@@ -39,12 +49,12 @@ namespace com.paraquery.Html.Tags
             return new Tag(_context, name, false, empty, Attributes(attributes));
         }
 
-        public virtual Tag Html(object attributes = null)
+        public virtual Tag Html(Action<GlobalAttributes> attributes = null)
         {
             return new Tag(_context, "html", true, false, Attributes(attributes));
         }
 
-        public virtual Tag Head(object attributes = null)
+        public virtual Tag Head(Action<GlobalAttributes> attributes = null)
         {
             return new Tag(_context, "head", true, false, Attributes(attributes));
         }

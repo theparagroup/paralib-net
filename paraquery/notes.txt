@@ -58,6 +58,7 @@ Design Goals & Notes
 		data- 
 			can be a collection, or just jam them in the additional
 		review case sensitivity (only id and class?, quirks mode?)
+		provide fluent support for iso language codes? probably not worth it
 		reify "shorthand properties"? or avoid them altogether? ordering issues?
 			Style.Background.Color=""
 			Style.BackgroundColor=""

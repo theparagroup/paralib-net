@@ -8,148 +8,57 @@ using com.paraquery.Html.Attributes;
 
 namespace com.paraquery.Html.Tags
 {
-    /*
+   /*
 
-        case sensitivity
-
-        CSS is case insensitive
-
-        however, the following things are case sensitive:
-
-            ids
-            class names
-            urls
-            font names/families?
-
-
-        in html, tag names are case insensitive
-
-        tag names in html5?
-
-        in xhtml, tag names are case sensitive
-
-
-
-
-        anything else?
+        if T is not GlobalAttributes, then T is object
 
 
     */
-
-    //examples
-    // "class1 class2"
-    // new { id="div1", @class="class1 class2"}
-    // new { id="div1", defaults= new { @class="class1 class2"}}
-
-    /*
-
-        the idea here is to accept
-          a string, which is assumed to a list of classes (shorthand)
-          a dictionary of name/value pairs
-          an (anonymous) object
-              containing either string properties
-              or a nested (anonymous) object
-
-          the string, int, bool, enum, etc properties will be used for name value pairs
-          properties on additional objects will be used as "defaults" (not added if they already exist)
-              unless the property is "class" then it will be merged
-
-          properties can be IComplexAttribute
-
-          recursion and complex handling can be toggled
-
-          property names are lower cased by default but can be converted from camel case to hypenated
-
-
-    */
-
-    /*
-  public void Attributes(object attributes = null)
-  {
-      //namespace state should be over in context
-
-      //TODO allow for namespaces
-      //TODO allow for namespace-vars (class="[admin:foo-bar]" -> class="nsvar-foo-bar") 
-      //TODO allow for name substitutions (clazz->class, classes->class)
-      //TODO allow for symbol replacement (_,-) in names ( data_value -> data-value, data__value -> data_value)
-      //TODO allow for variables? (class="{debug}" -> class="debug-verbose")
-      //TODO allow for expansions? new { id="foo", style=new {background_color="green"}, margin=new { border_style="solid" } } -> id="foo" style="backgound-color:green;" margin="border-style:solid;"
-
-      // id="foo-bar" -> id="foo-bar" (no change)
-      // id="[foo-bar]" -> id="ns-foo-bar" (ns prefixing)
-      // id="[blah:admin:foo-bar]" -> id="blah-admin-foo-bar" (if admin not an nsvar)
-      // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
-      // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
-
-      var atts = AttributeDictionary.Build(attributes);
-
-      if (atts != null)
-      {
-          if (atts.ContainsKey("id"))
-          {
-              //TODO process namespaces for ids
-              Attribute("id", atts["id"]);
-          }
-
-          if (atts.ContainsKey("class"))
-          {
-              //TODO process namespaces for classes
-              Attribute("class", atts["class"]);
-          }
-
-          foreach (var key in atts.Keys)
-          {
-              if (key != "id" && key != "class")
-              {
-                  Attribute(key, atts[key]);
-              }
-          }
-
-      }
-  }
-  */
 
     public class AttributeDictionary : NameValuePairs
     {
 
-        public static AttributeDictionary Attributes(object attributes)
-        {
-            AttributeDictionary dictionary = new AttributeDictionary();
-            BuildAttributeDictionary(dictionary, attributes, null);
-            return dictionary;
-        }
-
-        public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool preserveCase = false) where T : GlobalAttributes
-        {
-            BuildAttributeDictionary(dictionary, attributes, typeof(T), preserveCase);
-        }
-
-        public static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, Type type, bool preserveCase = false)
+        private static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, Type type, bool caseSensive)
         {
             if (attributes != null)
             {
-
-
-                if (type == null)
-                {
-                    type = attributes.GetType();
-                }
-
+                //this includes inherited properties (see missing DeclaredOnly flag)
+                //this also excludes interface properties implemented explictly
                 BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
 
-                //this includes inherited properties
-                foreach (var pi in type.GetProperties(bindingFlags))
+                //enumerate properties
+                var pis = type.GetProperties(bindingFlags);
+
+                foreach (var pi in pis)
                 {
-                    object v = pi.GetValue(attributes);
+                    object v = null;
+                    bool getValue = true;
+
+                    //handle dynamic values
+                    if (pi.GetCustomAttribute<DynamicValueAttribute>() != null)
+                    {
+                        if (typeof(IDynamicValueContainer).IsAssignableFrom(type))
+                        {
+                            getValue = ((IDynamicValueContainer)attributes).HasValue(pi.Name);
+                        }
+                    }
+
+                    if (getValue)
+                    {
+                        v = pi.GetValue(attributes);
+                    }
 
                     if (v != null)
                     {
-                        //if you have two properties with same name but different case, results are undefined
 
-                        string name;
+                        //if you have two properties with same name but different case, we will enumerate both
+                        //but the order is undefined. the last one will replace the first one in the dictionary
+                        //if we are in case-insensitive mode. otherwise both will be added.
+
+                        string name = null;
                         string value = null;
 
-                        if (!preserveCase)
+                        if (!caseSensive)
                         {
                             name = pi.Name.ToLower();
                         }
@@ -160,7 +69,12 @@ namespace com.paraquery.Html.Tags
 
                         if (typeof(IComplexAttribute).IsAssignableFrom(pi.PropertyType))
                         {
-                            //very important that this interface is implemented explicitly or you will recurse endlessly
+                            //if your implementation of value wants to call this Build method recursively on iteself (see Style),
+                            //it's very important that IComplexAttribute is implemented explicitly or you will recurse endlessly.
+                            //this is because the first time through, the class owning the property is enumerating it's properties,
+                            //and the property will be enumerated. however, in the recursive call, the property class is enumerating,
+                            //and we don't want to call Value again. the way we call GetProperties(), excplicity implemented interface
+                            //properties are not enumerated.
                             value = ((IComplexAttribute)v).Value;
                         }
                         else if (pi.PropertyType == typeof(string))
@@ -180,83 +94,201 @@ namespace com.paraquery.Html.Tags
                             bool? b = (bool?)v;
                             if (b.HasValue)
                             {
-                                value = b.ToString(); //tolower?
+                                value = b.ToString().ToLower();
                             }
                         }
                         else if (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false)
                         {
-                            //this is name value pair
-                            dictionary.Add(name, v.ToString().ToLower());
+                            value = v.ToString().ToLower();
                         }
                         else
                         {
                             //ignore unknown types
                         }
 
+                        //add it to the dictionary if it was handled
                         if (value != null)
                         {
-                            if (!dictionary.ContainsKey(name))
-                            {
-                                dictionary.Add(name, value);
-                            }
-                            else
-                            {
-                                dictionary[name] = value;
-                            }
+                            dictionary.Add(name, value);
                         }
 
                     }
                 }
 
-                //process "additional" attributes
+                //process "Attributes" or "attributes" property if it exists
                 {
-                    var pi = type.GetProperty("Attributes", bindingFlags);
+                    var pi = type.GetProperty(GlobalAttributes.AdditonalAttributesPropertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
 
-                    if (pi == null)
-                    {
-                        pi = type.GetProperty("attributes", bindingFlags);
-                    }
+                    //todo get A then get a and merge
 
                     if (pi != null)
                     {
                         object v = pi.GetValue(attributes);
-                        BuildAttributeDictionary(dictionary, v, null);
+
+                        if (v!=null)
+                        {
+                            BuildAttributeDictionary(dictionary, v, false);
+                        }
                     }
                 }
             }
         }
-       
+
+        public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool caseSensive)
+        {
+            //this is the public method
+            //typeof() is ever so slightly faster than TypeOf()
+            BuildAttributeDictionary(dictionary, attributes, typeof(T), caseSensive);
+        }
+
+
+        public static AttributeDictionary Attributes(object attributes)
+        {
+            AttributeDictionary dictionary = new AttributeDictionary();
+            BuildAttributeDictionary(dictionary, attributes, false);
+            return dictionary;
+        }
 
         public static AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
         {
-            T attributes = new T();
-
-            if (init != null)
+            //let's keep it simple if there is nothing to do
+            if (init != null || additional != null)
             {
-                init(attributes);
+                //create a new dictionary to hold the name value pairs
+                AttributeDictionary dictionary = new AttributeDictionary();
+
+                //execute init action and build, if exists
+                if (init != null)
+                {
+                    T attributes = new T();
+
+                    init(attributes);
+
+                    BuildAttributeDictionary<T>(dictionary, attributes, false);
+                }
+
+                //merge any additional anonymous object-based attributes
+                if (additional != null)
+                {
+                    BuildAttributeDictionary(dictionary, additional, false);
+                }
+
+                //return null if there are no attributes
+                if (dictionary.Count > 0)
+                {
+                    return dictionary;
+                }
             }
 
-            AttributeDictionary dictionary = new AttributeDictionary();
-
-            BuildAttributeDictionary<T>(dictionary, attributes);
-
-            if (additional != null)
-            {
-                BuildAttributeDictionary(dictionary, additional, null);
-            }
-
-            if (dictionary.Count > 0)
-            {
-                return dictionary;
-            }
-            else
-            {
-                return null;
-            }
-
+            return null;
         }
+
 
     }
 
 
 }
+
+
+
+
+/*
+
+       case sensitivity
+
+       CSS is case insensitive
+
+       however, the following things are case sensitive:
+
+           ids
+           class names
+           urls
+           font names/families?
+
+
+       in html, tag names are case insensitive
+
+       tag names in html5?
+
+       in xhtml, tag names are case sensitive
+
+
+
+
+       anything else?
+
+
+   */
+
+//examples
+// "class1 class2"
+// new { id="div1", @class="class1 class2"}
+// new { id="div1", defaults= new { @class="class1 class2"}}
+
+/*
+
+    the idea here is to accept
+      a string, which is assumed to a list of classes (shorthand)
+      a dictionary of name/value pairs
+      an (anonymous) object
+          containing either string properties
+          or a nested (anonymous) object
+
+      the string, int, bool, enum, etc properties will be used for name value pairs
+      properties on additional objects will be used as "defaults" (not added if they already exist)
+          unless the property is "class" then it will be merged
+
+      properties can be IComplexAttribute
+
+      recursion and complex handling can be toggled
+
+      property names are lower cased by default but can be converted from camel case to hypenated
+
+
+*/
+
+/*
+public void Attributes(object attributes = null)
+{
+  //namespace state should be over in context
+
+  //TODO allow for namespaces
+  //TODO allow for namespace-vars (class="[admin:foo-bar]" -> class="nsvar-foo-bar") 
+  //TODO allow for name substitutions (clazz->class, classes->class)
+  //TODO allow for symbol replacement (_,-) in names ( data_value -> data-value, data__value -> data_value)
+  //TODO allow for variables? (class="{debug}" -> class="debug-verbose")
+  //TODO allow for expansions? new { id="foo", style=new {background_color="green"}, margin=new { border_style="solid" } } -> id="foo" style="backgound-color:green;" margin="border-style:solid;"
+
+  // id="foo-bar" -> id="foo-bar" (no change)
+  // id="[foo-bar]" -> id="ns-foo-bar" (ns prefixing)
+  // id="[blah:admin:foo-bar]" -> id="blah-admin-foo-bar" (if admin not an nsvar)
+  // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
+  // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
+
+  var atts = AttributeDictionary.Build(attributes);
+
+  if (atts != null)
+  {
+      if (atts.ContainsKey("id"))
+      {
+          //TODO process namespaces for ids
+          Attribute("id", atts["id"]);
+      }
+
+      if (atts.ContainsKey("class"))
+      {
+          //TODO process namespaces for classes
+          Attribute("class", atts["class"]);
+      }
+
+      foreach (var key in atts.Keys)
+      {
+          if (key != "id" && key != "class")
+          {
+              Attribute(key, atts[key]);
+          }
+      }
+
+  }
+}
+*/
