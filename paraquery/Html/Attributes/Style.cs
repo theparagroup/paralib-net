@@ -33,7 +33,7 @@ namespace com.paraquery.Html.Attributes
                 var dictionary = new AttributeDictionary();
 
                 //note: we call this in case-sensitive mode so we can hyphenate mixed case
-                AttributeDictionary.BuildAttributeDictionary<Style>(dictionary, this, true);
+                AttributeDictionary.BuildAttributeDictionary(dictionary, this, true);
 
                 string style = null;
 

@@ -32,6 +32,10 @@ Design Goals & Notes
 	remember, we're not replacing a web server or mvc in this project, just creating
 	a generation library with a focus on building components
 
+	document
+	improve htmlpage
+	move pQuery into paramvc
+
 	create some components to be used int ttb
 		Page
 		Page[TModel]
@@ -51,7 +55,7 @@ Design Goals & Notes
 
 	better formatting for attribute names, underscores, etc
 		design goals
-			keep in mind, you can always drop into _writer.Write()
+			keep in mind, you can always drop into _writer.Write() or just use the Attributes object
 			we are building components, not making razor great again
 			so maybe remove the backgroundColor type properties, everything mixed case, simplified
 			regardless, make it consistent, any string properties need to be lower case (id, class, title)

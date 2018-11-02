@@ -74,7 +74,7 @@ namespace com.paraquery.Html
 
         protected virtual Tag OnHtml()
         {
-            return TagBuilder.Html(a=>a.Lang=Language);
+            return TagBuilder.Html(a=> a.Lang = Language);
         }
 
         protected abstract string Language {get;}

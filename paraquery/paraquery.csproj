@@ -44,6 +44,9 @@
     <Compile Include="Bootstrap\Grids\RowTag.cs" />
     <Compile Include="Bootstrap\Grids\ContainerTag.cs" />
     <Compile Include="Bootstrap\Grids\GridMarker.cs" />
+    <Compile Include="Html\Attributes\HeadAttributes.cs" />
+    <Compile Include="Html\Attributes\HtmlAttributes.cs" />
+    <Compile Include="Html\Attributes\BodyAttributes.cs" />
     <Compile Include="Html\DOCTYPE.cs" />
     <Compile Include="Html\DocumentTypes.cs" />
     <Compile Include="Html\Fluent\FluentHtmlMarker.cs" />

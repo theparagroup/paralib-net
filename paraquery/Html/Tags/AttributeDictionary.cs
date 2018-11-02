@@ -81,23 +81,15 @@ namespace com.paraquery.Html.Tags
                         {
                             value = (string)v;
                         }
-                        else if (pi.PropertyType == typeof(int?))
+                        else if (pi.PropertyType == typeof(int) || pi.PropertyType == typeof(int?))
                         {
-                            int? i = (int?)v;
-                            if (i.HasValue)
-                            {
-                                value = i.ToString();
-                            }
+                            value = v.ToString();
                         }
-                        else if (pi.PropertyType == typeof(bool?))
+                        else if (pi.PropertyType == typeof(bool) || pi.PropertyType == typeof(bool?))
                         {
-                            bool? b = (bool?)v;
-                            if (b.HasValue)
-                            {
-                                value = b.ToString().ToLower();
-                            }
+                            value = v.ToString().ToLower();
                         }
-                        else if (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false)
+                        else if ( (pi.PropertyType.IsEnum) || (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false))
                         {
                             value = v.ToString().ToLower();
                         }
@@ -134,20 +126,26 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool caseSensive)
+        public static void BuildAttributeDictionary(AttributeDictionary dictionary, object attributes, bool caseSensive)
         {
-            //this is the public method
-            //typeof() is ever so slightly faster than TypeOf()
-            BuildAttributeDictionary(dictionary, attributes, typeof(T), caseSensive);
+            BuildAttributeDictionary(dictionary, attributes, attributes.GetType(), caseSensive);
         }
 
 
-        public static AttributeDictionary Attributes(object attributes)
-        {
-            AttributeDictionary dictionary = new AttributeDictionary();
-            BuildAttributeDictionary(dictionary, attributes, false);
-            return dictionary;
-        }
+        //public static void BuildAttributeDictionary<T>(AttributeDictionary dictionary, T attributes, bool caseSensive)
+        //{
+        //    //this is the public method
+        //    //typeof() is ever so slightly faster than TypeOf()
+        //    BuildAttributeDictionary(dictionary, attributes, typeof(T), caseSensive);
+        //}
+
+
+        //public static AttributeDictionary Attributes(object attributes)
+        //{
+        //    AttributeDictionary dictionary = new AttributeDictionary();
+        //    BuildAttributeDictionary(dictionary, attributes, false);
+        //    return dictionary;
+        //}
 
         public static AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
         {
@@ -164,7 +162,7 @@ namespace com.paraquery.Html.Tags
 
                     init(attributes);
 
-                    BuildAttributeDictionary<T>(dictionary, attributes, false);
+                    BuildAttributeDictionary(dictionary, attributes, typeof(T), false);
                 }
 
                 //merge any additional anonymous object-based attributes

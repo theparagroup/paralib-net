@@ -104,10 +104,7 @@ namespace com.paraquery.Html.Tags
             Comment($"{text} {_tagName} {_attributes?["id"]}");
         }
 
-
-       
-
-        public virtual void Attribute(string name, string value = null)
+        protected virtual void Attribute(string name, string value = null)
         {
             //TODO escaping quotes? escaping in general?
 
@@ -115,7 +112,7 @@ namespace com.paraquery.Html.Tags
             {
                 if (value == null)
                 {
-                    //boolean
+                    //boolean style attributes (e.g. "readonly")
                     Writer.Write($" {name}");
                 }
                 else
@@ -126,13 +123,13 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        public virtual void Attributes(AttributeDictionary dictionary)
+        protected virtual void Attributes()
         {
-            if (dictionary != null)
+            if (_attributes != null)
             {
-                foreach (var name in dictionary.Keys)
+                foreach (var name in _attributes.Keys)
                 {
-                    Attribute(name, dictionary[name]);
+                    Attribute(name, _attributes[name]);
                 }
             }
         }
@@ -141,7 +138,7 @@ namespace com.paraquery.Html.Tags
         {
             Writer.Write($"<{_tagName}");
 
-            Attributes(_attributes);
+            Attributes();
 
             if (!_empty)
             {

@@ -11,12 +11,12 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml
     {
 
-        public virtual FluentHtml Block(string name, object attributes = null, bool empty=false)
+        public virtual FluentHtml Block(string name, Action<GlobalAttributes> attributes = null, bool empty=false)
         {
             return Push(TagBuilder.Block(name, attributes, empty));
         }
 
-        public virtual FluentHtml Inline(string name, object attributes = null, bool empty = false)
+        public virtual FluentHtml Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             return Push(TagBuilder.Inline(name, attributes, empty));
         }
