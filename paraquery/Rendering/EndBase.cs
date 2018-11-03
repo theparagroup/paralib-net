@@ -12,12 +12,13 @@ namespace com.paraquery.Rendering
        Defines the basics of the IDisposable interface ("End" semantics). It is up to the instatiator wrap 
        the instance in a using() statement, or to call End() explicitly.
 
+       Note: you can only effectively "End" one time.
 
    */
 
     public abstract class EndBase : IDisposable
     {
-        private bool _disposed;
+        internal bool _disposed;
 
         public void End()
         {
@@ -25,6 +26,11 @@ namespace com.paraquery.Rendering
         }
 
         public void Dispose()
+        {
+            DoDispose();
+        }
+
+        internal virtual void DoDispose()
         {
             if (!_disposed)
             {

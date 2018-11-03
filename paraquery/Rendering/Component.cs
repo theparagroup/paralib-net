@@ -20,8 +20,32 @@ namespace com.paraquery.Rendering
 
     public abstract class Component : RendererStack
     {
-        public Component(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
+        protected Renderer _start;
+
+        public Component(Context context, Renderer renderer) : base(context, FormatModes.None, renderer.StackMode)
         {
+            _start = renderer;
+        }
+
+        protected override void DoBegin()
+        {
+            OnPreBegin();
+            Push(_start);
+            OnBegin();
+            OnPostBegin();
+            OnPreContent();
+        }
+
+        internal override void DoDispose()
+        {
+            if (_begun)
+            {
+                base.DoDispose();
+            }
+            else
+            {
+                throw new InvalidOperationException($"Can't End() Component '{GetType().Name}' without Begin()");
+            }
         }
 
     }

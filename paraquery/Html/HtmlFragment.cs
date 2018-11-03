@@ -10,7 +10,7 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlFragment : HtmlComponent
     {
-        public HtmlFragment(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
+        public HtmlFragment(HtmlContext context, HtmlRenderer renderer) : base(context, renderer)
         {
         }
 

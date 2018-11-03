@@ -163,6 +163,15 @@ namespace com.paraquery.Html.Tags
             {
                 Writer.Write($"</{_tagName}>");
             }
+
+            if (Context.Options.CommentEndTags && StackMode==StackModes.Block)
+            {
+                if (_attributes?.ContainsKey("id") ?? false)
+                {
+                    Comment($"end {_attributes?["id"]}");
+                }
+            }
+
         }
 
     }

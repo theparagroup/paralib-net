@@ -7,6 +7,7 @@ using com.paraquery.Html.Attributes;
 using com.paraquery.Html.Fluent;
 using com.paraquery.Html.Tags;
 using com.paraquery.Rendering;
+using com.paraquery.Html;
 
 namespace com.paraquery.Bootstrap.Grids
 {
@@ -87,11 +88,14 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _classes;
         protected int _columnNumber;
 
-        public FluentGrid(Context context) : base(context)
+        public FluentGrid(HtmlContext context) : base(context, new GridMarker(context))
         {
-            //let's always start with a grid marker
-            Grid();
         }
+
+        protected override void OnBegin()
+        {
+        }
+
 
         protected new FluentGrid Push(Renderer renderer)
         {
@@ -226,7 +230,8 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IGrid Grid()
         {
-            var grid = new GridMarker(Context);
+            //var grid = new GridMarker(Context);
+            var grid = new FluentGrid(Context);
             return Push(grid);
         }
 

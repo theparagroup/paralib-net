@@ -12,7 +12,15 @@ namespace com.paraquery.Html
     {
         protected TagBuilder TagBuilder { private set; get; }
 
-        public HtmlComponent(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
+        protected new HtmlContext Context
+        {
+            get
+            {
+                return (HtmlContext)base.Context;
+            }
+        }
+
+        public HtmlComponent(HtmlContext context, HtmlRenderer renderer) : base(context, renderer)
         {
             TagBuilder = new TagBuilder(context);
         }

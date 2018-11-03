@@ -9,16 +9,23 @@ namespace com.paraquery.Rendering
 
     /*
 
-       Provides "Begin semantics". It is up to the instatiator or subclass to call Begin().
+        Provides "Begin semantics".
+
+        The instatiator should call Begin(), or          
 
    */
 
     public abstract class BeginBase : EndBase
     {
+        internal bool _begun;
 
         public void Begin()
         {
-            DoBegin();
+            if (!_begun)
+            {
+                _begun = true;
+                DoBegin();
+            }
         }
 
         protected virtual void DoBegin()
@@ -27,7 +34,6 @@ namespace com.paraquery.Rendering
             OnBegin();
             OnPostBegin();
             OnPreContent();
-
         }
 
         protected virtual void OnPreBegin() { }

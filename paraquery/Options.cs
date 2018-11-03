@@ -19,5 +19,8 @@ namespace com.paraquery
     {
         public bool SelfClosingTags { get; set; } = true;
         public bool DebugSourceFormatting { get; set; } = false;
+        public bool CommentEndTags { get; set; } = false;
+        public bool CommentFluentHtml { get; set; } = false;
+        public bool CommentFluentGrid { get; set; } = false;
     }
 }

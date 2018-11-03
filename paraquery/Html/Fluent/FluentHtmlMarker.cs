@@ -10,13 +10,13 @@ namespace com.paraquery.Html.Fluent
 {
     public class FluentHtmlMarker : HtmlRenderer
     {
-        public FluentHtmlMarker(Context context) : base(context, context.Options.DebugSourceFormatting ? FormatModes.Block : FormatModes.None, StackModes.Block)
+        public FluentHtmlMarker(Context context) : base(context, context.Options.CommentFluentHtml ? FormatModes.Block : FormatModes.None, StackModes.Block)
         {
         }
 
         protected override void OnBegin()
         {
-            if (Context.Options.DebugSourceFormatting)
+            if (Context.Options.CommentFluentHtml)
             {
                 Comment("fluent html start");
             }
@@ -24,7 +24,7 @@ namespace com.paraquery.Html.Fluent
 
         protected override void OnEnd()
         {
-            if (Context.Options.DebugSourceFormatting)
+            if (Context.Options.CommentFluentHtml)
             {
                 Comment("fluent html end");
             }

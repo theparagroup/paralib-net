@@ -10,11 +10,8 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlRenderer : Renderer
     {
-        protected TagBuilder TagBuilder { private set; get; }
-
         public HtmlRenderer(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
         {
-            TagBuilder = new TagBuilder(context);
         }
 
         public static void Comment(Writer writer, string text)

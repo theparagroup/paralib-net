@@ -11,10 +11,24 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml : HtmlComponent
     {
 
-        public FluentHtml(Context context) : base(context, FormatModes.None, StackModes.Block)
+        public FluentHtml(HtmlContext context) : base(context, new FluentHtmlMarker(context))
         {
-            //let's start with a fluent html marker
-            Push(new FluentHtmlMarker(Context));
+
+        }
+
+        public FluentHtml(HtmlContext context, HtmlRenderer marker) : base(context, marker)
+        {
+
+        }
+
+        protected override void OnBegin()
+        {
+            //do nothing, the marker does it all
+        }
+
+        protected override void OnEnd()
+        {
+            CloseAll();
         }
 
         protected override void OnDebug(string text)
@@ -29,19 +43,15 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
-        protected override void OnBegin()
-        {
-            //do nothing here
-        }
-
-        protected override void OnEnd()
-        {
-            CloseAll();
-        }
-
         public new FluentHtml Open(Renderer renderer)
         {
             return Push(renderer);
+        }
+
+        public new FluentHtml CloseInline()
+        {
+            base.CloseInline();
+            return this;
         }
 
         public new FluentHtml CloseBlock()

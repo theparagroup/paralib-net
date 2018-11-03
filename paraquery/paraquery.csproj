@@ -51,6 +51,7 @@
     <Compile Include="Html\DocumentTypes.cs" />
     <Compile Include="Html\Fluent\FluentHtmlMarker.cs" />
     <Compile Include="Html\HtmlComponent.cs" />
+    <Compile Include="Html\HtmlContext.cs" />
     <Compile Include="Html\HtmlFragment.cs" />
     <Compile Include="Html\HtmlPage.cs" />
     <Compile Include="Html\HtmlRenderer.cs" />

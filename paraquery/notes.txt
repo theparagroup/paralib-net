@@ -33,6 +33,25 @@ Design Goals & Notes
 	a generation library with a focus on building components
 
 	document
+		components
+			top-level components must call Begin() or it will throw
+			make it clear that Components should always be Open()ed on the parent's stack to preserve rules/formatting
+
+			//using (var html = new FluentHtml(c))
+                {
+                    //this will run but will mess up the formatting
+                    html.Begin();
+
+
+	move markers to inner classes like HtmlPage (protected)
+	rename stackmodes to structure modes but keep inline, line, block
+		<block>
+			<line />
+			<inline>foo<inline>bar</inline></inline> <!-- this is a "line" -->
+		</block>
+
+	fluent could throw if you call writeline/newline with an inline on top, or write/writeline/newline with line on top
+
 	improve htmlpage
 	move pQuery into paramvc
 

@@ -6,10 +6,17 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Rendering
 {
-    public enum StackModes
+    /*
+        Just as you can't put block elements inside inline elements in HTML,
+        you can't put structured renderers inside non-structured renderers
+        in the RendererStack. The 
+
+    */
+
+    public enum StackModes //StructureModes
     {
-        Inline,
+        Inline, 
         Line,
-        Block
+        Block 
     }
 }

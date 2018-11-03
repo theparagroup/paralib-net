@@ -10,13 +10,13 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public class GridMarker : HtmlRenderer
     {
-        public GridMarker(Context context) : base(context, context.Options.DebugSourceFormatting?FormatModes.Block:FormatModes.None, StackModes.Block)
+        public GridMarker(Context context) : base(context, context.Options.CommentFluentGrid?FormatModes.Block:FormatModes.None, StackModes.Block)
         {
         }
 
         protected override void OnBegin()
         {
-            if (Context.Options.DebugSourceFormatting)
+            if (Context.Options.CommentFluentGrid)
             {
                 Comment("fluent bootstrap grid start");
             }
@@ -24,7 +24,7 @@ namespace com.paraquery.Bootstrap.Grids
 
         protected override void OnEnd()
         {
-            if (Context.Options.DebugSourceFormatting)
+            if (Context.Options.CommentFluentGrid)
             {
                 Comment("fluent bootstrap grid end");
             }

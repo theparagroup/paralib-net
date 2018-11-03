@@ -5,19 +5,41 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Tags;
 using com.paraquery.Rendering;
+using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Html
 {
     public abstract class HtmlPage : HtmlComponent
     {
-        public HtmlPage(Context context) : base(context, FormatModes.None, StackModes.Block)
+        protected class Marker : HtmlRenderer
         {
-            Begin();
+            public Marker(HtmlContext context) : base(context, FormatModes.None, StackModes.Block)
+            {
+            }
+
+            protected override void OnBegin()
+            {
+            }
+
+            protected override void OnEnd()
+            {
+            }
+        }
+
+        public HtmlPage(HtmlContext context) : base(context, new Marker(context))
+        {
+        }
+
+        public FluentHtml Html()
+        {
+            var fluentHtml = new FluentHtml(Context);
+            Push(fluentHtml);
+            return fluentHtml;
         }
 
         protected override void OnBegin()
         {
-
+            //derived classes should use the new OnXXX() methods below
         }
 
         protected override void OnPreContent()

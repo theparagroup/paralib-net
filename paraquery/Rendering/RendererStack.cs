@@ -73,12 +73,11 @@ namespace com.paraquery.Rendering
             }
         }
 
-        protected void Push(Renderer renderer)
+        internal virtual void Push(Renderer renderer)
         {
             //we don't want nulls on the stack
             if (renderer != null)
             {
-
                 //if we're putting a non-inline under an inline,
                 //or anything under a line,
                 //close all renderers up to and including the last non-inline and start a new one
@@ -88,9 +87,13 @@ namespace com.paraquery.Rendering
                 {
                     Renderer top = Stack.Peek();
 
-                    if ((renderer.StackMode != StackModes.Inline && top.StackMode == StackModes.Inline) || top.StackMode == StackModes.Line)
+                    if (renderer.StackMode != StackModes.Inline && top.StackMode == StackModes.Inline) 
                     {
-                        CloseBlock();
+                        CloseInline();
+                    }
+                    else if (top.StackMode == StackModes.Line)
+                    {
+                        Close();
                     }
                 }
 
@@ -107,7 +110,7 @@ namespace com.paraquery.Rendering
             Push(renderer);
         }
 
-        protected virtual void Pop()
+        internal virtual void Pop()
         {
             if (Stack.Count > 0)
             {
@@ -147,10 +150,27 @@ namespace com.paraquery.Rendering
 
         }
 
+        public virtual void CloseInline()
+        {
+            //end all inline renderers up to but NOT including the last non-inline
+            while (Stack.Count > 0)
+            {
+                Renderer top = Stack.Peek();
+
+                if (top.StackMode == StackModes.Inline)
+                {
+                    Pop();
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
 
         public virtual void CloseBlock()
         {
-            //end all inline renderers up to and including the last non-inline
+            //end all inline renderers up to AND including the last non-inline
             while (Stack.Count > 0)
             {
                 Renderer top = Stack.Peek();

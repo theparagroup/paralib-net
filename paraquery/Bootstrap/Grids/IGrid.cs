@@ -9,6 +9,8 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public interface IGrid : IDisposable
     {
+        void Begin();
+
         IGrid SetClasses(IList<string> classes = null);
 
         IContainer Container(Action<GlobalAttributes> attributes = null, bool fluid = false);

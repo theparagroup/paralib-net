@@ -15,10 +15,10 @@ namespace com.paraquery
     public class pQuery
     {
         protected TagBuilder _tagBuilder;
-        protected Context _context;
+        protected HtmlContext _context;
         protected Bs _bs { set; get; }
 
-        public pQuery(Context context)
+        public pQuery(HtmlContext context)
         {
             _context = context;
             _tagBuilder = new TagBuilder(context);
@@ -27,7 +27,7 @@ namespace com.paraquery
 
         }
 
-        public Context Context
+        public HtmlContext Context
         {
             get
             {
