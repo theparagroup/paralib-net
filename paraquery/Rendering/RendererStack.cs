@@ -22,6 +22,13 @@ namespace com.paraquery.Rendering
         It is up to the instatiator to wrap the RendererStack in a using() statement or else call End()
         explicitly.
 
+        structure modes:
+   		    <block>
+			    <line />
+			    <inline>foo<inline>bar</inline></inline> <!-- this is a "line" -->
+		    </block>
+
+
         Renderers at the top are "nested" inside lower Renderers when rendered to the writer stream.
 
         This stack (div at top):
@@ -56,7 +63,7 @@ namespace com.paraquery.Rendering
     {
         protected Stack<Renderer> Stack { private set; get; } = new Stack<Renderer>();
 
-        public RendererStack(Context context, FormatModes formatMode, StackModes stackMode) : base(context, formatMode, stackMode)
+        public RendererStack(Context context, FormatModes formatMode, StructureModes structureMode) : base(context, formatMode, structureMode)
         {
         }
 
@@ -87,11 +94,11 @@ namespace com.paraquery.Rendering
                 {
                     Renderer top = Stack.Peek();
 
-                    if (renderer.StackMode != StackModes.Inline && top.StackMode == StackModes.Inline) 
+                    if (renderer.StructureMode != StructureModes.Inline && top.StructureMode == StructureModes.Inline) 
                     {
                         CloseInline();
                     }
-                    else if (top.StackMode == StackModes.Line)
+                    else if (top.StructureMode == StructureModes.Line)
                     {
                         Close();
                     }
@@ -157,7 +164,7 @@ namespace com.paraquery.Rendering
             {
                 Renderer top = Stack.Peek();
 
-                if (top.StackMode == StackModes.Inline)
+                if (top.StructureMode == StructureModes.Inline)
                 {
                     Pop();
                 }
@@ -175,7 +182,7 @@ namespace com.paraquery.Rendering
             {
                 Renderer top = Stack.Peek();
 
-                if (top.StackMode != StackModes.Inline)
+                if (top.StructureMode != StructureModes.Inline)
                 {
                     Pop();
                     break;

@@ -88,8 +88,52 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _classes;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context) : base(context, new GridMarker(context))
+        public FluentGrid(HtmlContext context) : base(context, new Marker(context))
         {
+        }
+
+        public new class Marker : FluentHtml.Marker
+        {
+            public Marker(HtmlContext context) : base(context)
+            {
+            }
+
+            protected override void OnBegin()
+            {
+                if (Context.Options.CommentFluentGrid)
+                {
+                    Comment("fluent bootstrap grid start");
+                }
+            }
+
+            protected override void OnEnd()
+            {
+                if (Context.Options.CommentFluentGrid)
+                {
+                    Comment("fluent bootstrap grid end");
+                }
+            }
+        }
+
+        public class ContainerTag : Tag
+        {
+            public ContainerTag(Context context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            {
+            }
+        }
+
+        public class RowTag : Tag
+        {
+            public RowTag(Context context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            {
+            }
+        }
+
+        public class ColumnTag : Tag
+        {
+            public ColumnTag(Context context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            {
+            }
         }
 
         protected override void OnBegin()
@@ -137,9 +181,8 @@ namespace com.paraquery.Bootstrap.Grids
 
         protected void CloseRow()
         {
-            //end all elements up to last row or grid/container
-            //end last (current) row
-            //do not end container
+            //end all columns up to and including last row
+            //if no row is found, end all columns up to but NOT including last grid/container
             while (Stack.Count > 0)
             {
                 Renderer top = Stack.Peek();
@@ -149,7 +192,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is GridMarker || top is ContainerTag)
+                else if (top is Marker || top is ContainerTag)
                 {
                     break;
                 }
@@ -183,7 +226,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is GridMarker || top is ContainerTag || top is RowTag)
+                else if (top is Marker || top is ContainerTag || top is RowTag)
                 {
                     break;
                 }
@@ -230,7 +273,6 @@ namespace com.paraquery.Bootstrap.Grids
 
         public IGrid Grid()
         {
-            //var grid = new GridMarker(Context);
             var grid = new FluentGrid(Context);
             return Push(grid);
         }
@@ -244,7 +286,7 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = Stack.Peek();
 
-                if (top is GridMarker)
+                if (top is Marker)
                 {
                     Pop();
                     break;

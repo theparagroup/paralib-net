@@ -59,16 +59,16 @@ namespace com.paraquery.Rendering
         protected Context Context { private set; get; }
         protected Writer Writer { private set; get; }
         public FormatModes FormatMode { private set; get; }
-        public StackModes StackMode { private set; get; }
+        public StructureModes StructureMode { private set; get; }
 
-        protected Renderer(Context context, FormatModes formatMode, StackModes stackMode)
+        protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode)
         {
             _debugSourceFormatting = context.Options.DebugSourceFormatting;
 
             Context = context;
             Writer = Context.Writer;
             FormatMode = formatMode;
-            StackMode = stackMode;
+            StructureMode = structureMode;
         }
 
         protected void Debug(string text)

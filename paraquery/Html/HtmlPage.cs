@@ -9,11 +9,16 @@ using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Html
 {
-    public abstract class HtmlPage : HtmlComponent
+    public abstract class HtmlPage : HtmlFragment
     {
-        protected class Marker : HtmlRenderer
+
+        public HtmlPage(HtmlContext context) : base(context, new Marker(context))
         {
-            public Marker(HtmlContext context) : base(context, FormatModes.None, StackModes.Block)
+        }
+
+        public class Marker : HtmlRenderer
+        {
+            public Marker(HtmlContext context) : base(context, FormatModes.None, StructureModes.Block)
             {
             }
 
@@ -24,17 +29,6 @@ namespace com.paraquery.Html
             protected override void OnEnd()
             {
             }
-        }
-
-        public HtmlPage(HtmlContext context) : base(context, new Marker(context))
-        {
-        }
-
-        public FluentHtml Html()
-        {
-            var fluentHtml = new FluentHtml(Context);
-            Push(fluentHtml);
-            return fluentHtml;
         }
 
         protected override void OnBegin()

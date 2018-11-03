@@ -11,7 +11,7 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml : HtmlComponent
     {
 
-        public FluentHtml(HtmlContext context) : base(context, new FluentHtmlMarker(context))
+        public FluentHtml(HtmlContext context) : base(context, new Marker(context))
         {
 
         }
@@ -19,6 +19,29 @@ namespace com.paraquery.Html.Fluent
         public FluentHtml(HtmlContext context, HtmlRenderer marker) : base(context, marker)
         {
 
+        }
+
+        public class Marker : HtmlRenderer
+        {
+            public Marker(HtmlContext context) : base(context, context.Options.CommentFluentHtml ? FormatModes.Block : FormatModes.None, StructureModes.Block)
+            {
+            }
+
+            protected override void OnBegin()
+            {
+                if (Context.Options.CommentFluentHtml)
+                {
+                    Comment("fluent html start");
+                }
+            }
+
+            protected override void OnEnd()
+            {
+                if (Context.Options.CommentFluentHtml)
+                {
+                    Comment("fluent html end");
+                }
+            }
         }
 
         protected override void OnBegin()

@@ -10,11 +10,11 @@ namespace com.paraquery.Html.Tags
 
     public partial class TagBuilder
     {
-        protected Context _context;
+        protected Context Context { private set; get; }
 
         public TagBuilder(Context context)
         {
-            _context = context;
+            Context = context;
         }
 
         protected virtual AttributeDictionary Attributes<T>(Action<T> init = null) where T : GlobalAttributes, new()
@@ -40,54 +40,64 @@ namespace com.paraquery.Html.Tags
 
         */
 
+        public virtual Tag Block(string name, AttributeDictionary attributes = null, bool empty = false)
+        {
+            return new Tag(Context, TagTypes.Block, name, attributes, empty);
+        }
+
         public virtual Tag Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
-            return new Tag(_context, name, true, empty, Attributes(attributes));
+            return Block(name, Attributes(attributes), empty);
+        }
+
+        public virtual Tag Inline(string name, AttributeDictionary attributes = null, bool empty = false)
+        {
+            return new Tag(Context, TagTypes.Inline, name, attributes, empty);
         }
 
         public virtual Tag Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
-            return new Tag(_context, name, false, empty, Attributes(attributes));
+            return Inline(name, Attributes(attributes), empty);
         }
 
         public virtual Tag Html(Action<HtmlAttributes> attributes = null)
         {
-            return new Tag(_context, "html", true, false, Attributes(attributes));
+            return Block("html", Attributes(attributes));
         }
 
         public virtual Tag Head(Action<HeadAttributes> attributes = null)
         {
-            return new Tag(_context, "head", true, false, Attributes(attributes));
+            return Block("head", Attributes(attributes));
         }
 
         public virtual Tag Title(Action<GlobalAttributes> attributes = null)
         {
-            return new Tag(_context, "title", false, false, Attributes(attributes));
+            return Inline("title", Attributes(attributes));
         }
 
         public virtual Tag Body(Action<BodyAttributes> attributes = null)
         {
-            return new Tag(_context, "body", true, false, Attributes(attributes));
+            return Block("body", Attributes(attributes));
         }
 
         public virtual Tag Div(Action<GlobalAttributes> attributes = null)
         {
-            return new Tag(_context, "div", true, false, Attributes(attributes));
+            return Block("div", Attributes(attributes));
         }
 
         public virtual Tag Span(Action<GlobalAttributes> attributes = null)
         {
-            return new Tag(_context, "span", false, false, Attributes(attributes));
+            return Inline("span", Attributes(attributes));
         }
 
         public virtual Tag Hr(Action<HrAttributes> attributes = null)
         {
-            return new Tag(_context, "hr", true, true, Attributes(attributes));
+            return Block("hr", Attributes(attributes), true);
         }
 
         public virtual Tag Script(Action<ScriptAttributes> attributes = null)
         {
-            return new Tag(_context, "script", true, false, Attributes(attributes));
+            return Block("script", Attributes(attributes));
         }
 
     }

@@ -22,7 +22,7 @@ namespace com.paraquery.Rendering
     {
         protected Renderer _start;
 
-        public Component(Context context, Renderer renderer) : base(context, FormatModes.None, renderer.StackMode)
+        public Component(Context context, Renderer renderer) : base(context, FormatModes.None, renderer.StructureMode)
         {
             _start = renderer;
         }

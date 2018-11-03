@@ -48,20 +48,21 @@ namespace com.paraquery.Html.Tags
 
     public class Tag : HtmlRenderer
     {
-        protected string _tagName;
-        protected bool _empty;
-        protected AttributeDictionary _attributes;
+        public string TagName { private set; get; }
+        public TagTypes TagType { private set; get; }
+        public bool Empty { private set; get; }
+        public AttributeDictionary Attributes { private set; get; }
 
-        public Tag(Context context, string tagName, bool block, bool empty, AttributeDictionary attributes):base(context, GetFormatMode(block, empty), GetStackMode(block, empty))
+        internal Tag(Context context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty=false) :base(context, GetFormatMode(tagType, empty), GetStructureMode(tagType, empty))
         {
-            _tagName = tagName;
-            _empty = empty;
-            _attributes = attributes;
+            TagName = tagName;
+            Empty = empty;
+            Attributes = attributes;
         }
 
-        private static FormatModes GetFormatMode(bool block, bool empty)
+        private static FormatModes GetFormatMode(TagTypes tagType, bool empty)
         {
-            if (block)
+            if (tagType==TagTypes.Block)
             {
                 if (empty)
                 {
@@ -79,32 +80,41 @@ namespace com.paraquery.Html.Tags
 
         }
 
-        private static StackModes GetStackMode(bool block, bool empty)
+        private static StructureModes GetStructureMode(TagTypes tagType, bool empty)
         {
-            if (block)
+            if (tagType == TagTypes.Block)
             {
                 if (empty)
                 {
-                    return StackModes.Line;
+                    return StructureModes.Line;
                 }
                 else
                 {
-                    return StackModes.Block;
+                    return StructureModes.Block;
                 }
             }
             else
             {
-                return StackModes.Inline;
+                return StructureModes.Inline;
             }
 
         }
 
         protected override void OnDebug(string text)
         {
-            Comment($"{text} {_tagName} {_attributes?["id"]}");
+            var id = Attributes?["id"];
+
+            if (id!=null)
+            {
+                Comment($"{text} {TagName} {id}");
+            }
+            else
+            {
+                Comment($"{text} {TagName}");
+            }
         }
 
-        protected virtual void Attribute(string name, string value = null)
+        protected virtual void WriteAttribute(string name, string value = null)
         {
             //TODO escaping quotes? escaping in general?
 
@@ -123,24 +133,24 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        protected virtual void Attributes()
+        protected virtual void WriteAttributes()
         {
-            if (_attributes != null)
+            if (Attributes != null)
             {
-                foreach (var name in _attributes.Keys)
+                foreach (var name in Attributes.Keys)
                 {
-                    Attribute(name, _attributes[name]);
+                    WriteAttribute(name, Attributes[name]);
                 }
             }
         }
 
         protected override void OnBegin()
         {
-            Writer.Write($"<{_tagName}");
+            Writer.Write($"<{TagName}");
 
-            Attributes();
+            WriteAttributes();
 
-            if (!_empty)
+            if (!Empty)
             {
                 Writer.Write(">");
             }
@@ -148,7 +158,7 @@ namespace com.paraquery.Html.Tags
 
         protected override void OnEnd()
         {
-            if (_empty)
+            if (Empty)
             {
                 if (Context.Options.SelfClosingTags)
                 {
@@ -161,14 +171,17 @@ namespace com.paraquery.Html.Tags
             }
             else
             {
-                Writer.Write($"</{_tagName}>");
+                Writer.Write($"</{TagName}>");
             }
 
-            if (Context.Options.CommentEndTags && StackMode==StackModes.Block)
+            if (Context.Options.CommentEndTags && StructureMode == StructureModes.Block)
             {
-                if (_attributes?.ContainsKey("id") ?? false)
+                if (Attributes!=null)
                 {
-                    Comment($"end {_attributes?["id"]}");
+                    if (Attributes.ContainsKey("id"))
+                    {
+                        Comment($"end {Attributes["id"]}");
+                    }
                 }
             }
 
