@@ -174,7 +174,7 @@ namespace com.paraquery.Html.Tags
                 Writer.Write($"</{TagName}>");
             }
 
-            if (Context.Options.CommentEndTags && StructureMode == StructureModes.Block)
+            if (Context.IsDebug(DebugFlags.EndTag) && StructureMode == StructureModes.Block)
             {
                 if (Attributes!=null)
                 {

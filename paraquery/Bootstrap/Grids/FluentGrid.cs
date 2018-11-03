@@ -100,7 +100,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             protected override void OnBegin()
             {
-                if (Context.Options.CommentFluentGrid)
+                if (Context.IsDebug(DebugFlags.FluentGrid))
                 {
                     Comment("fluent bootstrap grid start");
                 }
@@ -108,7 +108,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             protected override void OnEnd()
             {
-                if (Context.Options.CommentFluentGrid)
+                if (Context.IsDebug(DebugFlags.FluentGrid))
                 {
                     Comment("fluent bootstrap grid end");
                 }

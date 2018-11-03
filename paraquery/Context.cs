@@ -9,7 +9,6 @@ namespace com.paraquery
     public class Context
     {
         public Writer Writer { private set; get; }
-
         public Options Options { get; set; }=new Options();
 
         //namespace stack
@@ -28,6 +27,11 @@ namespace com.paraquery
 
             //add initial namespace
 
+        }
+
+        public bool IsDebug(DebugFlags debugFlags)
+        {
+            return (Options.Debug & debugFlags) != 0;
         }
 
         public virtual string UrlPrefix(string url)

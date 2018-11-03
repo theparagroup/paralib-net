@@ -63,12 +63,12 @@ namespace com.paraquery.Rendering
 
         protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode)
         {
-            _debugSourceFormatting = context.Options.DebugSourceFormatting;
-
             Context = context;
             Writer = Context.Writer;
             FormatMode = formatMode;
             StructureMode = structureMode;
+
+            _debugSourceFormatting = Context.IsDebug(DebugFlags.SourceFormatting);
         }
 
         protected void Debug(string text)
