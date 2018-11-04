@@ -94,12 +94,29 @@ namespace com.paraquery.Rendering
                 {
                     Renderer top = Stack.Peek();
 
-                    if (renderer.StructureMode != StructureModes.Inline && top.StructureMode == StructureModes.Inline) 
+                    if (top.StructureMode == StructureModes.Inline)
                     {
-                        CloseInline();
+                        //anything under an inline
+
+                        if (renderer.StructureMode != StructureModes.Inline)
+                        {
+                            //block or line under an inline
+                            CloseInline();
+                        }
+                        else
+                        {
+                            //inline under inline
+
+                            if (top.Empty)
+                            {
+                                //inline under an empty inline
+                                Close();
+                            }
+                        }
                     }
                     else if (top.StructureMode == StructureModes.Line)
                     {
+                        //anything under a line
                         Close();
                     }
                 }

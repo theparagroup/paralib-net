@@ -60,15 +60,18 @@ namespace com.paraquery.Rendering
         protected Writer Writer { private set; get; }
         public FormatModes FormatMode { private set; get; }
         public StructureModes StructureMode { private set; get; }
+        public bool Empty { private set; get; }
+
 
         public bool Indent { private set; get; }
 
-        protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode, bool indent=true)
+        protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode, bool empty=false, bool indent=true)
         {
             Context = context;
             Writer = Context.Writer;
             FormatMode = formatMode;
             StructureMode = structureMode;
+            Empty = empty;
             Indent = indent;
 
             _debugSourceFormatting = Context.IsDebug(DebugFlags.SourceFormatting);

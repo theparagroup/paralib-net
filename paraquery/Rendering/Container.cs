@@ -11,7 +11,7 @@ namespace com.paraquery.Rendering
         public string Name { private set; get; }
         public bool IsDebug { private set; get; }
 
-        public Container(Context context, string name, bool debug, bool indent) : base(context, debug ? FormatModes.Block : FormatModes.None, StructureModes.Block, indent)
+        public Container(Context context, string name, bool debug, bool indent) : base(context, debug ? FormatModes.Block : FormatModes.None, StructureModes.Block, false, indent)
         {
             Name = name;
             IsDebug = debug;

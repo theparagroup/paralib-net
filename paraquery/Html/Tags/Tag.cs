@@ -50,13 +50,11 @@ namespace com.paraquery.Html.Tags
     {
         public string TagName { private set; get; }
         public TagTypes TagType { private set; get; }
-        public bool Empty { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
 
-        internal Tag(Context context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty=false) :base(context, GetFormatMode(tagType, empty), GetStructureMode(tagType, empty))
+        internal Tag(Context context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false, bool indent=true) :base(context, GetFormatMode(tagType, empty), GetStructureMode(tagType, empty), empty, indent)
         {
             TagName = tagName;
-            Empty = empty;
             Attributes = attributes;
         }
 

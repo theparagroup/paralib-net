@@ -10,7 +10,7 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlRenderer : Renderer
     {
-        public HtmlRenderer(Context context, FormatModes formatMode, StructureModes structureMode) : base(context, formatMode, structureMode)
+        public HtmlRenderer(Context context, FormatModes formatMode, StructureModes structureMode, bool empty=false, bool indent=true) : base(context, formatMode, structureMode, empty, indent)
         {
         }
 
