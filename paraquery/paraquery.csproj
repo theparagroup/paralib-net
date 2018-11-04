@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap\Grids\GridOptions.cs" />
     <Compile Include="Html\Attributes\HeadAttributes.cs" />
     <Compile Include="Html\Attributes\HtmlAttributes.cs" />
     <Compile Include="Html\Attributes\BodyAttributes.cs" />

@@ -9,12 +9,12 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public interface IRow
     {
-        IRow SetClasses(IList<string> classes = null);
 
-        IRow Row(Action<GlobalAttributes> attributes = null);
+        IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
+        IRow Row(IList<string> columnClasses = null);
 
-        IColumn Column(string classes);
         IColumn Column(Action<GlobalAttributes> attributes = null);
+        IColumn Column(string @class);
 
         IGrid EndGrid();
 

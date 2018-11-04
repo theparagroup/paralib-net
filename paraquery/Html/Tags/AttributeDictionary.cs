@@ -140,12 +140,12 @@ namespace com.paraquery.Html.Tags
         //}
 
 
-        //public static AttributeDictionary Attributes(object attributes)
-        //{
-        //    AttributeDictionary dictionary = new AttributeDictionary();
-        //    BuildAttributeDictionary(dictionary, attributes, false);
-        //    return dictionary;
-        //}
+        public static AttributeDictionary Attributes(object attributes)
+        {
+            AttributeDictionary dictionary = new AttributeDictionary();
+            BuildAttributeDictionary(dictionary, attributes, false);
+            return dictionary;
+        }
 
         public static AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
         {

@@ -85,11 +85,30 @@ namespace com.paraquery.Bootstrap.Grids
 
     public partial class FluentGrid : HtmlComponent, IGrid, IContainer, IRow, IColumn
     {
-        protected IList<string> _classes;
+        protected string _containerClass;
+        protected string _rowClass;
+        protected string _columnClass;
+
+        protected IList<string> _gridColulmnClasses;
+        protected IList<string> _containerColulmnClasses;
+        protected IList<string> _rowColulmnClasses;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context, bool begin=true) : base(context, new GridContainer(context))
+        public FluentGrid(HtmlContext context, Action<GridOptions> init=null, bool begin=true) : base(context, new GridContainer(context))
         {
+            var gridOptions = new GridOptions();
+
+            if (init!=null)
+            {
+                init(gridOptions);
+            }
+
+            _gridColulmnClasses = gridOptions.GridColulmnClasses;
+
+            _containerClass = gridOptions.ContainerClass;
+            _rowClass = gridOptions.RowClass;
+            _columnClass = gridOptions.ColumnClass;
+
             if (begin)
             {
                 Begin();
@@ -137,35 +156,17 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-        IGrid IGrid.SetClasses(IList<string> classes)
+        public IContainer Container(Action<GlobalAttributes> init, IList<string> columnClasses = null)
         {
-            _classes = classes;
-            return this;
+            // fluid ? "container-fluid" : "container"
+            _containerColulmnClasses = columnClasses;
+            return Push(new ContainerTag(Context, AttributeDictionary.Attributes(init, new { @class = _containerClass })));
         }
 
-        IContainer IContainer.SetClasses(IList<string> classes)
+        public IContainer Container(IList<string> columnClasses = null)
         {
-            _classes = classes;
-            return this;
+            return Container(null, columnClasses);
         }
-
-        IRow IRow.SetClasses(IList<string> classes)
-        {
-            _classes = classes;
-            return this;
-        }
-
-        IColumn IColumn.SetClasses(IList<string> classes)
-        {
-            _classes = classes;
-            return this;
-        }
-
-        public IContainer Container(Action<GlobalAttributes> init = null, bool fluid = false)
-        {
-            return Push(new ContainerTag(Context, AttributeDictionary.Attributes(init, new { @class = fluid ? "container-fluid" : "container" })));
-        }
-
 
         protected void CloseRow()
         {
@@ -177,6 +178,7 @@ namespace com.paraquery.Bootstrap.Grids
 
                 if (top is RowTag)
                 {
+                    _rowColulmnClasses = null;
                     Pop();
                     break;
                 }
@@ -194,10 +196,16 @@ namespace com.paraquery.Bootstrap.Grids
 
         }
 
-        public IRow Row(Action<GlobalAttributes> init)
+        public IRow Row(Action<GlobalAttributes> init, IList<string> columnClasses = null)
         {
             CloseRow();
-            return Push(new RowTag(Context, AttributeDictionary.Attributes(init, new { @class = "row"})));
+            _rowColulmnClasses = columnClasses;
+            return Push(new RowTag(Context, AttributeDictionary.Attributes(init, new { @class = _rowClass})));
+        }
+
+        public IRow Row(IList<string> columnClasses = null)
+        {
+            return Row(null, columnClasses);
         }
 
         protected void CloseColumn()
@@ -226,9 +234,13 @@ namespace com.paraquery.Bootstrap.Grids
 
         }
 
-        public IColumn Column(string classes)
+        public IColumn Column(string @class)
         {
-            return Column(a => a.Class = classes);
+            CloseColumn();
+
+            ++_columnNumber;
+
+            return Push(new ColumnTag(Context, AttributeDictionary.Attributes(new { @class = @class })));
         }
 
         public IColumn Column(Action<GlobalAttributes> init = null)
@@ -237,14 +249,22 @@ namespace com.paraquery.Bootstrap.Grids
 
             string columnClasses = null;
 
-            if (_classes != null && _columnNumber < _classes.Count)
+            if (_rowColulmnClasses != null && _columnNumber < _rowColulmnClasses.Count)
             {
-                columnClasses = _classes[_columnNumber];
+                columnClasses = _rowColulmnClasses[_columnNumber];
+            }
+            else if (_containerColulmnClasses != null && _columnNumber < _containerColulmnClasses.Count)
+            {
+                columnClasses = _containerColulmnClasses[_columnNumber];
+            }
+            else if (_gridColulmnClasses != null && _columnNumber < _gridColulmnClasses.Count)
+            {
+                columnClasses = _gridColulmnClasses[_columnNumber];
             }
 
             ++_columnNumber;
 
-            return Push(new ColumnTag(Context, AttributeDictionary.Attributes(init, new { @class = columnClasses })));
+            return Push(new ColumnTag(Context, AttributeDictionary.Attributes(init, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
         }
 
         public new IColumn Open(Renderer renderer)
@@ -259,10 +279,11 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-        public IGrid Grid()
+        public IGrid Grid(Action<GridOptions> init = null)
         {
-            var grid = new FluentGrid(Context);
-            return Push(grid);
+            var grid = new FluentGrid(Context, init);
+            Push(grid);
+            return grid;
         }
 
 

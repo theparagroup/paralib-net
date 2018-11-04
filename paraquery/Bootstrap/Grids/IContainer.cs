@@ -9,9 +9,9 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public interface IContainer
     {
-        IContainer SetClasses(IList<string> classes = null);
 
-        IRow Row(Action<GlobalAttributes> attributes = null);
+        IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
+        IRow Row(IList<string> columnClasses = null);
 
         IGrid EndGrid();
 

@@ -11,11 +11,12 @@ namespace com.paraquery.Bootstrap.Grids
     {
         void Begin();
 
-        IGrid SetClasses(IList<string> classes = null);
+        IContainer Container(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
+        IContainer Container(IList<string> columnClasses = null);
 
-        IContainer Container(Action<GlobalAttributes> attributes = null, bool fluid = false);
+        IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
+        IRow Row(IList<string> columnClasses = null);
 
-        IRow Row(Action<GlobalAttributes> attributes = null);
 
         IGrid EndGrid();
     }

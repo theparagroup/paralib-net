@@ -42,13 +42,18 @@ Design Goals & Notes
                     //this will run but will mess up the formatting
                     html.Begin();
 
+	attribute builder
+		should we merge class?
+		should we merge style?
 
-	can we eliminate duplicating fluenthtml in grid like this?
-		grid()
-		.Col()
-		.Contents(html=>{
-			html.Span()
-		 })
+	style should be able to be used for programmatic style sheets
+	programmatic external javascript
+	caching options
+
+	in paracontroller, add View() replacements:
+		Page()
+		Fragment()
+		
 
 	fluent writer?
 	fluent jswriter?
@@ -65,7 +70,8 @@ Design Goals & Notes
 				//parms should all be nullable so we can call MethodInfo.Invoke easily
 				//parameters can be validated for type and required
 				//default values can be set
-
+				//when generating call statements, can be validated
+				//picks up module name/alias
 
 				//https://javascriptweblog.wordpress.com/2011/08/08/fixing-the-javascript-typeof-operator/
 				//https://stackoverflow.com/questions/13926213/checking-the-types-of-function-arguments-in-javascript

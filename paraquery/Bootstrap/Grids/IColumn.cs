@@ -11,18 +11,15 @@ namespace com.paraquery.Bootstrap.Grids
 {
     public interface IColumn
     {
-        IColumn SetClasses(IList<string> classes = null);
 
-        IRow Row(Action<GlobalAttributes> attributes = null);
+        IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
+        IRow Row(IList<string> columnClasses = null);
 
-        IColumn Column(string classes);
         IColumn Column(Action<GlobalAttributes> attributes = null);
+        IColumn Column(string @class);
 
-        IGrid Grid();
+        IGrid Grid(Action<GridOptions> init=null);
         IGrid EndGrid();
-
-        IColumn Open(Renderer renderer);
-        IColumn Close();
 
         IColumn Html(Action<FluentHtml> content);
 
