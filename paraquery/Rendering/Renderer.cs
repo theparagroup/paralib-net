@@ -61,12 +61,15 @@ namespace com.paraquery.Rendering
         public FormatModes FormatMode { private set; get; }
         public StructureModes StructureMode { private set; get; }
 
-        protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode)
+        public bool Indent { private set; get; }
+
+        protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode, bool indent=true)
         {
             Context = context;
             Writer = Context.Writer;
             FormatMode = formatMode;
             StructureMode = structureMode;
+            Indent = indent;
 
             _debugSourceFormatting = Context.IsDebug(DebugFlags.SourceFormatting);
         }
@@ -114,8 +117,11 @@ namespace com.paraquery.Rendering
                     Writer.NewLine();
                 }
 
-                //make sure content (for non-empty blocks) is indented
-                Writer.Indent();
+                if (Indent)
+                {
+                    //make sure content (for non-empty blocks) is indented
+                    Writer.Indent();
+                }
             }
         }
 
@@ -135,8 +141,11 @@ namespace com.paraquery.Rendering
                     Writer.NewLine();
                 }
 
-                //undo the indent
-                Writer.Dedent();
+                if (Indent)
+                {
+                    //undo the indent
+                    Writer.Dedent();
+                }
             }
         }
 

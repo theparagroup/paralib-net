@@ -88,30 +88,14 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _classes;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context) : base(context, new Marker(context))
+        public FluentGrid(HtmlContext context) : base(context, new GridContainer(context))
         {
         }
 
-        public new class Marker : FluentHtml.Marker
+        public class GridContainer : HtmlContainer
         {
-            public Marker(HtmlContext context) : base(context)
+            public GridContainer(Context context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
             {
-            }
-
-            protected override void OnBegin()
-            {
-                if (Context.IsDebug(DebugFlags.FluentGrid))
-                {
-                    Comment("fluent bootstrap grid start");
-                }
-            }
-
-            protected override void OnEnd()
-            {
-                if (Context.IsDebug(DebugFlags.FluentGrid))
-                {
-                    Comment("fluent bootstrap grid end");
-                }
             }
         }
 
@@ -192,7 +176,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is Marker || top is ContainerTag)
+                else if (top is GridContainer || top is ContainerTag)
                 {
                     break;
                 }
@@ -226,7 +210,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is Marker || top is ContainerTag || top is RowTag)
+                else if (top is GridContainer || top is ContainerTag || top is RowTag)
                 {
                     break;
                 }
@@ -286,7 +270,7 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = Stack.Peek();
 
-                if (top is Marker)
+                if (top is GridContainer)
                 {
                     Pop();
                     break;

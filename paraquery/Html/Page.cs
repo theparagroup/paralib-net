@@ -9,26 +9,11 @@ using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Html
 {
-    public abstract class HtmlPage : HtmlFragment
+    public class Page : Fragment
     {
 
-        public HtmlPage(HtmlContext context) : base(context, new Marker(context))
+        public Page(HtmlContext context) : base(context, new HtmlContainer(context, "page", context.IsDebug(DebugFlags.Page), false))
         {
-        }
-
-        public class Marker : HtmlRenderer
-        {
-            public Marker(HtmlContext context) : base(context, FormatModes.None, StructureModes.Block)
-            {
-            }
-
-            protected override void OnBegin()
-            {
-            }
-
-            protected override void OnEnd()
-            {
-            }
         }
 
         protected override void OnBegin()
@@ -86,14 +71,27 @@ namespace com.paraquery.Html
             }
         }
 
-        protected abstract DocumentTypes? DocumentType { get; }
+        protected virtual DocumentTypes? DocumentType
+        {
+            get
+            {
+                //quirks mode is default
+                return null;
+            }
+        }
 
         protected virtual Tag OnHtml()
         {
-            return TagBuilder.Html(a=> a.Lang = Language);
+            return TagBuilder.Html(a => a.Lang = Language);
         }
 
-        protected abstract string Language {get;}
+        protected virtual string Language
+        {
+            get
+            {
+                return null;
+            }
+        }
 
         protected virtual void Head()
         {
@@ -120,7 +118,13 @@ namespace com.paraquery.Html
             return TagBuilder.Head();
         }
 
-        public abstract string Title { get; }
+        public virtual string Title
+        {
+            get
+            {
+                return GetType().Name;
+            }
+        }
 
         protected virtual void OnHeadContent()
         {
@@ -131,7 +135,10 @@ namespace com.paraquery.Html
             return TagBuilder.Body();
         }
 
-        protected abstract void OnContent();
+        protected virtual void OnContent()
+        {
+            //you can override this or add content in a using
+        }
 
         protected override void OnPostContent()
         {

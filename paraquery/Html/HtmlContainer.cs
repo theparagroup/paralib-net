@@ -8,20 +8,17 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html
 {
-    public abstract class HtmlComponent : Component
+    public class HtmlContainer : Container
     {
-        protected TagBuilder TagBuilder { private set; get; }
-
-        public HtmlComponent(HtmlContext context, Renderer starter) : base(context, starter)
+        public HtmlContainer(Context context, string name, bool debug, bool indent) : base(context, name, debug, indent)
         {
-            TagBuilder = new TagBuilder(context);
         }
 
-        protected new HtmlContext Context
+        protected override bool CanDebug
         {
             get
             {
-                return (HtmlContext)base.Context;
+                return true;
             }
         }
 

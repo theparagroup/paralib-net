@@ -45,10 +45,11 @@
     <Compile Include="Html\Attributes\BodyAttributes.cs" />
     <Compile Include="Html\DOCTYPE.cs" />
     <Compile Include="Html\DocumentTypes.cs" />
+    <Compile Include="Html\HtmlContainer.cs" />
     <Compile Include="Html\HtmlComponent.cs" />
     <Compile Include="Html\HtmlContext.cs" />
-    <Compile Include="Html\HtmlFragment.cs" />
-    <Compile Include="Html\HtmlPage.cs" />
+    <Compile Include="Html\Fragment.cs" />
+    <Compile Include="Html\Page.cs" />
     <Compile Include="Html\HtmlRenderer.cs" />
     <Compile Include="Html\Tags\DynamicValueAttribute.cs" />
     <Compile Include="Html\Tags\Tag.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="NameValuePairs.cs" />
     <Compile Include="DebugFlags.cs" />
     <Compile Include="Rendering\Component.cs" />
+    <Compile Include="Rendering\Container.cs" />
     <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
     <Compile Include="Rendering\BeginBase.cs" />

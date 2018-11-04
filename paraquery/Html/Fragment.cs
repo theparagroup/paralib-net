@@ -9,9 +9,18 @@ using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Html
 {
-    public abstract class HtmlFragment : HtmlComponent
+    public class Fragment : HtmlComponent
     {
-        public HtmlFragment(HtmlContext context, HtmlRenderer renderer) : base(context, renderer)
+        protected Fragment(HtmlContext context, Renderer starter) : base(context, starter)
+        {
+        }
+
+        public Fragment(HtmlContext context) : this(context, new HtmlContainer(context, "fragment", context.IsDebug(DebugFlags.Fragment), false))
+        {
+
+        }
+
+        protected override void OnBegin()
         {
         }
 
@@ -21,7 +30,6 @@ namespace com.paraquery.Html
             Push(fluentHtml);
             return fluentHtml;
         }
-
 
     }
 }

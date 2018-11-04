@@ -20,17 +20,17 @@ namespace com.paraquery.Rendering
 
     public abstract class Component : RendererStack
     {
-        protected Renderer _start;
+        protected Renderer _starter;
 
-        public Component(Context context, Renderer renderer) : base(context, FormatModes.None, renderer.StructureMode)
+        public Component(Context context, Renderer starter) : base(context, FormatModes.None, starter.StructureMode)
         {
-            _start = renderer;
+            _starter = starter;
         }
 
         protected override void DoBegin()
         {
             OnPreBegin();
-            Push(_start);
+            Push(_starter);
             OnBegin();
             OnPostBegin();
             OnPreContent();
