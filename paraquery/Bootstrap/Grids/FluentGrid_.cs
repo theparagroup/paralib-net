@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
+using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Bootstrap.Grids
 {
@@ -17,6 +18,21 @@ namespace com.paraquery.Bootstrap.Grids
 
     public partial class FluentGrid 
     {
+
+        public IColumn Html(Action<FluentHtml> content)
+        {
+            if (content!=null)
+            {
+                var fluentHtml = new FluentHtml(Context, false);
+                Push(fluentHtml);
+                content(fluentHtml);
+            }
+
+            return this;
+        }
+
+
+
         IColumn IColumn.Write(string content)
         {
             Write(content);

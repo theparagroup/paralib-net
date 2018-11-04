@@ -90,6 +90,11 @@ namespace com.paraquery.Html.Tags
             return Inline("span", Attributes(attributes));
         }
 
+        public virtual Tag Br(Action<HrAttributes> attributes = null)
+        {
+            return Inline("br", Attributes(attributes), true);
+        }
+
         public virtual Tag Hr(Action<HrAttributes> attributes = null)
         {
             return Block("hr", Attributes(attributes), true);

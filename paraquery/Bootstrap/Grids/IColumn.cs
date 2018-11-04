@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
 using com.paraquery.Rendering;
+using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Bootstrap.Grids
 {
@@ -23,9 +24,14 @@ namespace com.paraquery.Bootstrap.Grids
         IColumn Open(Renderer renderer);
         IColumn Close();
 
+        IColumn Html(Action<FluentHtml> content);
+
+
+        //shorten/remove these?
         IColumn Write(string content);
         IColumn WriteLine(string content);
 
+        //remove these?
         IColumn Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false);
         IColumn Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false);
         IColumn Div(Action<GlobalAttributes> attributes = null);

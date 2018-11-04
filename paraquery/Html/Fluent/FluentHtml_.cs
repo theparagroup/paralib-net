@@ -31,6 +31,11 @@ namespace com.paraquery.Html.Fluent
             return Push(TagBuilder.Span(attributes));
         }
 
+        public virtual FluentHtml Br(Action<HrAttributes> attributes = null)
+        {
+            return Push(TagBuilder.Br(attributes));
+        }
+
         public virtual FluentHtml Hr(Action<HrAttributes> attributes = null)
         {
             return Push(TagBuilder.Hr(attributes));
