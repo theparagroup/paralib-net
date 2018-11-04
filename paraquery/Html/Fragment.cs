@@ -11,11 +11,15 @@ namespace com.paraquery.Html
 {
     public class Fragment : HtmlComponent
     {
-        protected Fragment(HtmlContext context, Renderer starter) : base(context, starter)
+        protected Fragment(HtmlContext context, Renderer starter, bool begin) : base(context, starter)
         {
+            if (begin)
+            {
+                Begin();
+            }
         }
 
-        public Fragment(HtmlContext context) : this(context, new HtmlContainer(context, "fragment", context.IsDebug(DebugFlags.Fragment), false))
+        public Fragment(HtmlContext context, bool begin = true) : this(context, new HtmlContainer(context, "fragment", context.IsDebug(DebugFlags.Fragment), false), begin)
         {
 
         }
@@ -26,7 +30,7 @@ namespace com.paraquery.Html
 
         public FluentHtml Html()
         {
-            var fluentHtml = new FluentHtml(Context);
+            var fluentHtml = new FluentHtml(Context, false);
             Push(fluentHtml);
             return fluentHtml;
         }

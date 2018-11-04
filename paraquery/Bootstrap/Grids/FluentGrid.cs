@@ -88,8 +88,12 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _classes;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context) : base(context, new GridContainer(context))
+        public FluentGrid(HtmlContext context, bool begin=true) : base(context, new GridContainer(context))
         {
+            if (begin)
+            {
+                Begin();
+            }
         }
 
         public class GridContainer : HtmlContainer

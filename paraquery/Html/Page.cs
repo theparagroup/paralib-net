@@ -12,7 +12,7 @@ namespace com.paraquery.Html
     public class Page : Fragment
     {
 
-        public Page(HtmlContext context) : base(context, new HtmlContainer(context, "page", context.IsDebug(DebugFlags.Page), false))
+        public Page(HtmlContext context, bool begin = true) : base(context, new HtmlContainer(context, "page", context.IsDebug(DebugFlags.Page), false), begin)
         {
         }
 
