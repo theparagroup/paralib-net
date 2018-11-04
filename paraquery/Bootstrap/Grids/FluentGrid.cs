@@ -83,7 +83,7 @@ namespace com.paraquery.Bootstrap.Grids
 
     */
 
-    public partial class FluentGrid : FluentHtml, IGrid, IContainer, IRow, IColumn
+    public partial class FluentGrid : HtmlComponent, IGrid, IContainer, IRow, IColumn
     {
         protected IList<string> _classes;
         protected int _columnNumber;
@@ -285,6 +285,18 @@ namespace com.paraquery.Bootstrap.Grids
                 }
             }
 
+
+            return this;
+        }
+
+        public IColumn Html(Action<FluentHtml> content)
+        {
+            if (content != null)
+            {
+                var fluentHtml = new FluentHtml(Context, false);
+                Push(fluentHtml);
+                content(fluentHtml);
+            }
 
             return this;
         }

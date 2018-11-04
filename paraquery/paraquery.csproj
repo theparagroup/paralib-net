@@ -45,6 +45,7 @@
     <Compile Include="Html\Attributes\BodyAttributes.cs" />
     <Compile Include="Html\DOCTYPE.cs" />
     <Compile Include="Html\DocumentTypes.cs" />
+    <Compile Include="Html\Fluent\FluentHtml_.cs" />
     <Compile Include="Html\HtmlContainer.cs" />
     <Compile Include="Html\HtmlComponent.cs" />
     <Compile Include="Html\HtmlContext.cs" />
@@ -66,7 +67,6 @@
     <Compile Include="Bootstrap\Bs.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
-    <Compile Include="Bootstrap\Grids\FluentGrid_.cs" />
     <Compile Include="Rendering\FormatModes.cs" />
     <Compile Include="Writers\ConsoleWriter.cs" />
     <Compile Include="Writer.cs" />
@@ -82,7 +82,6 @@
     <Compile Include="Html\Attributes\ImgAttributes.cs" />
     <Compile Include="Html\Attributes\Style.cs" />
     <Compile Include="Html\Fluent\FluentHtml.cs" />
-    <Compile Include="Html\Fluent\FluentHtml_.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
     <Compile Include="Bootstrap\Grids\IColumn.cs" />
