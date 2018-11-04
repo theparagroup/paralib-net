@@ -103,17 +103,7 @@ Design Goals & Notes
 
 	fluent interfaces could throw if you call writeline/newline with an inline on top, or write/writeline/newline with line on top
 
-	improve htmlpage
 	move pQuery into paramvc
-
-	create some components to be used int ttb
-		Page
-		Page[TModel]
-			OnPreamble
-			OnHead
-			OnBody
-		View
-		View[TModel]
 
 	start converting ttb
 		remove UrlPrefix() from context
@@ -154,10 +144,12 @@ Design Goals & Notes
 	script management
 	built in onready
 
-	lets support some other grid systems
-	make universal if possible, don't tie to bootstrap
-	fold fluentgrid into fluenthtml?
-	refactor SetClasses
+	make jquery a seperate module?
+	rename to parahtml (just html & javascript)?
+
+	grids
+		remove bootstrap from pQuery (remove pQuery!) and make bootstrap a seperate module/dll
+		lets support some other grid systems
 
 	make debug a config option
 
