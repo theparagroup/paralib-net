@@ -59,8 +59,7 @@
     <Compile Include="Html\Tags\TagTypes.cs" />
     <Compile Include="NameValuePairs.cs" />
     <Compile Include="DebugFlags.cs" />
-    <Compile Include="Rendering\Component.cs" />
-    <Compile Include="Rendering\DebugBlock.cs" />
+    <Compile Include="Rendering\DebugRenderer.cs" />
     <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
     <Compile Include="Rendering\BeginBase.cs" />
@@ -68,7 +67,7 @@
     <Compile Include="Bootstrap\Bs.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
-    <Compile Include="Rendering\FormatModes.cs" />
+    <Compile Include="Rendering\LineModes.cs" />
     <Compile Include="Writers\ConsoleWriter.cs" />
     <Compile Include="Writer.cs" />
     <Compile Include="Writers\StringWriter.cs" />
@@ -96,7 +95,7 @@
     <Compile Include="jQuery\Blocks\Ready.cs" />
     <Compile Include="jQuery\Methods.cs" />
     <Compile Include="Options.cs" />
-    <Compile Include="Rendering\StructureModes.cs" />
+    <Compile Include="Rendering\StackModes.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="pQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

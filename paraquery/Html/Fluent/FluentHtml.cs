@@ -19,14 +19,8 @@ namespace com.paraquery.Html.Fluent
             }
         }
 
-        protected FluentHtml(HtmlContext context, Renderer starter) : base(context, starter)
-        {
-
-        }
-
         protected override void OnBegin()
         {
-            //do nothing, the marker does it all
         }
 
         protected override void OnEnd()
@@ -51,15 +45,15 @@ namespace com.paraquery.Html.Fluent
             return Push(renderer);
         }
 
-        public new FluentHtml CloseInline()
+        public FluentHtml CloseUp()
         {
-            base.CloseInline();
+            base.CloseLinears(false);
             return this;
         }
 
-        public new FluentHtml CloseBlock()
+        public FluentHtml CloseBlock()
         {
-            base.CloseBlock();
+            base.CloseLinears(true);
             return this;
         }
 

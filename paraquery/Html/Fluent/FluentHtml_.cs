@@ -21,6 +21,15 @@ namespace com.paraquery.Html.Fluent
             return Push(HtmlBuilder.Inline(name, attributes, empty));
         }
 
+        public virtual FluentHtml Open<T>(T renderer, Action<T> action) where T : Renderer
+        {
+            Push(renderer);
+
+            action(renderer);
+
+            return this;
+        }
+
         public virtual FluentHtml Html(Action<GlobalAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Html(attributes));

@@ -8,7 +8,11 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html
 {
+    /*
+        
+        Convienence methods for creating HTML tags, etc.
 
+    */
     public partial class HtmlBuilder
     {
         protected Context Context { private set; get; }
@@ -18,10 +22,10 @@ namespace com.paraquery.Html
             Context = context;
         }
 
-        protected virtual AttributeDictionary Attributes<T>(Action<T> init = null) where T : GlobalAttributes, new()
+        protected virtual AttributeDictionary Attributes<T>(Action<T> attributes = null) where T : GlobalAttributes, new()
         {
             //this method is just to simplify tag methods...
-            return AttributeDictionary.Attributes(init, null);
+            return AttributeDictionary.Attributes(attributes, null);
         }
 
         /*

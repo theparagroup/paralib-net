@@ -8,11 +8,27 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html
 {
-    public abstract class HtmlComponent : Component
+    /*
+        
+        HtmlComponent is a base class for "components" that are HTML-centric. It requires an
+        HtmlContext, defines OnDebug, etc.
+        
+        HtmlComponent follows the intended "component pattern", that is, a class derived from
+        RendererStack that builds its own content.
+
+        Because of the rules RendererStack enforces about the first renderer in the stack,
+        HtmlComponent declares itself to be Multiple/Nested and invisible, and requires
+        derived classes to provide the first renderer to go on the stack (start renderer).
+        
+        If implementors derive from HtmlComponent, they don't have to worry about these details. 
+
+    */
+    public abstract class HtmlComponent : RendererStack
     {
 
-        public HtmlComponent(HtmlContext context, Renderer starter) : base(context, starter)
+        public HtmlComponent(HtmlContext context, Renderer start) : base(context, LineModes.Multiple, StackModes.Nested, false)
         {
+            Push(start);
         }
 
         protected new HtmlContext Context

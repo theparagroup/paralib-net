@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Rendering
 {
-    public enum FormatModes
+    public enum StackModes
     {
-        None,
-        Line,
-        Block
+        Linear,
+        Nested
     }
 }

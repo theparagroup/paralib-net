@@ -8,7 +8,14 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html
 {
-    public class HtmlBlock : DebugBlock
+    /*
+
+        An HTML-centric version of the DebugRenderer that defines OnDebug.
+
+        Used in Page, FluentHtml, etc.
+
+    */
+    public class HtmlBlock : DebugRenderer
     {
         public HtmlBlock(Context context, string name, bool debug, bool indent) : base(context, name, debug, indent)
         {

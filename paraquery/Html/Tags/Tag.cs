@@ -10,9 +10,7 @@ namespace com.paraquery.Html.Tags
 {
     /* 
 
-        This is a utility class that Block and Inline can use to delegate functionality.
-
-        We need to do this because Inline derives from Renderer, and Block derives from BlockRenderer.
+        This is a utility class that converts HTML Block/Inline/Empty concepts Renderer concepts.
 
         Note on empty tags (also called void tags in HTML5 and self-closing tags in XHTML):
 
@@ -52,57 +50,65 @@ namespace com.paraquery.Html.Tags
         public TagTypes TagType { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
 
-        internal Tag(Context context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false, bool indent=true) :base(context, GetFormatMode(tagType, empty), GetStructureMode(tagType, empty), empty, indent)
+        internal Tag(Context context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContentMode(tagType, empty), empty, true, true)
         {
             TagName = tagName;
             Attributes = attributes;
         }
 
-        private static FormatModes GetFormatMode(TagTypes tagType, bool empty)
+        public bool Empty
         {
-            if (tagType==TagTypes.Block)
+            get
             {
-                if (empty)
-                {
-                    return FormatModes.Line;
-                }
-                else
-                {
-                    return FormatModes.Block;
-                }
+                return Terminal;
             }
-            else
-            {
-                return FormatModes.None;
-            }
-
         }
 
-        private static StructureModes GetStructureMode(TagTypes tagType, bool empty)
+
+        private static LineModes GetLineMode(TagTypes tagType, bool empty)
         {
             if (tagType == TagTypes.Block)
             {
                 if (empty)
                 {
-                    return StructureModes.Line;
+                    return LineModes.Single;
                 }
                 else
                 {
-                    return StructureModes.Block;
+                    return LineModes.Multiple;
                 }
             }
             else
             {
-                return StructureModes.Inline;
+                return LineModes.None;
             }
 
+        }
+
+        private static StackModes GetContentMode(TagTypes tagType, bool empty)
+        {
+            if (tagType == TagTypes.Block)
+            {
+                if (empty)
+                {
+                    return StackModes.Linear;
+                }
+                else
+                {
+                    return StackModes.Nested;
+                }
+            }
+            else
+            {
+                return StackModes.Linear;
+            }
         }
 
         protected override void OnDebug(string text)
         {
             var id = Attributes?["id"];
 
-            if (id!=null)
+            if (id != null)
             {
                 Comment($"{text} {TagName} {id}");
             }
@@ -172,9 +178,9 @@ namespace com.paraquery.Html.Tags
                 Writer.Write($"</{TagName}>");
             }
 
-            if (Context.IsDebug(DebugFlags.EndTag) && StructureMode == StructureModes.Block)
+            if (Context.IsDebug(DebugFlags.EndTag) && StackMode == StackModes.Nested)
             {
-                if (Attributes!=null)
+                if (Attributes != null)
                 {
                     if (Attributes.ContainsKey("id"))
                     {

@@ -18,10 +18,10 @@ namespace com.paraquery.Bootstrap.Grids
         IColumn Column(Action<GlobalAttributes> attributes = null);
         IColumn Column(string @class);
 
-        IGrid Grid(Action<GridOptions> init=null);
+        IGrid Grid(Action<GridOptions> options=null);
         IGrid EndGrid();
 
-        IColumn Html(Action<FluentHtml> content);
+        IColumn Html(Action<FluentHtml> fluentHtml);
 
     }
 }

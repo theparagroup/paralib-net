@@ -8,16 +8,22 @@ namespace com.paraquery.Rendering
 {
     /*
 
-        Containers are special renderers that are used to wrap
+        Containers are special renderers that are only visible when the "debug" parameter is set.
 
+        We use them for things that are usually invisible, such as Pages and FluentHtml.
+        
+        Containers are Multiline/Nested, but indentation is an option.
+
+        We want to make sure derived classes override OnDebug(), but there is no mechanism for that in C#,
+        so we add an abstract "nuisance property" called "CanDebug" to force implementors to think about it.
 
     */
-    public abstract class DebugBlock : Renderer
+    public abstract class DebugRenderer : Renderer
     {
         public string Name { private set; get; }
         public bool IsDebug { private set; get; }
 
-        public DebugBlock(Context context, string name, bool debug, bool indent) : base(context, debug ? FormatModes.Block : FormatModes.None, StructureModes.Block, false, indent)
+        public DebugRenderer(Context context, string name, bool debug, bool indent) : base(context, LineModes.Multiple, StackModes.Nested, false, debug, indent)
         {
             Name = name;
             IsDebug = debug;

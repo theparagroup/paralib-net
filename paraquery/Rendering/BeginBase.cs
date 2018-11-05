@@ -38,6 +38,11 @@ namespace com.paraquery.Rendering
                     //OnPostEnd
 
 
+        After you call End(), we reset and you can call Begin() again.
+
+        This is important if you want to re-use BeginBase objects.
+
+
    */
 
     public abstract class BeginBase : EndBase
@@ -68,6 +73,23 @@ namespace com.paraquery.Rendering
         protected virtual void OnPostBegin() { }
 
         protected virtual void OnPreContent() { }
+
+        internal override void DoDispose()
+        {
+            if (_begun)
+            {
+                base.DoDispose();
+
+                //reset
+                _begun = false;
+                _disposed = false;
+
+            }
+            else
+            {
+                throw new InvalidOperationException($"Can't End() Component '{GetType().Name}' without Begin()");
+            }
+        }
 
         protected override void OnPreEnd()
         {

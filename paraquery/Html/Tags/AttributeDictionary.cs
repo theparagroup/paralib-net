@@ -147,22 +147,22 @@ namespace com.paraquery.Html.Tags
             return dictionary;
         }
 
-        public static AttributeDictionary Attributes<T>(Action<T> init = null, object additional = null) where T : GlobalAttributes, new()
+        public static AttributeDictionary Attributes<T>(Action<T> attributes = null, object additional = null) where T : GlobalAttributes, new()
         {
             //let's keep it simple if there is nothing to do
-            if (init != null || additional != null)
+            if (attributes != null || additional != null)
             {
                 //create a new dictionary to hold the name value pairs
                 AttributeDictionary dictionary = new AttributeDictionary();
 
                 //execute init action and build, if exists
-                if (init != null)
+                if (attributes != null)
                 {
-                    T attributes = new T();
+                    T a = new T();
 
-                    init(attributes);
+                    attributes(a);
 
-                    BuildAttributeDictionary(dictionary, attributes, typeof(T), false);
+                    BuildAttributeDictionary(dictionary, a, typeof(T), false);
                 }
 
                 //merge any additional anonymous object-based attributes

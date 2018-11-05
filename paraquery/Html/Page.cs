@@ -9,16 +9,21 @@ using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Html
 {
+    /*
+    
+        Base class for HTML pages.
+    
+    */
     public class Page : Fragment
     {
 
-        public Page(HtmlContext context, bool begin = true) : base(context, new HtmlBlock(context, "page", context.IsDebug(DebugFlags.Page), false), begin)
+        public Page(HtmlContext context, bool begin = true) : base(context, begin)
         {
         }
 
         protected override void OnBegin()
         {
-            //derived classes should use the new OnXXX() methods below
+            Push(new HtmlBlock(Context, "page", Context.IsDebug(DebugFlags.Page), false));
         }
 
         protected override void OnPreContent()

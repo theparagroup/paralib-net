@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Rendering
 {
-    public enum StructureModes 
+    public enum LineModes
     {
-        Inline, 
-        Line,
-        Block 
+        None,
+        Single,
+        Multiple
     }
 }

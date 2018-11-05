@@ -8,9 +8,16 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html
 {
+    /*
+        
+        Basically defines Comment and OnDebug.
+
+        All HTML-based renderers should derive from this.
+
+    */
     public abstract class HtmlRenderer : Renderer
     {
-        public HtmlRenderer(Context context, FormatModes formatMode, StructureModes structureMode, bool empty = false, bool indent = true) : base(context, formatMode, structureMode, empty, indent)
+        public HtmlRenderer(Context context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent=true) : base(context, lineMode, stackMode, terminal, visible, indent)
         {
         }
 

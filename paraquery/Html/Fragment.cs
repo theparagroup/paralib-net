@@ -9,19 +9,21 @@ using com.paraquery.Html.Fluent;
 
 namespace com.paraquery.Html
 {
+    /*
+        
+        A base class for chunks of HTML.
+
+        Page and other HTML components derive from this class.
+
+    */
     public class Fragment : HtmlComponent
     {
-        protected Fragment(HtmlContext context, Renderer starter, bool begin) : base(context, starter)
+        public Fragment(HtmlContext context, bool begin=true) : base(context, new HtmlBlock(context, "fragment", context.IsDebug(DebugFlags.Fragment), false))
         {
             if (begin)
             {
                 Begin();
             }
-        }
-
-        public Fragment(HtmlContext context, bool begin = true) : this(context, new HtmlBlock(context, "fragment", context.IsDebug(DebugFlags.Fragment), false), begin)
-        {
-
         }
 
         protected override void OnBegin()

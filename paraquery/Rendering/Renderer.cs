@@ -19,15 +19,20 @@ namespace com.paraquery.Rendering
         Renderers have some important properties that control how they are formatted (pretty-printed)
         and how the behave in the RendererStack:
             
-            FormatMode
-            StructureMode
-            Empty
+            LineMode
             Indent
+            StackMode
+            Terminal
+            Visible
 
-        Empty and StructureMode are not used here in the Renderer, but they are used to control how
+        StackMode and Terminal are not used here in the Renderer, but they are used to control how
         the renderers are pushed and popped in the RendererStack to create structured content.
 
-        FormatMode controls how renderers are formatted (pretty-printed):
+        Visible basically controls what is written to the Writer. Invisible renderers do not write
+        anything (in this base class) to the output stream. However, all of the BeginBase and EndBase
+        methods are called in the normal sequence.
+
+        LineMode controls how renderers are formatted (pretty-printed):
 
             For such a renderer:
                 
@@ -39,13 +44,13 @@ namespace com.paraquery.Rendering
 
                     {outside content}[start]{inside content}[end]{outside content}
 
-                Line (renderer is on a line by itself):
+                Single (renderer is on a line by itself):
             
                     {outside content}
                     [start]{inside content}[end]
                     {outside content}
 
-                Block (renderer starts and ends on newlines, content is on a newline and indented):
+                Multiple (renderer starts and ends on newlines, content is on a newline and indented):
 
                     {outside content}
                         [start]
@@ -54,29 +59,9 @@ namespace com.paraquery.Rendering
                     {outside content}
 
 
-        Indent only applies to Block mode, as only "blocks" have nested content to indent. Indentation
-        of block content is by default turned on, but can be turned off for special cases. We use it
-        internally to make debug output easier to read (by eliminating excessive nesting).
-
-        It is important to understand that our FormatModes only loosely correspond to HTML concepts.
-        Our FormatModes are concerned with how generated text, markup or source code is formatted,
-        not how it is displayed in a browser (for example).
-
-        In HTML, "blocks" (CSS "display" property = "block"), can be formatted in source many ways:
-
-            <div>
-            </div>
-
-            <div></div>
-
-            <hr />
-
-            <div>
-                </div>
-
-
-        All are "HTML blocks", however only the first one would have a FormatMode=Block. The second
-        and third would be Line or None, and the last would be impossible to generate. 
+        Indent only applies to Multiple mode, as only this mode can have nested content to indent. 
+        Indentation of content is by default turned on, but can be turned off for special cases. We 
+        use it internally to make debug output easier to read (by eliminating excessive nesting).
 
         Note, Renderer generate newlines and controls the tab level, but does NOT generate the tabs...  
         this is handled by the Writer based on the indent level. The Writer always indents the first 
@@ -97,21 +82,24 @@ namespace com.paraquery.Rendering
 
     public abstract class Renderer : BeginBase
     {
-        protected Context Context { private set; get; }
-        public FormatModes FormatMode { private set; get; }
-        public StructureModes StructureMode { private set; get; }
-        public bool Empty { private set; get; }
+        public Context Context { private set; get; }
+        public LineModes LineMode { private set; get; }
+        public StackModes StackMode { private set; get; }
+        public bool Terminal { private set; get; }
         public bool Indent { private set; get; }
+        public bool Visible { private set; get; }
 
-        protected Renderer(Context context, FormatModes formatMode, StructureModes structureMode, bool empty=false, bool indent=true)
+        protected Renderer(Context context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent=true)
         {
             Context = context;
 
-            FormatMode = formatMode;
-            StructureMode = structureMode;
-            Empty = empty;
+            LineMode = lineMode;
+            StackMode = stackMode;
+            Terminal = terminal;
+            Visible = visible;
             Indent = indent;
         }
+
 
         private bool DebugSourceFormatting
         {
@@ -131,7 +119,10 @@ namespace com.paraquery.Rendering
 
         protected void Debug(string text)
         {
-            OnDebug($" {text}");
+            if (Visible)
+            {
+                OnDebug($" {text}");
+            }
         }
 
         protected virtual void OnDebug(string text)
@@ -140,66 +131,75 @@ namespace com.paraquery.Rendering
 
         protected override void OnPreBegin()
         {
-            if (FormatMode == FormatModes.Line || FormatMode == FormatModes.Block)
+            if (Visible)
             {
-                //make sure lines and blocks start on a newline
-                //this should be conditional on if newline was called last before this block started
-                if (!Writer.IsNewLine)
+                if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)
                 {
-                    if (DebugSourceFormatting)
+                    //make sure lines and blocks start on a newline
+                    //this should be conditional on if newline was called last before this block started
+                    if (!Writer.IsNewLine)
                     {
-                        Debug($"nl prebegin");
-                    }
+                        if (DebugSourceFormatting)
+                        {
+                            Debug($"nl prebegin");
+                        }
 
-                    Writer.NewLine();
+                        Writer.NewLine();
+                    }
                 }
             }
         }
 
         protected override void OnPostBegin()
         {
-            if (FormatMode == FormatModes.Block)
+            if (Visible)
             {
-                //make sure content nested under a block starts on a newline
-                //this should be conditional on if newline was called last in OnBegin
-                if (!Writer.IsNewLine)
+                if (LineMode == LineModes.Multiple)
                 {
-                    if (DebugSourceFormatting)
+                    //make sure content nested under a block starts on a newline
+                    //this should be conditional on if newline was called last in OnBegin
+                    if (!Writer.IsNewLine)
                     {
-                        Debug($"nl postbegin");
+                        if (DebugSourceFormatting)
+                        {
+                            Debug($"nl postbegin");
+                        }
+
+                        Writer.NewLine();
                     }
 
-                    Writer.NewLine();
-                }
-
-                if (Indent)
-                {
-                    //make sure content under blocks is indented (can be disabled)
-                    Writer.Indent();
+                    if (Indent)
+                    {
+                        //make sure content under blocks is indented (can be disabled)
+                        Writer.Indent();
+                    }
                 }
             }
         }
 
         protected override void OnPreEnd()
         {
-            if (FormatMode == FormatModes.Block)
+            if (Visible)
             {
-                //make sure block endings start on a newline
-                //this should be conditional on if newline was called last in the content
-                if (!Writer.IsNewLine)
+                if (LineMode == LineModes.Multiple)
                 {
-                    if (DebugSourceFormatting)
+                    //make sure block endings start on a newline
+                    //this should be conditional on if newline was called last in the content
+                    if (!Writer.IsNewLine)
                     {
-                        Debug($"nl preend");
+                        if (DebugSourceFormatting)
+                        {
+                            Debug($"nl preend");
+                        }
+
+                        Writer.NewLine();
                     }
 
-                    Writer.NewLine();
-                }
-
-                if (Indent)
-                {
-                    //undo the indent for block content (can be disabled)
-                    Writer.Dedent();
+                    if (Indent)
+                    {
+                        //undo the indent for block content (can be disabled)
+                        Writer.Dedent();
+                    }
                 }
             }
         }
@@ -207,19 +207,21 @@ namespace com.paraquery.Rendering
         protected override void OnPostEnd()
         {
             //TODO: is this a duplicate of OnPreBegin? remove this?
-
-            if (FormatMode == FormatModes.Line || FormatMode == FormatModes.Block)
+            if (Visible)
             {
-                //make sure blocks and lines end with a newline 
-                //this should be conditional on if newline was called last when this block ended
-                if (!Writer.IsNewLine)
+                if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)
                 {
-                    if (DebugSourceFormatting)
+                    //make sure blocks and lines end with a newline 
+                    //this should be conditional on if newline was called last when this block ended
+                    if (!Writer.IsNewLine)
                     {
-                        Debug($"nl postend");
-                    }
+                        if (DebugSourceFormatting)
+                        {
+                            Debug($"nl postend");
+                        }
 
-                    Writer.NewLine();
+                        Writer.NewLine();
+                    }
                 }
             }
         }

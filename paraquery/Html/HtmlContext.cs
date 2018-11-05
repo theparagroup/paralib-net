@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Html
 {
+    /*
+
+        A version of Context that has HTML-centric functionality.
+
+
+    */
     public class HtmlContext : Context
     {
         public HtmlBuilder HtmlBuilder { private set; get; }
 
 
-        public HtmlContext(Writer writer, Action<Options> init = null) : base(writer, init)
+        public HtmlContext(Writer writer, Action<Options> options = null) : base(writer, options)
         {
             HtmlBuilder = new HtmlBuilder(this);
         }

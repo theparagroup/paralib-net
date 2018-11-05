@@ -26,11 +26,11 @@ namespace com.paraquery
         //namespace stack
         //namespace vars
 
-        public Context(Writer writer, Action<Options> init=null)
+        public Context(Writer writer, Action<Options> options=null)
         {
-            if (init!=null)
+            if (options!=null)
             {
-                init(Options);                
+                options(Options);                
             }
 
             Writer = writer;
