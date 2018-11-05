@@ -33,18 +33,11 @@ Design Goals & Notes
 	a generation library with a focus on building components
 
 	document
-		components
-			top-level components must call Begin() or it will throw
-			make it clear that Components should always be Open()ed on the parent's stack to preserve rules/formatting
-
-			//using (var html = new FluentHtml(c))
-                {
-                    //this will run but will mess up the formatting
-                    html.Begin();
+		attributes
 
 	start converting ttb
 		move pQuery into paramvc
-		FluentGridExtensions are broke (no write methods on IColumn), will will break admin screens
+		FluentGridExtensions are broken (no write methods on IColumn), will will break admin screens
 		remove UrlPrefix() from context
 		refactor pQuery.Ajax() calls to do url resolution outside
 		clean up cruft
