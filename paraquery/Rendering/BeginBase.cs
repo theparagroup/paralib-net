@@ -11,7 +11,32 @@ namespace com.paraquery.Rendering
 
         Provides "Begin semantics".
 
-        The instatiator should call Begin(), or          
+        The instatiator should call Begin(), or a derived class could call it
+        in a constructor.
+        
+        You can call Begin() multiple times, but DoBegin() is only called once.
+        
+        Sequence looks like this:
+
+            using(var b=new Thing())
+            {
+                b.Begin()
+
+                //begin fires this sequence:
+                    //OnPreBegin
+                    //OnBegin
+                    //OnPostBegin
+                    //OnPreContent
+
+                //anything done here would be considered "content"                
+
+            }
+                //the dispose fires this sequence:
+                    //OnPostContent
+                    //OnPreEnd
+                    //OnEnd
+                    //OnPostEnd
+
 
    */
 
@@ -42,10 +67,7 @@ namespace com.paraquery.Rendering
 
         protected virtual void OnPostBegin() { }
 
-        protected virtual void OnPreContent()
-        {
-
-        }
+        protected virtual void OnPreContent() { }
 
         protected override void OnPreEnd()
         {
@@ -53,10 +75,7 @@ namespace com.paraquery.Rendering
             base.OnPreEnd();
         }
 
-        protected virtual void OnPostContent()
-        {
-
-        }
+        protected virtual void OnPostContent() { }
 
     }
 }

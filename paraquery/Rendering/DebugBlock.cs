@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Rendering
 {
-    public abstract class Container : Renderer
+    /*
+
+        Containers are special renderers that are used to wrap
+
+
+    */
+    public abstract class DebugBlock : Renderer
     {
         public string Name { private set; get; }
         public bool IsDebug { private set; get; }
 
-        public Container(Context context, string name, bool debug, bool indent) : base(context, debug ? FormatModes.Block : FormatModes.None, StructureModes.Block, false, indent)
+        public DebugBlock(Context context, string name, bool debug, bool indent) : base(context, debug ? FormatModes.Block : FormatModes.None, StructureModes.Block, false, indent)
         {
             Name = name;
             IsDebug = debug;

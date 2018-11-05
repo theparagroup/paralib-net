@@ -8,6 +8,16 @@ namespace com.paraquery
 {
     internal class Utils
     {
+        /*
+
+            Currently trying to minimize direct coupling to other libraries or 
+            the paralib-common assembly.
+
+            At some point we should feel more comfortable coupling to paralib-common, 
+            but not yet. Perhaps when config and logging have been refactored.
+
+        */
+
         public static Exception Exception(string message)
         {
             //centralized exception point

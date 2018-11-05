@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace com.paralib.Mvc.Infrastructure.ParaQuery
 {
-    public class Context: paraquery.Context
+    public class Context: paraquery.Html.HtmlContext
     {
         protected ViewContext _viewContext { get; private set; }
         protected UrlHelper _url { get; set; }

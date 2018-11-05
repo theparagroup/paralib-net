@@ -11,7 +11,7 @@ namespace com.paraquery.Html.Fluent
     public partial class FluentHtml : HtmlComponent
     {
 
-        public FluentHtml(HtmlContext context, bool begin=true) : base(context, new HtmlContainer(context, "fluent html", context.IsDebug(DebugFlags.FluentHtml), false))
+        public FluentHtml(HtmlContext context, bool begin=true) : base(context, new HtmlBlock(context, "fluent html", context.IsDebug(DebugFlags.FluentHtml), false))
         {
             if (begin)
             {

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Attributes;
+using com.paraquery.Html.Tags;
 
-namespace com.paraquery.Html.Tags
+namespace com.paraquery.Html
 {
 
-    public partial class TagBuilder
+    public partial class HtmlBuilder
     {
         protected Context Context { private set; get; }
 
-        public TagBuilder(Context context)
+        public HtmlBuilder(Context context)
         {
             Context = context;
         }
@@ -58,6 +59,16 @@ namespace com.paraquery.Html.Tags
         public virtual Tag Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             return Inline(name, Attributes(attributes), empty);
+        }
+
+        public virtual DOCTYPE DOCTYPE(string specification)
+        {
+            return new DOCTYPE(Context, specification);
+        }
+
+        public virtual DOCTYPE DOCTYPE(DocumentTypes documentType)
+        {
+            return new DOCTYPE(Context, documentType);
         }
 
         public virtual Tag Html(Action<HtmlAttributes> attributes = null)

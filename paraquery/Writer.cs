@@ -6,7 +6,40 @@ using System.Threading.Tasks;
 
 namespace com.paraquery
 {
+    /*
 
+        This base class for writers is where most of the state management for formatting
+        is performed. Other classes like Renderers and RendererStacks are totally dependent
+        upon the correct Writer behavior.
+
+        Formatting includes:
+            newlines after blocks and lines
+            indented block content
+            "spacing" - ensuring there is one and only one newline between written lines
+
+        We cache the tabs for some attempt at efficiency.
+
+        Everything is virtual, but probably no need (nor is it a good idea) to change the
+        way things are working. 
+
+        However, the one thing Writer doesn't know how to do... is actually write.
+
+        A derived class must implement:
+            _write
+            _writeLine
+
+        A derivied class can also override the newline string, which defaults to the 
+        environment settng. 
+        
+        HTTP and HTML generally use CRLF, but other applications may diverge from the
+        environment (OS) setting.
+
+        There is no mechanism to change writer settings mid-stream so to speak, you
+        would want to create two writers and merge the output (with a string buffer,
+        for example).
+
+
+    */
     public abstract class Writer
     {
         protected int _tabLevel = 0;
@@ -30,6 +63,11 @@ namespace com.paraquery
 
         public Writer()
         {
+            Init();
+        }
+
+        protected virtual void Init()
+        {
             //these can be changed in derived classes
             _tab = '\t';
 
@@ -45,10 +83,13 @@ namespace com.paraquery
             _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}"); //4
             _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}{_tab}"); //5
             _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}"); //6
-
+            _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}"); //7
+            _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}"); //8
+            _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}"); //9
+            _tabCache.Add($"{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}{_tab}"); //10
         }
 
-        public int TabLevel
+        public virtual int TabLevel
         {
             get
             {
@@ -56,7 +97,7 @@ namespace com.paraquery
             }
         }
 
-        public bool IsNewLine
+        public virtual bool IsNewLine
         {
             get
             {
@@ -64,7 +105,7 @@ namespace com.paraquery
             }
         }
 
-        protected string GetTabs(int? level = null)
+        protected virtual string GetTabs(int? level = null)
         {
             if (level == null)
             {
@@ -122,7 +163,7 @@ namespace com.paraquery
             _isTabbed = false;
         }
 
-        public void Space()
+        public virtual void Space()
         {
             if (!_isSpaced)
             {
@@ -161,7 +202,7 @@ namespace com.paraquery
 
         }
 
-        public void NewLine()
+        public virtual void NewLine()
         {
             //if we are already at a newline, then another newline will space things out
             //otherwise we're just newline and not spaced
@@ -180,7 +221,7 @@ namespace com.paraquery
             _isTabbed = false;
         }
 
-        public void Indent()
+        public virtual void Indent()
         {
             ++_tabLevel;
 
@@ -191,7 +232,7 @@ namespace com.paraquery
 
         }
 
-        public void Dedent()
+        public virtual void Dedent()
         {
             //obviously we can't have negative tabs
             if (_tabLevel > 0)

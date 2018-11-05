@@ -12,7 +12,7 @@ namespace com.paraquery.Html
     public class Page : Fragment
     {
 
-        public Page(HtmlContext context, bool begin = true) : base(context, new HtmlContainer(context, "page", context.IsDebug(DebugFlags.Page), false), begin)
+        public Page(HtmlContext context, bool begin = true) : base(context, new HtmlBlock(context, "page", context.IsDebug(DebugFlags.Page), false), begin)
         {
         }
 
@@ -63,7 +63,7 @@ namespace com.paraquery.Html
 
             if (documentType != null)
             {
-                return new DOCTYPE(Context, documentType.Value);
+                return HtmlBuilder.DOCTYPE(documentType.Value);
             }
             else
             {
@@ -82,7 +82,7 @@ namespace com.paraquery.Html
 
         protected virtual Tag OnHtml()
         {
-            return TagBuilder.Html(a => a.Lang = Language);
+            return HtmlBuilder.Html(a => a.Lang = Language);
         }
 
         protected virtual string Language
@@ -98,7 +98,7 @@ namespace com.paraquery.Html
             var head = OnHead();
             Open(head);
 
-            Open(TagBuilder.Title());
+            Open(HtmlBuilder.Title());
             Writer.Write(Title);
             Close();
 
@@ -115,7 +115,7 @@ namespace com.paraquery.Html
 
         protected virtual Tag OnHead()
         {
-            return TagBuilder.Head();
+            return HtmlBuilder.Head();
         }
 
         public virtual string Title
@@ -132,7 +132,7 @@ namespace com.paraquery.Html
 
         protected virtual Tag OnBody()
         {
-            return TagBuilder.Body();
+            return HtmlBuilder.Body();
         }
 
         protected virtual void OnContent()

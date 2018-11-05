@@ -8,9 +8,9 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html
 {
-    public class HtmlContainer : Container
+    public class HtmlBlock : DebugBlock
     {
-        public HtmlContainer(Context context, string name, bool debug, bool indent) : base(context, name, debug, indent)
+        public HtmlBlock(Context context, string name, bool debug, bool indent) : base(context, name, debug, indent)
         {
         }
 

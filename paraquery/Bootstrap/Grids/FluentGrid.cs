@@ -94,7 +94,7 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _rowColulmnClasses;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context, Action<GridOptions> init=null, bool begin=true) : base(context, new GridContainer(context))
+        public FluentGrid(HtmlContext context, Action<GridOptions> init=null, bool begin=true) : base(context, new GridBlock(context))
         {
             var gridOptions = new GridOptions();
 
@@ -115,9 +115,9 @@ namespace com.paraquery.Bootstrap.Grids
             }
         }
 
-        public class GridContainer : HtmlContainer
+        public class GridBlock : HtmlBlock
         {
-            public GridContainer(Context context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
+            public GridBlock(Context context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
             {
             }
         }
@@ -182,7 +182,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is GridContainer || top is ContainerTag)
+                else if (top is GridBlock || top is ContainerTag)
                 {
                     break;
                 }
@@ -222,7 +222,7 @@ namespace com.paraquery.Bootstrap.Grids
                     Pop();
                     break;
                 }
-                else if (top is GridContainer || top is ContainerTag || top is RowTag)
+                else if (top is GridBlock || top is ContainerTag || top is RowTag)
                 {
                     break;
                 }
@@ -295,7 +295,7 @@ namespace com.paraquery.Bootstrap.Grids
             {
                 Renderer top = Stack.Peek();
 
-                if (top is GridContainer)
+                if (top is GridBlock)
                 {
                     Pop();
                     break;

@@ -9,10 +9,17 @@ namespace com.paraquery
     [Flags]
     public enum DebugFlags
     {
+        //required for testing absence of flags
         None=0,
-        SourceFormatting=1,
-        EndTag=2,
-        Fragment=4,
+
+        //injected newlines
+        SourceFormatting = 1, 
+
+        //endings of blocks with ids
+        EndTag =2, 
+
+        //see the begin and end of various components
+        Fragment = 4,
         Page=8,
         FluentHtml=16,
         FluentGrid=32

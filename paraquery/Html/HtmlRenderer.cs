@@ -10,7 +10,7 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlRenderer : Renderer
     {
-        public HtmlRenderer(Context context, FormatModes formatMode, StructureModes structureMode, bool empty=false, bool indent=true) : base(context, formatMode, structureMode, empty, indent)
+        public HtmlRenderer(Context context, FormatModes formatMode, StructureModes structureMode, bool empty = false, bool indent = true) : base(context, formatMode, structureMode, empty, indent)
         {
         }
 
@@ -21,14 +21,13 @@ namespace com.paraquery.Html
 
         public void Comment(string text)
         {
-            Writer.Write($"<!-- {text} -->");
+            Comment(Writer, text);
         }
 
         protected override void OnDebug(string text)
         {
             Comment(text);
         }
-
 
     }
 }

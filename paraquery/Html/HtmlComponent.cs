@@ -10,11 +10,9 @@ namespace com.paraquery.Html
 {
     public abstract class HtmlComponent : Component
     {
-        protected TagBuilder TagBuilder { private set; get; }
 
         public HtmlComponent(HtmlContext context, Renderer starter) : base(context, starter)
         {
-            TagBuilder = new TagBuilder(context);
         }
 
         protected new HtmlContext Context
@@ -24,6 +22,15 @@ namespace com.paraquery.Html
                 return (HtmlContext)base.Context;
             }
         }
+
+        protected HtmlBuilder HtmlBuilder
+        {
+            get
+            {
+                return Context.HtmlBuilder;
+            }
+        }
+
 
         protected override void OnDebug(string text)
         {

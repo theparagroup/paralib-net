@@ -19,7 +19,7 @@ namespace com.paraquery.Html
             }
         }
 
-        public Fragment(HtmlContext context, bool begin = true) : this(context, new HtmlContainer(context, "fragment", context.IsDebug(DebugFlags.Fragment), false), begin)
+        public Fragment(HtmlContext context, bool begin = true) : this(context, new HtmlBlock(context, "fragment", context.IsDebug(DebugFlags.Fragment), false), begin)
         {
 
         }

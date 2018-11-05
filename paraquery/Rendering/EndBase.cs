@@ -12,7 +12,7 @@ namespace com.paraquery.Rendering
        Defines the basics of the IDisposable interface ("End" semantics). It is up to the instatiator wrap 
        the instance in a using() statement, or to call End() explicitly.
 
-       Note: you can only effectively "End" one time.
+       Note: nothing bad happends if you call End() multiple times, but DoEnd() is called only one time.
 
    */
 

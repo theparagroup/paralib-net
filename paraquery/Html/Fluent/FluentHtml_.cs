@@ -13,37 +13,57 @@ namespace com.paraquery.Html.Fluent
 
         public virtual FluentHtml Block(string name, Action<GlobalAttributes> attributes = null, bool empty=false)
         {
-            return Push(TagBuilder.Block(name, attributes, empty));
+            return Push(HtmlBuilder.Block(name, attributes, empty));
         }
 
         public virtual FluentHtml Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
-            return Push(TagBuilder.Inline(name, attributes, empty));
+            return Push(HtmlBuilder.Inline(name, attributes, empty));
+        }
+
+        public virtual FluentHtml Html(Action<GlobalAttributes> attributes = null)
+        {
+            return Push(HtmlBuilder.Html(attributes));
+        }
+
+        public virtual FluentHtml Head(Action<GlobalAttributes> attributes = null)
+        {
+            return Push(HtmlBuilder.Head(attributes));
+        }
+
+        public virtual FluentHtml Title(Action<GlobalAttributes> attributes = null)
+        {
+            return Push(HtmlBuilder.Title(attributes));
+        }
+
+        public virtual FluentHtml Body(Action<GlobalAttributes> attributes = null)
+        {
+            return Push(HtmlBuilder.Body(attributes));
         }
 
         public virtual FluentHtml Div(Action<GlobalAttributes> attributes = null)
         {
-            return Push(TagBuilder.Div(attributes));
+            return Push(HtmlBuilder.Div(attributes));
         }
 
         public virtual FluentHtml Span(Action<GlobalAttributes> attributes = null)
         {
-            return Push(TagBuilder.Span(attributes));
+            return Push(HtmlBuilder.Span(attributes));
         }
 
         public virtual FluentHtml Br(Action<HrAttributes> attributes = null)
         {
-            return Push(TagBuilder.Br(attributes));
+            return Push(HtmlBuilder.Br(attributes));
         }
 
         public virtual FluentHtml Hr(Action<HrAttributes> attributes = null)
         {
-            return Push(TagBuilder.Hr(attributes));
+            return Push(HtmlBuilder.Hr(attributes));
         }
 
         public virtual FluentHtml Script(Action<ScriptAttributes> attributes = null)
         {
-            return Push(TagBuilder.Script(attributes));
+            return Push(HtmlBuilder.Script(attributes));
         }
 
     }

@@ -42,6 +42,21 @@ Design Goals & Notes
                     //this will run but will mess up the formatting
                     html.Begin();
 
+	start converting ttb
+		move pQuery into paramvc
+		FluentGridExtensions are broke (no write methods on IColumn), will will break admin screens
+		remove UrlPrefix() from context
+		refactor pQuery.Ajax() calls to do url resolution outside
+		clean up cruft
+		once razor is gone
+			remove paraviews, etc
+			re-org project to logically group controllers, pages, fragments
+
+	lets spell check
+		https://ewsoftware.github.io/VSSpellChecker/html/027d2fbc-7bfb-4dc3-b4f5-85f95fcf7629.htm
+
+	test without Renderer.OnPostEnd() code, seems to duplicate OnPreBegin
+
 	attribute builder
 		should we merge class?
 		should we merge style?
@@ -50,14 +65,70 @@ Design Goals & Notes
 	programmatic external javascript
 	caching options
 
+	remove Writer from Renderer, don't clutter
+
+	standalone, fluent writer?
+	standalone, fluent jswriter?
+		using (var js=new FluentJs(context))
+		{
+			js
+			._("this is a line")
+			._()
+			.Snippet(script)
+			._()
+				.If("v==foo")
+					._("something").Write(" more")
+					._($"really {how} it should be done")
+				.Else()
+					._($"really {how} it should be done")
+
+
+
+		}
+
+	split into assemblies
+		paragen (not important to refactor paralib-migrations to use this yet)
+		parahtml
+		paraquery
+
 	in paracontroller, add View() replacements:
 		Page()
 		Fragment()
 		
+	when we flesh out HtmlBuilder/FluentHtml, let's split into several partials:
+		https://www.w3schools.com/tags/ref_byfunc.asp
+		BasicHTML
+		Formatting
+		Forms and Input
+		Frames
+		Images
+		Audio / Video
+		Links
+		Lists
+		Tables
+		Styles and Semantics
+		Meta Info
+		Programming
 
-	fluent writer?
-	fluent jswriter?
+	we could enforce compliance, such as HTML41 with or without frames, HTML5, etc
+	on tags and attributes and values (not sure about the value)
 
+	also make sure to explore other fluent options
+	
+			/// <summary>
+            /// HTML5
+            /// </summary>
+			
+			[EditorBrowsable(EditorBrowsableState.Never)]
+            
+			[Obsolete("Stop using this. Really. It's old.")]
+
+	        [Description("My extra helpful description")]
+	
+	
+	
+	
+	
 	can we define javascript functions in c#
 
 		Function(name, new {foo=4});
@@ -103,15 +174,7 @@ Design Goals & Notes
 
 	fluent interfaces could throw if you call writeline/newline with an inline on top, or write/writeline/newline with line on top
 
-	move pQuery into paramvc
 
-	start converting ttb
-		remove UrlPrefix() from context
-		refactor pQuery.Ajax() calls to do url resolution outside
-		clean up cruft
-		once razor is gone
-			remove paraviews, etc
-			re-org project to logically group controllers, pages, fragments
 
 	better formatting for attribute names, underscores, etc
 		design goals
@@ -144,10 +207,8 @@ Design Goals & Notes
 	script management
 	built in onready
 
-	make jquery a seperate module?
-	rename to parahtml (just html & javascript)?
-
 	grids
+		make container->rowset, create packages for different grid systems, create "new" methods, interfaces, based on grid
 		remove bootstrap from pQuery (remove pQuery!) and make bootstrap a seperate module/dll
 		lets support some other grid systems
 
