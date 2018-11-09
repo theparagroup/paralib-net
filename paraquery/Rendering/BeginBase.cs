@@ -42,6 +42,7 @@ namespace com.paraquery.Rendering
 
         This is important if you want to re-use BeginBase objects.
 
+        Unlike EndBase, you must call End() only once or an exception will be thrown.
 
    */
 

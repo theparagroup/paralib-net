@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Attributes;
 using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Tags
@@ -120,10 +119,13 @@ namespace com.paraquery.Html.Tags
 
         protected virtual void WriteAttribute(string name, string value = null)
         {
-            //TODO escaping quotes? escaping in general?
-
             if (name != null)
             {
+                if (value == null && !Context.Options.MinimizeBooleans)
+                {
+                    value = name;
+                }
+
                 if (value == null)
                 {
                     //boolean style attributes (e.g. "readonly")
@@ -131,6 +133,11 @@ namespace com.paraquery.Html.Tags
                 }
                 else
                 {
+                    if (Context.Options.EscapeAttributeValues)
+                    {
+                        value = value.Replace("\"", "&quot;");
+                    }
+
                     Writer.Write($" {name}=\"{value}\"");
                 }
 
@@ -164,7 +171,7 @@ namespace com.paraquery.Html.Tags
         {
             if (Empty)
             {
-                if (Context.Options.SelfClosingTags)
+                if (Context.Options.SelfClosingEmptyTags)
                 {
                     Writer.Write(" />");
                 }

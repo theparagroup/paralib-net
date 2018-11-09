@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Attributes;
 using com.paraquery.Rendering;
+using com.paraquery.Html.Tags.Attributes;
 
 namespace com.paraquery.Html.Fluent
 {
@@ -19,15 +19,6 @@ namespace com.paraquery.Html.Fluent
         public virtual FluentHtml Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             return Push(HtmlBuilder.Inline(name, attributes, empty));
-        }
-
-        public virtual FluentHtml Open<T>(T renderer, Action<T> action) where T : Renderer
-        {
-            Push(renderer);
-
-            action(renderer);
-
-            return this;
         }
 
         public virtual FluentHtml Html(Action<GlobalAttributes> attributes = null)

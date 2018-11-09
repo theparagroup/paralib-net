@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using com.paraquery.Html.Tags;
+using com.paraquery.Html.Tags.Values;
 
-namespace com.paraquery.Html.Attributes
+
+namespace com.paraquery.Html.Tags.Attributes
 {
     public class Style : IComplexAttribute
     {

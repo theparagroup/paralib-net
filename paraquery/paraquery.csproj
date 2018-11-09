@@ -41,9 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\GridOptions.cs" />
-    <Compile Include="Html\Attributes\HeadAttributes.cs" />
-    <Compile Include="Html\Attributes\HtmlAttributes.cs" />
-    <Compile Include="Html\Attributes\BodyAttributes.cs" />
+    <Compile Include="Html\Tags\Attributes\HeadAttributes.cs" />
+    <Compile Include="Html\Tags\Attributes\HtmlAttributes.cs" />
+    <Compile Include="Html\Tags\Attributes\BodyAttributes.cs" />
     <Compile Include="Html\DOCTYPE.cs" />
     <Compile Include="Html\DocumentTypes.cs" />
     <Compile Include="Html\Fluent\FluentHtml_.cs" />
@@ -51,8 +51,13 @@
     <Compile Include="Html\HtmlComponent.cs" />
     <Compile Include="Html\HtmlContext.cs" />
     <Compile Include="Html\Fragment.cs" />
+    <Compile Include="Html\HtmlOptions.cs" />
+    <Compile Include="Html\Packages\Desp.cs" />
+    <Compile Include="Html\Packages\Package.cs" />
     <Compile Include="Html\Page.cs" />
     <Compile Include="Html\HtmlRenderer.cs" />
+    <Compile Include="Html\ParaHtmlPackage.cs" />
+    <Compile Include="Html\Tags\AttributeAttribute.cs" />
     <Compile Include="Html\Tags\DynamicValueAttribute.cs" />
     <Compile Include="Html\Tags\Tag.cs" />
     <Compile Include="Html\Tags\IDynamicValueContainer.cs" />
@@ -72,15 +77,15 @@
     <Compile Include="Writer.cs" />
     <Compile Include="Writers\StringWriter.cs" />
     <Compile Include="Html\Tags\AttributeDictionary.cs" />
-    <Compile Include="Html\Attributes\Color.cs" />
-    <Compile Include="Html\Attributes\HrAlignTypes.cs" />
-    <Compile Include="Html\Attributes\ButtonTypes.cs" />
-    <Compile Include="Html\Attributes\GlobalAttributes.cs" />
-    <Compile Include="Html\Attributes\HrAttributes.cs" />
+    <Compile Include="Html\Tags\Values\Color.cs" />
+    <Compile Include="Html\Tags\Values\HrAlignTypes.cs" />
+    <Compile Include="Html\Tags\Values\ButtonTypes.cs" />
+    <Compile Include="Html\Tags\Attributes\GlobalAttributes.cs" />
+    <Compile Include="Html\Tags\Attributes\HrAttributes.cs" />
     <Compile Include="Html\Tags\IComplexAttribute.cs" />
-    <Compile Include="Html\Attributes\ScriptAttributes.cs" />
-    <Compile Include="Html\Attributes\ImgAttributes.cs" />
-    <Compile Include="Html\Attributes\Style.cs" />
+    <Compile Include="Html\Tags\Attributes\ScriptAttributes.cs" />
+    <Compile Include="Html\Tags\Attributes\ImgAttributes.cs" />
+    <Compile Include="Html\Tags\Attributes\Style.cs" />
     <Compile Include="Html\Fluent\FluentHtml.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />

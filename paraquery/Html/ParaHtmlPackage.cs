@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paraquery.Html.Packages;
 
-namespace com.paraquery.Html.Attributes
+namespace com.paraquery.Html
 {
-    public class HtmlAttributes : GlobalAttributes
+    public class ParaHtmlPackage : Package
     {
-        public string XmlNs { get; set; }
         
     }
 }

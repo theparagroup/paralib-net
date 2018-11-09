@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Html.Attributes
+namespace com.paraquery.Html
 {
-    public class ImgAttributes : GlobalAttributes
+    public class HtmlOptions : Options
     {
-        public string Alt { get; set; }
+        public bool CreateDependencies { set; get; } = false;
+
+
     }
 }

@@ -20,25 +20,24 @@ namespace com.paraquery
 
     public class Context
     {
-        public Writer Writer { private set; get; }
-        public Options Options { get; set; }=new Options();
+        public Writer Writer { protected set; get; }
+        public Options Options { protected set; get; }
 
-        //namespace stack
-        //namespace vars
+        protected Context (Writer writer)
+        {
+            Writer = writer;
+        }
 
         public Context(Writer writer, Action<Options> options=null)
         {
+            Options = new Options();
+
             if (options!=null)
             {
                 options(Options);                
             }
 
             Writer = writer;
-
-            //derived classes create the other components
-
-            //add initial namespace
-
         }
 
         public bool IsDebug(DebugFlags debugFlags)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Attributes;
+using com.paraquery.Html.Tags.Attributes;
 using com.paraquery.Rendering;
 using com.paraquery.Html.Fluent;
 

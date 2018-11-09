@@ -4,13 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
-using com.paraquery.Html.Attributes;
+using com.paraquery.Html.Tags.Attributes;
 
 namespace com.paraquery.Html.Tags
 {
    /*
 
-        if T is not GlobalAttributes, then T is object
+        Contains a set of name value pairs that represents attributes on a tag.
+
+        Null values indicate true boolean values, and should be rendered according to the MinimizeBooleans option.
+
+
+
 
 
     */
@@ -58,13 +63,22 @@ namespace com.paraquery.Html.Tags
                         string name = null;
                         string value = null;
 
-                        if (!caseSensive)
+                        //see if the property has explicit specifications
+                        var specifics = pi.GetCustomAttribute<AttributeAttribute>();
+                        if (specifics != null)
                         {
-                            name = pi.Name.ToLower();
+                            name = specifics.Name;
                         }
                         else
                         {
-                            name = pi.Name;
+                            if (!caseSensive)
+                            {
+                                name = pi.Name.ToLower();
+                            }
+                            else
+                            {
+                                name = pi.Name;
+                            }
                         }
 
                         if (typeof(IComplexAttribute).IsAssignableFrom(pi.PropertyType))
@@ -87,22 +101,30 @@ namespace com.paraquery.Html.Tags
                         }
                         else if (pi.PropertyType == typeof(bool) || pi.PropertyType == typeof(bool?))
                         {
-                            value = v.ToString().ToLower();
+                            //for booleans, we only add the key if true.
+                            //attribute renderers such as tag should respect the "MinimizeBooleans" option
+
+                            //this cast is okay since we know it isn't null (if nullable)
+                            if (!(bool)v)
+                            {
+                                continue;
+                            }
+
+                            //if the attribute has a fixed value (xml:space="preserve") then use it instead of null
+                            value = specifics?.Value;
                         }
-                        else if ( (pi.PropertyType.IsEnum) || (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false))
+                        else if ((pi.PropertyType.IsEnum) || (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false))
                         {
                             value = v.ToString().ToLower();
                         }
                         else
                         {
                             //ignore unknown types
+                            continue;
                         }
 
-                        //add it to the dictionary if it was handled
-                        if (value != null)
-                        {
-                            dictionary.Add(name, value);
-                        }
+                        //add it to the dictionary (value may be null, indicating a boolean true)
+                        dictionary.Add(name, value);
 
                     }
                 }

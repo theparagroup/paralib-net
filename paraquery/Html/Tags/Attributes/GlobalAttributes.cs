@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Tags;
 
-namespace com.paraquery.Html.Attributes
+namespace com.paraquery.Html.Tags.Attributes
 {
     /*
         In HTML5, Global Attributes can be used on *any* element.

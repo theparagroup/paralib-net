@@ -12,16 +12,16 @@ namespace com.paraquery
         //required for testing absence of flags
         None=0,
 
-        //injected newlines
-        SourceFormatting = 1, 
-
         //endings of blocks with ids
-        EndTag =2, 
+        EndTag =1, 
 
         //see the begin and end of various components
-        Fragment = 4,
-        Page=8,
-        FluentHtml=16,
-        FluentGrid=32
+        Fragment = 2,
+        Page=3,
+        FluentHtml=8,
+
+
+
+        FluentGrid=16
     }
 }

@@ -8,7 +8,7 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Fluent
 {
-    public partial class FluentHtml : HtmlComponent
+    public partial class FluentHtml : HtmlComponent<ParaHtmlPackage>
     {
 
         public FluentHtml(HtmlContext context, bool begin=true) : base(context, new HtmlBlock(context, "fluent html", context.IsDebug(DebugFlags.FluentHtml), false))
@@ -43,6 +43,15 @@ namespace com.paraquery.Html.Fluent
         public new FluentHtml Open(Renderer renderer)
         {
             return Push(renderer);
+        }
+
+        public virtual FluentHtml Open<T>(T renderer, Action<T> action) where T : Renderer
+        {
+            Push(renderer);
+
+            action(renderer);
+
+            return this;
         }
 
         public FluentHtml CloseUp()

@@ -105,7 +105,7 @@ namespace com.paraquery.Rendering
         {
             get
             {
-                return Context.IsDebug(DebugFlags.SourceFormatting);
+                return Context.Options.DebugSourceFormatting;
             }
         }
 

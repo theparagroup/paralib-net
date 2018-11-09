@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Tags;
 using com.paraquery.Rendering;
+using com.paraquery.Html.Packages;
 
 namespace com.paraquery.Html
 {
@@ -23,11 +24,15 @@ namespace com.paraquery.Html
         If implementors derive from HtmlComponent, they don't have to worry about these details. 
 
     */
-    public abstract class HtmlComponent : RendererStack
+    public abstract class HtmlComponent<T> : RendererStack where T : Package, new()
     {
 
         public HtmlComponent(HtmlContext context, Renderer start) : base(context, LineModes.Multiple, StackModes.Nested, false)
         {
+            //register package
+            context.RegisterPackage<T>();
+
+            //push first renderer
             Push(start);
         }
 

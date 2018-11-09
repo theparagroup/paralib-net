@@ -16,7 +16,7 @@ namespace com.paraquery.Html
         Page and other HTML components derive from this class.
 
     */
-    public class Fragment : HtmlComponent
+    public class Fragment : HtmlComponent<ParaHtmlPackage>
     {
         public Fragment(HtmlContext context, bool begin=true) : base(context, new HtmlBlock(context, "fragment", context.IsDebug(DebugFlags.Fragment), false))
         {

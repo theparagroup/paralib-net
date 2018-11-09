@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Attributes;
+using com.paraquery.Html.Tags.Attributes;
 using com.paraquery.Html.Fluent;
 using com.paraquery.Html.Tags;
 using com.paraquery.Rendering;
@@ -83,7 +83,7 @@ namespace com.paraquery.Bootstrap.Grids
 
     */
 
-    public partial class FluentGrid : HtmlComponent, IGrid, IContainer, IRow, IColumn
+    public partial class FluentGrid : HtmlComponent<ParaHtmlPackage>, IGrid, IContainer, IRow, IColumn
     {
         protected string _containerClass;
         protected string _rowClass;
