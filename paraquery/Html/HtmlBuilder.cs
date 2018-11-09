@@ -15,9 +15,9 @@ namespace com.paraquery.Html
     */
     public partial class HtmlBuilder
     {
-        protected Context Context { private set; get; }
+        protected HtmlContext Context { private set; get; }
 
-        public HtmlBuilder(Context context)
+        public HtmlBuilder(HtmlContext context)
         {
             Context = context;
         }

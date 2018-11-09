@@ -35,6 +35,11 @@ namespace com.paraquery.Html
             HtmlBuilder = new HtmlBuilder(this);
         }
 
+        public bool IsDebug(DebugFlags debugFlags)
+        {
+            return (Options.Debug & debugFlags) != 0;
+        }
+
         public Package RegisterPackage<T>() where T : Package, new()
         {
             if (Packages.ContainsKey(typeof(T)))

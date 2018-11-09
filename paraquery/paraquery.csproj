@@ -63,7 +63,7 @@
     <Compile Include="Html\Tags\IDynamicValueContainer.cs" />
     <Compile Include="Html\Tags\TagTypes.cs" />
     <Compile Include="NameValuePairs.cs" />
-    <Compile Include="DebugFlags.cs" />
+    <Compile Include="Html\DebugFlags.cs" />
     <Compile Include="Rendering\DebugRenderer.cs" />
     <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />

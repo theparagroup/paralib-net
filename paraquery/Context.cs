@@ -40,11 +40,6 @@ namespace com.paraquery
             Writer = writer;
         }
 
-        public bool IsDebug(DebugFlags debugFlags)
-        {
-            return (Options.Debug & debugFlags) != 0;
-        }
-
         public virtual string UrlPrefix(string url)
         {
             throw new NotImplementedException("need to refactor UrlPrefix out of context");

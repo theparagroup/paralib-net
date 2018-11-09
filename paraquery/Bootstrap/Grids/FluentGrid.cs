@@ -117,28 +117,28 @@ namespace com.paraquery.Bootstrap.Grids
 
         public class GridBlock : HtmlBlock
         {
-            public GridBlock(Context context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
+            public GridBlock(HtmlContext context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
             {
             }
         }
 
         public class ContainerTag : Tag
         {
-            public ContainerTag(Context context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            public ContainerTag(HtmlContext context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
             {
             }
         }
 
         public class RowTag : Tag
         {
-            public RowTag(Context context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            public RowTag(HtmlContext context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
             {
             }
         }
 
         public class ColumnTag : Tag
         {
-            public ColumnTag(Context context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            public ColumnTag(HtmlContext context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
             {
             }
         }

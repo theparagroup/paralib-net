@@ -49,7 +49,7 @@ namespace com.paraquery.Html.Tags
         public TagTypes TagType { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
 
-        internal Tag(Context context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContentMode(tagType, empty), empty, true, true)
+        internal Tag(HtmlContext context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContentMode(tagType, empty), empty, true, true)
         {
             TagName = tagName;
             Attributes = attributes;

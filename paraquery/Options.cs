@@ -17,12 +17,7 @@ namespace com.paraquery
         EscapeAttributeValues
             Convert " into &quot;
 
-        DebugFlags
-            Use these to inject debug information (usually comments) into
-            the source. Since comments are dependent upon the kind of content
-            being generated, OnDebug() should be overridden for this to work.
-            See HtmlRenderer, the base renderer for all HTML renderers, for 
-            an example.
+       
 
     */
 
@@ -34,7 +29,7 @@ namespace com.paraquery
         public bool MinimizeBooleans { get; set; } = true;
         public bool EscapeAttributeValues { get; set; } = false;
 
-        public DebugFlags Debug { get; set; } = DebugFlags.None;
+        
     }
 
 }

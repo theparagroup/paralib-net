@@ -17,8 +17,16 @@ namespace com.paraquery.Html
     */
     public abstract class HtmlRenderer : Renderer
     {
-        public HtmlRenderer(Context context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent=true) : base(context, lineMode, stackMode, terminal, visible, indent)
+        public HtmlRenderer(HtmlContext context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent=true) : base(context, lineMode, stackMode, terminal, visible, indent)
         {
+        }
+
+        protected new HtmlContext Context
+        {
+            get
+            {
+                return (HtmlContext)base.Context;
+            }
         }
 
         public static void Comment(Writer writer, string text)
