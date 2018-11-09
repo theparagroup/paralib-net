@@ -36,7 +36,7 @@ namespace com.paraquery.Html.Tags
 
                 foreach (var pi in pis)
                 {
-                    object v = null;
+                    object v = null; //raw value
                     bool getValue = true;
 
                     //handle dynamic values
@@ -61,7 +61,7 @@ namespace com.paraquery.Html.Tags
                         //if we are in case-insensitive mode. otherwise both will be added.
 
                         string name = null;
-                        string value = null;
+                        string value = null; //processed value
 
                         //see if the property has explicit specifications
                         var specifics = pi.GetCustomAttribute<AttributeAttribute>();
@@ -71,13 +71,16 @@ namespace com.paraquery.Html.Tags
                         }
                         else
                         {
-                            if (!caseSensive)
+                            //generally, we're always in case-insensitive mode, and by default attribute
+                            //names are lower case. however, in certain cases such as Style, it is useful
+                            //to build a dictionary of name/values with mixed case
+                            if (caseSensive)
                             {
-                                name = pi.Name.ToLower();
+                                name = pi.Name;
                             }
                             else
                             {
-                                name = pi.Name;
+                                name = pi.Name.ToLower();
                             }
                         }
 
@@ -104,7 +107,7 @@ namespace com.paraquery.Html.Tags
                             //for booleans, we only add the key if true.
                             //attribute renderers such as tag should respect the "MinimizeBooleans" option
 
-                            //this cast is okay since we know it isn't null (if nullable)
+                            //this cast is okay since we know v isn't null (if nullable)
                             if (!(bool)v)
                             {
                                 continue;
@@ -119,32 +122,38 @@ namespace com.paraquery.Html.Tags
                         }
                         else
                         {
-                            //ignore unknown types
+                            //process unknown types recursively, looking for anything we can add to the dicitonary
+                            BuildAttributeDictionary(dictionary, v, false);
                             continue;
                         }
 
-                        //add it to the dictionary (value may be null, indicating a boolean true)
+                        //again, at this point, "v" isn't null, but "value" may be, indicating a boolean true
+
+                        //special rules
+                        if (value!=null)
+                        {
+                            //merge classes
+                            if (name == "class" && dictionary.ContainsKey("class"))
+                            {
+                                //note Union() will throw if one of the arrays is null
+                                //we know value isn't null, but if you have a property Class=true,
+                                //the what's in the dictionary could be
+                                string[] oldclasses = dictionary["class"]?.Split(' ') ?? new string[] { };
+                                string[] newClasses = value.Split(' ');
+
+                                //this removes duplicates
+                                string[] classes = oldclasses.Union(newClasses).ToArray();
+
+                                value = string.Join(" ", classes);
+                            }
+                        }
+
+                        //add it to the dictionary 
                         dictionary.Add(name, value);
 
                     }
                 }
 
-                //process "Attributes" or "attributes" property if it exists
-                {
-                    var pi = type.GetProperty(GlobalAttributes.AdditonalAttributesPropertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
-
-                    //todo get A then get a and merge
-
-                    if (pi != null)
-                    {
-                        object v = pi.GetValue(attributes);
-
-                        if (v!=null)
-                        {
-                            BuildAttributeDictionary(dictionary, v, false);
-                        }
-                    }
-                }
             }
         }
 

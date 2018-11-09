@@ -72,7 +72,6 @@ namespace com.paraquery.Html.Tags.Attributes
         }
 
 
-        internal const string AdditonalAttributesPropertyName = nameof(Attributes);
         public object Attributes { get; set; }
 
     }
