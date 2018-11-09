@@ -8,7 +8,7 @@ namespace com.paraquery.Html.Tags.Attributes
 {
     public class HeadAttributes : GlobalAttributes
     {
-        public string Profile { get; set; }
+        public Url Profile { get; set; }
         
     }
 }

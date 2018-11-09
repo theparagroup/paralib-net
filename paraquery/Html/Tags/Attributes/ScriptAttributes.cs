@@ -28,7 +28,7 @@ namespace com.paraquery.Html.Tags.Attributes
         public bool? XmlSpace { get; set; }
 
         //external scripts only
-        public string Src { get; set; }
+        public Url Src { get; set; }
         public string Async { get; set; }
         public bool? Defer { get; set; }
 

@@ -51,9 +51,8 @@ Design Goals & Notes
 	test without Renderer.OnPostEnd() code, seems to duplicate OnPreBegin
 
 	attribute builder
-		should we merge class?
 		should we merge style?
-		new Attribute for properties that can't be written in C# (script xml:space)
+		events
 
 	style should be able to be used for programmatic style sheets
 	programmatic external javascript

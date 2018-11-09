@@ -21,12 +21,12 @@ namespace com.paraquery.Html.Fluent
             return Push(HtmlBuilder.Inline(name, attributes, empty));
         }
 
-        public virtual FluentHtml Html(Action<GlobalAttributes> attributes = null)
+        public virtual FluentHtml Html(Action<HtmlAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Html(attributes));
         }
 
-        public virtual FluentHtml Head(Action<GlobalAttributes> attributes = null)
+        public virtual FluentHtml Head(Action<HeadAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Head(attributes));
         }
@@ -36,7 +36,7 @@ namespace com.paraquery.Html.Fluent
             return Push(HtmlBuilder.Title(attributes));
         }
 
-        public virtual FluentHtml Body(Action<GlobalAttributes> attributes = null)
+        public virtual FluentHtml Body(Action<BodyAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Body(attributes));
         }
@@ -51,7 +51,7 @@ namespace com.paraquery.Html.Fluent
             return Push(HtmlBuilder.Span(attributes));
         }
 
-        public virtual FluentHtml Br(Action<HrAttributes> attributes = null)
+        public virtual FluentHtml Br(Action<GlobalAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Br(attributes));
         }
@@ -64,6 +64,11 @@ namespace com.paraquery.Html.Fluent
         public virtual FluentHtml Script(Action<ScriptAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Script(attributes));
+        }
+
+        public virtual FluentHtml NoScript(Action<GlobalAttributes> attributes = null)
+        {
+            return Push(HtmlBuilder.NoScript(attributes));
         }
 
     }

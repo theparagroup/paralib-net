@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Tags.Values;
 
 namespace com.paraquery.Html.Tags.Attributes
 {

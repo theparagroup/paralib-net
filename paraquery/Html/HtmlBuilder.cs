@@ -120,5 +120,10 @@ namespace com.paraquery.Html
             return Block("script", Attributes(attributes));
         }
 
+        public virtual Tag NoScript(Action<GlobalAttributes> attributes = null)
+        {
+            return Block("noscript", Attributes(attributes));
+        }
+
     }
 }

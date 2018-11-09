@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Html.Tags.Values
+namespace com.paraquery.Html
 {
     public enum Color : uint
     {
