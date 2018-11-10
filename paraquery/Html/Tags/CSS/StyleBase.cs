@@ -18,6 +18,12 @@ namespace com.paraquery.Html
             return Regex.Replace(name, @"([a-z])([A-Z])", "$1-$2");
         }
 
+        protected static string Spacenate(string name)
+        {
+            //mixed case should be replaced with spaces (but not first letter)
+            return Regex.Replace(name, @"([a-z])([A-Z])", "$1 $2");
+        }
+
         protected virtual string GetProperties()
         {
 
@@ -40,7 +46,9 @@ namespace com.paraquery.Html
             //overwrite with camel if it exists (attributedictionary will replace it for us)
             foreach (var key in dictionary.Keys)
             {
-                if (char.IsLower(key[0]))
+                //we say !IsUpper instead of IsLower because attribute names can start with
+                //underscore and other non-alpha characters... we want these too!
+                if (!char.IsUpper(key[0]))
                 {
                     properties[Hyphenate(key).ToLower()] =dictionary[key];
                 }
@@ -50,9 +58,27 @@ namespace com.paraquery.Html
 
             if (properties.Count > 0)
             {
-
                 //doesn't add a semicolon to the end
-                style = string.Join("; ", properties.Select(e => $"{e.Key}: {e.Value}").ToArray());
+                foreach (var property in properties)
+                {
+                    if (style!=null)
+                    {
+                        style += "; ";
+                    }
+
+                    if (property.Key[0]!='!')
+                    {
+                        style += $"{property.Key}: {property.Value}";
+                    }
+                    else
+                    {
+                        style += property.Value;
+                    }
+
+                }
+
+
+                //style = string.Join("; ", properties.Select(e => $"{e.Key}: {e.Value}").ToArray());
             }
 
             return style;

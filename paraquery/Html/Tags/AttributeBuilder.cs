@@ -8,109 +8,6 @@ using com.paraquery.Html.Tags.Attributes;
 
 namespace com.paraquery.Html.Tags
 {
-    /*
-
-       case sensitivity
-
-       CSS is case insensitive
-
-       however, the following things are case sensitive:
-
-           ids
-           class names
-           urls
-           font names/families?
-
-
-       in html, tag names are case insensitive
-
-       tag names in html5?
-
-       in xhtml, tag names are case sensitive
-
-
-
-
-       anything else?
-
-
-   */
-
-    //examples
-    // "class1 class2"
-    // new { id="div1", @class="class1 class2"}
-    // new { id="div1", defaults= new { @class="class1 class2"}}
-
-    /*
-
-        the idea here is to accept
-          a string, which is assumed to a list of classes (shorthand)
-          a dictionary of name/value pairs
-          an (anonymous) object
-              containing either string properties
-              or a nested (anonymous) object
-
-          the string, int, bool, enum, etc properties will be used for name value pairs
-          properties on additional objects will be used as "defaults" (not added if they already exist)
-              unless the property is "class" then it will be merged
-
-          properties can be IComplexAttribute
-
-          recursion and complex handling can be toggled
-
-          property names are lower cased by default but can be converted from camel case to hypenated
-
-
-    */
-
-    /*
-    public void Attributes(object attributes = null)
-    {
-      //namespace state should be over in context
-
-      //TODO allow for namespaces
-      //TODO allow for namespace-vars (class="[admin:foo-bar]" -> class="nsvar-foo-bar") 
-      //TODO allow for name substitutions (clazz->class, classes->class)
-      //TODO allow for symbol replacement (_,-) in names ( data_value -> data-value, data__value -> data_value)
-      //TODO allow for variables? (class="{debug}" -> class="debug-verbose")
-      //TODO allow for expansions? new { id="foo", style=new {background_color="green"}, margin=new { border_style="solid" } } -> id="foo" style="backgound-color:green;" margin="border-style:solid;"
-
-      // id="foo-bar" -> id="foo-bar" (no change)
-      // id="[foo-bar]" -> id="ns-foo-bar" (ns prefixing)
-      // id="[blah:admin:foo-bar]" -> id="blah-admin-foo-bar" (if admin not an nsvar)
-      // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
-      // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
-
-      var atts = AttributeDictionary.Build(attributes);
-
-      if (atts != null)
-      {
-          if (atts.ContainsKey("id"))
-          {
-              //TODO process namespaces for ids
-              Attribute("id", atts["id"]);
-          }
-
-          if (atts.ContainsKey("class"))
-          {
-              //TODO process namespaces for classes
-              Attribute("class", atts["class"]);
-          }
-
-          foreach (var key in atts.Keys)
-          {
-              if (key != "id" && key != "class")
-              {
-                  Attribute(key, atts[key]);
-              }
-          }
-
-      }
-    }
-    */
-
-
-
     public static class AttributeBuilder
     {
        
@@ -161,6 +58,15 @@ namespace com.paraquery.Html.Tags
                         {
                             name = specifics.Name;
                         }
+                        else if(typeof(INestedAttribute).IsAssignableFrom(pi.PropertyType))
+                        {
+                            //if this is a "nested attribute" (meaning it doesn't render as a name/value
+                            //pair but as just the value), we prefix the name with a bang, which is not
+                            //a valid HTML attribute name. this is mainly used by Style to organize
+                            //properties into nested classes (see Background). So if you are using this
+                            //interface, you need to do something with these bangs.
+                            name = $"!{pi.Name}";
+                        }
                         else
                         {
                             //generally, we're always in case-insensitive mode, and by default attribute
@@ -191,6 +97,10 @@ namespace com.paraquery.Html.Tags
                             value = (string)v;
                         }
                         else if (pi.PropertyType == typeof(int) || pi.PropertyType == typeof(int?))
+                        {
+                            value = v.ToString();
+                        }
+                        else if (pi.PropertyType == typeof(float) || pi.PropertyType == typeof(float?))
                         {
                             value = v.ToString();
                         }
@@ -306,3 +216,105 @@ namespace com.paraquery.Html.Tags
 
     }
 }
+
+
+/*
+
+   case sensitivity
+
+   CSS is case insensitive
+
+   however, the following things are case sensitive:
+
+       ids
+       class names
+       urls
+       font names/families?
+
+
+   in html, tag names are case insensitive
+
+   tag names in html5?
+
+   in xhtml, tag names are case sensitive
+
+
+
+
+   anything else?
+
+
+*/
+
+//examples
+// "class1 class2"
+// new { id="div1", @class="class1 class2"}
+// new { id="div1", defaults= new { @class="class1 class2"}}
+
+/*
+
+    the idea here is to accept
+      a string, which is assumed to a list of classes (shorthand)
+      a dictionary of name/value pairs
+      an (anonymous) object
+          containing either string properties
+          or a nested (anonymous) object
+
+      the string, int, bool, enum, etc properties will be used for name value pairs
+      properties on additional objects will be used as "defaults" (not added if they already exist)
+          unless the property is "class" then it will be merged
+
+      properties can be IComplexAttribute
+
+      recursion and complex handling can be toggled
+
+      property names are lower cased by default but can be converted from camel case to hypenated
+
+
+*/
+
+/*
+public void Attributes(object attributes = null)
+{
+  //namespace state should be over in context
+
+  //TODO allow for namespaces
+  //TODO allow for namespace-vars (class="[admin:foo-bar]" -> class="nsvar-foo-bar") 
+  //TODO allow for name substitutions (clazz->class, classes->class)
+  //TODO allow for symbol replacement (_,-) in names ( data_value -> data-value, data__value -> data_value)
+  //TODO allow for variables? (class="{debug}" -> class="debug-verbose")
+  //TODO allow for expansions? new { id="foo", style=new {background_color="green"}, margin=new { border_style="solid" } } -> id="foo" style="backgound-color:green;" margin="border-style:solid;"
+
+  // id="foo-bar" -> id="foo-bar" (no change)
+  // id="[foo-bar]" -> id="ns-foo-bar" (ns prefixing)
+  // id="[blah:admin:foo-bar]" -> id="blah-admin-foo-bar" (if admin not an nsvar)
+  // id="[:blah:admin:foo-bar]" -> id="ns-blah-admin-foo-bar" (with current ns)
+  // id="[blah:admin:foo-bar]" -> id="blah-nsvar-foo-bar" (if admin is an nsvar)
+
+  var atts = AttributeDictionary.Build(attributes);
+
+  if (atts != null)
+  {
+      if (atts.ContainsKey("id"))
+      {
+          //TODO process namespaces for ids
+          Attribute("id", atts["id"]);
+      }
+
+      if (atts.ContainsKey("class"))
+      {
+          //TODO process namespaces for classes
+          Attribute("class", atts["class"]);
+      }
+
+      foreach (var key in atts.Keys)
+      {
+          if (key != "id" && key != "class")
+          {
+              Attribute(key, atts[key]);
+          }
+      }
+
+  }
+}
+*/

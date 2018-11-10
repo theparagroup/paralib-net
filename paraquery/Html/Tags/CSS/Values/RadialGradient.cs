@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Html.Tags.CSS.Values
+namespace com.paraquery.Html
 {
-    class GradientTypes
+    public class RadialGradient:Gradient
     {
+        //shape, etc
     }
 }

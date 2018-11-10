@@ -7,36 +7,48 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html
 {
-    public class Background: StyleBase
+    public class Background: StyleBase, IDynamicValueContainer, INestedAttribute
     {
-        public string backgroundColor { get; set; }
-        public Color? BackgroundColor { get; set; }
-    }
+        public string backgroundColor { set; get; }
+        public Color? BackgroundColor { set; get; }
 
-    public partial class Style 
-    {
-        public string background { get; set; }
-        protected Background _background { get; set; }
+        public string backgroundImage { set; get; }
+        protected BackgroundImage _backgroundImage;
+
+
+        bool IDynamicValueContainer.HasValue(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case nameof(BackgroundImage):
+                    return _backgroundImage != null;
+
+                default:
+                    throw new InvalidOperationException($"Property name {propertyName} not found");
+            }
+
+        }
 
         [DynamicValue]
-        public Background Background
+        public BackgroundImage BackgroundImage
         {
             set
             {
-                _background = value;
+                _backgroundImage = value;
             }
             get
             {
-                if (_background == null)
+                if (_backgroundImage == null)
                 {
-                    _background = new Background();
+                    _backgroundImage = new BackgroundImage();
                 }
 
-                return _background;
+                return _backgroundImage;
             }
         }
 
 
     }
+
 
 }

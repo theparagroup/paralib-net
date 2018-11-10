@@ -62,8 +62,13 @@
     <Compile Include="Html\Tags\CSS\Background.cs" />
     <Compile Include="Html\Tags\CSS\StyleBase.cs" />
     <Compile Include="Html\Tags\CSS\Values\BackgroundImage.cs" />
-    <Compile Include="Html\Tags\CSS\Values\GradientTypes.cs" />
+    <Compile Include="Html\Tags\CSS\Values\ColorStop.cs" />
+    <Compile Include="Html\Tags\CSS\Values\Directions.cs" />
+    <Compile Include="Html\Tags\CSS\Values\Gradient.cs" />
+    <Compile Include="Html\Tags\CSS\Values\LinearGradient.cs" />
+    <Compile Include="Html\Tags\CSS\Values\RadialGradient.cs" />
     <Compile Include="Html\Tags\DynamicValueAttribute.cs" />
+    <Compile Include="Html\Tags\INestedAttribute.cs" />
     <Compile Include="Html\Tags\Tag.cs" />
     <Compile Include="Html\Tags\IDynamicValueContainer.cs" />
     <Compile Include="Html\Tags\TagTypes.cs" />

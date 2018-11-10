@@ -35,6 +35,10 @@ Design Goals & Notes
 	document
 		attributes
 
+	fluent css inline/external
+
+	renderstack should look at top of nested renderstacks (see BlockStacks in Run0)
+
 	start converting ttb
 		move pQuery into paramvc
 		FluentGridExtensions are broken (no write methods on IColumn), will will break admin screens
@@ -51,7 +55,6 @@ Design Goals & Notes
 	test without Renderer.OnPostEnd() code, seems to duplicate OnPreBegin
 
 	attribute builder
-		should we merge style?
 		events
 
 	style should be able to be used for programmatic style sheets

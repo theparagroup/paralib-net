@@ -35,10 +35,14 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html
 {
-    public partial class Style : StyleBase, IDynamicValueContainer
+    public class Style : StyleBase, IDynamicValueContainer
     {
-        public string color { get; set; }
-        public Color? Color { get; set; }
+        public string color { set; get; }
+        public Color? Color { set; get; }
+
+        public string background { get; set; }
+        protected Background _background; 
+
 
         protected override string GetProperties()
         {
@@ -59,6 +63,24 @@ namespace com.paraquery.Html
 
         }
 
+
+        [DynamicValue]
+        public Background Background
+        {
+            set
+            {
+                _background = value;
+            }
+            get
+            {
+                if (_background == null)
+                {
+                    _background = new Background();
+                }
+
+                return _background;
+            }
+        }
 
 
     }
