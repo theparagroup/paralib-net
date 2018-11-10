@@ -54,6 +54,10 @@ namespace com.paraquery.Html.Tags.Attributes
         [DynamicValue]
         public Style Style
         {
+            set
+            {
+                _style = value;
+            }
             get
             {
                 if (_style==null)
@@ -67,7 +71,7 @@ namespace com.paraquery.Html.Tags.Attributes
 
         bool IDynamicValueContainer.HasValue(string propertyName)
         {
-            //we only have style so far
+            //we only have dynamic value so far
             return (_style != null);
         }
 

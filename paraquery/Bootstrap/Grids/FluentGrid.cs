@@ -160,7 +160,7 @@ namespace com.paraquery.Bootstrap.Grids
         {
             // fluid ? "container-fluid" : "container"
             _containerColulmnClasses = columnClasses;
-            return Push(new ContainerTag(Context, AttributeDictionary.Attributes(attributes, new { @class = _containerClass })));
+            return Push(new ContainerTag(Context, AttributeBuilder.Attributes(attributes, new { @class = _containerClass })));
         }
 
         public IContainer Container(IList<string> columnClasses = null)
@@ -200,7 +200,7 @@ namespace com.paraquery.Bootstrap.Grids
         {
             CloseRow();
             _rowColulmnClasses = columnClasses;
-            return Push(new RowTag(Context, AttributeDictionary.Attributes(attributes, new { @class = _rowClass})));
+            return Push(new RowTag(Context, AttributeBuilder.Attributes(attributes, new { @class = _rowClass})));
         }
 
         public IRow Row(IList<string> columnClasses = null)
@@ -240,7 +240,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new ColumnTag(Context, AttributeDictionary.Attributes(new { @class = @class })));
+            return Push(new ColumnTag(Context, AttributeBuilder.Attributes(new { @class = @class })));
         }
 
         public IColumn Column(Action<GlobalAttributes> attributes = null)
@@ -264,7 +264,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new ColumnTag(Context, AttributeDictionary.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
+            return Push(new ColumnTag(Context, AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
         }
 
         public new IColumn Open(Renderer renderer)
