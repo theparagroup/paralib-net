@@ -7,75 +7,97 @@ using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html
 {
-    public class BackgroundImage:StyleBase
+    /*
+        We're only reifying urls and gradients.
+
+        <image> = <url> | <image()> | <image-set()> | <element()> | <cross-fade()> | <gradient>
+
+        <gradient> = <linear-gradient()> | <repeating-linear-gradient()> | <radial-gradient()> | <repeating-radial-gradient()>
+
+        <color-stop-list> = <color-stop>#{2,}
+        <color-stop> = <color> <length-percentage>?
+        <length-percentage> = <length> | <percentage>
+
+        <linear-gradient()> = linear-gradient( [ <angle> | to <side-or-corner> ]? , <color-stop-list> )
+        <repeating-linear-gradient()> = repeating-linear-gradient( [ <angle> | to <side-or-corner> ]? , <color-stop-list> )
+        <side-or-corner> = [ left | right ] || [ top | bottom ]
+        
+        <radial-gradient()> = radial-gradient( [ <ending-shape> || <size> ]? [ at <position> ]? , <color-stop-list> )
+        <repeating-radial-gradient()> = repeating-radial-gradient( [ <ending-shape> || <size> ]? [ at <position> ]? , <color-stop-list> )
+
+
+    */
+
+    public class BackgroundImage : StyleBase, IValueContainer
     {
         public string[] Urls { set; get; }
 
 
-        protected override string GetProperties()
-        {
-            string style = null;
+        //protected override string GetProperties()
+        //{
+        //    string style = null;
 
-            if (Urls != null)
-            {
-                style = string.Join(", ", Urls.Select(url => $"url({url})").ToArray());
-            }
+        //    if (Urls != null)
+        //    {
+        //        style = string.Join(", ", Urls.Select(url => $"url({url})").ToArray());
+        //    }
 
-            if (this is Gradient)
-            {
-                var gradient = (Gradient)this;
+        //    if (this is Gradient)
+        //    {
+        //        var gradient = (Gradient)this;
 
-                if (style != null)
-                {
-                    style += ", ";
-                }
+        //        if (style != null)
+        //        {
+        //            style += ", ";
+        //        }
 
-                if (gradient.Repeating)
-                {
-                    style += "repeating-";
-                }
+        //        if (gradient.Repeating)
+        //        {
+        //            style += "repeating-";
+        //        }
 
-                if (this is LinearGradient)
-                {
-                    var linearGradient = (LinearGradient)this;
+        //        if (this is LinearGradient)
+        //        {
+        //            var linearGradient = (LinearGradient)this;
 
-                    style += "linear-gradient(";
+        //            style += "linear-gradient(";
 
-                    //note degrees and direction cannot both be set (see setters)
+        //            //note degrees and direction cannot both be set (see setters)
 
-                    if (linearGradient.Degrees != null)
-                    {
-                        style += $"{linearGradient.Degrees.ToString()}deg, ";
-                    }
+        //            if (linearGradient.Angle != null)
+        //            {
+        //                style += $"{linearGradient.Angle.ToValue()}, ";
+        //            }
 
-                    if (linearGradient.Direction != null)
-                    {
-                        style += $"to {Spacenate(linearGradient.Direction.ToString()).ToLower()}, ";
-                    }
+        //            if (linearGradient.SideOrCorner != null)
+        //            {
+        //                style += $"to {PropertyDictionary.Spacenate(PropertyDictionary.Lowernate(linearGradient.SideOrCorner))}, ";
+        //            }
 
-                }
-                else if(this is RadialGradient)
-                {
-                    style += "radial-gradient(";
-
-
-                    throw new NotImplementedException("radial gradients");
-                }
-
-                if (gradient.ColorStops?.Count>=2)
-                {
-                    style += string.Join(", ", gradient.ColorStops.Select(cs => $"{((IComplexAttribute)cs).Value}").ToArray());
-                }
-                else
-                {
-                    throw new InvalidOperationException("CSS Gradients require at least two color stops");
-                }
-
-                style += ")";
-            }
+        //        }
+        //        else if (this is RadialGradient)
+        //        {
+        //            style += "radial-gradient(";
 
 
-            return style;
-        }
+        //            throw new NotImplementedException("radial gradients not implemented");
+        //        }
+
+
+        //        style += $"{gradient.ColorStop1.ToValue()}, {gradient.ColorStop2.ToValue()}";
+
+        //        if (gradient.ColorStops?.Count>0)
+        //        {
+        //            style += ", ";
+        //            style += string.Join(", ", gradient.ColorStops.Select(cs => $"{cs.ToValue()}").ToArray());
+        //        }
+
+
+        //        style += ")";
+        //    }
+
+
+        //    return style;
+        //}
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Html
 {
-    public enum Directions
+    public enum SideOrCorner
     {
         Left,
         Right,

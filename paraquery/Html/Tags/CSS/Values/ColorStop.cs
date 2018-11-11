@@ -15,38 +15,37 @@ namespace com.paraquery.Html
 
 
     */
-    public class ColorStop: IComplexAttribute
+    public class ColorStop: IComplexValue
     {
         public string color { set; get; }
         public Color? Color { set; get; }
         public string length { set; get; }
-        public float? Length { set; get; }
+        public Length Length { set; get; }
+        public string percentage { set; get; }
+        public Percentage Percentage { set; get; }
 
-        string IComplexAttribute.Value
+        public string ToValue()
         {
-            get
+            string value = null;
+
+            value = color ?? PropertyDictionary.Lowernate(Color);
+
+            if (value != null)
             {
-                string style = null;
-
-                style = color ?? Color?.ToString();
-
-                if (style != null)
+                if (length != null)
                 {
-                    if (length!=null)
+                    value = $"{value} {length}";
+                }
+                else
+                {
+                    if (Length!=null)
                     {
-                        style = $"{style} {length}";
-                    }
-                    else
-                    {
-                        if (Length.HasValue)
-                        {
-                            style = $"{style} {Length.ToString()}%";
-                        }
+                        value = $"{value} {Length.ToValue()}";
                     }
                 }
-
-                return style;
             }
+
+            return value;
         }
     }
 }

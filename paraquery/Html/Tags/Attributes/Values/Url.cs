@@ -13,14 +13,18 @@ namespace com.paraquery.Html
         prevents us from using raw strings at the moment.
 
     */
-    public class Url: IComplexAttribute
+    public class Url: IComplexValue
     {
-        public string Value { private set; get; }
+        protected string _value;
 
         public Url(string value)
         {
-            Value = value;
+            _value = value;
         }
 
+        public string ToValue()
+        {
+            return _value;
+        }
     }
 }

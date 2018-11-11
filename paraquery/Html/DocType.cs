@@ -11,7 +11,7 @@ namespace com.paraquery.Html
     {
         private string _specification;
 
-        public DOCTYPE(Context context, string specification) : base(context, LineModes.Single, StackModes.Linear, true, true)
+        public DOCTYPE(Context context, string specification) : base(context, LineModes.Single, StackModes.Linear, true, true, false)
         {
             _specification = specification;
         }

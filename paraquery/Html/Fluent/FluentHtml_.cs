@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Rendering;
 using com.paraquery.Html.Tags.Attributes;
+using com.paraquery.Html.Tags.CSS.Fluent;
 
 namespace com.paraquery.Html.Fluent
 {
@@ -34,6 +35,18 @@ namespace com.paraquery.Html.Fluent
         public virtual FluentHtml Title(Action<GlobalAttributes> attributes = null)
         {
             return Push(HtmlBuilder.Title(attributes));
+        }
+
+        public virtual FluentHtml Style(Action<StyleAttributes> attributes = null)
+        {
+            return Push(HtmlBuilder.Style(attributes));
+        }
+
+        public FluentCss FluentCss()
+        {
+            var fluentCss = new FluentCss(Context, this);
+            Push(fluentCss);
+            return fluentCss;
         }
 
         public virtual FluentHtml Body(Action<BodyAttributes> attributes = null)

@@ -8,8 +8,8 @@ namespace com.paraquery.Html.Tags
 {
     /*
     
-        This is a marker interface for properties that shouldn't have an actual
-        "name", but rather just render the value as-is.
+        This is a marker interface for member properties that shouldn't generate
+        a name value pair for rendering. Rather, just the value should be rendered.
 
         This is useful particularly in Style where we want nested property
         objects but they shouldn't have a name (see Background).            
@@ -17,7 +17,7 @@ namespace com.paraquery.Html.Tags
          
     */
 
-    public interface INestedAttribute
+    public interface IValueContainer
     {
     }
 }

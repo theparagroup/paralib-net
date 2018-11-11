@@ -25,7 +25,7 @@ namespace com.paraquery.Html
         protected virtual AttributeDictionary Attributes<T>(Action<T> attributes = null) where T : GlobalAttributes, new()
         {
             //this method is just to simplify tag methods...
-            return AttributeBuilder.Attributes(attributes, null);
+            return AttributeDictionary.Attributes(attributes, null);
         }
 
         /*
@@ -88,6 +88,11 @@ namespace com.paraquery.Html
         public virtual Tag Title(Action<GlobalAttributes> attributes = null)
         {
             return Inline("title", Attributes(attributes));
+        }
+
+        public virtual Tag Style(Action<StyleAttributes> attributes = null)
+        {
+            return Block("style", Attributes(attributes));
         }
 
         public virtual Tag Body(Action<BodyAttributes> attributes = null)

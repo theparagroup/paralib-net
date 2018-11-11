@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery
+namespace com.paraquery.Html.Tags
 {
     /*
         This dictionary is more forgiving (doesn't throw) if the key doesn't exist.
     */
 
-    public class NameValuePairs : Dictionary<string, string>
+    public class NVPDictionary : Dictionary<string, string>
     {
         public new string this[string index]
         {

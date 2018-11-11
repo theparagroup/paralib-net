@@ -49,6 +49,23 @@ namespace com.paraquery.Html.Tags.Attributes
 
         public string Lang { get; set; }
 
+        public Action<Style> StyleAction
+        {
+            set
+            {
+                if (value!=null)
+                {
+                    var style = new Style();
+
+                    value(style);
+
+                    _style = style;
+
+                }
+
+            }
+        }
+
         protected Style _style;
 
         [DynamicValue]

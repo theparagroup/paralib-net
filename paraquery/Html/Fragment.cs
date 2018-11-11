@@ -30,7 +30,7 @@ namespace com.paraquery.Html
         {
         }
 
-        public FluentHtml Html()
+        public FluentHtml FluentHtml()
         {
             var fluentHtml = new FluentHtml(Context, false);
             Push(fluentHtml);

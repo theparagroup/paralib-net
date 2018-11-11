@@ -41,7 +41,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\GridOptions.cs" />
-    <Compile Include="Html\Tags\AttributeBuilder.cs" />
+    <Compile Include="Html\Tags\Attributes\StyleAttributes.cs" />
+    <Compile Include="Html\Tags\ComplexValue.cs" />
+    <Compile Include="Html\Tags\CSS\CssFormats.cs" />
+    <Compile Include="Html\Tags\CSS\Fluent\FluentCss.cs" />
+    <Compile Include="Html\Tags\CSS\Fluent\CssBlock.cs" />
+    <Compile Include="Html\Tags\CSS\Fluent\Interfaces.cs" />
+    <Compile Include="Html\Tags\CSS\Fluent\Rule.cs" />
+    <Compile Include="Html\Tags\CSS\Values\FontLengthUnits.cs" />
+    <Compile Include="Html\Tags\CSS\Values\ViewPortLengthUnits.cs" />
+    <Compile Include="Html\Tags\CSS\Values\Percentage.cs" />
+    <Compile Include="Html\Tags\CSS\Values\Length.cs" />
+    <Compile Include="Html\Tags\CSS\Values\LengthUnits.cs" />
+    <Compile Include="Html\Tags\PropertyDictionary.cs" />
+    <Compile Include="Html\Tags\DictionaryBuilder.cs" />
     <Compile Include="Html\Tags\Attributes\HeadAttributes.cs" />
     <Compile Include="Html\Tags\Attributes\HtmlAttributes.cs" />
     <Compile Include="Html\Tags\Attributes\BodyAttributes.cs" />
@@ -61,6 +74,8 @@
     <Compile Include="Html\Tags\AttributeAttribute.cs" />
     <Compile Include="Html\Tags\CSS\Background.cs" />
     <Compile Include="Html\Tags\CSS\StyleBase.cs" />
+    <Compile Include="Html\Tags\CSS\Values\Angle.cs" />
+    <Compile Include="Html\Tags\CSS\Values\AngleUnits.cs" />
     <Compile Include="Html\Tags\CSS\Values\BackgroundImage.cs" />
     <Compile Include="Html\Tags\CSS\Values\ColorStop.cs" />
     <Compile Include="Html\Tags\CSS\Values\Directions.cs" />
@@ -68,12 +83,12 @@
     <Compile Include="Html\Tags\CSS\Values\LinearGradient.cs" />
     <Compile Include="Html\Tags\CSS\Values\RadialGradient.cs" />
     <Compile Include="Html\Tags\DynamicValueAttribute.cs" />
-    <Compile Include="Html\Tags\INestedAttribute.cs" />
+    <Compile Include="Html\Tags\IValueContainer.cs" />
     <Compile Include="Html\Tags\Tag.cs" />
     <Compile Include="Html\Tags\IDynamicValueContainer.cs" />
     <Compile Include="Html\Tags\TagTypes.cs" />
     <Compile Include="Html\Tags\Attributes\Values\Url.cs" />
-    <Compile Include="NameValuePairs.cs" />
+    <Compile Include="Html\Tags\NVPDictionary.cs" />
     <Compile Include="Html\DebugFlags.cs" />
     <Compile Include="Rendering\DebugRenderer.cs" />
     <Compile Include="Rendering\EndBase.cs" />
@@ -93,7 +108,7 @@
     <Compile Include="Html\Tags\Attributes\Values\ButtonTypes.cs" />
     <Compile Include="Html\Tags\Attributes\GlobalAttributes.cs" />
     <Compile Include="Html\Tags\Attributes\HrAttributes.cs" />
-    <Compile Include="Html\Tags\IComplexAttribute.cs" />
+    <Compile Include="Html\Tags\IComplexValue.cs" />
     <Compile Include="Html\Tags\Attributes\ScriptAttributes.cs" />
     <Compile Include="Html\Tags\Attributes\ImgAttributes.cs" />
     <Compile Include="Html\Tags\CSS\Style.cs" />

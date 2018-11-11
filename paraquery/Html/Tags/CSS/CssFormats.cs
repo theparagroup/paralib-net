@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace com.paraquery.Html
 {
-    public abstract class Gradient
+    public enum CssFormats
     {
-        public List<ColorStop> ColorStops { set; get; }
-        public bool Repeating { set; get; }
-
-
-
+        Common,
+        Tucked,
+        Readable
     }
 }

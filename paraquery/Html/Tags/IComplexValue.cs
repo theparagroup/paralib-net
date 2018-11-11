@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 namespace com.paraquery.Html.Tags
 {
     /*
-        This is used to create attributes that can be processed by AttributeDictionary,
+        This is used to create member properties that can be processed by DictionaryBuilder,
         but are more complicated and may have different naming conventions than a string or bool.
 
         Style is a good example.
-    
-        Note: this must be implmented explicitly or you will recurse
     */
 
-    public interface IComplexAttribute
+    public interface IComplexValue
     {
-        string Value { get; }
+        string ToValue();
     }
 }

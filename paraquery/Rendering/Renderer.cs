@@ -82,14 +82,14 @@ namespace com.paraquery.Rendering
 
     public abstract class Renderer : BeginBase
     {
-        public Context Context { private set; get; }
+        protected Context Context { private set; get; }
         public LineModes LineMode { private set; get; }
         public StackModes StackMode { private set; get; }
         public bool Terminal { private set; get; }
         public bool Indent { private set; get; }
         public bool Visible { private set; get; }
 
-        protected Renderer(Context context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent=true)
+        protected Renderer(Context context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent)
         {
             Context = context;
 

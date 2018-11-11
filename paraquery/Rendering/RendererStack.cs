@@ -77,7 +77,7 @@ namespace com.paraquery.Rendering
     {
         internal Stack<Renderer> Stack { private set; get; } = new Stack<Renderer>();
 
-        public RendererStack(Context context, LineModes lineMode, StackModes stackMode, bool visible, bool indent = true) : base(context, lineMode, stackMode, false, visible, indent)
+        public RendererStack(Context context, LineModes lineMode, StackModes stackMode, bool visible, bool indent) : base(context, lineMode, stackMode, false, visible, indent)
         {
         }
 
@@ -90,7 +90,14 @@ namespace com.paraquery.Rendering
         {
             get
             {
-                return Stack.Peek();
+                if (Stack.Count > 0)
+                {
+                    return Stack.Peek();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 

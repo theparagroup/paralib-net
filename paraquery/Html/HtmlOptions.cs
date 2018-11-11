@@ -18,7 +18,8 @@ namespace com.paraquery.Html
     */
     public class HtmlOptions : Options
     {
-        public DebugFlags Debug { get; set; } = DebugFlags.None;
+        public DebugFlags Debug { set; get; } = DebugFlags.None;
+        public CssFormats CssFormat { set; get; } = CssFormats.Readable;
 
         public bool CreateDependencies { set; get; } = false;
 

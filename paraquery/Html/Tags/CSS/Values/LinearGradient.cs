@@ -8,32 +8,30 @@ namespace com.paraquery.Html
 {
     public class LinearGradient:Gradient
     {
-        protected float? _degrees;
-        protected Directions? _direction;
+        protected Angle _angle;
+        protected SideOrCorner? _sideOrCorner;
 
-        public float? Degrees
+        public Angle Angle
         {
             set
             {
-                _direction = null;
-                _degrees = value;
+                _angle = value;
             }
             get
             {
-                return _degrees;
+                return _angle;
             }
         }
 
-        public Directions? Direction
+        public SideOrCorner? SideOrCorner
         {
             set
             {
-                _degrees = null;
-                _direction = value;
+                _sideOrCorner = value;
             }
             get
             {
-                return _direction;
+                return _sideOrCorner;
             }
         }
 

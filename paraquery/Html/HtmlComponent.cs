@@ -27,7 +27,7 @@ namespace com.paraquery.Html
     public abstract class HtmlComponent<T> : RendererStack where T : Package, new()
     {
 
-        public HtmlComponent(HtmlContext context, Renderer start) : base(context, LineModes.Multiple, StackModes.Nested, false)
+        public HtmlComponent(HtmlContext context, Renderer start) : base(context, LineModes.Multiple, StackModes.Nested, false, false)
         {
             //register package
             context.RegisterPackage<T>();

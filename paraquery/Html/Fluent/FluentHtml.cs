@@ -78,32 +78,50 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
+        public new FluentHtml Close(Renderer renderer)
+        {
+            base.Close(renderer);
+            return this;
+        }
+
         public FluentHtml Write(string content)
         {
             Context.Writer.Write(content);
             return this;
         }
 
+        private void CloseUpIfTopIsLinear()
+        {
+            if (Top?.StackMode == StackModes.Linear)
+            {
+                CloseUp();
+            }
+        }
+
         public FluentHtml WriteLine(string content)
         {
+            CloseUpIfTopIsLinear();
             Context.Writer.WriteLine(content);
             return this;
         }
 
         public FluentHtml NewLine()
         {
+            CloseUpIfTopIsLinear();
             Context.Writer.NewLine();
             return this;
         }
 
         public FluentHtml Space()
         {
+            CloseUpIfTopIsLinear();
             Context.Writer.Space();
             return this;
         }
 
         public FluentHtml Snippet(string text, string newline = null)
         {
+            CloseUpIfTopIsLinear();
             Context.Writer.Snippet(text, newline);
             return this;
         }

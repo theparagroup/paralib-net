@@ -123,6 +123,11 @@ namespace com.paraquery
             return _tabCache[level.Value];
         }
 
+        public virtual void Tab()
+        {
+            //tabbing like this doesn't change state - use sparingly
+            _write($"{_tab}");
+        }
 
         public virtual void Write(string text)
         {

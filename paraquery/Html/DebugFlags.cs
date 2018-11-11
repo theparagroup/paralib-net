@@ -19,9 +19,10 @@ namespace com.paraquery.Html
         Fragment = 2,
         Page=3,
         FluentHtml=8,
+        FluentCss = 16,
 
 
 
-        FluentGrid=16
+        FluentGrid = 32
     }
 }
