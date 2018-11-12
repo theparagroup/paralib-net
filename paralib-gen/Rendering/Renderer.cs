@@ -21,11 +21,10 @@ namespace com.paralib.Gen.Rendering
             
             LineMode
             Indent
-            StackMode
-            Terminal
             Visible
+            ContainerMode
 
-        StackMode and Terminal are not used here in the Renderer, but they are used to control how
+        ContainerMode is not used here in the Renderer, but it is are used to control how
         the renderers are pushed and popped in the RendererStack to create structured content.
 
         Visible basically controls what is written to the Writer. Invisible renderers do not write
@@ -77,6 +76,11 @@ namespace com.paralib.Gen.Rendering
         components, and not by issuing tabs and newlines into the content stream. 
         
         It is fine to issue newlines inside block content (it was designed for that).
+
+        Additional note: OnPreBegin() and OnPostEnd() seem to do the same thing so it's easy to 
+        wonder why we do it in both places. Usually OnPostEnd() takes care of it, but since we have 
+        no control over the Writer state, it's possible for impelementors to write content before a 
+        Single/Multiple renderer's Begin() is called, in which case we need to do it in OnPreBegin().
 
     */
 
@@ -204,7 +208,6 @@ namespace com.paralib.Gen.Rendering
 
         protected override void OnPostEnd()
         {
-            //TODO: is this a duplicate of OnPreBegin? remove this?
             if (Visible)
             {
                 if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)

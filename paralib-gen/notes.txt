@@ -83,11 +83,6 @@ Design Goals & Notes
 
 		}
 
-	split into assemblies
-		paragen (not important to refactor paralib-migrations to use this yet)
-		parahtml
-		paraquery
-
 	in paracontroller, add View() replacements:
 		Page()
 		Fragment()
