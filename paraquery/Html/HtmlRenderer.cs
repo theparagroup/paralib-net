@@ -17,7 +17,7 @@ namespace com.paraquery.Html
     */
     public abstract class HtmlRenderer : Renderer
     {
-        public HtmlRenderer(HtmlContext context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent=true) : base(context, lineMode, stackMode, terminal, visible, indent)
+        public HtmlRenderer(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent) : base(context, lineMode, containerMode, visible, indentContent)
         {
         }
 

@@ -18,7 +18,7 @@ namespace com.paraquery.Html
     */
     public class Fragment : HtmlComponent<ParaHtmlPackage>
     {
-        public Fragment(HtmlContext context, bool begin=true) : base(context, new HtmlBlock(context, "fragment", context.IsDebug(DebugFlags.Fragment), false))
+        public Fragment(HtmlContext context, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, false, false)
         {
             if (begin)
             {
@@ -28,14 +28,32 @@ namespace com.paraquery.Html
 
         protected override void OnBegin()
         {
+            Push(new HtmlDebugBlock(Context, "fragment", Context.IsDebug(DebugFlags.Fragment), false));
         }
 
-        public FluentHtml FluentHtml()
+        protected override void OnEnd()
         {
-            var fluentHtml = new FluentHtml(Context, false);
+        }
+
+        public FluentHtml Html(bool inline = false)
+        {
+            var fluentHtml = new FluentHtml(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
             Push(fluentHtml);
             return fluentHtml;
         }
+
+        public FluentHtml Html(Action<FluentHtml> fluentHtml, bool inline = false)
+        {
+            var fh = Html(inline);
+
+            if (fluentHtml != null)
+            {
+                fluentHtml(fh);
+            }
+
+            return fh;
+        }
+
 
     }
 }

@@ -11,14 +11,14 @@ namespace com.paraquery.Html.Tags.CSS.Fluent
     {
         protected string _selector;
 
-        public Rule(HtmlContext context, string selector) : base(context, LineModes.Multiple, StackModes.Nested, true, true, context.Options.CssFormat!=CssFormats.Readable?false:true)
+        public Rule(HtmlContext context, string selector) : base(context, LineModes.Multiple, ContainerModes.Block, true, context.Options.CssFormat!=CssFormats.Readable?false:true)
         {
             _selector = selector;
         }
 
         protected override void OnBegin()
         {
-            Writer.NewLine();
+            Writer.Space();
 
             switch (Context.Options.CssFormat)
             {

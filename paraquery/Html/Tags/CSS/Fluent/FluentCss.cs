@@ -11,7 +11,7 @@ namespace com.paraquery.Html.Tags.CSS.Fluent
 {
     //this doesn't need to be a component
 
-    public class FluentCss : CssBlock, IFluentCss
+    public class FluentCss : CssDebugBlock, IFluentCss
     {
         protected FluentHtml _fluentHtml;
 
@@ -27,7 +27,7 @@ namespace com.paraquery.Html.Tags.CSS.Fluent
 
         protected override void OnEnd()
         {
-            Writer.NewLine();
+            Writer.Space();
             base.OnEnd();
         }
 

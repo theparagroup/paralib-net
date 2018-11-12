@@ -94,7 +94,7 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _rowColulmnClasses;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context, Action<GridOptions> options=null, bool begin=true) : base(context, new GridBlock(context))
+        public FluentGrid(HtmlContext context, Action<GridOptions> options=null, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, false, false)
         {
             var gridOptions = new GridOptions();
 
@@ -115,7 +115,7 @@ namespace com.paraquery.Bootstrap.Grids
             }
         }
 
-        public class GridBlock : HtmlBlock
+        public class GridBlock : HtmlDebugBlock
         {
             public GridBlock(HtmlContext context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
             {
@@ -145,8 +145,12 @@ namespace com.paraquery.Bootstrap.Grids
 
         protected override void OnBegin()
         {
+            Push(new GridBlock(Context));
         }
 
+        protected override void OnEnd()
+        {
+        }
 
         protected new FluentGrid Push(Renderer renderer)
         {
@@ -310,12 +314,13 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-        public IColumn Html(Action<FluentHtml> fluentHtml)
+        public IColumn Html(Action<FluentHtml> fluentHtml, bool inline = false)
         {
+            var fh = new FluentHtml(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
+            Push(fh);
+
             if (fluentHtml != null)
             {
-                var fh = new FluentHtml(Context, false);
-                Push(fh);
                 fluentHtml(fh);
             }
 

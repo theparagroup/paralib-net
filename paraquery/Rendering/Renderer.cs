@@ -84,20 +84,18 @@ namespace com.paraquery.Rendering
     {
         protected Context Context { private set; get; }
         public LineModes LineMode { private set; get; }
-        public StackModes StackMode { private set; get; }
-        public bool Terminal { private set; get; }
-        public bool Indent { private set; get; }
+        public ContainerModes ContainerMode { private set; get; }
+        public bool IndentContent { private set; get; }
         public bool Visible { private set; get; }
 
-        protected Renderer(Context context, LineModes lineMode, StackModes stackMode, bool terminal, bool visible, bool indent)
+        protected Renderer(Context context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent)
         {
             Context = context;
 
             LineMode = lineMode;
-            StackMode = stackMode;
-            Terminal = terminal;
+            ContainerMode = containerMode;
             Visible = visible;
-            Indent = indent;
+            IndentContent = indentContent;
         }
 
 
@@ -168,11 +166,12 @@ namespace com.paraquery.Rendering
                         Writer.NewLine();
                     }
 
-                    if (Indent)
+                    if (IndentContent)
                     {
-                        //make sure content under blocks is indented (can be disabled)
+                        //indent content
                         Writer.Indent();
                     }
+
                 }
             }
         }
@@ -195,12 +194,13 @@ namespace com.paraquery.Rendering
                         Writer.NewLine();
                     }
 
-                    if (Indent)
+                    if (IndentContent)
                     {
-                        //undo the indent for block content (can be disabled)
+                        //undo the content indent
                         Writer.Dedent();
                     }
                 }
+
             }
         }
 

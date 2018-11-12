@@ -8,10 +8,17 @@ using com.paraquery.Rendering;
 
 namespace com.paraquery.Html.Fluent
 {
+    /*
+
+        FluentHtml must either be in Block or Inline mode because....
+
+        Since adding HTML elements under an empty elment doesn't make any sense, we don't have
+        that concept (like Tag does) and never go into the "Single" LineMode.
+
+    */
     public partial class FluentHtml : HtmlComponent<ParaHtmlPackage>
     {
-
-        public FluentHtml(HtmlContext context, bool begin=true) : base(context, new HtmlBlock(context, "fluent html", context.IsDebug(DebugFlags.FluentHtml), false))
+        public FluentHtml(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool begin = true) : base(context, lineMode, containerMode, false, false)
         {
             if (begin)
             {
@@ -21,11 +28,18 @@ namespace com.paraquery.Html.Fluent
 
         protected override void OnBegin()
         {
+            if (ContainerMode==ContainerModes.Block)
+            {
+                Push(new HtmlDebugBlock(Context, "fluent html", Context.IsDebug(DebugFlags.FluentHtml), false));
+            }
+            else
+            {
+                Push(new HtmlDebugInline(Context, "fluent html", Context.IsDebug(DebugFlags.FluentHtml), false));
+            }
         }
 
         protected override void OnEnd()
         {
-            CloseAll();
         }
 
         protected override void OnDebug(string text)
@@ -56,13 +70,13 @@ namespace com.paraquery.Html.Fluent
 
         public FluentHtml CloseUp()
         {
-            base.CloseLinears(false);
+            base.CloseInlines(false);
             return this;
         }
 
         public FluentHtml CloseBlock()
         {
-            base.CloseLinears(true);
+            base.CloseInlines(true);
             return this;
         }
 
@@ -90,9 +104,9 @@ namespace com.paraquery.Html.Fluent
             return this;
         }
 
-        private void CloseUpIfTopIsLinear()
+        private void CloseUpIfTopNotMultipleLine()
         {
-            if (Top?.StackMode == StackModes.Linear)
+            if (Top?.LineMode != LineModes.Multiple)
             {
                 CloseUp();
             }
@@ -100,28 +114,28 @@ namespace com.paraquery.Html.Fluent
 
         public FluentHtml WriteLine(string content)
         {
-            CloseUpIfTopIsLinear();
+            CloseUpIfTopNotMultipleLine();
             Context.Writer.WriteLine(content);
             return this;
         }
 
         public FluentHtml NewLine()
         {
-            CloseUpIfTopIsLinear();
+            CloseUpIfTopNotMultipleLine();
             Context.Writer.NewLine();
             return this;
         }
 
         public FluentHtml Space()
         {
-            CloseUpIfTopIsLinear();
+            CloseUpIfTopNotMultipleLine();
             Context.Writer.Space();
             return this;
         }
 
         public FluentHtml Snippet(string text, string newline = null)
         {
-            CloseUpIfTopIsLinear();
+            CloseUpIfTopNotMultipleLine();
             Context.Writer.Snippet(text, newline);
             return this;
         }

@@ -53,7 +53,8 @@ namespace com.paraquery
 
         public FluentHtml Html()
         {
-            return new FluentHtml(_context);
+            throw new NotImplementedException();
+            //return new FluentHtml(_context, FluentModes.Block);
         }
 
         public Bs Bs

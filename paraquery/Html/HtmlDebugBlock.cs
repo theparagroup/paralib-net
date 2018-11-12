@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using com.paraquery.Html.Tags;
 using com.paraquery.Rendering;
 
-namespace com.paraquery.Html.Tags.CSS.Fluent
+namespace com.paraquery.Html
 {
     /*
 
@@ -15,18 +15,10 @@ namespace com.paraquery.Html.Tags.CSS.Fluent
         Used in Page, FluentHtml, etc.
 
     */
-    public class CssBlock : DebugRenderer
+    public class HtmlDebugBlock : DebugRenderer
     {
-        public CssBlock(HtmlContext context, string name, bool debug, bool indent) : base(context, name, debug, indent)
+        public HtmlDebugBlock(Context context, string name, bool visible, bool indentContent) : base(context, name, LineModes.Multiple, ContainerModes.Block, visible, indentContent)
         {
-        }
-
-        protected new HtmlContext Context
-        {
-            get
-            {
-                return (HtmlContext)base.Context;
-            }
         }
 
         protected override bool CanDebug
@@ -39,7 +31,7 @@ namespace com.paraquery.Html.Tags.CSS.Fluent
 
         protected override void OnDebug(string text)
         {
-            Writer.Write($"/* {text} */");
+            HtmlRenderer.Comment(Writer, text);
         }
 
     }

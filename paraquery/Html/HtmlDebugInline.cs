@@ -12,12 +12,10 @@ namespace com.paraquery.Html
 
         An HTML-centric version of the DebugRenderer that defines OnDebug.
 
-        Used in Page, FluentHtml, etc.
-
     */
-    public class HtmlBlock : DebugRenderer
+    public class HtmlDebugInline : DebugRenderer
     {
-        public HtmlBlock(Context context, string name, bool debug, bool indent) : base(context, name, debug, indent)
+        public HtmlDebugInline(Context context, string name, bool visible, bool indentContent) : base(context, name, LineModes.None, ContainerModes.Inline, visible, indentContent)
         {
         }
 

@@ -41,11 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\GridOptions.cs" />
+    <Compile Include="Html\HtmlDebugInline.cs" />
     <Compile Include="Html\Tags\Attributes\StyleAttributes.cs" />
     <Compile Include="Html\Tags\ComplexValue.cs" />
     <Compile Include="Html\Tags\CSS\CssFormats.cs" />
     <Compile Include="Html\Tags\CSS\Fluent\FluentCss.cs" />
-    <Compile Include="Html\Tags\CSS\Fluent\CssBlock.cs" />
+    <Compile Include="Html\Tags\CSS\Fluent\CssDebugBlock.cs" />
     <Compile Include="Html\Tags\CSS\Fluent\Interfaces.cs" />
     <Compile Include="Html\Tags\CSS\Fluent\Rule.cs" />
     <Compile Include="Html\Tags\CSS\Values\FontLengthUnits.cs" />
@@ -61,7 +62,7 @@
     <Compile Include="Html\DOCTYPE.cs" />
     <Compile Include="Html\DocumentTypes.cs" />
     <Compile Include="Html\Fluent\FluentHtml_.cs" />
-    <Compile Include="Html\HtmlBlock.cs" />
+    <Compile Include="Html\HtmlDebugBlock.cs" />
     <Compile Include="Html\HtmlComponent.cs" />
     <Compile Include="Html\HtmlContext.cs" />
     <Compile Include="Html\Fragment.cs" />

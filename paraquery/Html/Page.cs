@@ -23,8 +23,9 @@ namespace com.paraquery.Html
 
         protected override void OnBegin()
         {
-            Push(new HtmlBlock(Context, "page", Context.IsDebug(DebugFlags.Page), false));
+            Push(new HtmlDebugBlock(Context, "page", Context.IsDebug(DebugFlags.Page), false));
         }
+
 
         protected override void OnPreContent()
         {

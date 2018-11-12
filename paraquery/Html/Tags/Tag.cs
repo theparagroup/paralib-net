@@ -9,36 +9,50 @@ namespace com.paraquery.Html.Tags
 {
     /* 
 
-        This is a utility class that converts HTML Block/Inline/Empty concepts Renderer concepts.
+        This is a utility class that converts HTML Block/Inline+Empty concepts to RendererStack
+        concepts.
 
-        Note on empty tags (also called void tags in HTML5 and self-closing tags in XHTML):
+        GetLineMode() below basically makes some hard-coded formatting choices for our HTML:
+
+            Non-empty Block tags are Multiple and the content is indented
+            Empty Block tags are Single
+            Inline (empty or not) tags are always None
+
+            Example:
+
+                <block>
+                    <span><span>content</span></span>
+                    <hr />
+                </block>
+
+        Notes on empty tags (also called void tags in HTML5 and self-closing tags in XHTML):
 
             While you can have self-closing tags like <div /> in XHTML, we don't do that.
 
-            HTML4/XHTML empty/void elements:
-                area
-                base
-                br
-                col
-                hr
-                img
-                input
-                link
-                meta
-                param
+                HTML4/XHTML empty/void elements:
+                    area
+                    base
+                    br
+                    col
+                    hr
+                    img
+                    input
+                    link
+                    meta
+                    param
 
-            Additional HTML5 void elements
-                keygen
-                source
-                track
-                embed
-                wbr
-                menuitem (removed)
-                command (obsololete)
+                Additional HTML5 void elements
+                    keygen
+                    source
+                    track
+                    embed
+                    wbr
+                    menuitem (removed)
+                    command (obsololete)
             
-        The close tag " />" is optional for void tags in HTML.
+            The close tag " />" is optional for void tags in HTML.
 
-        TagBuilder uses the SelfClosingTags option to control how the void tags are formatted.
+        HtmlBuilder uses the SelfClosingTags option to control how the void tags are formatted.
 
     */
 
@@ -50,7 +64,7 @@ namespace com.paraquery.Html.Tags
         public TagTypes TagType { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
 
-        internal Tag(HtmlContext context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContentMode(tagType, empty), empty, true, true)
+        internal Tag(HtmlContext context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true, true)
         {
             TagName = tagName;
             Attributes = attributes;
@@ -60,7 +74,7 @@ namespace com.paraquery.Html.Tags
         {
             get
             {
-                return Terminal;
+                return ContainerMode==ContainerModes.None;
             }
         }
 
@@ -85,22 +99,22 @@ namespace com.paraquery.Html.Tags
 
         }
 
-        private static StackModes GetContentMode(TagTypes tagType, bool empty)
+        private static ContainerModes GetContainerMode(TagTypes tagType, bool empty)
         {
-            if (tagType == TagTypes.Block)
+            if(empty)
             {
-                if (empty)
-                {
-                    return StackModes.Linear;
-                }
-                else
-                {
-                    return StackModes.Nested;
-                }
+                return ContainerModes.None;
             }
             else
             {
-                return StackModes.Linear;
+                if (tagType == TagTypes.Block)
+                {
+                    return ContainerModes.Block;
+                }
+                else
+                {
+                    return ContainerModes.Inline;
+                }
             }
         }
 
@@ -186,7 +200,7 @@ namespace com.paraquery.Html.Tags
                 Writer.Write($"</{TagName}>");
             }
 
-            if (Context.IsDebug(DebugFlags.EndTag) && StackMode == StackModes.Nested)
+            if (Context.IsDebug(DebugFlags.EndTag) && ContainerMode == ContainerModes.Block)
             {
                 if (Attributes != null)
                 {

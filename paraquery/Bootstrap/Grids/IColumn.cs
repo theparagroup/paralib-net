@@ -21,7 +21,7 @@ namespace com.paraquery.Bootstrap.Grids
         IGrid Grid(Action<GridOptions> options=null);
         IGrid EndGrid();
 
-        IColumn Html(Action<FluentHtml> fluentHtml);
+        IColumn Html(Action<FluentHtml> fluentHtml, bool inline=false);
 
     }
 }

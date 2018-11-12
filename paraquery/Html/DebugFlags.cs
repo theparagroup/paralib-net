@@ -17,7 +17,7 @@ namespace com.paraquery.Html
 
         //see the begin and end of various components
         Fragment = 2,
-        Page=3,
+        Page=4,
         FluentHtml=8,
         FluentCss = 16,
 

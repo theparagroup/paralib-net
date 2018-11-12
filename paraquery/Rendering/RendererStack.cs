@@ -25,29 +25,29 @@ namespace com.paraquery.Rendering
         When Renderers are pushed onto the stack, we look at a couple of renderer properties to decide
         what to do:
 
-            StackMode
-            Terminal
+            ContainerMode
+            LineMode
 
-        StackMode can have the following values:
+        ContainerMode can have the following values:
 
-            Nested:    may contain Linear and other Nested renderers
-            Linear:    may only contain other Linear renderers
-
-        Terminal means the renderer cannot contain other renderers.
+            None:      may not contain any renderers
+            Block:     may contain both Block and Inline renderers
+            Inline:    may only contain other Inline renderers
 
         Note, we're talking about nesting renderers inside other renderers, not "content". Any
-        StackMode may have nested "content" between the Begin() and End() calls, such as
+        ContainerMode may have "content" between the Begin() and End() calls, such as
         text or code. 
 
         Derived classes may use these properties to make other decisions about how to render themselves.
-        For example, Tag treats Terminal the same Empty for HTML purposes (which makes sense because
+        For example, Tag treats None the as same Empty for HTML purposes (which makes sense because
         empty tags can't have any content at all).
 
         RenderStack uses these properties to determine what to do with existing renderers on the stack
         whenever a new render is pushed:
 
-            Pushing anything onto a Terminal, closes that Terminal.
-            Pushing a Nested onto a Linear, closes all the Linears up to but not including the last Nested.
+            Pushing anything onto a None, closes the None renderer.
+            Pushing a non-Inline (None|Block) onto an Inline, closes all the Inlines up to but not 
+                including the last Block.
 
         Also, keep in mind, things higher on the stack are "under" things lower on the stack,
         when rendered. The top of the stack represents the last thing that had Begin()
@@ -60,16 +60,16 @@ namespace com.paraquery.Rendering
         However, because nesting RendererStacks could cause formatting and structure to get messed up,
         we enforce some rules:
 
-            RendererStacks must declare thier own LineMode and StackMode.
-            RendererStacks are never Terminal. They are designed to contain other renderers.
-            The first renderer pushed onto the stack must match the RendererStack's StackMode.
-            If the RendererStack is Linear, all pushed renderers must be Linear as well.
-            If the RendererStack is Visible, you can't push Multiline renderers under non-Multiline.
+            RendererStacks must declare thier own LineMode and ContainerMode.
+            RendererStacks are never None. They are designed to contain other renderers.
+            If the RendererStack is Inline, all pushed renderers must be Inline as well.
+            If the RendererStack is Visible and LineMode is None|Single, all pushed renderers must be None.
 
         Essentially, these rules ensure that a nested RendererStack's content behaves the same way
         you have declared the RendererStack's behavior to behave. This is crucial for creating re-usable
         components that can be arbitrarily nested.
 
+        Nested RendererStacks:
 
     */
 
@@ -77,13 +77,19 @@ namespace com.paraquery.Rendering
     {
         internal Stack<Renderer> Stack { private set; get; } = new Stack<Renderer>();
 
-        public RendererStack(Context context, LineModes lineMode, StackModes stackMode, bool visible, bool indent) : base(context, lineMode, stackMode, false, visible, indent)
+        public RendererStack(Context context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent) : base(context, lineMode, containerMode, visible, indentContent)
         {
+            if (ContainerMode==ContainerModes.None)
+            {
+                throw new InvalidOperationException("RendererStack's ContainerMode cannot be None");
+            }
+
         }
 
-        protected override void OnEnd()
+        protected override void DoEnd()
         {
             CloseAll();
+            base.DoEnd();
         }
 
         public virtual Renderer Top
@@ -106,38 +112,33 @@ namespace com.paraquery.Rendering
             //we don't want nulls on the stack
             if (renderer != null)
             {
+                /*
+                    We ensure that if the RendererStack itself is Inline, it only contains Inlines
 
-                if (Stack.Count == 0)
+                    This is important if this RendererStack is itself pushed onto another stack.
+
+                    The renderer before this stack may be inline, so pushing a Bbock or a none into
+                    this (inline) stack would clear out any inlines in here, but do nothing about the 
+                    inline outside, messing up the formatting.
+
+                */
+                if (ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
                 {
-                    //the first renderer on the stack must match the RendererStack's StackMode
-                    if (StackMode != renderer.StackMode)
-                    {
-                        throw new InvalidOperationException($"The first Renderer's StackMode {renderer.StackMode} is incompatible with RendererStack's StackMode {StackMode}");
-                    }
+                    throw new InvalidOperationException($"RendererStack is Inline and may only contain other Inline renderers");
                 }
 
-                if (StackMode == StackModes.Linear && renderer.StackMode != StackModes.Linear)
-                {
-                    /*
-                        StackModes for subsequently pushed renderers:
-                            If we're Linear, all pushed renderers must be Linear.
-                            If we're Nested, we don't care.
-                    */
-
-                    throw new InvalidOperationException($"Renderer's StackMode {renderer.StackMode} is incompatible with RendererStack's StackMode {StackMode}");
-                }
-
-
+                /*
+                    Here we don't want to push single or multiple line mode renders onto none or single, messing
+                    up the formatting
+                    
+                    Rules for visible renderers:
+                        If we're None or Single, all pushed renderers must be None.
+                        If we're Multiple, we don't care.
+                */
                 if (Visible)
                 {
-                    if ((LineMode == LineModes.None || LineMode == LineModes.Single) && (renderer.LineMode != LineModes.None && renderer.LineMode != LineModes.Single))
+                    if ((LineMode == LineModes.None || LineMode == LineModes.Single) && (renderer.LineMode!=LineModes.None))
                     {
-                        /*
-                            LineModes for visible renderers:
-                                If we're None or Single, all pushed renderers must be None.
-                                If we're Multiple, we don't care.
-                        */
-
                         throw new InvalidOperationException($"Renderer's LineMode {renderer.LineMode} is incompatible with RendererStack's LineMode {LineMode}");
                     }
                 }
@@ -146,15 +147,37 @@ namespace com.paraquery.Rendering
                 {
                     Renderer top = Stack.Peek();
 
-                    if (top.Terminal)
+                    if (top.ContainerMode==ContainerModes.None)
                     {
-                        //anything under a terminal pops that terminal
+                        //anything under a None pops that None
                         Pop();
                     }
-                    else if (top.StackMode == StackModes.Linear && renderer.StackMode == StackModes.Nested)
+                    else if (top.ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
                     {
-                        //pushing nested under a linear pops all linears up to but not including the last nested
-                        PopLinears(false);
+                        //pushing a non-inline under an inline pops all inline up to but not including the last block
+                        PopInlines(false);
+                    }
+                    else if (top is RendererStack)
+                    {
+                        //are we pushing a renderer onto another rendererstack?
+                        //then we need to manipulate that rendererstack under certain conditions
+
+                        var rs = (RendererStack)top;
+
+                        if (rs.Top.ContainerMode==ContainerModes.None)
+                        {
+                            //if the last thing on the top stack is a None, close it
+                            rs.Close();
+                        }
+                        else if (rs.Top.ContainerMode==ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
+                        {
+                            //note: we can only get here for top stacks that are Blocks, as we would have popped an inline stack
+                            //in the else block above
+
+                            //just as we do above (for ourselves), we need to close any inlines on the top stack
+                            //if we're pushing a non-inline.
+                            rs.CloseInlines(false);
+                        }
                     }
                 }
 
@@ -186,17 +209,17 @@ namespace com.paraquery.Rendering
             }
         }
 
-        internal virtual void PopLinears(bool includeOuterNested)
+        internal virtual void PopInlines(bool includeOuterNested)
         {
             while (Stack.Count > 0)
             {
                 Renderer top = Stack.Peek();
 
-                if (top.StackMode == StackModes.Linear)
+                if (top.ContainerMode == ContainerModes.Inline)
                 {
                     Pop();
                 }
-                else if (top.StackMode == StackModes.Nested)
+                else if (top.ContainerMode == ContainerModes.Block)
                 {
                     if (includeOuterNested)
                     {
@@ -204,6 +227,10 @@ namespace com.paraquery.Rendering
                     }
 
                     break;
+                }
+                else
+                {
+                    //we should never see a none 
                 }
             }
         }
@@ -232,9 +259,9 @@ namespace com.paraquery.Rendering
 
         }
 
-        protected virtual void CloseLinears(bool includeOuterNested)
+        protected virtual void CloseInlines(bool includeOuterNested)
         {
-            PopLinears(includeOuterNested);
+            PopInlines(includeOuterNested);
         }
 
         public virtual void CloseAll()

@@ -21,14 +21,12 @@ namespace com.paraquery.Rendering
     public abstract class DebugRenderer : Renderer
     {
         public string Name { private set; get; }
-        public bool IsDebug { private set; get; }
 
-        public DebugRenderer(Context context, string name, bool debug, bool indent) : base(context, LineModes.Multiple, StackModes.Nested, false, debug, indent)
+        public DebugRenderer(Context context, string name, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent) : base(context, lineMode, containerMode, visible, indentContent)
         {
             Name = name;
-            IsDebug = debug;
 
-            if (IsDebug && !CanDebug)
+            if (Visible && !CanDebug)
             {
                 throw new InvalidOperationException("Containers must be able to write debug information when in debug mode");
             }
@@ -39,7 +37,7 @@ namespace com.paraquery.Rendering
 
         protected override void OnBegin()
         {
-            if (IsDebug)
+            if (Visible)
             {
                 Debug($"{Name} start");
             }
@@ -47,7 +45,7 @@ namespace com.paraquery.Rendering
 
         protected override void OnEnd()
         {
-            if (IsDebug)
+            if (Visible)
             {
                 Debug($"{Name} end");
             }

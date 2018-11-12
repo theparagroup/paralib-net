@@ -10,7 +10,6 @@ using com.paraquery.Html.Packages;
 namespace com.paraquery.Html
 {
     /*
-        
         HtmlComponent is a base class for "components" that are HTML-centric. It requires an
         HtmlContext, defines OnDebug, etc.
         
@@ -27,13 +26,10 @@ namespace com.paraquery.Html
     public abstract class HtmlComponent<T> : RendererStack where T : Package, new()
     {
 
-        public HtmlComponent(HtmlContext context, Renderer start) : base(context, LineModes.Multiple, StackModes.Nested, false, false)
+        public HtmlComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent) : base(context, lineMode, containerMode, visible, indentContent)
         {
             //register package
             context.RegisterPackage<T>();
-
-            //push first renderer
-            Push(start);
         }
 
         protected new HtmlContext Context
