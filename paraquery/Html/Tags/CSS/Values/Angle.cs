@@ -11,7 +11,7 @@ namespace com.paraquery.Html
     {
         public Angle(float number, AngleUnits unit = AngleUnits.Deg)
         {
-            _value= $"{number}{PropertyDictionary.Lowernate(unit)}";
+            _value= $"{number}{PropertyBuilder.Lowernate(unit)}";
         }
     }
 }

@@ -15,6 +15,6 @@ namespace com.paraquery.Html.Tags
 
     public interface IComplexValue
     {
-        string ToValue();
+        string ToValue(Context context);
     }
 }

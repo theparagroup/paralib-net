@@ -16,7 +16,7 @@ namespace com.paraquery.Html.Tags
     {
         protected string _value;
 
-        public string ToValue()
+        public string ToValue(Context context)
         {
             return _value;
         }

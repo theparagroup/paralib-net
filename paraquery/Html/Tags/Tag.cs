@@ -132,49 +132,16 @@ namespace com.paraquery.Html.Tags
             }
         }
 
-        protected virtual void WriteAttribute(string name, string value = null)
-        {
-            if (name != null)
-            {
-                if (value == null && !Context.Options.MinimizeBooleans)
-                {
-                    value = name;
-                }
-
-                if (value == null)
-                {
-                    //boolean style attributes (e.g. "readonly")
-                    Writer.Write($" {name}");
-                }
-                else
-                {
-                    if (Context.Options.EscapeAttributeValues)
-                    {
-                        value = value.Replace("\"", "&quot;");
-                    }
-
-                    Writer.Write($" {name}=\"{value}\"");
-                }
-
-            }
-        }
-
-        protected virtual void WriteAttributes()
-        {
-            if (Attributes != null)
-            {
-                foreach (var name in Attributes.Keys)
-                {
-                    WriteAttribute(name, Attributes[name]);
-                }
-            }
-        }
-
         protected override void OnBegin()
         {
             Writer.Write($"<{TagName}");
 
-            WriteAttributes();
+            if (Attributes != null)
+            {
+                var attributes = Attributes.ToAttributesString(Context.Options.MinimizeBooleans, Context.Options.EscapeAttributeValues);
+                Writer.Write($" ");
+                Writer.Write(attributes);
+            }
 
             if (!Empty)
             {

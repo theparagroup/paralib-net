@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Tags.Attributes;
-using System.Text.RegularExpressions;
+
 
 namespace com.paraquery.Html.Tags
 {
@@ -25,76 +25,7 @@ namespace com.paraquery.Html.Tags
 
     public class PropertyDictionary : NVPDictionary
     {
-        public static string Hyphenate(string name)
-        {
-            //mixed case should be replaced with hyphens (but not first letter)
-            return Regex.Replace(name, @"([a-z])([A-Z])", "$1-$2");
-        }
-
-        public static string Spacenate(string name)
-        {
-            //mixed case should be replaced with spaces (but not first letter)
-            return Regex.Replace(name, @"([a-z])([A-Z])", "$1 $2");
-        }
-
-        public static string Customnate(string name)
-        {
-            if (name?[0]=='_')
-            {
-                return $"--{name.Remove(0, 1)}";
-            }
-
-            return name;
-        }
-
-        public static string Lowernate<T>(T value) where T : struct
-        {
-            return value.ToString().ToLower();
-        }
-
-        public static string Lowernate<T>(T? value) where T : struct
-        {
-            if (value.HasValue)
-            {
-                return value.ToString().ToLower();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public static PropertyDictionary Properties(object properties)
-        {
-            //note: we call this in case-sensitive mode so we can hyphenate mixed case
-            var dictionary = new PropertyDictionary();
-            DictionaryBuilder.Build(dictionary, properties, true);
-
-            //merge mixed and camel case duplicates
-            var merged = new PropertyDictionary();
-
-            //add mixed cased first
-            foreach (var key in dictionary.Keys)
-            {
-                if (char.IsUpper(key[0]))
-                {
-                    merged.Add(Hyphenate(key).ToLower(), dictionary[key]);
-                }
-            }
-
-            //overwrite with camel if it exists (attributedictionary will replace it for us)
-            foreach (var key in dictionary.Keys)
-            {
-                //we say !IsUpper instead of IsLower because attribute names can start with
-                //underscore and other non-alpha characters... we want these too!
-                if (!char.IsUpper(key[0]))
-                {
-                    merged[Hyphenate(key).ToLower()] = dictionary[key];
-                }
-            }
-
-            return merged;
-        }
+        protected const char ValueContainerMarker = '!';
 
         public string[] ToDeclarations()
         {
@@ -102,9 +33,9 @@ namespace com.paraquery.Html.Tags
 
             foreach (var property in this)
             {
-                if (property.Key[0]!='!')
+                if (property.Key[0] != ValueContainerMarker)
                 {
-                    declarations.Add($"{Customnate(property.Key)}: {property.Value}");
+                    declarations.Add($"{PropertyBuilder.Customnate(property.Key)}: {property.Value}");
                 }
                 else
                 {
@@ -121,7 +52,6 @@ namespace com.paraquery.Html.Tags
             return declarations.ToArray();
 
         }
-
         public string ToDeclaration()
         {
             StringBuilder styleBuilder = new StringBuilder();
@@ -135,15 +65,15 @@ namespace com.paraquery.Html.Tags
                     if (lastProperty != null)
                     {
                         //but not if the last property was a value container
-                        if (lastProperty.Value.Key[0]!='!')
+                        if (lastProperty.Value.Key[0]!= ValueContainerMarker)
                         {
                             styleBuilder.Append("; ");
                         }
                     }
 
-                    if (property.Key[0] != '!')
+                    if (property.Key[0] != ValueContainerMarker)
                     {
-                        styleBuilder.Append($"{Customnate(property.Key)}: {property.Value}");
+                        styleBuilder.Append($"{PropertyBuilder.Customnate(property.Key)}: {property.Value}");
                     }
                     else
                     {
@@ -154,7 +84,7 @@ namespace com.paraquery.Html.Tags
                 }
 
                 //there has to be a lastProperty since Count>0
-                if (lastProperty.Value.Key[0] != '!')
+                if (lastProperty.Value.Key[0] != ValueContainerMarker)
                 {
                     styleBuilder.Append(";");
                 }

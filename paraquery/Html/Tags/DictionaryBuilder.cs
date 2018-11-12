@@ -12,22 +12,23 @@ namespace com.paraquery.Html.Tags
         DictionaryBuilder, builds html attribute and css property dictionaries from strongly typed
         objects. 
 
-        Right now, we are coupled to HTML/CSS by the following:
-
-            "!" as the IValueContainer marker
-            Booleans only go in the dictionary when true, with a null value (or a specified fixed value)
-            We merge "class" attributes
 
     */
-    public static class DictionaryBuilder
+    public class DictionaryBuilder
     {
+        protected Context Context {private set; get;}
 
-        public static void Build(NVPDictionary dictionary, object attributes, bool caseSensive)
+        public DictionaryBuilder(Context context)
+        {
+            Context = context;
+        }
+
+        public void Build(NVPDictionary dictionary, object attributes, bool caseSensive)
         {
             Build(dictionary, attributes, attributes.GetType(), caseSensive);
         }
 
-        public static void Build(NVPDictionary dictionary, object attributes, Type type, bool caseSensive)
+        public void Build(NVPDictionary dictionary, object attributes, Type type, bool caseSensive)
         {
             if (attributes != null)
             {
@@ -76,14 +77,15 @@ namespace com.paraquery.Html.Tags
                             //but the order is undefined. the last one will replace the first one in the dictionary
                             //if we are in case-insensitive mode. otherwise both will be added.
 
-                            string name = null;
-                            string value = null; //processed value
 
-                            //see if the property has explicit specifications
-                            var specifics = pi.GetCustomAttribute<AttributeAttribute>();
-                            if (specifics != null)
+                            //let's do the name
+                            string name = null;
+
+                            //see if the property has explicit builder options
+                            var options = pi.GetCustomAttribute<BuilderOptionsAttribute>();
+                            if (options?.Name != null)
                             {
-                                name = specifics.Name;
+                                name = options.Name;
                             }
                             else if (typeof(IValueContainer).IsAssignableFrom(pi.PropertyType))
                             {
@@ -92,7 +94,7 @@ namespace com.paraquery.Html.Tags
                                 //a valid HTML attribute name. this is mainly used by Style to organize
                                 //properties into nested classes (see Background). So if you are using this
                                 //interface, you need to do something with these bangs.
-                                name = $"!{pi.Name}";
+                                name = $"{Context.Options.ValueContainerMarker}{pi.Name}";
                             }
                             else
                             {
@@ -109,9 +111,18 @@ namespace com.paraquery.Html.Tags
                                 }
                             }
 
-                            if (typeof(IComplexValue).IsAssignableFrom(pi.PropertyType))
+                            //let's do the value. v is the raw, value is the processed.
+                            string value = null; 
+
+                            if (options?.Value!=null)
                             {
-                                value = ((IComplexValue)v).ToValue();
+                                //if [Attribute] was present and a value provided, use that
+                                value = options?.Value;
+                            }
+                            else if (typeof(IComplexValue).IsAssignableFrom(pi.PropertyType))
+                            {
+                                //if complex, use that
+                                value = ((IComplexValue)v).ToValue(Context);
                             }
                             else if (pi.PropertyType == typeof(string))
                             {
@@ -127,17 +138,8 @@ namespace com.paraquery.Html.Tags
                             }
                             else if (pi.PropertyType == typeof(bool) || pi.PropertyType == typeof(bool?))
                             {
-                                //for booleans, we only add the key if true.
-                                //attribute renderers such as tag should respect the "MinimizeBooleans" option
-
                                 //this cast is okay since we know v isn't null (if nullable)
-                                if (!(bool)v)
-                                {
-                                    continue;
-                                }
-
-                                //if the attribute has a fixed value (xml:space="preserve") then use it instead of null
-                                value = specifics?.Value;
+                                value = v.ToString().ToLower();
                             }
                             else if ((pi.PropertyType.IsEnum) || (Nullable.GetUnderlyingType(pi.PropertyType)?.IsEnum ?? false))
                             {
@@ -150,35 +152,20 @@ namespace com.paraquery.Html.Tags
                                 continue;
                             }
 
-                            //again, at this point, "v" isn't null, but "value" may be, indicating a boolean true
-
-                            //special rules
-                            if (value != null)
-                            {
-                                //merge classes
-                                if (name == "class" && dictionary.ContainsKey("class"))
-                                {
-                                    //note Union() will throw if one of the arrays is null
-                                    //we know value isn't null, but if you have a property Class=true,
-                                    //the what's in the dictionary could be
-                                    string[] oldclasses = dictionary["class"]?.Split(' ') ?? new string[] { };
-                                    string[] newClasses = value.Split(' ');
-
-                                    //this removes duplicates
-                                    string[] classes = oldclasses.Union(newClasses).ToArray();
-
-                                    value = string.Join(" ", classes);
-                                }
-                            }
-
-                            //add it to the dictionary 
-                            dictionary.Add(name, value);
+                            //again, at this point, "v" isn't null, but "value" may be...
+                            //add it to the dictionary
+                            OnAdd(Context, dictionary, name, value); 
 
                         }//if v!=null
                     } //if canread
                 }//foreach pi
             }
 
+        }
+
+        protected virtual void OnAdd(Context context, NVPDictionary dictionary, string name, string value)
+        {
+            dictionary.Add(name, value);
         }
 
     }

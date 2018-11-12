@@ -24,7 +24,7 @@ namespace com.paraquery.Html.Tags.Attributes
         public string Charset { get; set; }
         public string Type { get; set; }
 
-        [Attribute("xml:space", Value = "preserve")]
+        [BuilderOptions("xml:space", Value = "preserve")]
         public bool? XmlSpace { get; set; }
 
         //external scripts only

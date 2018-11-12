@@ -107,9 +107,9 @@ namespace com.paraquery.Html
         public string background { get; set; }
         protected Background _background;
 
-        public string ToValue()
+        public string ToValue(Context context)
         {
-            var properties =PropertyDictionary.Properties(this);
+            var properties =((HtmlContext)context).PropertyBuilder.Properties(this);
             var style = properties.ToDeclaration();
             return style;
         }

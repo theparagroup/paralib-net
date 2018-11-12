@@ -22,7 +22,7 @@ namespace com.paraquery.Html
             _value = value;
         }
 
-        public string ToValue()
+        public string ToValue(Context context)
         {
             return _value;
         }

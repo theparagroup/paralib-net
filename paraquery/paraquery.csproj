@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\GridOptions.cs" />
     <Compile Include="Html\HtmlDebugInline.cs" />
+    <Compile Include="Html\Tags\AttributeBuilder.cs" />
     <Compile Include="Html\Tags\Attributes\StyleAttributes.cs" />
     <Compile Include="Html\Tags\ComplexValue.cs" />
     <Compile Include="Html\Tags\CSS\CssFormats.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Html\Tags\CSS\Values\Percentage.cs" />
     <Compile Include="Html\Tags\CSS\Values\Length.cs" />
     <Compile Include="Html\Tags\CSS\Values\LengthUnits.cs" />
+    <Compile Include="Html\Tags\PropertyBuilder.cs" />
     <Compile Include="Html\Tags\PropertyDictionary.cs" />
     <Compile Include="Html\Tags\DictionaryBuilder.cs" />
     <Compile Include="Html\Tags\Attributes\HeadAttributes.cs" />

@@ -14,15 +14,15 @@ namespace com.paraquery.Html
 
        
 
-        protected virtual string GetProperties()
+        protected virtual string GetProperties(Context context)
         {
-            var properties = PropertyDictionary.Properties(this);
+            var properties = ((HtmlContext)context).PropertyBuilder.Properties(this);
             return properties.ToDeclaration();
         }
 
-        public string ToValue()
+        public string ToValue(Context context)
         {
-            return GetProperties();
+            return GetProperties(context);
         }
 
     }

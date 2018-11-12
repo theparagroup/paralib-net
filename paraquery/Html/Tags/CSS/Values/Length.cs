@@ -14,15 +14,15 @@ namespace com.paraquery.Html
             _value = $"{number}{unit}";
         }
 
-        public Length(float number, LengthUnits unit) : this(number, PropertyDictionary.Lowernate(unit))
+        public Length(float number, LengthUnits unit) : this(number, PropertyBuilder.Lowernate(unit))
         {
         }
 
-        public Length(float number, ViewPortLengthUnits unit) : this(number, PropertyDictionary.Lowernate(unit))
+        public Length(float number, ViewPortLengthUnits unit) : this(number, PropertyBuilder.Lowernate(unit))
         {
         }
 
-        public Length(float number, FontLengthUnits unit) : this(number, PropertyDictionary.Lowernate(unit))
+        public Length(float number, FontLengthUnits unit) : this(number, PropertyBuilder.Lowernate(unit))
         {
         }
 

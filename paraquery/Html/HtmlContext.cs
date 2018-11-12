@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Html.Packages;
+using com.paraquery.Html.Tags;
 
 namespace com.paraquery.Html
 {
@@ -16,9 +17,9 @@ namespace com.paraquery.Html
     public class HtmlContext : Context
     {
         public new HtmlOptions Options { private set; get; }
-
         public Dictionary<Type, Package> Packages { private set; get; } = new Dictionary<Type, Package>();
-
+        public AttributeBuilder AttributeBuilder { private set; get; }
+        public PropertyBuilder PropertyBuilder { private set; get; }
         public HtmlBuilder HtmlBuilder { private set; get; }
 
         public HtmlContext(Writer writer, Action<HtmlOptions> options = null) : base(writer)
@@ -32,6 +33,8 @@ namespace com.paraquery.Html
 
             base.Options = Options;
 
+            AttributeBuilder = new AttributeBuilder(this);
+            PropertyBuilder = new PropertyBuilder(this);
             HtmlBuilder = new HtmlBuilder(this);
         }
 

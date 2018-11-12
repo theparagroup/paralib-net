@@ -24,11 +24,11 @@ namespace com.paraquery.Html
         public string percentage { set; get; }
         public Percentage Percentage { set; get; }
 
-        public string ToValue()
+        public string ToValue(Context context)
         {
             string value = null;
 
-            value = color ?? PropertyDictionary.Lowernate(Color);
+            value = color ?? PropertyBuilder.Lowernate(Color);
 
             if (value != null)
             {
@@ -40,7 +40,7 @@ namespace com.paraquery.Html
                 {
                     if (Length!=null)
                     {
-                        value = $"{value} {Length.ToValue()}";
+                        value = $"{value} {Length.ToValue(context)}";
                     }
                 }
             }

@@ -25,7 +25,7 @@ namespace com.paraquery.Html
         protected virtual AttributeDictionary Attributes<T>(Action<T> attributes = null) where T : GlobalAttributes, new()
         {
             //this method is just to simplify tag methods...
-            return AttributeDictionary.Attributes(attributes, null);
+            return Context.AttributeBuilder.Attributes(attributes, null);
         }
 
         /*

@@ -23,12 +23,12 @@ namespace com.paraquery
 
     public class Options
     {
-        public bool DebugSourceFormatting { get; set; } = false;
+        public string ValueContainerMarker { set; get; } = "!";
+        public bool DebugSourceFormatting { set; get; } = false;
 
-        public bool SelfClosingEmptyTags { get; set; } = true;
-        public bool MinimizeBooleans { get; set; } = true;
-        public bool EscapeAttributeValues { get; set; } = false;
-
+        public Options()
+        {
+        }
         
     }
 

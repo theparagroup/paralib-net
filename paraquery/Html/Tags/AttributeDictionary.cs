@@ -26,47 +26,73 @@ namespace com.paraquery.Html.Tags
     public class AttributeDictionary : NVPDictionary
     {
 
-        public static AttributeDictionary Attributes(object attributes)
-        {
-            AttributeDictionary dictionary = new AttributeDictionary();
-            DictionaryBuilder.Build(dictionary, attributes, false);
-            return dictionary;
-        }
+       
+       
 
-        public static AttributeDictionary Attributes<T>(Action<T> attributes = null, object additional = null) where T : GlobalAttributes, new()
+        public string[] ToAttributes(bool minimizeBooleans, bool escapeAttributeValues)
         {
-            //let's keep it simple if there is nothing to do
-            if (attributes != null || additional != null)
+            List<string> attributes = new List<string>();
+
+            foreach (var attribute in this)
             {
-                //create a new dictionary to hold the name value pairs
-                AttributeDictionary dictionary = new AttributeDictionary();
+                var name = attribute.Key;
+                var value = attribute.Value;
 
-                //execute init action and build, if exists
-                if (attributes != null)
+                if (name != null)
                 {
-                    T a = new T();
+                    if (value == "true" && !minimizeBooleans)
+                    {
+                        value = name;
+                    }
 
-                    attributes(a);
+                    if (value == "true")
+                    {
+                        //boolean style attributes (e.g. "readonly")
+                        attributes.Add($"{name}");
+                    }
+                    else
+                    {
+                        if (escapeAttributeValues)
+                        {
+                            value = value.Replace("\"", "&quot;");
+                        }
 
-                    DictionaryBuilder.Build(dictionary, a, typeof(T), false);
+                        attributes.Add($"{name}=\"{value}\"");
+                    }
+
                 }
 
-                //merge any additional anonymous object-based attributes
-                if (additional != null)
-                {
-                    DictionaryBuilder.Build(dictionary, additional, false);
-                }
 
-                //return null if there are no attributes
-                if (dictionary.Count > 0)
-                {
-                    return dictionary;
-                }
+
             }
 
-            return null;
+            return attributes.ToArray();
         }
 
+        public string ToAttributesString(bool minimizeBooleans, bool escapeAttributeValues)
+        {
+            StringBuilder attributeBuilder = new StringBuilder();
+            bool firstPass = true;
+
+            var attributes = ToAttributes(minimizeBooleans, escapeAttributeValues);
+
+            foreach (var attribute in attributes)
+            {
+                if (firstPass)
+                {
+                    firstPass = false;
+                }
+                else
+                {
+                    attributeBuilder.Append(" ");
+                }
+
+                attributeBuilder.Append(attribute);
+            }
+
+            return attributeBuilder.ToString();
+
+        }
     }
 }
 

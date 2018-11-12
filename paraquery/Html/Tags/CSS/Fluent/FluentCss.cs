@@ -65,7 +65,7 @@ namespace com.paraquery.Html.Tags.CSS.Fluent
 
                 declaration(style);
 
-                var properties = PropertyDictionary.Properties(style);
+                var properties = Context.PropertyBuilder.Properties(style);
 
                 var declarations = properties.ToDeclarations();
 
