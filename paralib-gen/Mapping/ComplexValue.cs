@@ -12,7 +12,7 @@ namespace com.paralib.Gen.Mapping
         the constructor.
 
     */
-    public class ComplexValue:IComplexValue
+    public class ComplexValue:IComplexValue<Context>
     {
         protected string _value;
 

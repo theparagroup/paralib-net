@@ -9,19 +9,19 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Css
 {
-    public abstract class StyleBase : IComplexValue
+    public abstract class StyleBase : IComplexValue<HtmlContext>
     {
         public object Properties { set; get; }
 
        
 
-        protected virtual string GetProperties(Context context)
+        protected virtual string GetProperties(HtmlContext context)
         {
-            var properties = ((HtmlContext)context).PropertyBuilder.Properties(this);
-            return properties.ToDeclaration();
+            var properties = context.PropertyBuilder.Properties(this);
+            return context.PropertyBuilder.ToDeclaration(properties);
         }
 
-        public string ToValue(Context context)
+        public string ToValue(HtmlContext context)
         {
             return GetProperties(context);
         }

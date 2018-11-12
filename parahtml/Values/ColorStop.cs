@@ -17,7 +17,7 @@ namespace com.parahtml
 
 
     */
-    public class ColorStop: IComplexValue
+    public class ColorStop: IComplexValue<HtmlContext>
     {
         public string color { set; get; }
         public Color? Color { set; get; }
@@ -26,7 +26,7 @@ namespace com.parahtml
         public string percentage { set; get; }
         public Percentage Percentage { set; get; }
 
-        public string ToValue(Context context)
+        public string ToValue(HtmlContext context)
         {
             string value = null;
 

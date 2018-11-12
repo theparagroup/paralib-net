@@ -9,7 +9,23 @@ using com.parahtml.Attributes;
 
 namespace com.parahtml.Core
 {
-    public class AttributeBuilder:DictionaryBuilder
+    /*
+
+        Contains a set of name value pairs that represents attributes on a tag.
+
+        Null values indicate true boolean values, and should be rendered according to the MinimizeBooleans option.
+
+
+       Attribute Names
+           http://www.w3.org/TR/2000/REC-xml-20001006#NT-Name
+
+           First character         => letter | _ | :
+           Additional characters   => letter | digit | underscore | colon | period | dash, or a “CombiningChar” or “Extender” character, which I believe allows Unicode attributes names.
+
+
+    */
+
+    public class AttributeBuilder:DictionaryBuilder<HtmlContext, AttributeDictionary>
     {
         protected new HtmlContext Context { private set; get; }
 
@@ -18,7 +34,7 @@ namespace com.parahtml.Core
             Context = context;
         }
 
-        protected override void OnAdd(Context context, NVPDictionary dictionary, string name, string value)
+        protected override void OnAdd(HtmlContext context, AttributeDictionary dictionary, string name, string value)
         {
             //special rules
             if (value != null)
@@ -84,11 +100,71 @@ namespace com.parahtml.Core
             return null;
         }
 
-        /*
-    
+        public List<string> ToList(AttributeDictionary attributes)
+        {
+            List<string> list = new List<string>();
+
+            foreach (var attribute in attributes)
+            {
+                var name = attribute.Key;
+                var value = attribute.Value;
+
+                if (name != null)
+                {
+                    if (value == "true" && !Context.Options.MinimizeBooleans)
+                    {
+                        value = name;
+                    }
+
+                    if (value == "true")
+                    {
+                        //boolean style attributes (e.g. "readonly")
+                        list.Add($"{name}");
+                    }
+                    else
+                    {
+                        if (Context.Options.EscapeAttributeValues)
+                        {
+                            value = value.Replace("\"", "&quot;");
+                        }
+
+                        list.Add($"{name}=\"{value}\"");
+                    }
+
+                }
 
 
-                           
-*/
+
+            }
+
+            return list;
+        }
+
+        public string ToTagContents(AttributeDictionary attributes)
+        {
+            //no leading or trailing spaces
+
+            StringBuilder attributeBuilder = new StringBuilder();
+            bool firstPass = true;
+
+            var list = ToList(attributes);
+
+            foreach (var attribute in list)
+            {
+                if (firstPass)
+                {
+                    firstPass = false;
+                }
+                else
+                {
+                    attributeBuilder.Append(" ");
+                }
+
+                attributeBuilder.Append(attribute);
+            }
+
+            return attributeBuilder.ToString();
+
+        }
     }
 }

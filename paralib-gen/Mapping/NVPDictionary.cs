@@ -10,7 +10,7 @@ namespace com.paralib.Gen.Mapping
         This dictionary is more forgiving (doesn't throw) if the key doesn't exist.
     */
 
-    public class NVPDictionary : Dictionary<string, string>
+    public abstract class NVPDictionary : Dictionary<string, string>
     {
         public new string this[string index]
         {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Mapping;
-using com.paralib.Gen;
+using com.parahtml.Core;
 
 namespace com.parahtml
 {
@@ -14,7 +14,7 @@ namespace com.parahtml
         prevents us from using raw strings at the moment.
 
     */
-    public class Url: IComplexValue
+    public class Url: IComplexValue<HtmlContext>
     {
         protected string _value;
 
@@ -23,7 +23,7 @@ namespace com.parahtml
             _value = value;
         }
 
-        public string ToValue(Context context)
+        public string ToValue(HtmlContext context)
         {
             return _value;
         }

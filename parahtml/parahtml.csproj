@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AttributeDictionary.cs" />
     <Compile Include="Css\Fluent\FluentCss.cs" />
     <Compile Include="Css\Fluent\Interfaces.cs" />
     <Compile Include="Css\Fluent\Rule.cs" />
@@ -71,7 +72,6 @@
     <Compile Include="Values\ButtonTypes.cs" />
     <Compile Include="Values\Color.cs" />
     <Compile Include="Core\AttributeBuilder.cs" />
-    <Compile Include="Core\AttributeDictionary.cs" />
     <Compile Include="DebugFlags.cs" />
     <Compile Include="Core\HtmlBuilder.cs" />
     <Compile Include="Core\HtmlComponent.cs" />
@@ -104,6 +104,9 @@
       <Project>{55c1ac99-d46c-41b7-b1d2-77e4760ddf6e}</Project>
       <Name>paralib-gen</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Parahtml.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

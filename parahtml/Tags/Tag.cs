@@ -121,7 +121,7 @@ namespace com.parahtml.Tags
 
         protected override void Comment(string text)
         {
-            HtmlRenderer.HtmlComment(Writer, text);
+            HtmlComment(Writer, text);
         }
 
         protected override void OnBegin()
@@ -130,7 +130,7 @@ namespace com.parahtml.Tags
 
             if (Attributes != null)
             {
-                var attributes = Attributes.ToAttributesString(Context.Options.MinimizeBooleans, Context.Options.EscapeAttributeValues);
+                var attributes = Context.AttributeBuilder.ToTagContents(Attributes);
                 Writer.Write($" ");
                 Writer.Write(attributes);
             }

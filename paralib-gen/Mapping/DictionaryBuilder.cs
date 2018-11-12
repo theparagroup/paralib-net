@@ -14,21 +14,21 @@ namespace com.paralib.Gen.Mapping
 
 
     */
-    public class DictionaryBuilder
+    public class DictionaryBuilder<C,T> where C:Context where T : NVPDictionary
     {
-        protected Context Context {private set; get;}
+        protected C Context {private set; get;}
 
-        public DictionaryBuilder(Context context)
+        public DictionaryBuilder(C context)
         {
             Context = context;
         }
 
-        public void Build(NVPDictionary dictionary, object attributes, bool caseSensive)
+        public void Build(T dictionary, object attributes, bool caseSensive)
         {
             Build(dictionary, attributes, attributes.GetType(), caseSensive);
         }
 
-        public void Build(NVPDictionary dictionary, object attributes, Type type, bool caseSensive)
+        public void Build(T dictionary, object attributes, Type type, bool caseSensive)
         {
             if (attributes != null)
             {
@@ -119,10 +119,10 @@ namespace com.paralib.Gen.Mapping
                                 //if [Attribute] was present and a value provided, use that
                                 value = options?.Value;
                             }
-                            else if (typeof(IComplexValue).IsAssignableFrom(pi.PropertyType))
+                            else if (typeof(IComplexValue<C>).IsAssignableFrom(pi.PropertyType))
                             {
                                 //if complex, use that
-                                value = ((IComplexValue)v).ToValue(Context);
+                                value = ((IComplexValue<C>)v).ToValue(Context);
                             }
                             else if (pi.PropertyType == typeof(string))
                             {
@@ -163,7 +163,7 @@ namespace com.paralib.Gen.Mapping
 
         }
 
-        protected virtual void OnAdd(Context context, NVPDictionary dictionary, string name, string value)
+        protected virtual void OnAdd(C context, T dictionary, string name, string value)
         {
             dictionary.Add(name, value);
         }

@@ -79,7 +79,7 @@ namespace com.parahtml.Css.Fluent
 
                 var properties = Context.PropertyBuilder.Properties(style);
 
-                var declarations = properties.ToDeclarations();
+                var declarations = Context.PropertyBuilder.ToList(properties);
 
                 foreach (var decl in declarations)
                 {

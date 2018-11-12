@@ -101,7 +101,7 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Css
 {
-    public class Style : IComplexValue //,StyleBase, IDynamicValueContainer
+    public class Style : IComplexValue<HtmlContext> //,StyleBase, IDynamicValueContainer
     {
         public string color { set; get; }
         public Color? Color { set; get; }
@@ -109,10 +109,10 @@ namespace com.parahtml.Css
         public string background { get; set; }
         protected Background _background;
 
-        public string ToValue(Context context)
+        public string ToValue(HtmlContext context)
         {
-            var properties =((HtmlContext)context).PropertyBuilder.Properties(this);
-            var style = properties.ToDeclaration();
+            var properties =context.PropertyBuilder.Properties(this);
+            var style = context.PropertyBuilder.ToDeclaration(properties);
             return style;
         }
 

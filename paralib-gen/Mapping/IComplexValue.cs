@@ -13,8 +13,8 @@ namespace com.paralib.Gen.Mapping
         Style is a good example.
     */
 
-    public interface IComplexValue
+    public interface IComplexValue<C> where C:Context
     {
-        string ToValue(Context context);
+        string ToValue(C context);
     }
 }
