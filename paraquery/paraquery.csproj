@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\GridOptions.cs" />
-    <Compile Include="Html\HtmlDebugInline.cs" />
+    <Compile Include="Html\Core\HtmlDebugInline.cs" />
     <Compile Include="Html\Tags\AttributeBuilder.cs" />
     <Compile Include="Html\Tags\Attributes\StyleAttributes.cs" />
     <Compile Include="Html\Tags\ComplexValue.cs" />
@@ -64,17 +64,17 @@
     <Compile Include="Html\DOCTYPE.cs" />
     <Compile Include="Html\DocumentTypes.cs" />
     <Compile Include="Html\Fluent\FluentHtml_.cs" />
-    <Compile Include="Html\HtmlDebugBlock.cs" />
-    <Compile Include="Html\HtmlComponent.cs" />
-    <Compile Include="Html\HtmlContext.cs" />
+    <Compile Include="Html\Core\HtmlDebugBlock.cs" />
+    <Compile Include="Html\Core\HtmlComponent.cs" />
+    <Compile Include="Html\Core\HtmlContext.cs" />
     <Compile Include="Html\Fragment.cs" />
-    <Compile Include="Html\HtmlOptions.cs" />
+    <Compile Include="Html\Core\HtmlOptions.cs" />
     <Compile Include="Html\Packages\Desp.cs" />
     <Compile Include="Html\Packages\Package.cs" />
     <Compile Include="Html\Page.cs" />
-    <Compile Include="Html\HtmlRenderer.cs" />
-    <Compile Include="Html\ParaHtmlPackage.cs" />
-    <Compile Include="Html\Tags\AttributeAttribute.cs" />
+    <Compile Include="Html\Core\HtmlRenderer.cs" />
+    <Compile Include="Html\Core\ParaHtmlPackage.cs" />
+    <Compile Include="Html\Tags\BuilderOptionsAttribute.cs" />
     <Compile Include="Html\Tags\CSS\Background.cs" />
     <Compile Include="Html\Tags\CSS\StyleBase.cs" />
     <Compile Include="Html\Tags\CSS\Values\Angle.cs" />
@@ -92,7 +92,7 @@
     <Compile Include="Html\Tags\TagTypes.cs" />
     <Compile Include="Html\Tags\Attributes\Values\Url.cs" />
     <Compile Include="Html\Tags\NVPDictionary.cs" />
-    <Compile Include="Html\DebugFlags.cs" />
+    <Compile Include="Html\Core\DebugFlags.cs" />
     <Compile Include="Rendering\DebugRenderer.cs" />
     <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
     <Compile Include="Bootstrap\Grids\IColumn.cs" />
     <Compile Include="Context.cs" />
-    <Compile Include="Html\HtmlBuilder.cs" />
+    <Compile Include="Html\Core\HtmlBuilder.cs" />
     <Compile Include="jQuery\AjaxSettings.cs" />
     <Compile Include="jQuery\Blocks\Click.cs" />
     <Compile Include="jQuery\Blocks\jQueryBlock.cs" />
