@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Gen.NameValuePairs
+namespace com.paralib.Gen.Mapping
 {
     /*
         This is used to create member properties that can be processed by DictionaryBuilder,

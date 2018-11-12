@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 
-namespace com.paralib.Gen.NameValuePairs
+namespace com.paralib.Gen.Mapping
 {
     /*
 

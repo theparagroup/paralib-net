@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Css;
-using com.paralib.Gen.NameValuePairs;
+using com.paralib.Gen.Mapping;
 
 namespace com.parahtml
 {

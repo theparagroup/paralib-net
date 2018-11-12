@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Gen.NameValuePairs
+namespace com.paralib.Gen.Mapping
 {
     /*
         This dictionary is more forgiving (doesn't throw) if the key doesn't exist.
