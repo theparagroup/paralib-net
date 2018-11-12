@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Tags.Attributes;
+using com.parahtml.Attributes;
 
 namespace com.paraquery.Bootstrap.Grids
 {

@@ -41,86 +41,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap\Grids\GridOptions.cs" />
-    <Compile Include="Html\Core\HtmlDebugInline.cs" />
-    <Compile Include="Html\Tags\AttributeBuilder.cs" />
-    <Compile Include="Html\Tags\Attributes\StyleAttributes.cs" />
-    <Compile Include="Html\Tags\ComplexValue.cs" />
-    <Compile Include="Html\Tags\CSS\CssFormats.cs" />
-    <Compile Include="Html\Tags\CSS\Fluent\FluentCss.cs" />
-    <Compile Include="Html\Tags\CSS\Fluent\CssDebugBlock.cs" />
-    <Compile Include="Html\Tags\CSS\Fluent\Interfaces.cs" />
-    <Compile Include="Html\Tags\CSS\Fluent\Rule.cs" />
-    <Compile Include="Html\Tags\CSS\Values\FontLengthUnits.cs" />
-    <Compile Include="Html\Tags\CSS\Values\ViewPortLengthUnits.cs" />
-    <Compile Include="Html\Tags\CSS\Values\Percentage.cs" />
-    <Compile Include="Html\Tags\CSS\Values\Length.cs" />
-    <Compile Include="Html\Tags\CSS\Values\LengthUnits.cs" />
-    <Compile Include="Html\Tags\PropertyBuilder.cs" />
-    <Compile Include="Html\Tags\PropertyDictionary.cs" />
-    <Compile Include="Html\Tags\DictionaryBuilder.cs" />
-    <Compile Include="Html\Tags\Attributes\HeadAttributes.cs" />
-    <Compile Include="Html\Tags\Attributes\HtmlAttributes.cs" />
-    <Compile Include="Html\Tags\Attributes\BodyAttributes.cs" />
-    <Compile Include="Html\DOCTYPE.cs" />
-    <Compile Include="Html\DocumentTypes.cs" />
-    <Compile Include="Html\Fluent\FluentHtml_.cs" />
-    <Compile Include="Html\Core\HtmlDebugBlock.cs" />
-    <Compile Include="Html\Core\HtmlComponent.cs" />
-    <Compile Include="Html\Core\HtmlContext.cs" />
-    <Compile Include="Html\Fragment.cs" />
-    <Compile Include="Html\Core\HtmlOptions.cs" />
-    <Compile Include="Html\Packages\Desp.cs" />
-    <Compile Include="Html\Packages\Package.cs" />
-    <Compile Include="Html\Page.cs" />
-    <Compile Include="Html\Core\HtmlRenderer.cs" />
-    <Compile Include="Html\Core\ParaHtmlPackage.cs" />
-    <Compile Include="Html\Tags\BuilderOptionsAttribute.cs" />
-    <Compile Include="Html\Tags\CSS\Background.cs" />
-    <Compile Include="Html\Tags\CSS\StyleBase.cs" />
-    <Compile Include="Html\Tags\CSS\Values\Angle.cs" />
-    <Compile Include="Html\Tags\CSS\Values\AngleUnits.cs" />
-    <Compile Include="Html\Tags\CSS\Values\BackgroundImage.cs" />
-    <Compile Include="Html\Tags\CSS\Values\ColorStop.cs" />
-    <Compile Include="Html\Tags\CSS\Values\Directions.cs" />
-    <Compile Include="Html\Tags\CSS\Values\Gradient.cs" />
-    <Compile Include="Html\Tags\CSS\Values\LinearGradient.cs" />
-    <Compile Include="Html\Tags\CSS\Values\RadialGradient.cs" />
-    <Compile Include="Html\Tags\DynamicValueAttribute.cs" />
-    <Compile Include="Html\Tags\IValueContainer.cs" />
-    <Compile Include="Html\Tags\Tag.cs" />
-    <Compile Include="Html\Tags\IDynamicValueContainer.cs" />
-    <Compile Include="Html\Tags\TagTypes.cs" />
-    <Compile Include="Html\Tags\Attributes\Values\Url.cs" />
-    <Compile Include="Html\Tags\NVPDictionary.cs" />
-    <Compile Include="Html\Core\DebugFlags.cs" />
-    <Compile Include="Rendering\DebugRenderer.cs" />
-    <Compile Include="Rendering\EndBase.cs" />
-    <Compile Include="Rendering\RendererStack.cs" />
-    <Compile Include="Rendering\BeginBase.cs" />
-    <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Bootstrap\Bs.cs" />
     <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
     <Compile Include="Bootstrap\Grids\IContainer.cs" />
-    <Compile Include="Rendering\LineModes.cs" />
-    <Compile Include="Writers\ConsoleWriter.cs" />
-    <Compile Include="Writer.cs" />
-    <Compile Include="Writers\StringWriter.cs" />
-    <Compile Include="Html\Tags\AttributeDictionary.cs" />
-    <Compile Include="Html\Tags\Attributes\Values\Color.cs" />
-    <Compile Include="Html\Tags\Attributes\Values\HrAlignTypes.cs" />
-    <Compile Include="Html\Tags\Attributes\Values\ButtonTypes.cs" />
-    <Compile Include="Html\Tags\Attributes\GlobalAttributes.cs" />
-    <Compile Include="Html\Tags\Attributes\HrAttributes.cs" />
-    <Compile Include="Html\Tags\IComplexValue.cs" />
-    <Compile Include="Html\Tags\Attributes\ScriptAttributes.cs" />
-    <Compile Include="Html\Tags\Attributes\ImgAttributes.cs" />
-    <Compile Include="Html\Tags\CSS\Style.cs" />
-    <Compile Include="Html\Fluent\FluentHtml.cs" />
     <Compile Include="Bootstrap\Grids\IRow.cs" />
     <Compile Include="Bootstrap\Grids\IGrid.cs" />
     <Compile Include="Bootstrap\Grids\IColumn.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="Html\Core\HtmlBuilder.cs" />
     <Compile Include="jQuery\AjaxSettings.cs" />
     <Compile Include="jQuery\Blocks\Click.cs" />
     <Compile Include="jQuery\Blocks\jQueryBlock.cs" />
@@ -128,28 +54,30 @@
     <Compile Include="Js\Blocks\Function.cs" />
     <Compile Include="jQuery\Blocks\Ready.cs" />
     <Compile Include="jQuery\Methods.cs" />
-    <Compile Include="Options.cs" />
-    <Compile Include="Rendering\StackModes.cs" />
-    <Compile Include="Utils.cs" />
     <Compile Include="pQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="jQuery\Templates\ajax.js" />
-    <Content Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\parahtml\parahtml.csproj">
+      <Project>{f72b0961-d74c-4260-8c8d-c616d51b68c9}</Project>
+      <Name>parahtml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\paralib-common\paralib-common.csproj">
       <Project>{101e2741-5a3d-460b-bdf4-f5e5bd27cf1c}</Project>
       <Name>paralib-common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\paralib-gen\paralib-gen.csproj">
+      <Project>{55c1ac99-d46c-41b7-b1d2-77e4760ddf6e}</Project>
+      <Name>paralib-gen</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Architecture.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configuration\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

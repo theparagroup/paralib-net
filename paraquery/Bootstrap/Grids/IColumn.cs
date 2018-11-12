@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Tags.Attributes;
-using com.paraquery.Rendering;
-using com.paraquery.Html.Fluent;
+using com.parahtml.Attributes;
+using com.parahtml.Tags.Fluent;
 
 namespace com.paraquery.Bootstrap.Grids
 {

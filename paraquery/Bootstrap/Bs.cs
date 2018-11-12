@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paraquery.Bootstrap.Grids;
-using com.paraquery.Html.Tags;
-using com.paraquery.Html;
+using com.parahtml.Core;
 
 namespace com.paraquery.Bootstrap
 {

@@ -40,8 +40,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context.cs" />
+    <Compile Include="NameValuePairs\BuilderOptionsAttribute.cs" />
+    <Compile Include="NameValuePairs\ComplexValue.cs" />
+    <Compile Include="NameValuePairs\DictionaryBuilder.cs" />
+    <Compile Include="NameValuePairs\DynamicValueAttribute.cs" />
+    <Compile Include="NameValuePairs\IComplexValue.cs" />
+    <Compile Include="NameValuePairs\IDynamicValueContainer.cs" />
+    <Compile Include="NameValuePairs\IValueContainer.cs" />
+    <Compile Include="NameValuePairs\NVPDictionary.cs" />
+    <Compile Include="Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\BeginBase.cs" />
+    <Compile Include="Rendering\DebugRenderer.cs" />
+    <Compile Include="Rendering\EndBase.cs" />
+    <Compile Include="Rendering\LineModes.cs" />
+    <Compile Include="Rendering\Renderer.cs" />
+    <Compile Include="Rendering\RendererStack.cs" />
+    <Compile Include="Rendering\StackModes.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Writer.cs" />
+    <Compile Include="Writers\ConsoleWriter.cs" />
+    <Compile Include="Writers\StringWriter.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\paralib-common\paralib-common.csproj">
+      <Project>{101e2741-5a3d-460b-bdf4-f5e5bd27cf1c}</Project>
+      <Name>paralib-common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="notes.txt" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Rendering;
+using com.paralib.Gen.Rendering;
+using com.paralib.Gen;
 
 namespace com.paraquery.Js.Blocks
 {

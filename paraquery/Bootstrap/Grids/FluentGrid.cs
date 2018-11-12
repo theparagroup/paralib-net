@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.Html.Tags.Attributes;
-using com.paraquery.Html.Fluent;
-using com.paraquery.Html.Tags;
-using com.paraquery.Rendering;
-using com.paraquery.Html;
+using com.parahtml.Core;
+using com.paralib.Gen.Rendering;
+using com.parahtml.Tags;
+using com.parahtml.Attributes;
+using com.parahtml.Tags.Fluent;
+using com.parahtml;
 
 namespace com.paraquery.Bootstrap.Grids
 {
