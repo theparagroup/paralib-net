@@ -55,16 +55,16 @@ namespace com.parahtml
             HtmlRenderer.HtmlComment(Writer, text);
         }
 
-        public FluentHtml Html(bool inline = false)
+        public FluentHtml Fluent(bool inline = false)
         {
             var fluentHtml = new FluentHtml(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
             Push(fluentHtml);
             return fluentHtml;
         }
 
-        public FluentHtml Html(Action<FluentHtml> fluentHtml, bool inline = false)
+        public FluentHtml Fluent(Action<FluentHtml> fluentHtml, bool inline = false)
         {
-            var fh = Html(inline);
+            var fh = Fluent(inline);
 
             if (fluentHtml != null)
             {
