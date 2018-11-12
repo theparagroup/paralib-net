@@ -16,13 +16,24 @@ namespace com.parahtml
     public class Page : Fragment
     {
 
-        public Page(HtmlContext context, bool begin = true) : base(context, begin)
+        public Page(HtmlContext context, bool begin = true) : base(context, context.IsDebug(DebugFlags.Page), begin)
         {
         }
 
         protected override void OnBegin()
         {
-            Push(new HtmlDebugBlock(Context, "page", Context.IsDebug(DebugFlags.Page), false));
+            if (Visible)
+            {
+                Comment("page start");
+            }
+        }
+
+        protected override void OnEnd()
+        {
+            if (Visible)
+            {
+                Comment("page end");
+            }
         }
 
 

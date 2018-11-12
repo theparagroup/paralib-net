@@ -47,11 +47,5 @@ namespace com.parahtml.Core
             }
         }
 
-
-        protected override void OnDebug(string text)
-        {
-            HtmlRenderer.Comment(Writer, text);
-        }
-
     }
 }

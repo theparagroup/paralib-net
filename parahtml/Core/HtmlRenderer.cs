@@ -29,19 +29,14 @@ namespace com.parahtml.Core
             }
         }
 
-        public static void Comment(Writer writer, string text)
+        public static void HtmlComment(Writer writer, string text)
         {
             writer.Write($"<!-- {text} -->");
         }
 
-        public void Comment(string text)
+        public static void CssComment(Writer writer, string text)
         {
-            Comment(Writer, text);
-        }
-
-        protected override void OnDebug(string text)
-        {
-            Comment(text);
+            writer.Write($"/* {text} */");
         }
 
     }

@@ -35,6 +35,9 @@ Design Goals & Notes
 	document
 		attributes
 
+	
+	fluent html
+		Div(a=>Id="foo", f=>{ /* let's do some conditional statements */})
 	fluent css inline/external
 
 	start converting ttb

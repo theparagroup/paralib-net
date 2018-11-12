@@ -95,7 +95,7 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _rowColulmnClasses;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context, Action<GridOptions> options=null, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, false, false)
+        public FluentGrid(HtmlContext context, Action<GridOptions> options=null, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentGrid), false)
         {
             var gridOptions = new GridOptions();
 
@@ -116,9 +116,21 @@ namespace com.paraquery.Bootstrap.Grids
             }
         }
 
-        public class GridBlock : HtmlDebugBlock
+        public class GridBlock : HtmlRenderer
         {
-            public GridBlock(HtmlContext context) : base(context, "fluent bootstrap grid", context.IsDebug(DebugFlags.FluentGrid), false)
+            public GridBlock(HtmlContext context) : base(context, LineModes.None, ContainerModes.Block, false, false)
+            {
+            }
+
+            protected override void Comment(string text)
+            {
+            }
+
+            protected override void OnBegin()
+            {
+            }
+
+            protected override void OnEnd()
             {
             }
         }
@@ -144,15 +156,28 @@ namespace com.paraquery.Bootstrap.Grids
             }
         }
 
+        protected override void Comment(string text)
+        {
+            HtmlRenderer.HtmlComment(Writer, text);
+        }
+
         protected override void OnBegin()
         {
+            if (Visible)
+            {
+                Comment("fluent grid start");
+            }
+
             Push(new GridBlock(Context));
         }
 
         protected override void OnEnd()
         {
+            if (Visible)
+            {
+                Comment("fluent grid end");
+            }
         }
-
         protected new FluentGrid Push(Renderer renderer)
         {
             //this method simplifies "calling to Push() and returning a FluentGrid", 

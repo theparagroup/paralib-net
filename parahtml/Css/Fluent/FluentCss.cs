@@ -5,29 +5,42 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Tags.Fluent;
 using com.parahtml.Core;
+using com.paralib.Gen.Rendering;
 
 namespace com.parahtml.Css.Fluent
 {
     //this doesn't need to be a component
 
-    public class FluentCss : CssDebugBlock, IFluentCss
+    public class FluentCss : HtmlRenderer, IFluentCss
     {
         protected FluentHtml _fluentHtml;
 
-        public FluentCss(HtmlContext context, FluentHtml fluentHtml) : base(context, "fluent css", context.IsDebug(DebugFlags.FluentCss), false)
+        public FluentCss(HtmlContext context, FluentHtml fluentHtml) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentCss), false)
         {
             _fluentHtml = fluentHtml;
         }
 
+        protected override void Comment(string text)
+        {
+            HtmlRenderer.CssComment(Writer, text);
+        }
+
         protected override void OnBegin()
         {
-            base.OnBegin();
+            if (Visible)
+            {
+                Comment("fluent css start");
+            }
         }
 
         protected override void OnEnd()
         {
             Writer.Space();
-            base.OnEnd();
+
+            if (Visible)
+            {
+                Comment("fluent css end");
+            }
         }
 
         public IFluentCss Rule(string selector)
@@ -85,7 +98,7 @@ namespace com.parahtml.Css.Fluent
             return _fluentHtml.Close(this);
         }
 
-        public new void Close()
+        public void Close()
         {
             _fluentHtml.Close(this);
         }

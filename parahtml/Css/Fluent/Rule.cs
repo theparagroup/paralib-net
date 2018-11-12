@@ -17,6 +17,11 @@ namespace com.parahtml.Css.Fluent
             _selector = selector;
         }
 
+        protected override void Comment(string text)
+        {
+            HtmlRenderer.CssComment(Writer, text);
+        }
+
         protected override void OnBegin()
         {
             Writer.Space();

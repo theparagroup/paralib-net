@@ -28,24 +28,26 @@ namespace com.parahtml.Tags.Fluent
 
         protected override void OnBegin()
         {
-            if (ContainerMode==ContainerModes.Block)
+            if (Visible)
             {
-                Push(new HtmlDebugBlock(Context, "fluent html", Context.IsDebug(DebugFlags.FluentHtml), false));
-            }
-            else
-            {
-                Push(new HtmlDebugInline(Context, "fluent html", Context.IsDebug(DebugFlags.FluentHtml), false));
+                Comment("fluent html start");
             }
         }
 
         protected override void OnEnd()
         {
+            if (Visible)
+            {
+                Comment("fluent html end");
+            }
         }
 
-        protected override void OnDebug(string text)
+
+        protected override void Comment(string text)
         {
-            HtmlRenderer.Comment(Writer, text);
+            HtmlRenderer.HtmlComment(Writer, text);
         }
+
 
         protected new FluentHtml Push(Renderer renderer)
         {
@@ -140,6 +142,5 @@ namespace com.parahtml.Tags.Fluent
             return this;
         }
 
-       
     }
 }

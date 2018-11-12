@@ -18,7 +18,15 @@ namespace com.parahtml
     */
     public class Fragment : HtmlComponent<ParaHtmlPackage>
     {
-        public Fragment(HtmlContext context, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, false, false)
+        protected Fragment(HtmlContext context, bool visible, bool begin) : base(context, LineModes.Multiple, ContainerModes.Block, visible, false)
+        {
+            if (begin)
+            {
+                Begin();
+            }
+        }
+
+        public Fragment(HtmlContext context, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.Fragment), false)
         {
             if (begin)
             {
@@ -28,11 +36,23 @@ namespace com.parahtml
 
         protected override void OnBegin()
         {
-            Push(new HtmlDebugBlock(Context, "fragment", Context.IsDebug(DebugFlags.Fragment), false));
+            if (Visible)
+            {
+                Comment("fragment start");
+            }
         }
 
         protected override void OnEnd()
         {
+            if (Visible)
+            {
+                Comment("fragment end");
+            }
+        }
+
+        protected override void Comment(string text)
+        {
+            HtmlRenderer.HtmlComment(Writer, text);
         }
 
         public FluentHtml Html(bool inline = false)
@@ -53,7 +73,6 @@ namespace com.parahtml
 
             return fh;
         }
-
 
     }
 }

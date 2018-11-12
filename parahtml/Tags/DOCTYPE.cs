@@ -70,6 +70,10 @@ namespace com.parahtml.Tags
 
         }
 
+        protected override void Comment(string text)
+        {
+        }
+
         protected override void OnBegin()
         {
             Writer.Write($"<!DOCTYPE {_specification}");

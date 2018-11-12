@@ -119,18 +119,9 @@ namespace com.parahtml.Tags
             }
         }
 
-        protected override void OnDebug(string text)
+        protected override void Comment(string text)
         {
-            var id = Attributes?["id"];
-
-            if (id != null)
-            {
-                Comment($"{text} {TagName} {id}");
-            }
-            else
-            {
-                Comment($"{text} {TagName}");
-            }
+            HtmlRenderer.HtmlComment(Writer, text);
         }
 
         protected override void OnBegin()

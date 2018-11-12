@@ -115,16 +115,14 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected void Debug(string text)
+        protected abstract void Comment(string text);
+
+        private void SourceDebug(string text)
         {
             if (Visible)
             {
-                OnDebug($" {text}");
+                Comment(text);
             }
-        }
-
-        protected virtual void OnDebug(string text)
-        {
         }
 
         protected override void OnPreBegin()
@@ -139,7 +137,7 @@ namespace com.paralib.Gen.Rendering
                     {
                         if (DebugSourceFormatting)
                         {
-                            Debug($"nl prebegin");
+                            SourceDebug($"nl prebegin");
                         }
 
                         Writer.NewLine();
@@ -160,7 +158,7 @@ namespace com.paralib.Gen.Rendering
                     {
                         if (DebugSourceFormatting)
                         {
-                            Debug($"nl postbegin");
+                            SourceDebug($"nl postbegin");
                         }
 
                         Writer.NewLine();
@@ -188,7 +186,7 @@ namespace com.paralib.Gen.Rendering
                     {
                         if (DebugSourceFormatting)
                         {
-                            Debug($"nl preend");
+                            SourceDebug($"nl preend");
                         }
 
                         Writer.NewLine();
@@ -217,7 +215,7 @@ namespace com.paralib.Gen.Rendering
                     {
                         if (DebugSourceFormatting)
                         {
-                            Debug($"nl postend");
+                            SourceDebug($"nl postend");
                         }
 
                         Writer.NewLine();

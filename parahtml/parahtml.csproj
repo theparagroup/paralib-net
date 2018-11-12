@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Css\Fluent\CssDebugBlock.cs" />
     <Compile Include="Css\Fluent\FluentCss.cs" />
     <Compile Include="Css\Fluent\Interfaces.cs" />
     <Compile Include="Css\Fluent\Rule.cs" />
@@ -77,8 +76,6 @@
     <Compile Include="Core\HtmlBuilder.cs" />
     <Compile Include="Core\HtmlComponent.cs" />
     <Compile Include="Core\HtmlContext.cs" />
-    <Compile Include="Core\HtmlDebugBlock.cs" />
-    <Compile Include="Core\HtmlDebugInline.cs" />
     <Compile Include="Core\HtmlOptions.cs" />
     <Compile Include="Core\HtmlRenderer.cs" />
     <Compile Include="Values\DocumentTypes.cs" />
