@@ -109,7 +109,16 @@ namespace com.paralib.Gen.Rendering
 
         protected virtual void Push(Renderer renderer)
         {
-            //we don't want nulls on the stack
+            //we prevent strange stuff from happening, like:
+            //  pushing stack2 onto stack1 (stack2 begins)
+            //  poping stack1 (stack2 ends)
+            //  pushing onto stack2 (don't do this)
+            if (!_begun)
+            {
+                throw new Exception("Can't use RendererStack without calling Begin()");
+            }
+
+            //we never want nulls on the stack
             if (renderer != null)
             {
                 /*
@@ -147,7 +156,7 @@ namespace com.paralib.Gen.Rendering
                 {
                     Renderer top = Stack.Peek();
 
-                    if (top.ContainerMode==ContainerModes.None)
+                    if (top.ContainerMode == ContainerModes.None)
                     {
                         //anything under a None pops that None
                         Pop();
@@ -164,19 +173,29 @@ namespace com.paralib.Gen.Rendering
 
                         var rs = (RendererStack)top;
 
-                        if (rs.Top.ContainerMode==ContainerModes.None)
+                        if (rs.Top == null)
                         {
-                            //if the last thing on the top stack is a None, close it
-                            rs.Close();
-                        }
-                        else if (rs.Top.ContainerMode==ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
-                        {
-                            //note: we can only get here for top stacks that are Blocks, as we would have popped an inline stack
-                            //in the else block above
+                            //pushing onto an empty renderstack closes that renderstack
+                            Pop();
 
-                            //just as we do above (for ourselves), we need to close any inlines on the top stack
-                            //if we're pushing a non-inline.
-                            rs.CloseInlines(false);
+                            //do we care what's next?
+                        }
+                        else
+                        {
+                            if (rs.Top.ContainerMode == ContainerModes.None)
+                            {
+                                //if the last thing on the top stack is a None, close it
+                                rs.Close();
+                            }
+                            else if (rs.Top.ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
+                            {
+                                //note: we can only get here for top stacks that are Blocks, as we would have popped an inline stack
+                                //in the else block above
+
+                                //just as we do above (for ourselves), we need to close any inlines on the top stack
+                                //if we're pushing a non-inline.
+                                rs.CloseInlines(false);
+                            }
                         }
                     }
                 }
