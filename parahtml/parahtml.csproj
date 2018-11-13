@@ -44,6 +44,8 @@
     <Compile Include="Css\Fluent\FluentCss.cs" />
     <Compile Include="Css\Fluent\Interfaces.cs" />
     <Compile Include="Css\Fluent\Rule.cs" />
+    <Compile Include="Tags\Fluent\Document.cs" />
+    <Compile Include="Tags\Fluent\Document_.cs" />
     <Compile Include="Tags\Fluent\FluentHtml.cs" />
     <Compile Include="Tags\Fluent\FluentHtml_.cs" />
     <Compile Include="Values\Angle.cs" />

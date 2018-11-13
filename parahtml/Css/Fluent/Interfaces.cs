@@ -14,7 +14,7 @@ namespace com.parahtml.Css.Fluent
         IFluentCss Rule(string selector);
         IFluentCss Declaration(Action<Style> declaration);
         IFluentCss Declaration(string declaration);
-        FluentHtml FluentHtml();
+        Html Html();
         void Close();
     }
 

@@ -13,16 +13,24 @@ namespace com.parahtml.Css.Fluent
 
     public class FluentCss : HtmlRenderer, IFluentCss
     {
-        protected FluentHtml _fluentHtml;
+        protected Html _html;
 
-        public FluentCss(HtmlContext context, FluentHtml fluentHtml) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentCss), false)
+        public FluentCss(HtmlContext context, Html html) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentCss), false)
         {
-            _fluentHtml = fluentHtml;
+            _html = html;
         }
 
         protected override void Comment(string text)
         {
-            HtmlRenderer.CssComment(Writer, text);
+            CssComment(Writer, text);
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "fluent css";
+            }
         }
 
         protected override void OnBegin()
@@ -45,7 +53,7 @@ namespace com.parahtml.Css.Fluent
 
         public IFluentCss Rule(string selector)
         {
-            _fluentHtml.Open(new Rule(Context, selector));
+            _html.Open(new Rule(Context, selector));
             return this;
         }
 
@@ -93,14 +101,14 @@ namespace com.parahtml.Css.Fluent
             return this;
         }
 
-        public FluentHtml FluentHtml()
+        public Html Html()
         {
-            return _fluentHtml.Close(this);
+            return _html.Close(this);
         }
 
         public void Close()
         {
-            _fluentHtml.Close(this);
+            _html.Close(this);
         }
 
     }

@@ -19,7 +19,15 @@ namespace com.parahtml.Css.Fluent
 
         protected override void Comment(string text)
         {
-            HtmlRenderer.CssComment(Writer, text);
+            CssComment(Writer, text);
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return $"css rule {_selector}";
+            }
         }
 
         protected override void OnBegin()

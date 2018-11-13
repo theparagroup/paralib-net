@@ -126,6 +126,14 @@ namespace com.paraquery.Bootstrap.Grids
             {
             }
 
+            public override string Name
+            {
+                get
+                {
+                    return "grid";
+                }
+            }
+
             protected override void OnBegin()
             {
             }
@@ -159,6 +167,14 @@ namespace com.paraquery.Bootstrap.Grids
         protected override void Comment(string text)
         {
             HtmlRenderer.HtmlComment(Writer, text);
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "fluent grid";
+            }
         }
 
         protected override void OnBegin()
@@ -340,14 +356,14 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-        public IColumn Html(Action<FluentHtml> fluentHtml, bool inline = false)
+        public IColumn Html(Action<Html> html, bool inline = false)
         {
-            var fh = new FluentHtml(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
+            var fh = new Html(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
             Push(fh);
 
-            if (fluentHtml != null)
+            if (html != null)
             {
-                fluentHtml(fh);
+                html(fh);
             }
 
             return this;

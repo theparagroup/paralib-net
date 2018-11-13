@@ -24,6 +24,14 @@ namespace com.paraquery.Js.Blocks
             Begin();
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "function";
+            }
+        }
+
         protected override void OnBegin()
         {
             Writer.Write($"function {_name}({Utils.Parameters(_parameters)}) {{");

@@ -121,6 +121,8 @@ namespace com.paralib.Gen.Rendering
 
         protected abstract void Comment(string text);
 
+        public abstract string Name { get; }
+
         private void SourceDebug(string text)
         {
             if (Visible)

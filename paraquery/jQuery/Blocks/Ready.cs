@@ -19,6 +19,14 @@ namespace com.paraquery.jQuery.Blocks
             Begin();
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "ready";
+            }
+        }
+
         protected override void OnBegin()
         {
             Writer.Write("$(document).ready(function() {");

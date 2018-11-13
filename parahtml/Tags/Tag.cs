@@ -69,6 +69,11 @@ namespace com.parahtml.Tags
         {
             TagName = tagName;
             Attributes = attributes;
+
+            if (TagName==null)
+            {
+                throw new InvalidOperationException("TagName cannot be null");
+            }
         }
 
         public bool Empty
@@ -79,6 +84,23 @@ namespace com.parahtml.Tags
             }
         }
 
+        public override string Name
+        {
+            get
+            {
+                var id = Attributes?["id"];
+
+                if (id!=null)
+                {
+                    return $"{TagName}/{id}";
+                }
+                else
+                {
+                    return TagName;
+                }
+
+            }
+        }
 
         private static LineModes GetLineMode(TagTypes tagType, bool empty)
         {

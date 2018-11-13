@@ -31,7 +31,7 @@ namespace com.parahtml.Core
             context.RegisterPackage<T>();
         }
 
-        protected new HtmlContext Context
+        public new HtmlContext Context
         {
             get
             {
@@ -39,7 +39,7 @@ namespace com.parahtml.Core
             }
         }
 
-        protected HtmlBuilder HtmlBuilder
+        public HtmlBuilder HtmlBuilder
         {
             get
             {

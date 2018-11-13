@@ -18,7 +18,7 @@ namespace com.paraquery.Js.Blocks
         {
             Writer.Write($" // {text}");
         }
-
+        
         protected override void OnPreBegin()
         {
             Writer.Space();

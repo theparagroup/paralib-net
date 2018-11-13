@@ -133,7 +133,7 @@ namespace com.paralib.Gen.Rendering
                 */
                 if (ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
                 {
-                    throw new InvalidOperationException($"RendererStack is Inline and may only contain other Inline renderers");
+                    throw new InvalidOperationException($"RendererStack '{Name}' cannot contain Renderer '{renderer.Name}' because it is not Inline");
                 }
 
                 /*
@@ -148,55 +148,36 @@ namespace com.paralib.Gen.Rendering
                 {
                     if ((LineMode == LineModes.None || LineMode == LineModes.Single) && (renderer.LineMode!=LineModes.None))
                     {
-                        throw new InvalidOperationException($"Renderer's LineMode {renderer.LineMode} is incompatible with RendererStack's LineMode {LineMode}");
+                        throw new InvalidOperationException($"RendererStack '{Name}' cannot container Renderer {renderer.Name} because its LineMode '{renderer.LineMode}' is incompatible");
                     }
                 }
 
+
+                /*
+                    Before we Begin() and Push() this new renderer, we want to clean up the stack first.
+
+                    This means:
+
+                        If we're pushing onto a None, Pop() it. According to the rules, the next renderer after
+                        the None should be a Block, so that's all we need to do.
+
+                        Otherwise, if we're a Block, we need to Pop() any Inlines starting at the top of the 
+                        stack and working down till we hit the next Block, and then stop. If we run into any
+                        RendererStacks on the way, treat their contents as if they were on our stack (that is,
+                        we stop when we hit a block on a nested rendererstack, and if we empty a rendererstack,
+                        we pop it off our stack as well).
+                
+                */
                 if (Stack.Count > 0)
                 {
                     Renderer top = Stack.Peek();
-
                     if (top.ContainerMode == ContainerModes.None)
                     {
-                        //anything under a None pops that None
                         Pop();
                     }
-                    else if (top.ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
+                    else if (renderer.ContainerMode == ContainerModes.Block)
                     {
-                        //pushing a non-inline under an inline pops all inline up to but not including the last block
                         PopInlines(false);
-                    }
-                    else if (top is RendererStack)
-                    {
-                        //are we pushing a renderer onto another rendererstack?
-                        //then we need to manipulate that rendererstack under certain conditions
-
-                        var rs = (RendererStack)top;
-
-                        if (rs.Top == null)
-                        {
-                            //pushing onto an empty renderstack closes that renderstack
-                            Pop();
-
-                            //do we care what's next?
-                        }
-                        else
-                        {
-                            if (rs.Top.ContainerMode == ContainerModes.None)
-                            {
-                                //if the last thing on the top stack is a None, close it
-                                rs.Close();
-                            }
-                            else if (rs.Top.ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline)
-                            {
-                                //note: we can only get here for top stacks that are Blocks, as we would have popped an inline stack
-                                //in the else block above
-
-                                //just as we do above (for ourselves), we need to close any inlines on the top stack
-                                //if we're pushing a non-inline.
-                                rs.CloseInlines(false);
-                            }
-                        }
                     }
                 }
 
@@ -228,31 +209,67 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected virtual void PopInlines(bool includeOuterNested)
+        protected virtual bool PopInlines(bool popBlock)
         {
+            //pop Nones/Inlines till we hit a block
+            //we follow renderstacks and pop them if empty
+
             while (Stack.Count > 0)
             {
                 Renderer top = Stack.Peek();
 
-                if (top.ContainerMode == ContainerModes.Inline)
+                if (top is RendererStack)
                 {
-                    Pop();
-                }
-                else if (top.ContainerMode == ContainerModes.Block)
-                {
-                    if (includeOuterNested)
+                    /*
+                        pop rs till we hit a block on its stack
+                        note if rs is inline, we'll empty it, just
+                        as if we popped the rs itself (End->CloseAll),
+                        it's the same thing, so we just ignore container
+                        mode here
+                    */
+                    var rs = (RendererStack)top;
+                    var blockfound=rs.PopInlines(popBlock);
+
+                    //if we emptied rs, pop rs too
+                    if (rs.Stack.Count == 0)
                     {
                         Pop();
                     }
 
-                    break;
+                    //in case the last thing on rs was a block
+                    //then we're done
+                    if (blockfound)
+                    {
+                        return true;
+                    }
                 }
                 else
                 {
-                    //we should never see a none 
+                    if (top.ContainerMode == ContainerModes.None)
+                    {
+                        Pop();
+                    }
+                    else if (top.ContainerMode == ContainerModes.Inline)
+                    {
+                        Pop();
+                    }
+                    else if (top.ContainerMode == ContainerModes.Block)
+                    {
+                        if (popBlock)
+                        {
+                            Pop();
+                        }
+
+                        return true;
+                    }
                 }
+
             }
+
+            return false;
         }
+
+
 
         public virtual void Close()
         {
@@ -278,9 +295,14 @@ namespace com.paralib.Gen.Rendering
 
         }
 
-        protected virtual void CloseInlines(bool includeOuterNested)
+        public void CloseUp()
         {
-            PopInlines(includeOuterNested);
+            PopInlines(false);
+        }
+
+        public void CloseBlock()
+        {
+            PopInlines(true);
         }
 
         public virtual void CloseAll()
@@ -291,6 +313,9 @@ namespace com.paralib.Gen.Rendering
             }
 
         }
+
+
+
 
     }
 }

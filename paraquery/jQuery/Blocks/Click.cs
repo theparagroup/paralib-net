@@ -24,6 +24,14 @@ namespace com.paraquery.jQuery.Blocks
             Begin();
         }
 
+        public override string Name
+        {
+            get
+            {
+                return "click";
+            }
+        }
+
         protected override void OnBegin()
         {
             Writer.WriteLine($"$('{_selector}').click({Utils.Parameters(_data)}function(event) {{");

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen;
 using com.paralib.Gen.Rendering;
+using com.parahtml.Core;
 
 /*
 
@@ -72,6 +73,15 @@ namespace com.parahtml.Tags
 
         protected override void Comment(string text)
         {
+            HtmlRenderer.HtmlComment(Writer, text);
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return "DOCTYPE";
+            }
         }
 
         protected override void OnBegin()

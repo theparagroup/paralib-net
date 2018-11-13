@@ -51,7 +51,7 @@ namespace com.paraquery
             }
         }
 
-        public FluentHtml Html()
+        public Html Html()
         {
             throw new NotImplementedException();
             //return new FluentHtml(_context, FluentModes.Block);
