@@ -35,20 +35,6 @@ Design Goals & Notes
 	document
 		attributes
 
-	fragment
-		Css()
-		split out less common tags into "Document()"
-			doctype
-			html
-			head
-			style, etc
-			script (can also exist in fluenthtml)
-			body
-
-	now we can call fluent html Html()
-
-	fluent html
-		Div(a=>Id="foo", f=>{ /* let's do some conditional statements */})
 	fluent css inline/external
 
 	start converting ttb

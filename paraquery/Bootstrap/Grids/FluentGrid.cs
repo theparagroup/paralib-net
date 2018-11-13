@@ -167,7 +167,7 @@ namespace com.paraquery.Bootstrap.Grids
         }
 
      
-        protected FluentGrid Push(Renderer renderer)
+        protected FluentGrid Open(Renderer renderer)
         {
             //this method simplifies "calling to Push() and returning a FluentGrid", 
             //as we do for grids, containers, rows, columns...
@@ -179,7 +179,7 @@ namespace com.paraquery.Bootstrap.Grids
         {
             // fluid ? "container-fluid" : "container"
             _containerColulmnClasses = columnClasses;
-            return Push(new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _containerClass })));
+            return Open(new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _containerClass })));
         }
 
         public IContainer Container(IList<string> columnClasses = null)
@@ -219,7 +219,7 @@ namespace com.paraquery.Bootstrap.Grids
         {
             CloseRow();
             _rowColulmnClasses = columnClasses;
-            return Push(new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _rowClass})));
+            return Open(new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _rowClass})));
         }
 
         public IRow Row(IList<string> columnClasses = null)
@@ -259,7 +259,7 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new ColumnTag(Context, Context.AttributeBuilder.Attributes(new { @class = @class })));
+            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(new { @class = @class })));
         }
 
         public IColumn Column(Action<GlobalAttributes> attributes = null)
@@ -283,14 +283,14 @@ namespace com.paraquery.Bootstrap.Grids
 
             ++_columnNumber;
 
-            return Push(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
+            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
         }
 
-        public IColumn Open(Renderer renderer)
-        {
-            _rendererStack.Open(renderer);
-            return this;
-        }
+        //public IColumn Open(Renderer renderer)
+        //{
+        //    _rendererStack.Open(renderer);
+        //    return this;
+        //}
 
         public IColumn Close()
         {

@@ -5,43 +5,63 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
+using com.parahtml.Attributes;
+using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Tags.Fluent
 {
-    public partial class Document : HtmlComponent<ParaHtmlPackage>
+    public partial class Document : FluentStack<HtmlContext, Document>, IDocument
     {
-        public Document(HtmlContext context, bool begin = true) : base(context, LineModes.Multiple, ContainerModes.Block, false, false)
+        public Document(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 
-        public override string Name
+        protected HtmlBuilder HtmlBuilder
         {
             get
             {
-                return "Document";
+                return Context.HtmlBuilder;
             }
         }
 
-        protected override void Comment(string text)
+        public virtual IDocument DOCTYPE(DocumentTypes documentType)
         {
-            HtmlRenderer.HtmlComment(Writer, text);
+            return Open(HtmlBuilder.DOCTYPE(documentType));
         }
 
-        protected override void OnBegin()
+        public virtual IDocument DOCTYPE(string specification)
         {
+            return Open(HtmlBuilder.DOCTYPE(specification));
         }
 
-        protected override void OnEnd()
+        public virtual IDocument Html(Action<HtmlAttributes> attributes = null)
         {
+            return Open(HtmlBuilder.Html(attributes));
         }
 
-        protected new Document Push(Renderer renderer)
+        public virtual IDocument Head(Action<HeadAttributes> attributes = null)
         {
-            //this method is just to simplify fluent methods...
-            base.Push(renderer);
-            return this;
+            return Open(HtmlBuilder.Head(attributes));
         }
 
+        public virtual IDocument Title(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Title(attributes));
+        }
 
+        public virtual IDocument Style(Action<StyleAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Style(attributes));
+        }
+
+        public virtual IDocument Script(Action<ScriptAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Script(attributes));
+        }
+
+        public virtual IDocument Body(Action<BodyAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Body(attributes));
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Tags.Fluent;
+using com.paralib.Gen.Fluent;
 
 namespace com.parahtml
 {
@@ -18,8 +19,14 @@ namespace com.parahtml
     */
     public class Fragment : HtmlComponent<ParaHtmlPackage>
     {
+        protected FluentWriter<HtmlContext> _fluentWriter;
+
+       
+
         protected Fragment(HtmlContext context, bool visible, bool begin) : base(context, LineModes.Multiple, ContainerModes.Block, visible, false)
         {
+            _fluentWriter = new FluentWriter<HtmlContext>(context, this);
+
             if (begin)
             {
                 Begin();
@@ -28,6 +35,8 @@ namespace com.parahtml
 
         public Fragment(HtmlContext context, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.Fragment), false)
         {
+            _fluentWriter = new FluentWriter<HtmlContext>(context, this);
+
             if (begin)
             {
                 Begin();
@@ -70,11 +79,9 @@ namespace com.parahtml
         //    return fluentCss;
         //}
 
-        public Document Document()
+        public IDocument Document()
         {
-            var document = new Document(Context, false);
-            Push(document);
-            return document;
+            return new Document(Context, this);
         }
 
         public Html Html()
@@ -82,5 +89,34 @@ namespace com.parahtml
             return new Html(Context, this);
         }
 
+        public Fragment Write(string content)
+        {
+            _fluentWriter.Write(content);
+            return this;
+        }
+
+        public Fragment WriteLine(string content)
+        {
+            _fluentWriter.WriteLine(content);
+            return this;
+        }
+
+        public Fragment NewLine()
+        {
+            _fluentWriter.NewLine();
+            return this;
+        }
+
+        public Fragment Space()
+        {
+            _fluentWriter.Space();
+            return this;
+        }
+
+        public Fragment Snippet(string text, string newline = null)
+        {
+            _fluentWriter.Snippet(text, newline);
+            return this;
+        }
     }
 }

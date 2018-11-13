@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
+using com.parahtml.Attributes;
+using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Tags.Fluent
 {
@@ -16,15 +18,11 @@ namespace com.parahtml.Tags.Fluent
         that concept (like Tag does) and never go into the "Single" LineMode.
 
     */
-    public partial class Html
+    public partial class Html : FluentStack<HtmlContext, Html>, IFluentStack<Html>, IHtml
     {
-        protected RendererStack _rendererStack;
-        protected HtmlContext Context { private set; get; }
 
-        public Html(HtmlContext context, RendererStack stack)
+        public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
-            _rendererStack = stack;
-            Context = context;
         }
 
         protected HtmlBuilder HtmlBuilder
@@ -35,43 +33,63 @@ namespace com.parahtml.Tags.Fluent
             }
         }
 
-        public Html Open(Renderer renderer)
+        public virtual IHtml Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
-            _rendererStack.Open(renderer);
-            return this;
+            if (tagType == TagTypes.Block)
+            {
+                return Open(HtmlBuilder.Block(name, attributes, empty));
+            }
+            else
+            {
+                return Open(HtmlBuilder.Inline(name, attributes, empty));
+            }
         }
 
-        public Html CloseUp()
+        public virtual IHtml Div(Action<GlobalAttributes> attributes = null)
         {
-            _rendererStack.CloseUp();
-            return this;
+            return Open(HtmlBuilder.Div(attributes));
         }
 
-        public Html CloseBlock()
+        public virtual IHtml Span(Action<GlobalAttributes> attributes = null)
         {
-            _rendererStack.CloseBlock();
-            return this;
+            return Open(HtmlBuilder.Span(attributes));
         }
 
-        public Html CloseAll()
+        public virtual IHtml Br(Action<GlobalAttributes> attributes = null)
         {
-            _rendererStack.CloseAll();
-            return this;
+            return Open(HtmlBuilder.Br(attributes));
         }
 
-        public Html Close()
+        public virtual IHtml Hr(Action<HrAttributes> attributes = null)
         {
-            _rendererStack.Close();
-            return this;
+            return Open(HtmlBuilder.Hr(attributes));
         }
 
-        public Html Close(Renderer renderer)
+        public virtual IHtml Script(Action<ScriptAttributes> attributes = null)
         {
-            _rendererStack.Close(renderer);
-            return this;
+            return Open(HtmlBuilder.Script(attributes));
+        }
+
+        public virtual IHtml NoScript(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.NoScript(attributes));
+        }
+
+        public virtual IHtml Ol(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Ol(attributes));
+        }
+
+        public virtual IHtml Ul(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Ul(attributes));
+        }
+
+        public virtual IHtml Li(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Li(attributes));
         }
 
       
-
     }
 }

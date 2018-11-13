@@ -130,5 +130,22 @@ namespace com.parahtml.Core
             return Block("noscript", Attributes(attributes));
         }
 
+
+        public virtual Tag Ul(Action<GlobalAttributes> attributes = null)
+        {
+            return Block("ul", Attributes(attributes));
+        }
+
+        public virtual Tag Ol(Action<GlobalAttributes> attributes = null)
+        {
+            return Block("ol", Attributes(attributes));
+        }
+
+        public virtual Tag Li(Action<GlobalAttributes> attributes = null)
+        {
+            return Block("li", Attributes(attributes));
+        }
+
+
     }
 }
