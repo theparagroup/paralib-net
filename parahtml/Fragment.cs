@@ -77,23 +77,9 @@ namespace com.parahtml
             return document;
         }
 
-        public Html Html(bool inline = false)
+        public Html Html()
         {
-            var fluentHtml = new Html(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
-            Push(fluentHtml);
-            return fluentHtml;
-        }
-
-        public Html Html(Action<Html> fluentHtml, bool inline = false)
-        {
-            var fh = Html(inline);
-
-            if (fluentHtml != null)
-            {
-                fluentHtml(fh);
-            }
-
-            return fh;
+            return new Html(Context, this);
         }
 
     }

@@ -16,86 +16,58 @@ namespace com.parahtml.Tags.Fluent
         that concept (like Tag does) and never go into the "Single" LineMode.
 
     */
-    public partial class Html : HtmlComponent<ParaHtmlPackage>
+    public partial class Html
     {
-        public Html(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool begin = true) : base(context, lineMode, containerMode, false, false)
+        protected RendererStack _rendererStack;
+        protected HtmlContext Context { private set; get; }
+
+        public Html(HtmlContext context, RendererStack stack)
         {
-            if (begin)
-            {
-                Begin();
-            }
+            _rendererStack = stack;
+            Context = context;
         }
 
-        public override string Name
+        protected HtmlBuilder HtmlBuilder
         {
             get
             {
-                return "fluent html";
+                return Context.HtmlBuilder;
             }
         }
 
-        protected override void OnBegin()
+        public Html Open(Renderer renderer)
         {
-            if (Visible)
-            {
-                Comment("fluent html start");
-            }
-        }
-
-        protected override void OnEnd()
-        {
-            if (Visible)
-            {
-                Comment("fluent html end");
-            }
-        }
-
-
-        protected override void Comment(string text)
-        {
-            HtmlRenderer.HtmlComment(Writer, text);
-        }
-
-
-        protected new Html Push(Renderer renderer)
-        {
-            //this method is just to simplify fluent methods...
-            base.Push(renderer);
+            _rendererStack.Open(renderer);
             return this;
         }
 
-        public new Html Open(Renderer renderer)
+        public Html CloseUp()
         {
-            return Push(renderer);
-        }
-
-        public new Html CloseUp()
-        {
-            base.CloseUp();
+            _rendererStack.CloseUp();
             return this;
         }
 
-        public new Html CloseBlock()
+        public Html CloseBlock()
         {
-            base.CloseBlock();
+            _rendererStack.CloseBlock();
             return this;
         }
 
-        public new Html CloseAll()
+        public Html CloseAll()
         {
-            base.CloseAll();
+            _rendererStack.CloseAll();
             return this;
         }
 
-        public new Html Close()
+        public Html Close()
         {
-            base.Close();
+            _rendererStack.Close();
             return this;
         }
 
-        public new Html Close(Renderer renderer)
+        public Html Close(Renderer renderer)
         {
-            base.Close(renderer);
+            _rendererStack.Close(renderer);
             return this;
         }
 

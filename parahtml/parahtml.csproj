@@ -46,8 +46,8 @@
     <Compile Include="Css\Fluent\Rule.cs" />
     <Compile Include="Tags\Fluent\Document.cs" />
     <Compile Include="Tags\Fluent\Document_.cs" />
-    <Compile Include="Tags\Fluent\FluentHtml.cs" />
-    <Compile Include="Tags\Fluent\FluentHtml_.cs" />
+    <Compile Include="Tags\Fluent\Html.cs" />
+    <Compile Include="Tags\Fluent\Html_.cs" />
     <Compile Include="Values\Angle.cs" />
     <Compile Include="Values\AngleUnits.cs" />
     <Compile Include="Attributes\BodyAttributes.cs" />

@@ -92,6 +92,14 @@ namespace com.paralib.Gen.Rendering
             base.DoEnd();
         }
 
+        public virtual int Count
+        {
+            get
+            {
+                return Stack.Count;
+            }
+        }
+
         public virtual Renderer Top
         {
             get
@@ -175,7 +183,7 @@ namespace com.paralib.Gen.Rendering
                     {
                         Pop();
                     }
-                    else if (renderer.ContainerMode == ContainerModes.Block)
+                    else if (renderer.ContainerMode != ContainerModes.Inline)
                     {
                         PopInlines(false);
                     }

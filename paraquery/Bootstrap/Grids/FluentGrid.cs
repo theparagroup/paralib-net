@@ -84,7 +84,7 @@ namespace com.paraquery.Bootstrap.Grids
 
     */
 
-    public partial class FluentGrid : HtmlComponent<ParaHtmlPackage>, IGrid, IContainer, IRow, IColumn
+    public partial class FluentGrid : IGrid, IContainer, IRow, IColumn
     {
         protected string _containerClass;
         protected string _rowClass;
@@ -95,8 +95,14 @@ namespace com.paraquery.Bootstrap.Grids
         protected IList<string> _rowColulmnClasses;
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context, Action<GridOptions> options=null, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentGrid), false)
+        protected RendererStack _rendererStack;
+        protected HtmlContext Context { private set; get; }
+
+        public FluentGrid(HtmlContext context, RendererStack rendererStack, Action<GridOptions> options = null)
         {
+            _rendererStack = rendererStack;
+            Context = context;
+
             var gridOptions = new GridOptions();
 
             if (options != null)
@@ -110,10 +116,6 @@ namespace com.paraquery.Bootstrap.Grids
             _rowClass = gridOptions.RowClass;
             _columnClass = gridOptions.ColumnClass;
 
-            if (begin)
-            {
-                Begin();
-            }
         }
 
         public class GridBlock : HtmlRenderer
@@ -164,41 +166,12 @@ namespace com.paraquery.Bootstrap.Grids
             }
         }
 
-        protected override void Comment(string text)
-        {
-            HtmlRenderer.HtmlComment(Writer, text);
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "fluent grid";
-            }
-        }
-
-        protected override void OnBegin()
-        {
-            if (Visible)
-            {
-                Comment("fluent grid start");
-            }
-
-            Push(new GridBlock(Context));
-        }
-
-        protected override void OnEnd()
-        {
-            if (Visible)
-            {
-                Comment("fluent grid end");
-            }
-        }
-        protected new FluentGrid Push(Renderer renderer)
+     
+        protected FluentGrid Push(Renderer renderer)
         {
             //this method simplifies "calling to Push() and returning a FluentGrid", 
             //as we do for grids, containers, rows, columns...
-            base.Push(renderer);
+            _rendererStack.Open(renderer);
             return this;
         }
 
@@ -218,14 +191,14 @@ namespace com.paraquery.Bootstrap.Grids
         {
             //end all columns up to and including last row
             //if no row is found, end all columns up to but NOT including last grid/container
-            while (Stack.Count > 0)
+            while (_rendererStack.Count > 0)
             {
-                Renderer top = Stack.Peek();
+                Renderer top = _rendererStack.Top;
 
                 if (top is RowTag)
                 {
                     _rowColulmnClasses = null;
-                    Pop();
+                    _rendererStack.Close();
                     break;
                 }
                 else if (top is GridBlock || top is ContainerTag)
@@ -234,7 +207,7 @@ namespace com.paraquery.Bootstrap.Grids
                 }
                 else
                 {
-                    Pop();
+                    _rendererStack.Close();
                 }
             }
 
@@ -259,13 +232,13 @@ namespace com.paraquery.Bootstrap.Grids
             //end all elements up to last column
             //end last (current) column
             //don't end grids, row or containers
-            while (Stack.Count > 0)
+            while (_rendererStack.Count > 0)
             {
-                Renderer top = Stack.Peek();
+                Renderer top = _rendererStack.Top;
 
                 if (top is ColumnTag)
                 {
-                    Pop();
+                    _rendererStack.Close();
                     break;
                 }
                 else if (top is GridBlock || top is ContainerTag || top is RowTag)
@@ -274,7 +247,7 @@ namespace com.paraquery.Bootstrap.Grids
                 }
                 else
                 {
-                    Pop();
+                    _rendererStack.Close();
                 }
             }
 
@@ -313,23 +286,27 @@ namespace com.paraquery.Bootstrap.Grids
             return Push(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
         }
 
-        public new IColumn Open(Renderer renderer)
+        public IColumn Open(Renderer renderer)
         {
-            base.Open(renderer);
+            _rendererStack.Open(renderer);
             return this;
         }
 
-        public new IColumn Close()
+        public IColumn Close()
         {
-            base.Close();
+            _rendererStack.Close();
             return this;
         }
 
         public IGrid Grid(Action<GridOptions> options = null)
         {
-            var grid = new FluentGrid(Context, options);
-            Push(grid);
-            return grid;
+            //var grid = new FluentGrid(Context, options);
+            //Push(grid);
+
+            //var grid = new FluentGrid(Context, _rendererStack, options);
+            //return grid;
+
+            return this;
         }
 
 
@@ -337,18 +314,18 @@ namespace com.paraquery.Bootstrap.Grids
         {
             //end all elements up to last grid, if any
             //end last (current) grid
-            while (Stack.Count > 0)
+            while (_rendererStack.Count > 0)
             {
-                Renderer top = Stack.Peek();
+                Renderer top = _rendererStack.Top;
 
                 if (top is GridBlock)
                 {
-                    Pop();
+                    _rendererStack.Close();
                     break;
                 }
                 else
                 {
-                    Pop();
+                    _rendererStack.Close();
                 }
             }
 
@@ -356,10 +333,9 @@ namespace com.paraquery.Bootstrap.Grids
             return this;
         }
 
-        public IColumn Html(Action<Html> html, bool inline = false)
+        public IColumn Html(Action<Html> html)
         {
-            var fh = new Html(Context, inline ? LineModes.None : LineModes.Multiple, inline ? ContainerModes.Inline : ContainerModes.Block, false);
-            Push(fh);
+            var fh = new Html(Context, _rendererStack);
 
             if (html != null)
             {

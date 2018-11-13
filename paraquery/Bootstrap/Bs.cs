@@ -17,9 +17,9 @@ namespace com.paraquery.Bootstrap
             _context = context;
         }
 
-        public IGrid Grid(bool fluid=false)
-        {
-            return new FluentGrid(_context,o=> { o.ContainerClass = fluid ? "container-fluid" : "container"; o.RowClass = "row"; });
-        }
+        //public IGrid Grid(bool fluid=false)
+        //{
+        //    return new FluentGrid(_context,o=> { o.ContainerClass = fluid ? "container-fluid" : "container"; o.RowClass = "row"; });
+        //}
     }
 }

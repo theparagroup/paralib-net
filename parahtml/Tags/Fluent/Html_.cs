@@ -14,8 +14,18 @@ namespace com.parahtml.Tags.Fluent
 
         public virtual Html Open<T>(T renderer, Action<T> action) where T : Renderer
         {
-            Push(renderer);
+            Open(renderer);
             action(renderer);
+            return this;
+        }
+
+        public virtual Html WithHtml(Action<Html> action)
+        {
+            if (action != null)
+            {
+                action(this);
+            }
+
             return this;
         }
 
@@ -27,7 +37,7 @@ namespace com.parahtml.Tags.Fluent
 
         private void CloseUpIfTopNotMultipleLine()
         {
-            if (Top?.LineMode != LineModes.Multiple)
+            if (_rendererStack.Top?.LineMode != LineModes.Multiple)
             {
                 CloseUp();
             }
@@ -65,52 +75,42 @@ namespace com.parahtml.Tags.Fluent
         {
             if (tagType==TagTypes.Block)
             {
-                return Push(HtmlBuilder.Block(name, attributes, empty));
+                return Open(HtmlBuilder.Block(name, attributes, empty));
             }
             else
             {
-                return Push(HtmlBuilder.Inline(name, attributes, empty));
+                return Open(HtmlBuilder.Inline(name, attributes, empty));
             }
-        }
-
-        public virtual Html DoIt(Action<Html> action)
-        {
-            if (action != null)
-            {
-                action(this);
-            }
-
-            return this;
         }
 
         public virtual Html Div(Action<GlobalAttributes> attributes = null)
         {
-            return Push(HtmlBuilder.Div(attributes));
+            return Open(HtmlBuilder.Div(attributes));
         }
 
         public virtual Html Span(Action<GlobalAttributes> attributes = null)
         {
-            return Push(HtmlBuilder.Span(attributes));
+            return Open(HtmlBuilder.Span(attributes));
         }
 
         public virtual Html Br(Action<GlobalAttributes> attributes = null)
         {
-            return Push(HtmlBuilder.Br(attributes));
+            return Open(HtmlBuilder.Br(attributes));
         }
 
         public virtual Html Hr(Action<HrAttributes> attributes = null)
         {
-            return Push(HtmlBuilder.Hr(attributes));
+            return Open(HtmlBuilder.Hr(attributes));
         }
 
         public virtual Html Script(Action<ScriptAttributes> attributes = null)
         {
-            return Push(HtmlBuilder.Script(attributes));
+            return Open(HtmlBuilder.Script(attributes));
         }
 
         public virtual Html NoScript(Action<GlobalAttributes> attributes = null)
         {
-            return Push(HtmlBuilder.NoScript(attributes));
+            return Open(HtmlBuilder.NoScript(attributes));
         }
 
     }

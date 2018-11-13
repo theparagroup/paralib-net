@@ -7,9 +7,9 @@ using com.parahtml.Attributes;
 
 namespace com.paraquery.Bootstrap.Grids
 {
-    public interface IGrid : IDisposable
+    public interface IGrid //: IDisposable
     {
-        void Begin();
+        //void Begin();
 
         IContainer Container(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
         IContainer Container(IList<string> columnClasses = null);
