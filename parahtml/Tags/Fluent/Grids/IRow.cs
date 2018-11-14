@@ -9,10 +9,10 @@ namespace com.parahtml.Tags.Fluent.Grids
 {
     public interface IRow
     {
+        IRow Here(Action<IColumn> row);
 
         IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
         IRow Row(IList<string> columnClasses = null);
-        IRow Here(Action<IColumn> row);
 
         IColumn Column(Action<GlobalAttributes> attributes = null);
         IColumn Column(string @class);

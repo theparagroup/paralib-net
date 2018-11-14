@@ -110,20 +110,30 @@ namespace com.parahtml.Tags.Fluent.Grids
             _containerClass = gridOptions.ContainerClass;
             _rowClass = gridOptions.RowClass;
             _columnClass = gridOptions.ColumnClass;
+
+            Open(new GridBlock(Context));
         }
 
         public class GridBlock : HtmlRenderer
         {
-            public GridBlock(HtmlContext context) : base(context, LineModes.None, ContainerModes.Block, false)
+            public GridBlock(HtmlContext context) : base(context, LineModes.Multiple, ContainerModes.Block, false)
             {
             }
 
             protected override void OnBegin()
             {
+                if (Context.IsDebug(DebugFlags.Grids))
+                {
+                    Context.Comment("fluent grid begin");
+                }
             }
 
             protected override void OnEnd()
             {
+                if (Context.IsDebug(DebugFlags.Grids))
+                {
+                    Context.Comment("fluent grid end");
+                }
             }
         }
 
@@ -174,13 +184,13 @@ namespace com.parahtml.Tags.Fluent.Grids
                     _rendererStack.Close();
                     break;
                 }
-                else if (top is GridBlock || top is ContainerTag)
+                else if (top is ColumnTag)
                 {
-                    break;
+                    _rendererStack.Close();
                 }
                 else
                 {
-                    _rendererStack.Close();
+                    break;
                 }
             }
 
@@ -261,13 +271,7 @@ namespace com.parahtml.Tags.Fluent.Grids
 
         public IGrid Grid(Action<GridOptions> options = null)
         {
-            //var grid = new FluentGrid(Context, options);
-            //Push(grid);
-
-            //var grid = new FluentGrid(Context, _rendererStack, options);
-            //return grid;
-
-            return this;
+            return new FluentGrid(Context, _rendererStack, options);
         }
 
 
@@ -290,6 +294,35 @@ namespace com.parahtml.Tags.Fluent.Grids
                 }
             }
 
+            return this;
+        }
+
+        public IGrid Here(Action<IGrid> grid)
+        {
+            if (grid != null)
+            {
+                grid(this);
+            }
+
+            return this;
+        }
+
+        public IRow Here(Action<IContainer> container)
+        {
+            if (container != null)
+            {
+                container(this);
+            }
+
+            return this;
+        }
+
+        public IRow Here(Action<IColumn> row)
+        {
+            if (row!=null)
+            {
+                row(this);
+            }
 
             return this;
         }
@@ -306,24 +339,5 @@ namespace com.parahtml.Tags.Fluent.Grids
             return this;
         }
 
-        public IRow Here(Action<IColumn> row)
-        {
-            if (row!=null)
-            {
-                row(this);
-            }
-
-            return this;
-        }
-
-        public IRow Here(Action<IContainer> container)
-        {
-            if (container != null)
-            {
-                container(this);
-            }
-
-            return this;
-        }
     }
 }

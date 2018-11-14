@@ -13,7 +13,11 @@ namespace com.parahtml
         None=0,
 
         //endings of blocks with ids
-        EndTag =1 
+        EndTag =1, 
+
+
+        Grids=32
+
 
     }
 }

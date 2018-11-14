@@ -11,6 +11,7 @@ namespace com.parahtml.Tags.Fluent.Grids
 {
     public interface IColumn
     {
+        IColumn Html(Action<Html> html);
 
         IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
         IRow Row(IList<string> columnClasses = null);
@@ -18,11 +19,7 @@ namespace com.parahtml.Tags.Fluent.Grids
         IColumn Column(Action<GlobalAttributes> attributes = null);
         IColumn Column(string @class);
 
-        IColumn Html(Action<Html> html);
-
         IGrid Grid(Action<GridOptions> options=null);
         IGrid EndGrid();
-
-
     }
 }
