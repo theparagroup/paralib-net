@@ -11,11 +11,11 @@ namespace com.parahtml.Css.Fluent
 {
     //this doesn't need to be a component
 
-    public class FluentCss : HtmlRenderer, IFluentCss
+    public class Css<F> : HtmlRenderer, ICss<F> where F:class
     {
-        protected Html _html;
+        protected IHtml<F> _html;
 
-        public FluentCss(HtmlContext context, Html html) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentCss), false)
+        public Css(HtmlContext context, IHtml<F> html) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentCss), false)
         {
             _html = html;
         }
@@ -51,18 +51,18 @@ namespace com.parahtml.Css.Fluent
             }
         }
 
-        public IFluentCss Rule(string selector)
+        public ICss<F> Rule(string selector)
         {
             _html.Open(new Rule(Context, selector));
             return this;
         }
 
-        public IFluentCss Rule(Action<ISelectorLevel> selector)
+        public ICss<F> Rule(Action<ISelectorLevel> selector)
         {
             return this;
         }
 
-        public IFluentCss Declaration(string declaration)
+        public ICss<F> Declaration(string declaration)
         {
             if (declaration != null)
             {
@@ -77,7 +77,7 @@ namespace com.parahtml.Css.Fluent
             return this;
         }
 
-        public IFluentCss Declaration(Action<Style> declaration)
+        public ICss<F> Declaration(Action<Style> declaration)
         {
             if (declaration != null)
             {
@@ -101,7 +101,7 @@ namespace com.parahtml.Css.Fluent
             return this;
         }
 
-        public Html Html()
+        public F Html()
         {
             return _html.Close(this);
         }

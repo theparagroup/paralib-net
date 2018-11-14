@@ -10,7 +10,7 @@ using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Tags.Fluent
 {
-    public partial class Document : FluentStack<HtmlContext, Document>, IDocument
+    public partial class Document : FluentRendererStack<HtmlContext, Document>, IDocument
     {
         public Document(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {

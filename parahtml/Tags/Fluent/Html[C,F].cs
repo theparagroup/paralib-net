@@ -7,6 +7,7 @@ using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Attributes;
 using com.paralib.Gen.Fluent;
+using com.paralib.Gen;
 
 namespace com.parahtml.Tags.Fluent
 {
@@ -18,10 +19,11 @@ namespace com.parahtml.Tags.Fluent
         that concept (like Tag does) and never go into the "Single" LineMode.
 
     */
-    public partial class Html : FluentStack<HtmlContext, Html>, IFluentStack<Html>, IHtml
+
+    public partial class Html<C, F> : FluentRendererStack<C, F>, IFluentRendererStack<F>, IHtml<F> where C : HtmlContext where F : Html<C, F>
     {
 
-        public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public Html(C context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 
@@ -33,7 +35,7 @@ namespace com.parahtml.Tags.Fluent
             }
         }
 
-        public virtual IHtml Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             if (tagType == TagTypes.Block)
             {
@@ -45,51 +47,51 @@ namespace com.parahtml.Tags.Fluent
             }
         }
 
-        public virtual IHtml Div(Action<GlobalAttributes> attributes = null)
+        public virtual F Div(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Div(attributes));
         }
 
-        public virtual IHtml Span(Action<GlobalAttributes> attributes = null)
+        public virtual F Span(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Span(attributes));
         }
 
-        public virtual IHtml Br(Action<GlobalAttributes> attributes = null)
+        public virtual F Br(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Br(attributes));
         }
 
-        public virtual IHtml Hr(Action<HrAttributes> attributes = null)
+        public virtual F Hr(Action<HrAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Hr(attributes));
         }
 
-        public virtual IHtml Script(Action<ScriptAttributes> attributes = null)
+        public virtual F Script(Action<ScriptAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Script(attributes));
         }
 
-        public virtual IHtml NoScript(Action<GlobalAttributes> attributes = null)
+        public virtual F NoScript(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.NoScript(attributes));
         }
 
-        public virtual IHtml Ol(Action<GlobalAttributes> attributes = null)
+        public virtual F Ol(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Ol(attributes));
         }
 
-        public virtual IHtml Ul(Action<GlobalAttributes> attributes = null)
+        public virtual F Ul(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Ul(attributes));
         }
 
-        public virtual IHtml Li(Action<GlobalAttributes> attributes = null)
+        public virtual F Li(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Li(attributes));
         }
 
-      
+
     }
 }

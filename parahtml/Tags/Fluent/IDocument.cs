@@ -8,7 +8,7 @@ using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Tags.Fluent
 {
-    public interface IDocument : IFluentStack<Document>
+    public interface IDocument : IFluentRendererStack<Document>
     {
         IDocument DOCTYPE(DocumentTypes documentType);
         IDocument DOCTYPE(string specification);

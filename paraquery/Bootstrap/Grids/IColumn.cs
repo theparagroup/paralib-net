@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
 using com.parahtml.Tags.Fluent;
+using com.parahtml.Core;
 
 namespace com.paraquery.Bootstrap.Grids
 {
