@@ -44,9 +44,15 @@
     <Compile Include="Css\Fluent\FluentCss.cs" />
     <Compile Include="Css\Fluent\Interfaces.cs" />
     <Compile Include="Css\Fluent\Rule.cs" />
-    <Compile Include="Tags\Fluent\Html[C].cs" />
+    <Compile Include="Tags\Fluent\Grids\FluentGrid.cs" />
+    <Compile Include="Tags\Fluent\Grids\GridOptions.cs" />
+    <Compile Include="Tags\Fluent\Grids\IColumn.cs" />
+    <Compile Include="Tags\Fluent\Grids\IContainer.cs" />
+    <Compile Include="Tags\Fluent\Grids\IGrid.cs" />
+    <Compile Include="Tags\Fluent\Grids\IRow.cs" />
+    <Compile Include="Tags\Fluent\Html.cs" />
     <Compile Include="Tags\Fluent\Document.cs" />
-    <Compile Include="Tags\Fluent\Html[C,F].cs" />
+    <Compile Include="Tags\Fluent\Html[F].cs" />
     <Compile Include="Tags\Fluent\IDocument.cs" />
     <Compile Include="Tags\Fluent\IHtml.cs" />
     <Compile Include="Values\Angle.cs" />

@@ -10,65 +10,17 @@ using com.paralib.Gen.Fluent;
 
 namespace com.parahtml
 {
-    /*
-        
-        A base class for chunks of HTML.
-
-        Page and other HTML components derive from this class.
-
-    */
-    public class Fragment : HtmlComponent<ParaHtmlPackage>
+    public class Fragment : FluentRendererStack<HtmlContext, Fragment>, IDisposable
     {
-        protected FluentWriter<HtmlContext> _fluentWriter;
-
-       
-
-        protected Fragment(HtmlContext context, bool visible, bool begin) : base(context, LineModes.Multiple, ContainerModes.Block, visible, false)
+        public Fragment(HtmlContext context) : base(context, new RendererStack())
         {
-            _fluentWriter = new FluentWriter<HtmlContext>(context, this);
-
-            if (begin)
-            {
-                Begin();
-            }
         }
 
-        public Fragment(HtmlContext context, bool begin=true) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.Fragment), false)
-        {
-            _fluentWriter = new FluentWriter<HtmlContext>(context, this);
-
-            if (begin)
-            {
-                Begin();
-            }
-        }
-
-        protected override void OnBegin()
-        {
-            if (Visible)
-            {
-                Comment("fragment start");
-            }
-        }
-
-        protected override void OnEnd()
-        {
-            if (Visible)
-            {
-                Comment("fragment end");
-            }
-        }
-
-        protected override void Comment(string text)
-        {
-            HtmlRenderer.HtmlComment(Writer, text);
-        }
-
-        public override string Name
+        public HtmlBuilder HtmlBuilder
         {
             get
             {
-                return "fragment";
+                return Context.HtmlBuilder;
             }
         }
 
@@ -81,42 +33,18 @@ namespace com.parahtml
 
         public IDocument Document()
         {
-            return new Document(Context, this);
+            return new Document(Context, _rendererStack);
         }
 
         public Html Html()
         {
-            return new Html(Context, this);
+            return new Html(Context, _rendererStack);
         }
 
-        public Fragment Write(string content)
+        public void Dispose()
         {
-            _fluentWriter.Write(content);
-            return this;
+            CloseAll();
         }
 
-        public Fragment WriteLine(string content)
-        {
-            _fluentWriter.WriteLine(content);
-            return this;
-        }
-
-        public Fragment NewLine()
-        {
-            _fluentWriter.NewLine();
-            return this;
-        }
-
-        public Fragment Space()
-        {
-            _fluentWriter.Space();
-            return this;
-        }
-
-        public Fragment Snippet(string text, string newline = null)
-        {
-            _fluentWriter.Snippet(text, newline);
-            return this;
-        }
     }
 }

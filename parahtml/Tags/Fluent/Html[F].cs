@@ -8,6 +8,7 @@ using com.paralib.Gen.Rendering;
 using com.parahtml.Attributes;
 using com.paralib.Gen.Fluent;
 using com.paralib.Gen;
+using com.parahtml.Tags.Fluent.Grids;
 
 namespace com.parahtml.Tags.Fluent
 {
@@ -20,10 +21,10 @@ namespace com.parahtml.Tags.Fluent
 
     */
 
-    public partial class Html<C, F> : FluentRendererStack<C, F>, IFluentRendererStack<F>, IHtml<F> where C : HtmlContext where F : Html<C, F>
+    public partial class Html<F> : FluentRendererStack<HtmlContext, F>, IHtml<F> where F : Html<F>
     {
 
-        public Html(C context, RendererStack rendererStack) : base(context, rendererStack)
+        public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 
@@ -92,6 +93,9 @@ namespace com.parahtml.Tags.Fluent
             return Open(HtmlBuilder.Li(attributes));
         }
 
-
+        public IGrid Grid(Action<GridOptions> options = null)
+        {
+            return new FluentGrid(Context,_rendererStack, options);
+        }
     }
 }

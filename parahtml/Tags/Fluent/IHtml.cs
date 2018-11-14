@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
 using com.paralib.Gen.Fluent;
+using com.parahtml.Tags.Fluent.Grids;
 
 namespace com.parahtml.Tags.Fluent
 {
@@ -21,5 +22,8 @@ namespace com.parahtml.Tags.Fluent
         F Ol(Action<GlobalAttributes> attributes = null);
         F Ul(Action<GlobalAttributes> attributes = null);
         F Li(Action<GlobalAttributes> attributes = null);
+
+        IGrid Grid(Action<GridOptions> options = null);
+
     }
 }

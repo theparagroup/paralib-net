@@ -14,7 +14,7 @@ namespace com.paralib.Gen.Fluent
         {
         }
 
-        public virtual Renderer Top
+        public virtual IRenderer Top
         {
             get
             {
@@ -22,7 +22,7 @@ namespace com.paralib.Gen.Fluent
             }
         }
 
-        public virtual F Open(Renderer renderer)
+        public virtual F Open(IRenderer renderer)
         {
             _rendererStack.Open(renderer);
             return (F)this;
@@ -52,13 +52,13 @@ namespace com.paralib.Gen.Fluent
             return (F)this;
         }
 
-        public virtual F Close(Renderer renderer)
+        public virtual F Close(IRenderer renderer)
         {
             _rendererStack.Close(renderer);
             return (F)this;
         }
 
-        public virtual F Open<R>(R renderer, Action<R> action) where R : Renderer
+        public virtual F Open<R>(R renderer, Action<R> action) where R : IRenderer
         {
             Open(renderer);
             action(renderer);

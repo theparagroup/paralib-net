@@ -12,35 +12,35 @@ namespace com.paraquery.jQuery.Blocks
             ...
         });
     */
-    public class Click : jQueryBlock
-    {
-        protected string _selector;
-        protected object _data;
+    //public class Click : jQueryBlock
+    //{
+    //    protected string _selector;
+    //    protected object _data;
 
-        public Click(Context context, string selector, object data=null) : base(context)
-        {
-            _selector = selector;
-            _data = data;
-            Begin();
-        }
+    //    public Click(Context context, string selector, object data=null) : base(context)
+    //    {
+    //        _selector = selector;
+    //        _data = data;
+    //        Begin();
+    //    }
 
-        public override string Name
-        {
-            get
-            {
-                return "click";
-            }
-        }
+    //    public override string Name
+    //    {
+    //        get
+    //        {
+    //            return "click";
+    //        }
+    //    }
 
-        protected override void OnBegin()
-        {
-            Writer.WriteLine($"$('{_selector}').click({Utils.Parameters(_data)}function(event) {{");
-        }
+    //    protected override void OnBegin()
+    //    {
+    //        Writer.WriteLine($"$('{_selector}').click({Utils.Parameters(_data)}function(event) {{");
+    //    }
 
-        protected override void OnEnd()
-        {
-            Writer.WriteLine($"}}); //end click");
-        }
+    //    protected override void OnEnd()
+    //    {
+    //        Writer.WriteLine($"}}); //end click");
+    //    }
 
-    }
+    //}
 }

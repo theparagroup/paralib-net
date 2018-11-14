@@ -9,14 +9,14 @@ namespace com.paralib.Gen.Fluent
 {
     public interface IFluentRendererStack<F> : IFluentWriter<F> where F : class
     {
-        Renderer Top { get; }
-        F Open(Renderer renderer);
+        IRenderer Top { get; }
+        F Open(IRenderer renderer);
         F CloseUp();
         F CloseBlock();
         F CloseAll();
         F Close();
-        F Close(Renderer renderer);
-        F Open<R>(R renderer, Action<R> action) where R : Renderer;
+        F Close(IRenderer renderer);
+        F Open<R>(R renderer, Action<R> action) where R : IRenderer;
         F Here(Action<F> action);
     }
 }

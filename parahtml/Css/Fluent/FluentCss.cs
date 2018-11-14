@@ -6,78 +6,44 @@ using System.Threading.Tasks;
 using com.parahtml.Tags.Fluent;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
+using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Css.Fluent
 {
-    //this doesn't need to be a component
 
-    public class Css<F> : HtmlRenderer, ICss<F> where F:class
+    public class Css : FluentRendererStack<HtmlContext, Css>, ICss
     {
-        protected IHtml<F> _html;
-
-        public Css(HtmlContext context, IHtml<F> html) : base(context, LineModes.Multiple, ContainerModes.Block, context.IsDebug(DebugFlags.FluentCss), false)
+        public Css(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
-            _html = html;
         }
 
-        protected override void Comment(string text)
+        public ICss Rule(string selector)
         {
-            CssComment(Writer, text);
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "fluent css";
-            }
-        }
-
-        protected override void OnBegin()
-        {
-            if (Visible)
-            {
-                Comment("fluent css start");
-            }
-        }
-
-        protected override void OnEnd()
-        {
-            Writer.Space();
-
-            if (Visible)
-            {
-                Comment("fluent css end");
-            }
-        }
-
-        public ICss<F> Rule(string selector)
-        {
-            _html.Open(new Rule(Context, selector));
+            Open(new Rule(Context, selector));
             return this;
         }
 
-        public ICss<F> Rule(Action<ISelectorLevel> selector)
+        public ICss Rule(Action<ISelectorLevel> selector)
         {
             return this;
         }
 
-        public ICss<F> Declaration(string declaration)
+        public ICss Declaration(string declaration)
         {
             if (declaration != null)
             {
                 if (Context.Options.CssFormat != CssFormats.Readable)
                 {
-                    Writer.Write("   ");
+                    Write("   ");
                 }
 
-                Writer.WriteLine(declaration);
+                WriteLine(declaration);
             }
 
             return this;
         }
 
-        public ICss<F> Declaration(Action<Style> declaration)
+        public ICss Declaration(Action<Style> declaration)
         {
             if (declaration != null)
             {
@@ -101,15 +67,7 @@ namespace com.parahtml.Css.Fluent
             return this;
         }
 
-        public F Html()
-        {
-            return _html.Close(this);
-        }
 
-        public void Close()
-        {
-            _html.Close(this);
-        }
 
     }
 

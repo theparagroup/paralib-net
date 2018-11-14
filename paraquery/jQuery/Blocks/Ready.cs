@@ -12,30 +12,30 @@ namespace com.paraquery.jQuery.Blocks
         ...
         );
     */
-    public class Ready : jQueryBlock
-    {
-        public Ready(Context context) : base(context)
-        {
-            Begin();
-        }
+    //public class Ready : jQueryBlock
+    //{
+    //    public Ready(Context context) : base(context)
+    //    {
+    //        Begin();
+    //    }
 
-        public override string Name
-        {
-            get
-            {
-                return "ready";
-            }
-        }
+    //    public override string Name
+    //    {
+    //        get
+    //        {
+    //            return "ready";
+    //        }
+    //    }
 
-        protected override void OnBegin()
-        {
-            Writer.Write("$(document).ready(function() {");
-        }
+    //    protected override void OnBegin()
+    //    {
+    //        Writer.Write("$(document).ready(function() {");
+    //    }
 
-        protected override void OnEnd()
-        {
-            Writer.Write("}); //end ready");
-        }
+    //    protected override void OnEnd()
+    //    {
+    //        Writer.Write("}); //end ready");
+    //    }
 
-    }
+    //}
 }

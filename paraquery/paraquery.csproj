@@ -40,13 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrap\Grids\GridOptions.cs" />
     <Compile Include="Bootstrap\Bs.cs" />
-    <Compile Include="Bootstrap\Grids\FluentGrid.cs" />
-    <Compile Include="Bootstrap\Grids\IContainer.cs" />
-    <Compile Include="Bootstrap\Grids\IRow.cs" />
-    <Compile Include="Bootstrap\Grids\IGrid.cs" />
-    <Compile Include="Bootstrap\Grids\IColumn.cs" />
     <Compile Include="jQuery\AjaxSettings.cs" />
     <Compile Include="jQuery\Blocks\Click.cs" />
     <Compile Include="jQuery\Blocks\jQueryBlock.cs" />

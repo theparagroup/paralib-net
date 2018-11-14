@@ -5,13 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
 
-namespace com.paraquery.Bootstrap.Grids
+namespace com.parahtml.Tags.Fluent.Grids
 {
-    public interface IContainer
+    public interface IRow
     {
 
         IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
         IRow Row(IList<string> columnClasses = null);
+        IRow Here(Action<IColumn> row);
+
+        IColumn Column(Action<GlobalAttributes> attributes = null);
+        IColumn Column(string @class);
 
         IGrid EndGrid();
 

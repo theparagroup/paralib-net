@@ -7,7 +7,7 @@ using com.parahtml.Attributes;
 using com.parahtml.Tags.Fluent;
 using com.parahtml.Core;
 
-namespace com.paraquery.Bootstrap.Grids
+namespace com.parahtml.Tags.Fluent.Grids
 {
     public interface IColumn
     {
@@ -18,10 +18,11 @@ namespace com.paraquery.Bootstrap.Grids
         IColumn Column(Action<GlobalAttributes> attributes = null);
         IColumn Column(string @class);
 
+        IColumn Html(Action<Html> html);
+
         IGrid Grid(Action<GridOptions> options=null);
         IGrid EndGrid();
 
-        IColumn Html(Action<Html> html);
 
     }
 }

@@ -21,7 +21,6 @@ namespace com.paralib.Gen.Rendering
             
             LineMode
             Indent
-            Visible
             ContainerMode
 
         ContainerMode is not used here in the Renderer, but it is are used to control how
@@ -84,22 +83,19 @@ namespace com.paralib.Gen.Rendering
 
     */
 
-    public abstract class Renderer : BeginBase
+    public abstract class RendererBase : BeginBase, IRenderer
     {
         protected Context Context { private set; get; }
         public LineModes LineMode { private set; get; }
         public ContainerModes ContainerMode { private set; get; }
-        public bool IndentContent { private set; get; }
-        public bool Visible { private set; get; }
+        protected bool _indentContent { private set; get; }
 
-        protected Renderer(Context context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent)
+        protected RendererBase(Context context, LineModes lineMode, ContainerModes containerMode, bool indentContent)
         {
             Context = context;
-
             LineMode = lineMode;
             ContainerMode = containerMode;
-            Visible = visible;
-            IndentContent = indentContent;
+            _indentContent = indentContent;
         }
 
 
@@ -125,109 +121,92 @@ namespace com.paralib.Gen.Rendering
 
         private void SourceDebug(string text)
         {
-            if (Visible)
-            {
-                Comment(text);
-            }
+            Comment(text);
         }
 
         protected override void OnPreBegin()
         {
-            if (Visible)
+            if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)
             {
-                if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)
+                //make sure lines and blocks start on a newline
+                //this should be conditional on if newline was called last before this block started
+                if (!Writer.IsNewLine)
                 {
-                    //make sure lines and blocks start on a newline
-                    //this should be conditional on if newline was called last before this block started
-                    if (!Writer.IsNewLine)
+                    if (DebugSourceFormatting)
                     {
-                        if (DebugSourceFormatting)
-                        {
-                            SourceDebug($"nl prebegin");
-                        }
-
-                        Writer.NewLine();
+                        SourceDebug($"nl prebegin");
                     }
+
+                    Writer.NewLine();
                 }
             }
         }
 
         protected override void OnPostBegin()
         {
-            if (Visible)
+            if (LineMode == LineModes.Multiple)
             {
-                if (LineMode == LineModes.Multiple)
+                //make sure content nested under a block starts on a newline
+                //this should be conditional on if newline was called last in OnBegin
+                if (!Writer.IsNewLine)
                 {
-                    //make sure content nested under a block starts on a newline
-                    //this should be conditional on if newline was called last in OnBegin
-                    if (!Writer.IsNewLine)
+                    if (DebugSourceFormatting)
                     {
-                        if (DebugSourceFormatting)
-                        {
-                            SourceDebug($"nl postbegin");
-                        }
-
-                        Writer.NewLine();
+                        SourceDebug($"nl postbegin");
                     }
 
-                    if (IndentContent)
-                    {
-                        //indent content
-                        Writer.Indent();
-                    }
-
+                    Writer.NewLine();
                 }
+
+                if (_indentContent)
+                {
+                    //indent content
+                    Writer.Indent();
+                }
+
             }
         }
 
         protected override void OnPreEnd()
         {
-            if (Visible)
+            if (LineMode == LineModes.Multiple)
             {
-                if (LineMode == LineModes.Multiple)
+                //make sure block endings start on a newline
+                //this should be conditional on if newline was called last in the content
+                if (!Writer.IsNewLine)
                 {
-                    //make sure block endings start on a newline
-                    //this should be conditional on if newline was called last in the content
-                    if (!Writer.IsNewLine)
+                    if (DebugSourceFormatting)
                     {
-                        if (DebugSourceFormatting)
-                        {
-                            SourceDebug($"nl preend");
-                        }
-
-                        Writer.NewLine();
+                        SourceDebug($"nl preend");
                     }
 
-                    if (IndentContent)
-                    {
-                        //undo the content indent
-                        Writer.Dedent();
-                    }
+                    Writer.NewLine();
                 }
 
+                if (_indentContent)
+                {
+                    //undo the content indent
+                    Writer.Dedent();
+                }
             }
         }
 
         protected override void OnPostEnd()
         {
-            if (Visible)
+            if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)
             {
-                if (LineMode == LineModes.Single || LineMode == LineModes.Multiple)
+                //make sure blocks and lines end with a newline 
+                //this should be conditional on if newline was called last when this block ended
+                if (!Writer.IsNewLine)
                 {
-                    //make sure blocks and lines end with a newline 
-                    //this should be conditional on if newline was called last when this block ended
-                    if (!Writer.IsNewLine)
+                    if (DebugSourceFormatting)
                     {
-                        if (DebugSourceFormatting)
-                        {
-                            SourceDebug($"nl postend");
-                        }
-
-                        Writer.NewLine();
+                        SourceDebug($"nl postend");
                     }
+
+                    Writer.NewLine();
                 }
             }
         }
-
     }
 }

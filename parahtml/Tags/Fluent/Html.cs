@@ -8,7 +8,7 @@ using com.paralib.Gen.Rendering;
 
 namespace com.parahtml.Tags.Fluent
 {
-    public class Html : Html<HtmlContext, Html>
+    public class Html : Html<Html>
     {
         public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {

@@ -65,7 +65,7 @@ namespace com.parahtml.Tags
         public TagTypes TagType { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
 
-        public Tag(HtmlContext context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true, true)
+        public Tag(HtmlContext context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
         {
             TagName = tagName;
             Attributes = attributes;

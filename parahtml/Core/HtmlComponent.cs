@@ -5,38 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Packages;
+using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Core
 {
     /*
         HtmlComponent is a base class for "components" that are HTML-centric. It requires an
-        HtmlContext, defines OnDebug, etc.
-        
-        HtmlComponent follows the intended "component pattern", that is, a class derived from
-        RendererStack that builds its own content.
-
-        Because of the rules RendererStack enforces about the first renderer in the stack,
-        HtmlComponent declares itself to be Multiple/Nested and invisible, and requires
-        derived classes to provide the first renderer to go on the stack (start renderer).
-        
-        If implementors derive from HtmlComponent, they don't have to worry about these details. 
-
+        HtmlContext, etc.
     */
-    public abstract class HtmlComponent<T> : RendererStack where T : Package, new()
+    public abstract class HtmlComponent<F, P> : FluentRendererStack<HtmlContext, F>, IFluentRendererStack<F> where F : HtmlComponent<F,P>  where P : Package, new()
     {
-
-        public HtmlComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent) : base(context, lineMode, containerMode, visible, indentContent)
+        public HtmlComponent(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
             //register package
-            context.RegisterPackage<T>();
-        }
-
-        public new HtmlContext Context
-        {
-            get
-            {
-                return (HtmlContext)base.Context;
-            }
+            context.RegisterPackage<P>();
         }
 
         public HtmlBuilder HtmlBuilder

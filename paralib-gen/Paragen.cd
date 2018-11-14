@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="com.paralib.Gen.Writer">
-    <Position X="6.75" Y="1" Width="2" />
+    <Position X="7" Y="1" Width="2" />
     <TypeIdentifier>
       <HashCode>CAgAACAASAAkAAAIAAAAIgAgEgCAAAAEAAACAiEAQAA=</HashCode>
       <FileName>Writer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Utils">
-    <Position X="0.5" Y="1" Width="1.5" />
+    <Position X="1" Y="1" Width="1.5" />
     <NestedTypes>
       <Class Name="com.paralib.Gen.Utils.Json" Collapsed="true">
         <TypeIdentifier>
@@ -27,28 +27,28 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Options">
-    <Position X="4.5" Y="1" Width="2" />
+    <Position X="3.5" Y="3.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAEAAAAA=</HashCode>
       <FileName>Options.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Context">
-    <Position X="2.25" Y="1" Width="2" />
+    <Position X="3.5" Y="1" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAFAAAA=</HashCode>
       <FileName>Context.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Writers.StringWriter">
-    <Position X="5.5" Y="8" Width="2" />
+    <Position X="5.75" Y="8" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAgEAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Writers\StringWriter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Writers.ConsoleWriter">
-    <Position X="8" Y="8" Width="2.25" />
+    <Position X="8.25" Y="8" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Writers\ConsoleWriter.cs</FileName>
@@ -69,21 +69,14 @@
       <FileName>Rendering\BeginBase.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Rendering.Renderer">
-    <Position X="13.25" Y="8" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAkEAgEEEgAAAAAQAAAAAAAgAAAAAAAIAAAAAEEAAAA=</HashCode>
-      <FileName>Rendering\Renderer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.paralib.Gen.Rendering.RendererStack">
-    <Position X="13.25" Y="12.75" Width="2" />
+    <Position X="16" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAQAIAAAAIAAAAAAAAAAAgACIAAAAAAAAAACADAI=</HashCode>
+      <HashCode>AAAAAQAAAAAAIAAAAAAAAAQAgICIAACAAAAAAACACAI=</HashCode>
       <FileName>Rendering\RendererStack.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Mapping.DictionaryBuilder&lt;T&gt;">
+  <Class Name="com.paralib.Gen.Mapping.DictionaryBuilder&lt;C, T&gt;">
     <Position X="20.25" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAAAAAAAAAAIAAAAAAgAAAAAAAAAAAAAA=</HashCode>
@@ -119,6 +112,14 @@
       <FileName>Mapping\BuilderOptionsAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="com.paralib.Gen.Rendering.RendererBase">
+    <Position X="13.25" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAEEAgEEEgAAAAAQEAAAAAQgAAAAAAAAAAAAAEEAAAA=</HashCode>
+      <FileName>Rendering\RendererBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
   <Interface Name="com.paralib.Gen.Mapping.IValueContainer">
     <Position X="25.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
@@ -126,8 +127,8 @@
       <FileName>Mapping\IValueContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="com.paralib.Gen.Mapping.IComplexValue">
-    <Position X="25.25" Y="5" Width="1.5" />
+  <Interface Name="com.paralib.Gen.Mapping.IComplexValue&lt;C&gt;">
+    <Position X="25.25" Y="5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\IComplexValue.cs</FileName>
@@ -140,15 +141,22 @@
       <FileName>Mapping\IDynamicValueContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="com.paralib.Gen.Rendering.IRenderer">
+    <Position X="11.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAgAAAAAAAAAQAAAAAAQAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\IRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">
-    <Position X="15.75" Y="8" Width="1.5" />
+    <Position X="11.5" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAACAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Rendering\LineModes.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="com.paralib.Gen.Rendering.ContainerModes">
-    <Position X="15.75" Y="9.5" Width="1.5" />
+    <Position X="11.5" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Rendering\StackModes.cs</FileName>

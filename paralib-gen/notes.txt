@@ -32,8 +32,23 @@ Design Goals & Notes
 	remember, we're not replacing a web server or mvc in this project, just creating
 	a generation library with a focus on building components
 
+	commenting is part of writer and uses the context
+
 	document
 		attributes
+
+	grids
+		bootstrap (container, row, col, nestable, multiple breaks)
+		skeleton (container, row, col, not nestable, one break)
+		simplegrid (container, row, col, not nestable, one break)
+		foundation  (row, col, nestable, x break?)
+		uikit (skipped)
+		960 (not responsive, alpha/omega columns no actual rows)
+		unsemantic
+		beauter (rows, cols, not nestable?)
+		milligram (rows, cols, column, not nestable)
+		furtive (grid, row, col)
+
 
 	fluent css inline/external
 

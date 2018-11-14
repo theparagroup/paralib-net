@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paraquery.Bootstrap.Grids
+namespace com.parahtml.Tags.Fluent.Grids
 {
     public class GridOptions
     {
-        public IList<string> GridColulmnClasses { set; get; }
+        public IList<string> GridColumnClasses { set; get; }
         public string ContainerClass { set; get; }
         public string RowClass { set; get; }
         public string ColumnClass { set; get; }

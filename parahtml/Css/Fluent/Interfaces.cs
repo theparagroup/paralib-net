@@ -7,15 +7,13 @@ using com.parahtml.Tags.Fluent;
 
 namespace com.parahtml.Css.Fluent
 {
-    public interface ICss<F> where F:class
+    public interface ICss
     {
         //at-rules
-        ICss<F> Rule(Action<ISelectorLevel> selector);
-        ICss<F> Rule(string selector);
-        ICss<F> Declaration(Action<Style> declaration);
-        ICss<F> Declaration(string declaration);
-        F Html();
-        void Close();
+        ICss Rule(Action<ISelectorLevel> selector);
+        ICss Rule(string selector);
+        ICss Declaration(Action<Style> declaration);
+        ICss Declaration(string declaration);
     }
 
 

@@ -12,7 +12,7 @@ namespace com.parahtml.Css.Fluent
     {
         protected string _selector;
 
-        public Rule(HtmlContext context, string selector) : base(context, LineModes.Multiple, ContainerModes.Block, true, context.Options.CssFormat!=CssFormats.Readable?false:true)
+        public Rule(HtmlContext context, string selector) : base(context, LineModes.Multiple, ContainerModes.None, context.Options.CssFormat!=CssFormats.Readable?false:true)
         {
             _selector = selector;
         }

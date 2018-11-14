@@ -8,30 +8,30 @@ using com.paralib.Gen;
 
 namespace com.paraquery.jQuery.Blocks
 {
-    public abstract class jQueryBlock : Renderer
-    {
-        public jQueryBlock(Context context) : base(context, LineModes.Multiple, ContainerModes.Block, true, true)
-        {
-        }
+    //public abstract class jQueryBlock : Renderer
+    //{
+    //    public jQueryBlock(Context context) : base(context, LineModes.Multiple, ContainerModes.Block, true, true)
+    //    {
+    //    }
 
-        protected override void Comment(string text)
-        {
-            Writer.Write($" // {text}");
-        }
+    //    protected override void Comment(string text)
+    //    {
+    //        Writer.Write($" // {text}");
+    //    }
 
-        protected override void OnPreBegin()
-        {
-            Writer.Space();
+    //    protected override void OnPreBegin()
+    //    {
+    //        Writer.Space();
 
-            base.OnPreBegin();
-        }
+    //        base.OnPreBegin();
+    //    }
 
-        protected override void OnPostEnd()
-        {
-            base.OnPostEnd();
+    //    protected override void OnPostEnd()
+    //    {
+    //        base.OnPostEnd();
 
-            Writer.Space();
-        }
+    //        Writer.Space();
+    //    }
 
-    }
+    //}
 }

@@ -14,11 +14,11 @@ using com.parahtml.Core;
 */
 namespace com.parahtml.Tags
 {
-    public class DOCTYPE : Renderer
+    public class DOCTYPE : RendererBase
     {
         private string _specification;
 
-        public DOCTYPE(Context context, string specification) : base(context, LineModes.Single, ContainerModes.None, true, false)
+        public DOCTYPE(Context context, string specification) : base(context, LineModes.Single, ContainerModes.None, false)
         {
             _specification = specification;
         }

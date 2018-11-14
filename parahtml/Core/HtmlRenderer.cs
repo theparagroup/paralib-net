@@ -15,9 +15,9 @@ namespace com.parahtml.Core
         All HTML-based renderers should derive from this.
 
     */
-    public abstract class HtmlRenderer : Renderer
+    public abstract class HtmlRenderer : RendererBase
     {
-        public HtmlRenderer(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool visible, bool indentContent) : base(context, lineMode, containerMode, visible, indentContent)
+        public HtmlRenderer(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
         {
         }
 
