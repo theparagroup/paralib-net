@@ -44,6 +44,7 @@
     <Compile Include="Css\Fluent\FluentCss.cs" />
     <Compile Include="Css\Fluent\Interfaces.cs" />
     <Compile Include="Css\Fluent\Rule.cs" />
+    <Compile Include="Tags\FluentHtmlBase.cs" />
     <Compile Include="Tags\Fluent\Grids\FluentGrid.cs" />
     <Compile Include="Tags\Fluent\Grids\GridOptions.cs" />
     <Compile Include="Tags\Fluent\Grids\IColumn.cs" />

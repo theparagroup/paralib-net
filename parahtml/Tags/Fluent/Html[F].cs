@@ -21,19 +21,11 @@ namespace com.parahtml.Tags.Fluent
 
     */
 
-    public partial class Html<F> : FluentRendererStack<HtmlContext, F>, IHtml<F> where F : Html<F>
+    public partial class Html<F> : FluentHtmlBase<F>, IHtml<F> where F : Html<F>
     {
 
         public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
-        }
-
-        protected HtmlBuilder HtmlBuilder
-        {
-            get
-            {
-                return Context.HtmlBuilder;
-            }
         }
 
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)

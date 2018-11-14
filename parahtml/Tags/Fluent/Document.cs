@@ -10,18 +10,10 @@ using com.paralib.Gen.Fluent;
 
 namespace com.parahtml.Tags.Fluent
 {
-    public partial class Document : FluentRendererStack<HtmlContext, Document>, IDocument
+    public partial class Document : FluentHtmlBase<Document>, IDocument
     {
         public Document(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
-        }
-
-        protected HtmlBuilder HtmlBuilder
-        {
-            get
-            {
-                return Context.HtmlBuilder;
-            }
         }
 
         public virtual IDocument DOCTYPE(DocumentTypes documentType)
