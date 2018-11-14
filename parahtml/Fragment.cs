@@ -17,12 +17,12 @@ namespace com.parahtml
         {
         }
 
-        //public FluentCss FluentCss()
-        //{
-        //    var fluentCss = new FluentCss(Context, this);
-        //    Push(fluentCss);
-        //    return fluentCss;
-        //}
+        public Css.Fluent.Css Css()
+        {
+            var cssContext = new Css.CssContext(Context);
+            var css = new Css.Fluent.Css(cssContext, _rendererStack);
+            return css;
+        }
 
         public IDocument Document()
         {

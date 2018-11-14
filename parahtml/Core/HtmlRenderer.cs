@@ -29,14 +29,12 @@ namespace com.parahtml.Core
             }
         }
 
-        public static void HtmlComment(Writer writer, string text)
+        protected new HtmlOptions Options
         {
-            writer.Write($"<!-- {text} -->");
-        }
-
-        public static void CssComment(Writer writer, string text)
-        {
-            writer.Write($"/* {text} */");
+            get
+            {
+                return (HtmlOptions)base.Context.Options;
+            }
         }
 
     }

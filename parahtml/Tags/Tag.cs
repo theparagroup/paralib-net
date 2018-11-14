@@ -84,24 +84,6 @@ namespace com.parahtml.Tags
             }
         }
 
-        public override string Name
-        {
-            get
-            {
-                var id = Attributes?["id"];
-
-                if (id!=null)
-                {
-                    return $"{TagName}/{id}";
-                }
-                else
-                {
-                    return TagName;
-                }
-
-            }
-        }
-
         private static LineModes GetLineMode(TagTypes tagType, bool empty)
         {
             if (tagType == TagTypes.Block)
@@ -139,11 +121,6 @@ namespace com.parahtml.Tags
                     return ContainerModes.Inline;
                 }
             }
-        }
-
-        protected override void Comment(string text)
-        {
-            HtmlComment(Writer, text);
         }
 
         protected override void OnBegin()
@@ -187,7 +164,7 @@ namespace com.parahtml.Tags
                 {
                     if (Attributes.ContainsKey("id"))
                     {
-                        Comment($"end {Attributes["id"]}");
+                        Context.Comment($"end {Attributes["id"]}");
                     }
                 }
             }

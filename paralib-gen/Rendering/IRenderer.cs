@@ -8,7 +8,6 @@ namespace com.paralib.Gen.Rendering
 {
     public interface IRenderer
     {
-        string Name { get; }
         LineModes LineMode {  get; }
         ContainerModes ContainerMode { get; }
         void Begin();

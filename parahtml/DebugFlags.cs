@@ -13,16 +13,7 @@ namespace com.parahtml
         None=0,
 
         //endings of blocks with ids
-        EndTag =1, 
+        EndTag =1 
 
-        //see the begin and end of various components
-        Fragment = 2,
-        Page=4,
-        FluentHtml=8,
-        FluentCss = 16,
-
-
-
-        FluentGrid = 32
     }
 }

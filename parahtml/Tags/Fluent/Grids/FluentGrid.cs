@@ -118,18 +118,6 @@ namespace com.parahtml.Tags.Fluent.Grids
             {
             }
 
-            protected override void Comment(string text)
-            {
-            }
-
-            public override string Name
-            {
-                get
-                {
-                    return "grid";
-                }
-            }
-
             protected override void OnBegin()
             {
             }

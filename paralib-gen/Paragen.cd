@@ -70,7 +70,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.RendererStack">
-    <Position X="16" Y="8" Width="2" />
+    <Position X="18.25" Y="8" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAQAAAAAAIAAAAAAAAAQAgICIAACAAAAAAACACAI=</HashCode>
       <FileName>Rendering\RendererStack.cs</FileName>
@@ -115,7 +115,7 @@
   <Class Name="com.paralib.Gen.Rendering.RendererBase">
     <Position X="13.25" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEEAgEEEgAAAAAQEAAAAAQgAAAAAAAAAAAAAEEAAAA=</HashCode>
+      <HashCode>AAEEAgEEEgAAAAAQEAAAAAQgAAAAAAAAAAAAAEFAAAA=</HashCode>
       <FileName>Rendering\RendererBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -142,21 +142,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Rendering.IRenderer">
-    <Position X="11.5" Y="10.25" Width="1.5" />
+    <Position X="15.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAgAAAAAAAAAQAAAAAAQAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IRenderer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">
-    <Position X="11.5" Y="7" Width="1.5" />
+    <Position X="11.5" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAACAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Rendering\LineModes.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="com.paralib.Gen.Rendering.ContainerModes">
-    <Position X="11.5" Y="8.5" Width="1.5" />
+    <Position X="11.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Rendering\StackModes.cs</FileName>

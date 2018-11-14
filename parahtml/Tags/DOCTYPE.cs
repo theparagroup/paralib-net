@@ -14,16 +14,16 @@ using com.parahtml.Core;
 */
 namespace com.parahtml.Tags
 {
-    public class DOCTYPE : RendererBase
+    public class DOCTYPE : HtmlRenderer
     {
         private string _specification;
 
-        public DOCTYPE(Context context, string specification) : base(context, LineModes.Single, ContainerModes.None, false)
+        public DOCTYPE(HtmlContext context, string specification) : base(context, LineModes.Single, ContainerModes.None, false)
         {
             _specification = specification;
         }
 
-        public DOCTYPE(Context context, DocumentTypes documentType) : this(context, DecodeDocumentType(documentType))
+        public DOCTYPE(HtmlContext context, DocumentTypes documentType) : this(context, DecodeDocumentType(documentType))
         {
 
         }
@@ -69,19 +69,6 @@ namespace com.parahtml.Tags
                     throw new Exception($"Unknown DocType {documentType}");
             }
 
-        }
-
-        protected override void Comment(string text)
-        {
-            HtmlRenderer.HtmlComment(Writer, text);
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return "DOCTYPE";
-            }
         }
 
         protected override void OnBegin()

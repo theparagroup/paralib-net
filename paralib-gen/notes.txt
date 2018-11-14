@@ -32,10 +32,8 @@ Design Goals & Notes
 	remember, we're not replacing a web server or mvc in this project, just creating
 	a generation library with a focus on building components
 
-	commenting is part of writer and uses the context
-
-	document
-		attributes
+	documentation review
+	re-test nested rendererstacks
 
 	grids
 		bootstrap (container, row, col, nestable, multiple breaks)
@@ -64,8 +62,6 @@ Design Goals & Notes
 
 	lets spell check
 		https://ewsoftware.github.io/VSSpellChecker/html/027d2fbc-7bfb-4dc3-b4f5-85f95fcf7629.htm
-
-	test without Renderer.OnPostEnd() code, seems to duplicate OnPreBegin
 
 	attribute builder
 		dom events

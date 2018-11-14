@@ -22,7 +22,19 @@ namespace com.parahtml.Core
         public PropertyBuilder PropertyBuilder { private set; get; }
         public HtmlBuilder HtmlBuilder { private set; get; }
 
-        public HtmlContext(Writer writer, Action<HtmlOptions> options = null) : base(writer)
+        protected HtmlContext(Writer writer):base(writer)
+        {
+            AttributeBuilder = new AttributeBuilder(this);
+            PropertyBuilder = new PropertyBuilder(this);
+            HtmlBuilder = new HtmlBuilder(this);
+        }
+
+        public HtmlContext(Writer writer, HtmlOptions options = null) : this(writer)
+        {
+            Options = options ?? new HtmlOptions();
+        }
+
+        public HtmlContext(Writer writer, Action<HtmlOptions> options = null) : this(writer)
         {
             Options = new HtmlOptions();
 
@@ -33,9 +45,11 @@ namespace com.parahtml.Core
 
             base.Options = Options;
 
-            AttributeBuilder = new AttributeBuilder(this);
-            PropertyBuilder = new PropertyBuilder(this);
-            HtmlBuilder = new HtmlBuilder(this);
+        }
+
+        public override void Comment(string text)
+        {
+            Writer.Write($"<!-- {text} -->");
         }
 
         public bool IsDebug(DebugFlags debugFlags)

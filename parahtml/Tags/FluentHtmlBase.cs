@@ -23,6 +23,14 @@ namespace com.parahtml.Tags
             }
         }
 
+        protected new HtmlOptions Options
+        {
+            get
+            {
+                return (HtmlOptions)base.Context.Options;
+            }
+        }
+
         public HtmlBuilder HtmlBuilder
         {
             get

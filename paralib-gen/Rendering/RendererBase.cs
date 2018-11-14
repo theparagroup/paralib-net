@@ -98,15 +98,6 @@ namespace com.paralib.Gen.Rendering
             _indentContent = indentContent;
         }
 
-
-        private bool DebugSourceFormatting
-        {
-            get
-            {
-                return Context.Options.DebugSourceFormatting;
-            }
-        }
-
         protected Writer Writer
         {
             get
@@ -115,14 +106,27 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected abstract void Comment(string text);
-
-        public abstract string Name { get; }
-
-        private void SourceDebug(string text)
+        protected Options Options
         {
-            Comment(text);
+            get
+            {
+                return Context.Options;
+            }
         }
+
+        private void Comment(string text)
+        {
+            Context.Comment(text);
+        }
+
+        private bool DebugSourceFormatting
+        {
+            get
+            {
+                return Options.DebugSourceFormatting;
+            }
+        }
+
 
         protected override void OnPreBegin()
         {
@@ -134,7 +138,7 @@ namespace com.paralib.Gen.Rendering
                 {
                     if (DebugSourceFormatting)
                     {
-                        SourceDebug($"nl prebegin");
+                        Comment($"nl prebegin");
                     }
 
                     Writer.NewLine();
@@ -152,7 +156,7 @@ namespace com.paralib.Gen.Rendering
                 {
                     if (DebugSourceFormatting)
                     {
-                        SourceDebug($"nl postbegin");
+                        Comment($"nl postbegin");
                     }
 
                     Writer.NewLine();
@@ -177,7 +181,7 @@ namespace com.paralib.Gen.Rendering
                 {
                     if (DebugSourceFormatting)
                     {
-                        SourceDebug($"nl preend");
+                        Comment($"nl preend");
                     }
 
                     Writer.NewLine();
@@ -201,7 +205,7 @@ namespace com.paralib.Gen.Rendering
                 {
                     if (DebugSourceFormatting)
                     {
-                        SourceDebug($"nl postend");
+                        Comment($"nl postend");
                     }
 
                     Writer.NewLine();

@@ -17,19 +17,6 @@ namespace com.parahtml.Css.Fluent
             _selector = selector;
         }
 
-        protected override void Comment(string text)
-        {
-            CssComment(Writer, text);
-        }
-
-        public override string Name
-        {
-            get
-            {
-                return $"css rule {_selector}";
-            }
-        }
-
         protected override void OnBegin()
         {
             Writer.Space();

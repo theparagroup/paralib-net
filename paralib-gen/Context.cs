@@ -18,7 +18,7 @@ namespace com.paralib.Gen
         features to custom components and renderers.
     */
 
-    public class Context
+    public abstract class Context
     {
         public Writer Writer { protected set; get; }
         public Options Options { protected set; get; }
@@ -39,6 +39,8 @@ namespace com.paralib.Gen
 
             Writer = writer;
         }
+
+        public abstract void Comment(string text);
 
         public virtual string UrlPrefix(string url)
         {
