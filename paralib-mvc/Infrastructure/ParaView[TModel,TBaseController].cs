@@ -6,7 +6,6 @@ namespace com.paralib.Mvc.Infrastructure
     public abstract class ParaView<TModel, TBaseController> : WebViewPage<TModel> where TBaseController : ParaController
     {
         public ParaViewHelper<TModel> Para { private set; get; }
-        private paraquery.pQuery _pQuery;
 
         public override void InitHelpers()
         {
@@ -19,20 +18,6 @@ namespace com.paralib.Mvc.Infrastructure
 
             Para = new ParaViewHelper<TModel>(this);
 
-        }
-
-        public paraquery.pQuery pQuery
-        {
-            get
-            {
-                if (_pQuery == null)
-                {
-                    var context = new ParaQuery.Context(ViewContext);
-                    _pQuery = new paraquery.pQuery(context);
-                }
-
-                return _pQuery;
-            }
         }
 
     }
