@@ -5,13 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
-using com.parahtml.Tags;
+using com.parahtml.Html;
 using com.parahtml.Attributes;
-using com.parahtml.Tags.Fluent;
-using com.parahtml;
 using com.paralib.Gen.Fluent;
 
-namespace com.parahtml.Tags.Fluent.Grids
+namespace com.parahtml.Grids
 {
     /*
         FluentGrid. A bootstrap-style grid with a fluent interface.
@@ -274,6 +272,16 @@ namespace com.parahtml.Tags.Fluent.Grids
             return new FluentGrid(Context, _rendererStack, options);
         }
 
+        public IGrid Grid(IList<string> columnClasses = null)
+        {
+            return new FluentGrid(Context, _rendererStack, o =>
+            {
+                o.ContainerClass = _containerClass;
+                o.RowClass = _rowClass;
+                o.ColumnClass = _columnClass;
+                o.GridColumnClasses = columnClasses;
+            });
+        }
 
         public IGrid EndGrid()
         {
@@ -327,9 +335,9 @@ namespace com.parahtml.Tags.Fluent.Grids
             return this;
         }
 
-        public IColumn Html(Action<Html> html)
+        public IColumn Html(Action<FluentHtml> html)
         {
-            var fh = new Html(Context, _rendererStack);
+            var fh = new FluentHtml(Context, _rendererStack);
 
             if (html != null)
             {

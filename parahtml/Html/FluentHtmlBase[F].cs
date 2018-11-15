@@ -3,29 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using com.paralib.Gen.Fluent;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Attributes;
-using com.paralib.Gen.Fluent;
-using com.paralib.Gen;
-using com.parahtml.Tags.Fluent.Grids;
 
-namespace com.parahtml.Tags.Fluent
+namespace com.parahtml.Html
 {
-    /*
-
-        FluentHtml must either be in Block or Inline mode because....
-
-        Since adding HTML elements under an empty elment doesn't make any sense, we don't have
-        that concept (like Tag does) and never go into the "Single" LineMode.
-
-    */
-
-    public partial class Html<F> : FluentHtmlBase<F>, IHtml<F> where F : Html<F>
+    public abstract class FluentHtmlBase<F> : FluentRendererStack<HtmlContext, F> where F : FluentHtmlBase<F>
     {
-
-        public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentHtmlBase(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
+        }
+
+        public new HtmlContext Context
+        {
+            get
+            {
+                return base.Context;
+            }
+        }
+
+        protected HtmlOptions Options
+        {
+            get
+            {
+                return base.Context.Options;
+            }
+        }
+
+        public HtmlBuilder HtmlBuilder
+        {
+            get
+            {
+                return Context.HtmlBuilder;
+            }
         }
 
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
@@ -85,9 +97,5 @@ namespace com.parahtml.Tags.Fluent
             return Open(HtmlBuilder.Li(attributes));
         }
 
-        public IGrid Grid(Action<GridOptions> options = null)
-        {
-            return new FluentGrid(Context,_rendererStack, options);
-        }
     }
 }

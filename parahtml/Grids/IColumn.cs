@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
-using com.parahtml.Tags.Fluent;
-using com.parahtml.Core;
+using com.parahtml.Html;
 
-namespace com.parahtml.Tags.Fluent.Grids
+namespace com.parahtml.Grids
 {
     public interface IColumn
     {
-        IColumn Html(Action<Html> html);
+        IColumn Html(Action<FluentHtml> html);
 
         IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
         IRow Row(IList<string> columnClasses = null);
@@ -20,6 +19,7 @@ namespace com.parahtml.Tags.Fluent.Grids
         IColumn Column(string @class);
 
         IGrid Grid(Action<GridOptions> options=null);
+        IGrid Grid(IList<string> columnClasses = null);
         IGrid EndGrid();
     }
 }

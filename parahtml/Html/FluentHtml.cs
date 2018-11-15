@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 
-namespace com.parahtml.Tags.Fluent
+namespace com.parahtml.Html
 {
-    public class Html : Html<Html>
+    public class FluentHtml : FluentHtmlBase<FluentHtml>
     {
-        public Html(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentHtml(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
     }

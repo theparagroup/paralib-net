@@ -46,8 +46,6 @@
     <Compile Include="Fluent\FluentRendererStack.cs" />
     <Compile Include="Fluent\FluentWriter.cs" />
     <Compile Include="Fluent\FluentWriter[C,F].cs" />
-    <Compile Include="Fluent\IFluentRendererStack[F].cs" />
-    <Compile Include="Fluent\IFluentWriter[F].cs" />
     <Compile Include="Mapping\BuilderOptionsAttribute.cs" />
     <Compile Include="Mapping\ComplexValue.cs" />
     <Compile Include="Mapping\DictionaryBuilder.cs" />
@@ -61,6 +59,7 @@
     <Compile Include="Rendering\BeginBase.cs" />
     <Compile Include="Rendering\EndBase.cs" />
     <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\IHasRendererStack.cs" />
     <Compile Include="Rendering\LineModes.cs" />
     <Compile Include="Rendering\RendererBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />

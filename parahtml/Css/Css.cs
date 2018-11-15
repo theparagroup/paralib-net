@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.parahtml.Tags.Fluent;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.paralib.Gen.Fluent;
 
-namespace com.parahtml.Css.Fluent
+namespace com.parahtml.Css
 {
 
-    public class Css : FluentRendererStack<HtmlContext, Css>, ICss
+    public class FluentCss : FluentRendererStack<HtmlContext, FluentCss>, ICss
     {
-        public Css(CssContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentCss(CssContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 

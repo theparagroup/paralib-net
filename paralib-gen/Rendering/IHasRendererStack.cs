@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.parahtml.Tags
+namespace com.paralib.Gen.Rendering
 {
-    public enum TagTypes
+    public interface IHasRendererStack:IRenderer
     {
-        Inline,
-        Block
+        RendererStack RendererStack { get; }
     }
 }

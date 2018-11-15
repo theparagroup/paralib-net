@@ -75,6 +75,12 @@ namespace com.paralib.Gen.Rendering
     public class RendererStack 
     {
         protected Stack<IRenderer> Stack { private set; get; } = new Stack<IRenderer>();
+        protected bool NoLineBreaks { private set; get; }
+
+        public RendererStack(bool noLineBreaks)
+        {
+            NoLineBreaks = noLineBreaks;
+        }
 
         public virtual int Count
         {
@@ -99,6 +105,18 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
+        protected static IRenderer FindTop(RendererStack rendererStack)
+        {
+            if (rendererStack.Top is IHasRendererStack)
+            {
+                return FindTop(((IHasRendererStack)rendererStack.Top).RendererStack);
+            }
+            else
+            {
+                return rendererStack.Top;
+            }
+        }
+
         protected virtual void Push(IRenderer renderer)
         {
 
@@ -106,9 +124,22 @@ namespace com.paralib.Gen.Rendering
             if (renderer != null)
             {
                 /*
+
+                */
+
+                if (NoLineBreaks && renderer.LineMode != LineModes.None)
+                { 
+                    throw new InvalidOperationException($"Renderer's LineMode {renderer.LineMode} is not allowed when RendererStack is in NoLineBreaks mode");
+                }
+
+
+                /*
                     Before we Begin() and Push() this new renderer, we want to clean up the stack first.
 
                     This means:
+
+                        If we're pushing onto a renderer that has it's own renderer stack, we need to walk
+                        that stack and close
 
                         If we're pushing onto a None, Pop() it. According to the rules, the next renderer after
                         the None should be a Block, so that's all we need to do.
@@ -123,13 +154,32 @@ namespace com.paralib.Gen.Rendering
                 if (Stack.Count > 0)
                 {
                     IRenderer top = Stack.Peek();
+
+
                     if (top.ContainerMode == ContainerModes.None)
                     {
                         Pop();
                     }
-                    else if (renderer.ContainerMode != ContainerModes.Inline)
+                    else
                     {
-                        PopInlines(false);
+                        //since we always pop nones first when pushing,
+                        //we know that the top is either a block or inline
+                        //unless it is a nested rendererstack, in which case
+                        //we need it's "top"
+
+                        if (top is IHasRendererStack)
+                        {
+                            var rs = ((IHasRendererStack)top).RendererStack;
+                            top = FindTop(rs);
+                        }
+
+                        if (top.ContainerMode==ContainerModes.None || (top.ContainerMode==ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline))
+                        {
+                            //if the top is a None,
+                            //or if we're pushing a non-inline onto an inline, 
+                            //clear inlines to last block
+                            PopToBlock(false);
+                        }
                     }
                 }
 
@@ -139,12 +189,6 @@ namespace com.paralib.Gen.Rendering
                 //push it
                 Stack.Push(renderer);
             }
-        }
-
-        public virtual IRenderer Open(IRenderer renderer)
-        {
-            Push(renderer);
-            return renderer;
         }
 
         protected virtual void Pop()
@@ -161,7 +205,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected virtual bool PopInlines(bool popBlock)
+        protected virtual bool PopToBlock(bool popBlock)
         {
             //pop Nones/Inlines till we hit a block
             //we follow renderstacks and pop them if empty
@@ -170,7 +214,9 @@ namespace com.paralib.Gen.Rendering
             {
                 IRenderer top = Stack.Peek();
 
-                if (top is RendererStack)
+                //The order is important here(renderer stacks first).
+
+                if (top is IHasRendererStack)
                 {
                     /*
                         we can implement IRenderer on a custom rendererstack
@@ -186,8 +232,8 @@ namespace com.paralib.Gen.Rendering
                             it's the same thing, so we just ignore container
                             mode here
                     */
-                    var rs = (RendererStack)top;
-                    var blockfound=rs.PopInlines(popBlock);
+                    var rs = ((IHasRendererStack)top).RendererStack;
+                    var blockfound=rs.PopToBlock(popBlock);
 
                     //if we emptied rs, pop rs too
                     if (rs.Stack.Count == 0)
@@ -231,6 +277,11 @@ namespace com.paralib.Gen.Rendering
         }
 
 
+        public virtual IRenderer Open(IRenderer renderer)
+        {
+            Push(renderer);
+            return renderer;
+        }
 
         public virtual void Close()
         {
@@ -258,12 +309,12 @@ namespace com.paralib.Gen.Rendering
 
         public void CloseUp()
         {
-            PopInlines(false);
+            PopToBlock(false);
         }
 
         public void CloseBlock()
         {
-            PopInlines(true);
+            PopToBlock(true);
         }
 
         public virtual void CloseAll()

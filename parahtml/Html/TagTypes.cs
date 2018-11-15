@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.parahtml.Packages;
 
-namespace com.parahtml.Core
+namespace com.parahtml.Html
 {
-    public class ParaHtmlPackage : Package
+    public enum TagTypes
     {
-        
+        Inline,
+        Block
     }
 }

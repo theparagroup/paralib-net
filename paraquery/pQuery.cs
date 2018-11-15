@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using com.paraquery.jQuery.Blocks;
-using com.paraquery.Bootstrap;
-using com.paraquery.Js.Blocks;
-using com.paralib.Gen;
-using com.parahtml.Core;
-using com.parahtml.Tags.Fluent;
+//using com.paraquery.jQuery.Blocks;
+//using com.paraquery.Bootstrap;
+//using com.paraquery.Js.Blocks;
+//using com.paralib.Gen;
+//using com.parahtml.Core;
 
 namespace com.paraquery
 {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 
-namespace com.parahtml.Tags
+namespace com.parahtml.Html
 {
     /* 
 
@@ -84,7 +84,7 @@ namespace com.parahtml.Tags
             }
         }
 
-        private static LineModes GetLineMode(TagTypes tagType, bool empty)
+        public static LineModes GetLineMode(TagTypes tagType, bool empty)
         {
             if (tagType == TagTypes.Block)
             {
@@ -104,9 +104,9 @@ namespace com.parahtml.Tags
 
         }
 
-        private static ContainerModes GetContainerMode(TagTypes tagType, bool empty)
+        public static ContainerModes GetContainerMode(TagTypes tagType, bool empty)
         {
-            if(empty)
+            if (empty)
             {
                 return ContainerModes.None;
             }
@@ -135,7 +135,7 @@ namespace com.parahtml.Tags
             }
 
             if (!Empty)
-            {
+            { 
                 Writer.Write(">");
             }
         }
@@ -158,7 +158,7 @@ namespace com.parahtml.Tags
                 Writer.Write($"</{TagName}>");
             }
 
-            if (Context.IsDebug(DebugFlags.EndTag) && ContainerMode == ContainerModes.Block)
+            if (ContainerMode == ContainerModes.Block && Context.IsDebug(DebugFlags.EndTag))
             {
                 if (Attributes != null)
                 {

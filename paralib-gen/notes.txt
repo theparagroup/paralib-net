@@ -47,6 +47,19 @@ Design Goals & Notes
 		milligram (rows, cols, column, not nestable)
 		furtive (grid, row, col)
 
+		
+	autocomplete
+		Autocomplete.js
+			https://www.devbridge.com/sourcery/components/jquery-autocomplete/
+		Awesomplete
+			https://leaverou.github.io/awesomplete/
+		EasyAutocomplete
+			http://easyautocomplete.com/
+		Flexselect
+			http://rmm5t.github.io/jquery-flexselect/
+		Ajax Autocomplete for jQuery
+			https://www.devbridge.com/sourcery/components/jquery-autocomplete/
+
 
 	fluent css inline/external
 

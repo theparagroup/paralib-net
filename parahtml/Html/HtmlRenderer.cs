@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Rendering;
-using com.paralib.Gen;
+using com.parahtml.Core;
 
-namespace com.parahtml.Core
+namespace com.parahtml.Html
 {
     /*
         

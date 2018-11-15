@@ -12,7 +12,7 @@ using com.parahtml.Core;
     Technically SGML, but we're putting it in the Tags namespace.
 
 */
-namespace com.parahtml.Tags
+namespace com.parahtml.Html
 {
     public class DOCTYPE : HtmlRenderer
     {

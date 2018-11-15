@@ -5,34 +5,40 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
-using com.parahtml.Tags.Fluent;
-using com.paralib.Gen.Fluent;
-using com.parahtml.Tags;
+using com.parahtml.Html;
+using com.parahtml.Css;
+using com.parahtml.Grids;
 
 namespace com.parahtml
 {
     public class Fragment : FluentHtmlBase<Fragment>, IDisposable
     {
-        public Fragment(HtmlContext context) : base(context, new RendererStack())
+        public Fragment(HtmlContext context) : base(context, new RendererStack(false))
         {
         }
 
-        public Css.Fluent.Css Css()
+        public FluentCss Css()
         {
             var cssContext = new Css.CssContext(Context);
-            var css = new Css.Fluent.Css(cssContext, _rendererStack);
+            var css = new FluentCss(cssContext, _rendererStack);
             return css;
         }
 
-        public IDocument Document()
+        public FluentDocument Document()
         {
-            return new Document(Context, _rendererStack);
+            return new FluentDocument(Context, _rendererStack);
         }
 
-        public Html Html()
+        public FluentHtml Html()
         {
-            return new Html(Context, _rendererStack);
+            return new FluentHtml(Context, _rendererStack);
         }
+
+        public IGrid Grid(Action<GridOptions> options = null)
+        {
+            return new FluentGrid(Context, _rendererStack, options);
+        }
+
 
         public void Dispose()
         {

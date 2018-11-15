@@ -1,31 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="com.parahtml.Core.HtmlContext">
-    <Position X="7.75" Y="0.5" Width="2" />
+    <Position X="5.25" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAEBCAAAIAAAAARAAAABAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Core\HtmlContext.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Core.HtmlOptions">
-    <Position X="10.25" Y="0.5" Width="2" />
+    <Position X="7.75" Y="0.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAIAAAAAAAAQAAAgAAAAAAAAQAiAAAAA=</HashCode>
       <FileName>Core\HtmlOptions.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.parahtml.Core.HtmlRenderer">
+  <Class Name="com.parahtml.Html.HtmlRenderer">
     <Position X="16.75" Y="5.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>Core\HtmlRenderer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.parahtml.Core.ParaHtmlPackage">
-    <Position X="1.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\ParaHtmlPackage.cs</FileName>
+      <FileName>Html\HtmlRenderer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Core.AttributeBuilder">
@@ -51,7 +44,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Packages.Package">
-    <Position X="1.5" Y="0.5" Width="1.5" />
+    <Position X="3" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Packages\Package.cs</FileName>
@@ -73,38 +66,31 @@
     <TypeIdentifier />
   </Class>
   <Class Name="com.parahtml.Core.HtmlBuilder">
-    <Position X="26.5" Y="7.75" Width="2.25" />
+    <Position X="26.75" Y="10" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAEAAAAAkAAAMAgIAABAAAQAAAABAAEDQIAAAIwAAA=</HashCode>
       <FileName>Core\HtmlBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Fragment">
-    <Position X="29.25" Y="13.75" Width="2.75" />
+    <Position X="33.75" Y="16.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAFAACAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAgAAACAAAAAAAAAAAAAAAAAAFAACAAAAAAAAAAA=</HashCode>
       <FileName>Fragment.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="com.parahtml.Tags.Tag">
+  <Class Name="com.parahtml.Html.Tag">
     <Position X="19.5" Y="8.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAIIAAIQQAgAAAAAACAAAAAAQCAA=</HashCode>
-      <FileName>Tags\Tag.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAIIAAIAQAgAAAAAACAAAAAAQCAA=</HashCode>
+      <FileName>Html\Tag.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.RendererBase">
     <Position X="16.5" Y="0.75" Width="2.5" />
     <TypeIdentifier />
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.parahtml.Core.HtmlComponent&lt;F, P&gt;">
-    <Position X="26.25" Y="13.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Core\HtmlComponent.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Fluent.FluentRendererStack&lt;C, F&gt;">
     <Position X="30.25" Y="5" Width="2.25" />
@@ -116,63 +102,133 @@
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="com.parahtml.Css.Fluent.Css">
-    <Position X="33.25" Y="9.5" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Css\Fluent\Css.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.parahtml.Tags.Fluent.Document">
-    <Position X="32.5" Y="13.75" Width="3" />
-    <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAAAMAAAAABAAAAAAAABAAABAAAAAAgAAA=</HashCode>
-      <FileName>Tags\Fluent\Document.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
-  <Class Name="com.parahtml.Tags.Fluent.Html&lt;F&gt;">
-    <Position X="36.25" Y="13.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAgAAAgIAAAAAAAAAAAAAAECQIAAAIwAAA=</HashCode>
-      <FileName>Tags\Fluent\Html[F].cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.parahtml.Tags.Fluent.Html">
-    <Position X="36.5" Y="18.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Tags\Fluent\Html.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.parahtml.Tags.DOCTYPE">
+  <Class Name="com.parahtml.Html.DOCTYPE">
     <Position X="14" Y="8.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQABgAAACAACAAAAAAAAAA=</HashCode>
-      <FileName>Tags\DOCTYPE.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABgAAACAACAAAAAAAAAA=</HashCode>
+      <FileName>Html\DOCTYPE.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.parahtml.Tags.FluentHtmlBase&lt;F&gt;">
-    <Position X="29.5" Y="9.5" Width="2.25" />
+  <Class Name="com.parahtml.Html.FluentHtmlBase&lt;F&gt;">
+    <Position X="29.5" Y="9.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>Tags\FluentHtmlBase.cs</FileName>
+      <HashCode>AAAAAAAABgAgAAAgIAAAAAAAAAAAAAAECQIAAAJwAAA=</HashCode>
+      <FileName>Html\FluentHtmlBase[F].cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="com.parahtml.Html.HtmlComponentBase&lt;F, P&gt;">
+    <Position X="25" Y="16.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html\HtmlComponentBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html.FluentDocument">
+    <Position X="30.75" Y="16.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAMAAAAABAAAAAAAABAAABAAAAAAgAAA=</HashCode>
+      <FileName>Html\FluentDocument.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html.FluentHtml">
+    <Position X="28" Y="16.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html\FluentHtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Grids.FluentGrid">
+    <Position X="33.25" Y="9.5" Width="2.25" />
+    <NestedTypes>
+      <Class Name="com.parahtml.Grids.FluentGrid.GridBlock" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Grids\FluentGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="com.parahtml.Grids.FluentGrid.ContainerTag" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Grids\FluentGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="com.parahtml.Grids.FluentGrid.RowTag" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Grids\FluentGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="com.parahtml.Grids.FluentGrid.ColumnTag" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Grids\FluentGrid.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQAAAgQJAgAAAACBAABAAAAEAAAABgIgBABAAAAAAAA=</HashCode>
+      <FileName>Grids\FluentGrid.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Grids.GridOptions">
+    <Position X="36.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABBACAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Grids\GridOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html.TagComponent&lt;P&gt;">
+    <Position X="24.75" Y="23" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html\TagComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html.RendererComponent&lt;F, P&gt;">
+    <Position X="25" Y="19" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAACAAAEAAAAAAAABAAAAAAAAECAAAAIAAAAA=</HashCode>
+      <FileName>Html\RendererComponent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="com.parahtml.Grids.IGrid">
+    <Position X="36.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAQAAAAAAAABAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grids\IGrid.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Grids.IContainer">
+    <Position X="38" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAABAAAAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grids\IContainer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Grids.IRow">
+    <Position X="39.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAABAABAAAAAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grids\IRow.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Grids.IColumn">
+    <Position X="41.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAgAAAAAAAAAAAABAAAAAAAAABgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Grids\IColumn.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="com.parahtml.DebugFlags">
-    <Position X="12.5" Y="0.5" Width="1.5" />
+    <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAEBAAAAQAQAAAAAACAAAIAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <HashCode>AAAABAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>DebugFlags.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="com.parahtml.Tags.TagTypes">
+  <Enum Name="com.parahtml.Html.TagTypes">
     <Position X="17.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Tags\TagTypes.cs</FileName>
+      <FileName>Html\TagTypes.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
