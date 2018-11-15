@@ -48,6 +48,11 @@ namespace com.parahtml.Html
 
         void IRenderer.Begin()
         {
+            DoBegin();
+        }
+
+        protected virtual void DoBegin()
+        {
             OnBegin();
         }
 

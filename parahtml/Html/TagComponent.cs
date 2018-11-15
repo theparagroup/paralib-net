@@ -21,12 +21,17 @@ namespace com.parahtml.Html
     */
     public abstract class TagComponent<P> : RendererComponent<TagComponent<P>, P> where P : Package, new()
     {
-        public TagTypes TagType { private set; get; }
+        protected Tag _tag;
 
-        public TagComponent(HtmlContext context, TagTypes tagType, bool empty) : base(context, Html.Tag.GetLineMode(tagType, empty), Html.Tag.GetContainerMode(tagType, empty))
+        public TagComponent(HtmlContext context, Tag tag) : base(context, tag.LineMode, tag.ContainerMode)
         {
-            TagType = tagType;
+            _tag = tag;
         }
 
+        protected override void DoBegin()
+        {
+            Open(_tag);
+            base.DoBegin();
+        }
     }
 }
