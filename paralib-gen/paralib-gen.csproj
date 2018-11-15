@@ -46,6 +46,7 @@
     <Compile Include="Fluent\FluentRendererStack.cs" />
     <Compile Include="Fluent\FluentWriter.cs" />
     <Compile Include="Fluent\FluentWriter[C,F].cs" />
+    <Compile Include="Fluent\IHasContext.cs" />
     <Compile Include="Mapping\BuilderOptionsAttribute.cs" />
     <Compile Include="Mapping\ComplexValue.cs" />
     <Compile Include="Mapping\DictionaryBuilder.cs" />

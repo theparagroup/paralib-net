@@ -7,19 +7,19 @@ using com.paralib.Gen.Rendering;
 
 namespace com.paralib.Gen.Fluent
 {
-    public abstract class FluentWriter<C, F> where C : Context where F : FluentWriter<C, F>
+    public abstract class FluentWriter<C, F>:IHasContext<C> where C : Context where F : FluentWriter<C, F>
     {
         protected RendererStack _rendererStack;
         protected C Context { private set; get; }
 
         public FluentWriter(C context, RendererStack rendererStack)
         {
-            if (rendererStack==null)
-            {
-                throw new InvalidOperationException("RendererStack cannot be null");
-            }
-
             _rendererStack = rendererStack;
+            Context = context;
+        }
+
+        void IHasContext<C>.SetContext(C context)
+        {
             Context = context;
         }
 
@@ -64,5 +64,6 @@ namespace com.paralib.Gen.Fluent
             Context.Writer.Snippet(text, newline);
             return (F)this;
         }
+
     }
 }
