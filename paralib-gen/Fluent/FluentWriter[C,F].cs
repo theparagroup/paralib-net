@@ -65,5 +65,17 @@ namespace com.paralib.Gen.Fluent
             return (F)this;
         }
 
+        public F Indent()
+        {
+            Context.Writer.Indent();
+            return (F)this;
+        }
+
+        public F Dedent()
+        {
+            Context.Writer.Dedent();
+            return (F)this;
+        }
+
     }
 }

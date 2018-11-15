@@ -16,7 +16,6 @@ namespace com.parahtml.Core
     */
     public class HtmlContext : Context
     {
-        public new HtmlOptions Options { private set; get; }
         public Dictionary<Type, Package> Packages { private set; get; } = new Dictionary<Type, Package>();
         public AttributeBuilder AttributeBuilder { private set; get; }
         public PropertyBuilder PropertyBuilder { private set; get; }
@@ -31,12 +30,12 @@ namespace com.parahtml.Core
 
         public HtmlContext(Writer writer, HtmlOptions options = null) : this(writer)
         {
-            Options = options ?? new HtmlOptions();
+            base.Options = options ?? new HtmlOptions();
         }
 
         public HtmlContext(Writer writer, Action<HtmlOptions> options = null) : this(writer)
         {
-            Options = new HtmlOptions();
+            base.Options = new HtmlOptions();
 
             if (options != null)
             {
@@ -45,6 +44,14 @@ namespace com.parahtml.Core
 
             base.Options = Options;
 
+        }
+
+        public new HtmlOptions Options
+        {
+            get
+            {
+                return (HtmlOptions)base.Options;
+            }
         }
 
         public override void Comment(string text)
