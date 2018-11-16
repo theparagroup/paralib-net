@@ -10,7 +10,7 @@ namespace com.parahtml.Css
 {
     public class CssContext:HtmlContext
     {
-        public CssContext(HtmlContext context) : base(context.Writer, context.Options)
+        public CssContext(HtmlContext context) : base(context.Writer, context.Server, context.Options)
         {
         }
 

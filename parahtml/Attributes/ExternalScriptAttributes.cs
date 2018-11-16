@@ -20,12 +20,15 @@ namespace com.parahtml.Attributes
 
     */
 
-    public class ScriptAttributes : GlobalAttributes
+    public class ExternalScriptAttributes : GlobalAttributes
     {
         public string Type { get; set; }
 
-        [BuilderOptions("xml:space", Value = "preserve")]
-        public bool? XmlSpace { get; set; }
+        //external scripts only
+        public string Src { get; set; }
+        public string Charset { get; set; }
+        public string Async { get; set; }
+        public bool? Defer { get; set; }
 
     }
 }

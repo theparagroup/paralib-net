@@ -40,6 +40,11 @@ namespace com.parahtml.Html
             }
         }
 
+        public string Url(string url)
+        {
+            return Context.Server.Url(url);
+        }
+
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             if (tagType == TagTypes.Block)
@@ -85,6 +90,13 @@ namespace com.parahtml.Html
         public virtual F Script(Action<ScriptAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Script(attributes));
+        }
+
+        public virtual F ExternalScript(Action<ExternalScriptAttributes> attributes = null)
+        {
+            Open(HtmlBuilder.ExternalScript(attributes));
+            Close();
+            return (F)this;
         }
 
         public virtual F NoScript(Action<GlobalAttributes> attributes = null)

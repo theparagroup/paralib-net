@@ -125,6 +125,11 @@ namespace com.parahtml.Core
             return Block("script", Attributes(attributes));
         }
 
+        public virtual Tag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
+        {
+            return Inline("script", Attributes(attributes));
+        }
+
         public virtual Tag NoScript(Action<GlobalAttributes> attributes = null)
         {
             return Block("noscript", Attributes(attributes));

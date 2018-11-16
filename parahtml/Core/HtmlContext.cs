@@ -16,24 +16,26 @@ namespace com.parahtml.Core
     */
     public class HtmlContext : Context
     {
+        public Server Server { private set; get; }
         public Dictionary<Type, Package> Packages { private set; get; } = new Dictionary<Type, Package>();
         public AttributeBuilder AttributeBuilder { private set; get; }
         public PropertyBuilder PropertyBuilder { private set; get; }
         public HtmlBuilder HtmlBuilder { private set; get; }
 
-        protected HtmlContext(Writer writer):base(writer)
+        protected HtmlContext(Writer writer, Server server):base(writer)
         {
+            Server = server;
             AttributeBuilder = new AttributeBuilder(this);
             PropertyBuilder = new PropertyBuilder(this);
             HtmlBuilder = new HtmlBuilder(this);
         }
 
-        public HtmlContext(Writer writer, HtmlOptions options = null) : this(writer)
+        public HtmlContext(Writer writer, Server server, HtmlOptions options = null) : this(writer, server)
         {
             base.Options = options ?? new HtmlOptions();
         }
 
-        public HtmlContext(Writer writer, Action<HtmlOptions> options = null) : this(writer)
+        public HtmlContext(Writer writer, Server server, Action<HtmlOptions> options = null) : this(writer, server)
         {
             base.Options = new HtmlOptions();
 
@@ -62,6 +64,11 @@ namespace com.parahtml.Core
         public bool IsDebug(DebugFlags debugFlags)
         {
             return (Options.Debug & debugFlags) != 0;
+        }
+
+        public string Url(string url)
+        {
+            return Server.Url(url);
         }
 
         public Package RegisterPackage<T>() where T : Package, new()
