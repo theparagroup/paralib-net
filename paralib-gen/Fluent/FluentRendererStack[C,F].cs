@@ -10,93 +10,68 @@ namespace com.paralib.Gen.Fluent
 
     public abstract class FluentRendererStack<C, F> : FluentWriter<C, F> where C : Context where F : FluentRendererStack<C, F>
     {
-        protected Stack<Marker> _markers;
+        
 
         public FluentRendererStack(C context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 
-        protected class Marker
-        {
-            public string Name { private set; get; }
-            public IRenderer Renderer { private set; get; }
-
-            public Marker(string name, IRenderer renderer)
-            {
-                Name = name;
-                Renderer = renderer;
-            }
-        }
+       
 
         public virtual IRenderer Top
         {
             get
             {
-                return _rendererStack.Top;
+                return RendererStack.Top;
             }
         }
 
         public virtual F Open(IRenderer renderer)
         {
-            _rendererStack.Open(renderer);
+            RendererStack.Open(renderer);
             return (F)this;
         }
 
         public virtual F CloseUp()
         {
-            _rendererStack.CloseUp();
+            RendererStack.CloseUp();
             return (F)this;
         }
 
         public virtual F CloseBlock()
         {
-            _rendererStack.CloseBlock();
+            RendererStack.CloseBlock();
             return (F)this;
         }
 
         public virtual F CloseAll()
         {
-            _rendererStack.CloseAll();
+            RendererStack.CloseAll();
             return (F)this;
         }
 
         public virtual F Close()
         {
-            _rendererStack.Close();
+            RendererStack.Close();
             return (F)this;
         }
 
         public virtual F Close(IRenderer renderer)
         {
-            _rendererStack.Close(renderer);
+            RendererStack.Close(renderer);
             return (F)this;
         }
 
         public virtual F Mark(string name)
         {
-            if (_markers==null)
-            {
-                _markers = new Stack<Marker>();
-            }
-
-            _markers.Push(new Marker(name, Top));
-
+            RendererStack.Mark(name);
             return (F)this;
         }
 
         public virtual F Close(string name)
         {
-            while (_markers?.Count > 0)
-            {
-                var marker = _markers.Pop();
-
-                if (marker.Name == name)
-                {
-                    return Close(marker.Renderer);
-                }
-            }
-
-            throw new InvalidOperationException($"Marker {name} doesn't exist");
+            RendererStack.Close(name);
+            return (F)this;
         }
 
         public virtual F Open<R>(R renderer, Action<R> action) where R : IRenderer

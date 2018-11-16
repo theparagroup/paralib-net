@@ -75,6 +75,7 @@ namespace com.paralib.Gen.Rendering
     public class RendererStack 
     {
         protected Stack<IRenderer> Stack { private set; get; } = new Stack<IRenderer>();
+        public Stack<Marker> Markers { private set; get; }
         protected bool NoLineBreaks { private set; get; }
 
         public RendererStack(bool noLineBreaks)
@@ -326,7 +327,34 @@ namespace com.paralib.Gen.Rendering
 
         }
 
+        public virtual void Mark(string name)
+        {
+            if (Markers == null)
+            {
+                Markers = new Stack<Marker>();
+            }
 
+            if (Top!=null)
+            {
+                Markers.Push(new Marker(name, Top));
+            }
+        }
+
+        public virtual void Close(string name)
+        {
+            while (Markers?.Count > 0)
+            {
+                var marker = Markers.Pop();
+
+                if (marker.Name == name)
+                {
+                    Close(marker.Renderer);
+                    return;
+                }
+            }
+
+            throw new InvalidOperationException($"Marker {name} doesn't exist");
+        }
 
 
     }

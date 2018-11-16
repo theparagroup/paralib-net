@@ -72,7 +72,7 @@
   <Class Name="com.paralib.Gen.Rendering.RendererStack">
     <Position X="18.75" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAIAAAAAAAAAQAgICIQACAAAAAAACBCAI=</HashCode>
+      <HashCode>AAACAAAAAAAAIAAAAAgAAAQAgICIQACAAACAAACBCAI=</HashCode>
       <FileName>Rendering\RendererStack.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -84,7 +84,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Mapping.NVPDictionary">
-    <Position X="20.75" Y="3" Width="1.5" />
+    <Position X="21" Y="3" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\NVPDictionary.cs</FileName>
@@ -98,7 +98,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Mapping.ComplexValue">
-    <Position X="23.75" Y="2.75" Width="1.5" />
+    <Position X="28" Y="3.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\ComplexValue.cs</FileName>
@@ -106,7 +106,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="com.paralib.Gen.Mapping.BuilderOptionsAttribute">
-    <Position X="25.75" Y="0.5" Width="2.25" />
+    <Position X="18.25" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Mapping\BuilderOptionsAttribute.cs</FileName>
@@ -115,7 +115,7 @@
   <Class Name="com.paralib.Gen.Rendering.RendererBase">
     <Position X="13.25" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAEEAgEEAgAAAAAQEAAAAAAgAAAAAAAAAAAAAEFAAAA=</HashCode>
+      <HashCode>AAkEAgEEAgAAAAAQAAAAAAAgAAAAAAAAAAAAAEFAAAA=</HashCode>
       <FileName>Rendering\RendererBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -123,9 +123,10 @@
   <Class Name="com.paralib.Gen.Fluent.FluentWriter&lt;C, F&gt;">
     <Position X="24" Y="8.25" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>CAAAACAAAgAIAAAIAAAAAAAAAAAAAAAAAAACAgEAAAA=</HashCode>
+      <HashCode>AAAAACAAAgAMAAAIAAAgAAACAAAAAAAAAAACAgEAQAA=</HashCode>
       <FileName>Fluent\FluentWriter[C,F].cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="com.paralib.Gen.Fluent.FluentWriter&lt;C&gt;">
     <Position X="22.5" Y="12.75" Width="2.25" />
@@ -137,7 +138,7 @@
   <Class Name="com.paralib.Gen.Fluent.FluentRendererStack&lt;C, F&gt;">
     <Position X="26.5" Y="12.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAABAAAAAAAAAIAIAACAAAAAAACAAAI=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAABAAAAAAAAAIAIAACAAACAAACAAAI=</HashCode>
       <FileName>Fluent\FluentRendererStack[C,F].cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -148,97 +149,53 @@
       <FileName>Fluent\FluentRendererStack.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Fluent.FluentConcepts">
-    <Position X="30.25" Y="8" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Foo" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Interface Name="com.paralib.Gen.Fluent.FluentConcepts.IFluent&lt;F&gt;" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Interface>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Fluent" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Foo&lt;F&gt;" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-        <Lollipop Position="0.2" />
-      </Class>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Bar" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Interface Name="com.paralib.Gen.Fluent.FluentConcepts.IFoo&lt;F&gt;" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Interface>
-      <Interface Name="com.paralib.Gen.Fluent.FluentConcepts.IBar&lt;F&gt;" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Interface>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Test" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Bar&lt;F&gt;" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-        <Lollipop Position="0.2" />
-      </Class>
-      <Class Name="com.paralib.Gen.Fluent.FluentConcepts.Fluent&lt;F&gt;" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Fluent\FluentConcepts.cs</NewMemberFileName>
-        </TypeIdentifier>
-        <Lollipop Position="0.2" />
-      </Class>
-    </NestedTypes>
+  <Class Name="com.paralib.Gen.Rendering.Renderer">
+    <Position X="13.5" Y="12.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Fluent\FluentConcepts.cs</FileName>
+      <HashCode>AAEEAAEAAAAAAAAAAAAAAAAgAgAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\Renderer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paralib.Gen.Rendering.Marker">
+    <Position X="21" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <FileName>Rendering\Marker.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="com.paralib.Gen.Mapping.IValueContainer">
-    <Position X="26" Y="4.25" Width="1.5" />
+    <Position X="26" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\IValueContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Mapping.IComplexValue&lt;C&gt;">
-    <Position X="23.5" Y="4.75" Width="1.75" />
+    <Position X="26" Y="3.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\IComplexValue.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Mapping.IDynamicValueContainer">
-    <Position X="25.75" Y="2.75" Width="2.25" />
+    <Position X="26" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\IDynamicValueContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Rendering.IRenderer">
-    <Position X="15.5" Y="8.25" Width="1.5" />
+    <Position X="15.5" Y="8.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAgAAAAAAAAAQAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.paralib.Gen.Rendering.IHasRendererStack">
+    <Position X="15.5" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Rendering\IHasRendererStack.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">

@@ -36,9 +36,6 @@ Design Goals & Notes
 	re-test nested rendererstacks
 	review grids/CloseGrid() in context of Html()
 
-	Mark()
-	CloseToMark()
-
 	remove all junk from paralib-mvc
 
 	grids

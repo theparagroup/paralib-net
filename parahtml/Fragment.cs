@@ -20,20 +20,14 @@ namespace com.parahtml
         public FluentCss Css()
         {
             var cssContext = new Css.CssContext(Context);
-            var css = new FluentCss(cssContext, _rendererStack);
+            var css = new FluentCss(cssContext, RendererStack);
             return css;
-        }
-
-        public FluentDocument Document()
-        {
-            return new FluentDocument(Context, _rendererStack);
         }
 
         public IGrid Grid(Action<GridOptions> options = null)
         {
-            return new FluentGrid(Context, _rendererStack, options);
+            return new FluentGrid(Context, RendererStack, options);
         }
-
 
         public void Dispose()
         {

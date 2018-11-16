@@ -140,9 +140,42 @@ namespace com.parahtml.Grids
             }
         }
 
+        protected void CloseContainer()
+        {
+            //end all columns and rows up to and including last container
+            //if no row is found, end all columns up to but NOT including last grid
+            while (RendererStack.Count > 0)
+            {
+                IRenderer top = RendererStack.Top;
+
+                if (top is ContainerTag)
+                {
+                    _containerColulmnClasses = null;
+                    RendererStack.Close();
+                    break;
+                }
+                else if (top is RowTag)
+                {
+                    _rowColulmnClasses = null;
+                    RendererStack.Close();
+                }
+                else if (top is ColumnTag)
+                {
+                    RendererStack.Close();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            _columnNumber = 0;
+
+        }
+
         public IContainer Container(Action<GlobalAttributes> attributes, IList<string> columnClasses = null)
         {
-            // fluid ? "container-fluid" : "container"
+            CloseContainer();
             _containerColulmnClasses = columnClasses;
             return Open(new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _containerClass })));
         }
@@ -156,19 +189,19 @@ namespace com.parahtml.Grids
         {
             //end all columns up to and including last row
             //if no row is found, end all columns up to but NOT including last grid/container
-            while (_rendererStack.Count > 0)
+            while (RendererStack.Count > 0)
             {
-                IRenderer top = _rendererStack.Top;
+                IRenderer top = RendererStack.Top;
 
                 if (top is RowTag)
                 {
                     _rowColulmnClasses = null;
-                    _rendererStack.Close();
+                    RendererStack.Close();
                     break;
                 }
                 else if (top is ColumnTag)
                 {
-                    _rendererStack.Close();
+                    RendererStack.Close();
                 }
                 else
                 {
@@ -197,13 +230,13 @@ namespace com.parahtml.Grids
             //end all elements up to last column
             //end last (current) column
             //don't end grids, row or containers
-            while (_rendererStack.Count > 0)
+            while (RendererStack.Count > 0)
             {
-                IRenderer top = _rendererStack.Top;
+                IRenderer top = RendererStack.Top;
 
                 if (top is ColumnTag)
                 {
-                    _rendererStack.Close();
+                    RendererStack.Close();
                     break;
                 }
                 else if (top is GridBlock || top is ContainerTag || top is RowTag)
@@ -212,7 +245,7 @@ namespace com.parahtml.Grids
                 }
                 else
                 {
-                    _rendererStack.Close();
+                    RendererStack.Close();
                 }
             }
 
@@ -253,7 +286,7 @@ namespace com.parahtml.Grids
 
         public IGrid Grid(Action<GridOptions> options = null)
         {
-            return new FluentGrid(Context, _rendererStack, options);
+            return new FluentGrid(Context, RendererStack, options);
         }
 
         public IGrid Grid(IList<string> columnClasses = null)
@@ -271,19 +304,29 @@ namespace com.parahtml.Grids
         {
             //end all elements up to last grid, if any
             //end last (current) grid
-            while (_rendererStack.Count > 0)
+            while (RendererStack.Count > 0)
             {
-                IRenderer top = _rendererStack.Top;
+                IRenderer top = RendererStack.Top;
 
                 if (top is GridBlock)
                 {
-                    _rendererStack.Close();
+                    RendererStack.Close();
                     break;
                 }
                 else
                 {
-                    _rendererStack.Close();
+                    RendererStack.Close();
                 }
+            }
+
+            return this;
+        }
+
+        protected FluentGrid Here<T>(Action<T> action, T value)
+        {
+            if (action != null)
+            {
+                action(value);
             }
 
             return this;
@@ -291,44 +334,53 @@ namespace com.parahtml.Grids
 
         public IGrid Here(Action<IGrid> grid)
         {
-            if (grid != null)
+            return Here(grid, this);
+        }
+
+        public IContainer Here(Action<IContainer> grid)
+        {
+            return Here(grid, this);
+        }
+
+        public IRow Here(Action<IRow> grid)
+        {
+            return Here(grid, this);
+        }
+
+        public IColumn Here(Action<IColumn> grid)
+        {
+            return Here(grid, this);
+        }
+
+        protected FluentGrid _Html(Action<FluentHtml> action)
+        {
+            if (action != null)
             {
-                grid(this);
+                var fh = new FluentHtml(Context, RendererStack);
+                action(fh);
             }
 
             return this;
         }
 
-        public IRow Here(Action<IContainer> container)
+        IGrid IGrid.Html(Action<FluentHtml> html)
         {
-            if (container != null)
-            {
-                container(this);
-            }
-
-            return this;
+            return _Html(html);
         }
 
-        public IRow Here(Action<IColumn> row)
+        IContainer IContainer.Html(Action<FluentHtml> html)
         {
-            if (row!=null)
-            {
-                row(this);
-            }
-
-            return this;
+            return _Html(html);
         }
 
-        public IColumn Html(Action<FluentHtml> html)
+        IRow IRow.Html(Action<FluentHtml> html)
         {
-            var fh = new FluentHtml(Context, _rendererStack);
+            return _Html(html);
+        }
 
-            if (html != null)
-            {
-                html(fh);
-            }
-
-            return this;
+        IColumn IColumn.Html(Action<FluentHtml> html)
+        {
+            return _Html(html);
         }
 
     }

@@ -57,6 +57,7 @@
     <Compile Include="Mapping\NVPDictionary.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\Marker.cs" />
     <Compile Include="Rendering\Renderer.cs" />
     <Compile Include="Rendering\BeginBase.cs" />
     <Compile Include="Rendering\EndBase.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Rendering\LineModes.cs" />
     <Compile Include="Rendering\RendererBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
-    <Compile Include="Rendering\RendererStackState.cs" />
     <Compile Include="Rendering\StackModes.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Writer.cs" />

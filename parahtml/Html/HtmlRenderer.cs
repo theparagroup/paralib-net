@@ -9,8 +9,6 @@ using com.parahtml.Core;
 namespace com.parahtml.Html
 {
     /*
-        
-        Basically defines Comment and OnDebug.
 
         All HTML-based renderers should derive from this.
 

@@ -10,6 +10,7 @@ namespace com.parahtml.Grids
 {
     public interface IColumn
     {
+        IColumn Here(Action<IColumn> column);
         IColumn Html(Action<FluentHtml> html);
 
         IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);

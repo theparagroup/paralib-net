@@ -88,14 +88,14 @@ namespace com.paralib.Gen.Rendering
         protected Context Context { private set; get; }
         public LineModes LineMode { private set; get; }
         public ContainerModes ContainerMode { private set; get; }
-        protected bool _indentContent { private set; get; }
+        public bool IndentContent { private set; get; }
 
         protected RendererBase(Context context, LineModes lineMode, ContainerModes containerMode, bool indentContent)
         {
             Context = context;
             LineMode = lineMode;
             ContainerMode = containerMode;
-            _indentContent = indentContent;
+            IndentContent = indentContent;
         }
 
         protected Writer Writer
@@ -162,7 +162,7 @@ namespace com.paralib.Gen.Rendering
                     Writer.NewLine();
                 }
 
-                if (_indentContent)
+                if (IndentContent)
                 {
                     //indent content
                     Writer.Indent();
@@ -187,7 +187,7 @@ namespace com.paralib.Gen.Rendering
                     Writer.NewLine();
                 }
 
-                if (_indentContent)
+                if (IndentContent)
                 {
                     //undo the content indent
                     Writer.Dedent();

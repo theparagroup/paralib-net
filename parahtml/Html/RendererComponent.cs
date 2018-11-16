@@ -87,7 +87,7 @@ namespace com.parahtml.Html
         {
             get
             {
-                return _rendererStack;
+                return RendererStack;
             }
         }
 
