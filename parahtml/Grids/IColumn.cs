@@ -20,6 +20,6 @@ namespace com.parahtml.Grids
 
         IGrid Grid(Action<GridOptions> options=null);
         IGrid Grid(IList<string> columnClasses = null);
-        IGrid EndGrid();
+        IGrid CloseGrid();
     }
 }

@@ -21,11 +21,13 @@ namespace com.parahtml.Html
     */
     public abstract class RendererComponent<F,P> : HtmlComponentBase<F, P>, IHasRendererStack where F : RendererComponent<F, P> where P : Package, new()
     {
+        private Renderer _renderer;
         protected LineModes _lineMode { private set; get; }
         protected ContainerModes _containerMode { private set; get; }
 
-        public RendererComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode) : base(context, new RendererStack(lineMode==LineModes.None))
+        public RendererComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, new RendererStack(lineMode==LineModes.None))
         {
+            _renderer = new Renderer(context, lineMode, containerMode, indentContent);
             _lineMode = lineMode;
             _containerMode = containerMode;
         }
@@ -53,15 +55,33 @@ namespace com.parahtml.Html
 
         protected virtual void DoBegin()
         {
+            _renderer.OnPreBegin();
             OnBegin();
-        }
+            _renderer.OnPostBegin();
 
-        protected abstract void OnBegin();
+            OnBeginContent();
+        }
 
         void IRenderer.End()
         {
-            CloseAll();
+            DoEnd();
         }
+
+        protected virtual void DoEnd()
+        {
+            OnEndContent();
+
+            _renderer.OnPreEnd();
+            OnEnd();
+            _renderer.OnPostEnd();
+        }
+
+        protected abstract void OnBegin();
+        protected abstract void OnBeginContent();
+        protected abstract void OnEndContent();
+        protected abstract void OnEnd();
+
+
 
         RendererStack IHasRendererStack.RendererStack
         {

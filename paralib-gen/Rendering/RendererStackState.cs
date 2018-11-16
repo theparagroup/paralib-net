@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen.Rendering
 {
-    public interface IRenderer
+    public class RendererStackState
     {
-        LineModes LineMode {  get; }
-        ContainerModes ContainerMode { get; }
 
-        void Begin();
-        void End();
+
     }
 }

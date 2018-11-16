@@ -14,7 +14,7 @@ namespace com.parahtml.Grids
         IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
         IRow Row(IList<string> columnClasses = null);
 
-        IGrid EndGrid();
+        IGrid CloseGrid();
 
     }
 }

@@ -29,11 +29,6 @@ namespace com.parahtml
             return new FluentDocument(Context, _rendererStack);
         }
 
-        public FluentHtml Html()
-        {
-            return new FluentHtml(Context, _rendererStack);
-        }
-
         public IGrid Grid(Action<GridOptions> options = null)
         {
             return new FluentGrid(Context, _rendererStack, options);

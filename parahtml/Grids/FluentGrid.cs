@@ -112,26 +112,10 @@ namespace com.parahtml.Grids
             Open(new GridBlock(Context));
         }
 
-        public class GridBlock : HtmlRenderer
+        public class GridBlock : DebugBlock
         {
-            public GridBlock(HtmlContext context) : base(context, LineModes.Multiple, ContainerModes.Block, false)
+            public GridBlock(HtmlContext context) : base(context,"fluent grid", context.IsDebug(DebugFlags.Grids))
             {
-            }
-
-            protected override void OnBegin()
-            {
-                if (Context.IsDebug(DebugFlags.Grids))
-                {
-                    Context.Comment("fluent grid begin");
-                }
-            }
-
-            protected override void OnEnd()
-            {
-                if (Context.IsDebug(DebugFlags.Grids))
-                {
-                    Context.Comment("fluent grid end");
-                }
             }
         }
 
@@ -274,7 +258,7 @@ namespace com.parahtml.Grids
 
         public IGrid Grid(IList<string> columnClasses = null)
         {
-            return new FluentGrid(Context, _rendererStack, o =>
+            return Grid(o =>
             {
                 o.ContainerClass = _containerClass;
                 o.RowClass = _rowClass;
@@ -283,7 +267,7 @@ namespace com.parahtml.Grids
             });
         }
 
-        public IGrid EndGrid()
+        public IGrid CloseGrid()
         {
             //end all elements up to last grid, if any
             //end last (current) grid

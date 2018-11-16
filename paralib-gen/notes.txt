@@ -34,6 +34,12 @@ Design Goals & Notes
 
 	documentation review
 	re-test nested rendererstacks
+	review grids/CloseGrid() in context of Html()
+
+	Mark()
+	CloseToMark()
+
+	remove all junk from paralib-mvc
 
 	grids
 		bootstrap (container, row, col, nestable, multiple breaks)

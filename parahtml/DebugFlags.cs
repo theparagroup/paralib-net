@@ -10,13 +10,12 @@ namespace com.parahtml
     public enum DebugFlags
     {
         //required for testing absence of flags
-        None=0,
+        None = 0,
 
         //endings of blocks with ids
-        EndTag =1, 
+        EndTag = 1,
 
-
-        Grids=32
+        Grids= 32
 
 
     }

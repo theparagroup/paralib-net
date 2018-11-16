@@ -23,15 +23,22 @@ namespace com.parahtml.Html
     {
         protected Tag _tag;
 
-        public TagComponent(HtmlContext context, Tag tag) : base(context, tag.LineMode, tag.ContainerMode)
+        public TagComponent(HtmlContext context, Tag tag, bool indentContent) : base(context, tag.LineMode, tag.ContainerMode, indentContent)
         {
             _tag = tag;
         }
 
-        protected override void DoBegin()
+        protected override void OnBeginContent()
         {
             Open(_tag);
-            base.DoBegin();
         }
+
+        protected override void OnEndContent()
+        {
+            Close(_tag);
+        }
+
+
+
     }
 }

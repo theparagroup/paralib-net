@@ -54,6 +54,7 @@
     <Compile Include="Grids\IRow.cs" />
     <Compile Include="Html\FluentHtml.cs" />
     <Compile Include="Html\FluentDocument.cs" />
+    <Compile Include="Html\DebugBlock.cs" />
     <Compile Include="Html\RendererComponent.cs" />
     <Compile Include="Html\TagComponent.cs" />
     <Compile Include="Values\Angle.cs" />

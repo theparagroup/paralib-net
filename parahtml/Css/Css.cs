@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.paralib.Gen.Fluent;
+using com.parahtml.Html;
 
 namespace com.parahtml.Css
 {
