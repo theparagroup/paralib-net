@@ -34,7 +34,8 @@ Design Goals & Notes
 
 	documentation review
 	re-test nested rendererstacks
-	review grids/CloseGrid() in context of Html()
+	review grids/CloseGrid()
+		column classes do not nest (need to fix)
 
 	remove all junk from paralib-mvc
 

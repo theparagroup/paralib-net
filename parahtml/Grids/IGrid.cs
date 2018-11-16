@@ -13,11 +13,11 @@ namespace com.parahtml.Grids
         IGrid Here(Action<IGrid> grid);
         IGrid Html(Action<FluentHtml> html);
 
-        IContainer Container(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
-        IContainer Container(IList<string> columnClasses = null);
+        IContainer Container(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IContainer Container(string[] columnClassList = null);
 
-        IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
-        IRow Row(IList<string> columnClasses = null);
+        IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IRow Row(string[] columnClassList = null);
 
         IGrid CloseGrid();
     }

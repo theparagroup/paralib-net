@@ -89,6 +89,7 @@ namespace com.paralib.Gen.Rendering
         public LineModes LineMode { private set; get; }
         public ContainerModes ContainerMode { private set; get; }
         public bool IndentContent { private set; get; }
+        public object Data { set; get; }
 
         protected RendererBase(Context context, LineModes lineMode, ContainerModes containerMode, bool indentContent)
         {

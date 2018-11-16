@@ -62,15 +62,21 @@ namespace com.paralib.Gen.Fluent
             return (F)this;
         }
 
-        public virtual F Mark(string name)
+        public virtual F Mark(string marker)
         {
-            RendererStack.Mark(name);
+            RendererStack.Mark(marker);
             return (F)this;
         }
 
-        public virtual F Close(string name)
+        public virtual F Close(string marker)
         {
-            RendererStack.Close(name);
+            RendererStack.Close(marker);
+            return (F)this;
+        }
+
+        public virtual F Close(Func<IRenderer, bool> func)
+        {
+            RendererStack.Close(func);
             return (F)this;
         }
 

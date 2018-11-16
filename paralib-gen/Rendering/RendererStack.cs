@@ -340,22 +340,41 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        public virtual void Close(string name)
+        public virtual void Close(string marker)
         {
             while (Markers?.Count > 0)
             {
-                var marker = Markers.Pop();
+                var m = Markers.Pop();
 
-                if (marker.Name == name)
+                if (m.Name == marker)
                 {
-                    Close(marker.Renderer);
+                    Close(m.Renderer);
                     return;
                 }
             }
 
-            throw new InvalidOperationException($"Marker {name} doesn't exist");
+            throw new InvalidOperationException($"Marker {marker} doesn't exist");
         }
 
+        public virtual void Close(Func<IRenderer,bool> func)
+        {
+            if (func != null)
+            {
+                while (Stack.Count > 0)
+                {
+                    var top = Top;
+
+                    Pop();
+
+                    var pop = func(top);
+
+                    if (pop)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
 
     }
 }

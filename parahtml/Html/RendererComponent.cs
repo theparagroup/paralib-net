@@ -24,6 +24,7 @@ namespace com.parahtml.Html
         private Renderer _renderer;
         protected LineModes _lineMode { private set; get; }
         protected ContainerModes _containerMode { private set; get; }
+        public object Data { set; get; }
 
         public RendererComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, new RendererStack(lineMode==LineModes.None))
         {

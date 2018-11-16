@@ -13,8 +13,8 @@ namespace com.parahtml.Grids
         IRow Here(Action<IRow> row);
         IRow Html(Action<FluentHtml> html);
 
-        IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null);
-        IRow Row(IList<string> columnClasses = null);
+        IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IRow Row(string[] columnClassList = null);
 
         IColumn Column(Action<GlobalAttributes> attributes = null);
         IColumn Column(string @class);

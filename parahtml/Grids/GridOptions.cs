@@ -8,7 +8,7 @@ namespace com.parahtml.Grids
 {
     public class GridOptions
     {
-        public IList<string> GridColumnClasses { set; get; }
+        public string[] ColumnClassList { set; get; }
         public string ContainerClass { set; get; }
         public string RowClass { set; get; }
         public string ColumnClass { set; get; }

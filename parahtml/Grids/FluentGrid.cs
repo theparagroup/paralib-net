@@ -85,51 +85,47 @@ namespace com.parahtml.Grids
 
     public partial class FluentGrid : FluentRendererStack<HtmlContext, FluentGrid>, IGrid, IContainer, IRow, IColumn
     {
-        protected string _containerClass;
-        protected string _rowClass;
-        protected string _columnClass;
+        protected GridOptions _gridOptions;
 
-        protected IList<string> _gridColulmnClasses;
-        protected IList<string> _containerColulmnClasses;
-        protected IList<string> _rowColulmnClasses;
+        protected string[] _containerColumnClassList;
+        protected string[] _rowColumnClassList;
+
         protected int _columnNumber;
 
-        public FluentGrid(HtmlContext context, RendererStack rendererStack, Action<GridOptions> options = null) : base(context, rendererStack)
-        {
-            var gridOptions = new GridOptions();
 
-            if (options != null)
+        public FluentGrid(HtmlContext context, RendererStack rendererStack, Action<GridOptions> gridOptions = null, GridOptions current=null) : base(context, rendererStack)
+        {
+            _gridOptions = new GridOptions();
+
+            if (gridOptions != null)
             {
-                options(gridOptions);
+                gridOptions(_gridOptions);
             }
 
-            _gridColulmnClasses = gridOptions.GridColumnClasses;
-
-            _containerClass = gridOptions.ContainerClass;
-            _rowClass = gridOptions.RowClass;
-            _columnClass = gridOptions.ColumnClass;
-
-            Open(new GridBlock(Context));
+            Open(new GridBlock(Context, current));
         }
 
         public class GridBlock : DebugBlock
         {
-            public GridBlock(HtmlContext context) : base(context,"fluent grid", context.IsDebug(DebugFlags.Grids))
+            public GridBlock(HtmlContext context, GridOptions gridOptions) : base(context, "fluent grid", context.IsDebug(DebugFlags.Grids))
             {
+                Data = gridOptions;
             }
         }
 
         public class ContainerTag : Tag
         {
-            public ContainerTag(HtmlContext context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            public ContainerTag(HtmlContext context, AttributeDictionary attributes, string[] columnClassList) : base(context, TagTypes.Block, "div", attributes)
             {
+                Data = columnClassList;
             }
         }
 
         public class RowTag : Tag
         {
-            public RowTag(HtmlContext context, AttributeDictionary attributes) : base(context, TagTypes.Block, "div", attributes)
+            public RowTag(HtmlContext context, AttributeDictionary attributes, string[] columnClassList) : base(context, TagTypes.Block, "div", attributes)
             {
+                Data = columnClassList;
             }
         }
 
@@ -150,13 +146,13 @@ namespace com.parahtml.Grids
 
                 if (top is ContainerTag)
                 {
-                    _containerColulmnClasses = null;
+                    _containerColumnClassList = top.Data as string[];
                     RendererStack.Close();
                     break;
                 }
                 else if (top is RowTag)
                 {
-                    _rowColulmnClasses = null;
+                    _rowColumnClassList = top.Data as string[];
                     RendererStack.Close();
                 }
                 else if (top is ColumnTag)
@@ -173,14 +169,18 @@ namespace com.parahtml.Grids
 
         }
 
-        public IContainer Container(Action<GlobalAttributes> attributes, IList<string> columnClasses = null)
+        public IContainer Container(Action<GlobalAttributes> attributes, string[] columnClassList = null)
         {
             CloseContainer();
-            _containerColulmnClasses = columnClasses;
-            return Open(new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _containerClass })));
+
+            var containerTag = new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _gridOptions?.ContainerClass }), _containerColumnClassList);
+
+            _containerColumnClassList =columnClassList;
+
+            return Open(containerTag);
         }
 
-        public IContainer Container(IList<string> columnClasses = null)
+        public IContainer Container(string[] columnClasses = null)
         {
             return Container(null, columnClasses);
         }
@@ -195,7 +195,7 @@ namespace com.parahtml.Grids
 
                 if (top is RowTag)
                 {
-                    _rowColulmnClasses = null;
+                    _rowColumnClassList = top.Data as string[];
                     RendererStack.Close();
                     break;
                 }
@@ -213,14 +213,18 @@ namespace com.parahtml.Grids
 
         }
 
-        public IRow Row(Action<GlobalAttributes> attributes, IList<string> columnClasses = null)
+        public IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null)
         {
             CloseRow();
-            _rowColulmnClasses = columnClasses;
-            return Open(new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _rowClass})));
+
+            var rowTag = new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _gridOptions?.RowClass }), _rowColumnClassList);
+
+            _rowColumnClassList = columnClassList;
+
+            return Open(rowTag);
         }
 
-        public IRow Row(IList<string> columnClasses = null)
+        public IRow Row(string[] columnClasses = null)
         {
             return Row(null, columnClasses);
         }
@@ -266,38 +270,28 @@ namespace com.parahtml.Grids
 
             string columnClasses = null;
 
-            if (_rowColulmnClasses != null && _columnNumber < _rowColulmnClasses.Count)
+            if (_rowColumnClassList != null && _columnNumber < _rowColumnClassList.Length)
             {
-                columnClasses = _rowColulmnClasses[_columnNumber];
+                columnClasses = _rowColumnClassList[_columnNumber];
             }
-            else if (_containerColulmnClasses != null && _columnNumber < _containerColulmnClasses.Count)
+            else if (_containerColumnClassList != null && _columnNumber < _containerColumnClassList.Length)
             {
-                columnClasses = _containerColulmnClasses[_columnNumber];
+                columnClasses = _containerColumnClassList[_columnNumber];
             }
-            else if (_gridColulmnClasses != null && _columnNumber < _gridColulmnClasses.Count)
+            else if (_gridOptions?.ColumnClassList != null && _columnNumber< _gridOptions.ColumnClassList.Length)
             {
-                columnClasses = _gridColulmnClasses[_columnNumber];
+	            columnClasses = _gridOptions?.ColumnClassList[_columnNumber];
             }
 
             ++_columnNumber;
 
-            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_columnClass} })));
+            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_gridOptions?.ColumnClass} })));
         }
 
-        public IGrid Grid(Action<GridOptions> options = null)
+        public IGrid Grid(Action<GridOptions> gridOptions = null)
         {
-            return new FluentGrid(Context, RendererStack, options);
-        }
-
-        public IGrid Grid(IList<string> columnClasses = null)
-        {
-            return Grid(o =>
-            {
-                o.ContainerClass = _containerClass;
-                o.RowClass = _rowClass;
-                o.ColumnClass = _columnClass;
-                o.GridColumnClasses = columnClasses;
-            });
+            var grid = new FluentGrid(Context, RendererStack, gridOptions, _gridOptions);
+            return grid;
         }
 
         public IGrid CloseGrid()
@@ -310,6 +304,7 @@ namespace com.parahtml.Grids
 
                 if (top is GridBlock)
                 {
+                    _gridOptions = top.Data as GridOptions;
                     RendererStack.Close();
                     break;
                 }
