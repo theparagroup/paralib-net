@@ -32,12 +32,25 @@ Design Goals & Notes
 	remember, we're not replacing a web server or mvc in this project, just creating
 	a generation library with a focus on building components
 
+
+
 	documentation review
 	re-test nested rendererstacks
 	review grids/CloseGrid()
 		column classes do not nest (need to fix)
 
+	
+	stylebase and dynamic
+	flesh out style.background
+	inline and external style sheet
+
 	remove all junk from paralib-mvc
+	rewrite ttb
+		packages
+		scripts
+		components
+		etc
+
 
 	grids
 		bootstrap (container, row, col, nestable, multiple breaks)
