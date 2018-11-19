@@ -8,17 +8,11 @@ using com.parahtml.Core;
 
 namespace com.parahtml
 {
-    /*
-
-        Placeholder for a more advanced Url class... 
-        prevents us from using raw strings at the moment.
-
-    */
-    public class Url: IComplexValue<HtmlContext>
+    public class MediaType : IComplexValue<HtmlContext>
     {
         protected string _value;
 
-        public Url(string value)
+        public MediaType(string value)
         {
             _value = value;
         }

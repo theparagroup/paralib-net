@@ -22,13 +22,19 @@ namespace com.parahtml.Attributes
 
     public class ExternalScriptAttributes : GlobalAttributes
     {
-        public string Type { get; set; }
+        public MediaType Type { set; get; } = new MediaType(MediaTypes.Application.JavaScript);
+        public string type { set; get; }
 
         //external scripts only
-        public string Src { get; set; }
-        public string Charset { get; set; }
-        public string Async { get; set; }
-        public bool? Defer { get; set; }
+        public Url Src { set; get; }
+        public string src { set; get; }
+
+        public string charset { set; get; }
+
+        public string async { set; get; }
+
+        public bool? Defer { set; get; }
+        public string defer { set; get; }
 
     }
 }

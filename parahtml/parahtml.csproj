@@ -79,6 +79,8 @@
     <Compile Include="Values\Length.cs" />
     <Compile Include="Values\LengthUnits.cs" />
     <Compile Include="Values\LinearGradient.cs" />
+    <Compile Include="Values\MediaType.cs" />
+    <Compile Include="Values\MediaTypes.cs" />
     <Compile Include="Values\Percentage.cs" />
     <Compile Include="Values\RadialGradient.cs" />
     <Compile Include="Values\ButtonTypes.cs" />

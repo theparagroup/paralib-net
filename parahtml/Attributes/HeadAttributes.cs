@@ -8,7 +8,8 @@ namespace com.parahtml.Attributes
 {
     public class HeadAttributes : GlobalAttributes
     {
-        public Url Profile { get; set; }
-        
+        public Url Profile { set; get; }
+        public string profile { set; get; }
+
     }
 }

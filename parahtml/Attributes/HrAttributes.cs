@@ -8,10 +8,13 @@ namespace com.parahtml.Attributes
 {
     public class HrAttributes : GlobalAttributes
     {
-        public string align { get; set; }
-        public HrAlignTypes? Align { get; set; }
-        public string Size { get; set; }
-        public string Width { get; set; }
-        public bool? NoShade { get; set; }
+        public HrAlignTypes? Align { set; get; }
+        public string align { set; get; }
+
+        public string Size { set; get; }
+        public string Width { set; get; }
+
+        public bool? NoShade { set; get; }
+        public string noshade { set; get; }
     }
 }

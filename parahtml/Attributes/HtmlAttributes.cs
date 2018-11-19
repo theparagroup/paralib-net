@@ -8,7 +8,7 @@ namespace com.parahtml.Attributes
 {
     public class HtmlAttributes : GlobalAttributes
     {
-        public string XmlNs { get; set; }
+        public string xmlns { set; get; }
         
     }
 }

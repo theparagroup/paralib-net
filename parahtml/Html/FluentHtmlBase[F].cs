@@ -42,7 +42,7 @@ namespace com.parahtml.Html
 
         public string Url(string url)
         {
-            return Context.Server.Url(url);
+            return new Url(url).ToValue(Context);
         }
 
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)

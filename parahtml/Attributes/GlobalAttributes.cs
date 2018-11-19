@@ -29,10 +29,12 @@ namespace com.parahtml.Attributes
 
     public class GlobalAttributes:IDynamicValueContainer
     {
+        //upper case because we may pre-process these
         public string Id { get; set; }
         public string Class { get; set; }
+
         public int? TabIndex { get; set; }
-        public string Title { get; set; }
+        public string title { get; set; }
 
         /*
             accesskey
@@ -49,25 +51,10 @@ namespace com.parahtml.Attributes
                 translate
         */
 
-        public string Lang { get; set; }
+        public string lang { get; set; }
 
-        public Action<Style> StyleAction
-        {
-            set
-            {
-                if (value!=null)
-                {
-                    var style = new Style();
 
-                    value(style);
-
-                    _style = style;
-
-                }
-
-            }
-        }
-
+        public string style { get; set; }
         protected Style _style;
 
         [DynamicValue]

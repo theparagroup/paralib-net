@@ -14,21 +14,21 @@ namespace com.paralib.Gen.Mapping
 
 
     */
-    public class DictionaryBuilder<C,T> where C:Context where T : NVPDictionary
+    public abstract class DictionaryBuilder<C,T> where C:Context where T : NVPDictionary
     {
         protected C Context {private set; get;}
 
-        public DictionaryBuilder(C context)
+        protected DictionaryBuilder(C context)
         {
             Context = context;
         }
 
-        public void Build(T dictionary, object attributes, bool caseSensive)
+        protected void Build(T dictionary, object attributes, bool caseSensive)
         {
             Build(dictionary, attributes, attributes.GetType(), caseSensive);
         }
 
-        public void Build(T dictionary, object attributes, Type type, bool caseSensive)
+        protected void Build(T dictionary, object attributes, Type type, bool caseSensive)
         {
             if (attributes != null)
             {

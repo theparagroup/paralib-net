@@ -8,6 +8,6 @@ namespace com.parahtml.Attributes
 {
     public class ImgAttributes : GlobalAttributes
     {
-        public string Alt { get; set; }
+        public string alt { set; get; }
     }
 }
