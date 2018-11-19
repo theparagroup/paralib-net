@@ -80,11 +80,19 @@ namespace com.paralib.Gen.Mapping
                             //let's do the name
                             string name = null;
 
+                            //do we have a prefix
+                            string prefix = null;
+                            var prefixAtt = type.GetCustomAttribute<PrefixAttribute>();
+                            if (prefixAtt!=null)
+                            {
+                                prefix = prefixAtt?.Prefix ?? type.Name;
+                            }
+
                             //see if the property has an explicit name
                             var explicitNameAtt = pi.GetCustomAttribute<ExplicitNameAttribute>();
                             if (explicitNameAtt?.Name != null)
                             {
-                                name = explicitNameAtt.Name;
+                                name = $"{explicitNameAtt.Name}";
                             }
                             else if (typeof(IValueContainer).IsAssignableFrom(pi.PropertyType))
                             {
@@ -93,12 +101,15 @@ namespace com.paralib.Gen.Mapping
                                 //a valid HTML attribute name. this is mainly used by Style to organize
                                 //properties into nested classes (see Background). So if you are using this
                                 //interface, you need to do something with these bangs.
-                                name = OnValueContainer(Context, pi.Name);
+                                name = $"{OnValueContainer(Context, pi.Name)}";
                             }
                             else
                             {
-                                name = pi.Name;
+                                name = $"{pi.Name}";
                             }
+
+                            //give derived class a chance
+                            name = OnName(Context, prefix, name);
 
                             //let's do the value. v is the raw, value is the processed.
                             string value = null;
@@ -149,7 +160,7 @@ namespace com.paralib.Gen.Mapping
                             }
                             else
                             {
-                                //process unknown types recursively, looking for anything we can add to the dicitonary
+                                //process unknown types recursively, looking for anything we can add to the dictionary
                                 Build(dictionary, v);
                                 continue;
                             }
@@ -171,6 +182,11 @@ namespace com.paralib.Gen.Mapping
         protected virtual string OnValueContainer(C context, string name)
         {
             return name;
+        }
+
+        protected virtual string OnName(C context, string prefix, string name)
+        {
+            return $"{prefix}{name}";
         }
 
         protected virtual void OnAdd(C context, T dictionary, string name, string value)

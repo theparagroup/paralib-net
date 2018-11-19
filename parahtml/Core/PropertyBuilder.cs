@@ -25,22 +25,17 @@ namespace com.parahtml.Core
     public class PropertyBuilder:DictionaryBuilder<HtmlContext, PropertyDictionary>
     {
         protected new HtmlContext Context { private set; get; }
-
-        //this needs to be the same as the Context option
         protected const char ValueContainerMarker = '!';
+
+        public PropertyBuilder(HtmlContext context) : base(context)
+        {
+            Context = context;
+        }
 
         protected override string OnValueContainer(HtmlContext context, string name)
         {
             return $"{ValueContainerMarker}{name}";
         }
-
-
-        public PropertyBuilder(HtmlContext context):base(context)
-        {
-            Context = context;
-        }
-
-      
 
         public static string Customnate(string name)
         {
@@ -52,39 +47,38 @@ namespace com.parahtml.Core
             return name;
         }
 
+        protected override string OnName(HtmlContext context, string prefix, string name)
+        {
+            if (!string.IsNullOrEmpty(prefix) && !string.IsNullOrEmpty(name))
+            {
+                char[] p = prefix.ToCharArray();
+                char[] n = name.ToCharArray();
+
+                if (char.IsLower(n[0]))
+                {
+                    p[0] = char.ToLower(p[0]);
+                    n[0] = char.ToUpper(n[0]);
+                }
+
+                return $"{new string(p)}{new string(n)}";
+            }
+            else
+            {
+                return $"{prefix}{name}";
+            }
+        }
+
+        protected PropertyDictionary Flatten(PropertyDictionary dictionary)
+        {
+            return Merge(dictionary, f => char.IsUpper(f[0]), s => !char.IsUpper(s[0]), k => HtmlBuilder.HyphenateMixedCase(k).ToLower());
+        }
 
         public PropertyDictionary Properties(object properties)
         {
-            //note: we call this in case-sensitive mode so we can hyphenate mixed case
-            var dictionary = new PropertyDictionary();
+            PropertyDictionary dictionary = new PropertyDictionary();
             Build(dictionary, properties);
-
-            //merge mixed and camel case duplicates
-            var merged = new PropertyDictionary();
-
-            //add mixed cased first
-            foreach (var key in dictionary.Keys)
-            {
-                if (char.IsUpper(key[0]))
-                {
-                    merged.Add(HtmlBuilder.HyphenateMixedCase(key).ToLower(), dictionary[key]);
-                }
-            }
-
-            //overwrite with camel if it exists (attributedictionary will replace it for us)
-            foreach (var key in dictionary.Keys)
-            {
-                //we say !IsUpper instead of IsLower because attribute names can start with
-                //underscore and other non-alpha characters... we want these too!
-                if (!char.IsUpper(key[0]))
-                {
-                    merged[HtmlBuilder.HyphenateMixedCase(key).ToLower()] = dictionary[key];
-                }
-            }
-
-            return merged;
+            return Flatten(dictionary);
         }
-
 
         public List<string> ToList(PropertyDictionary properties)
         {
@@ -92,61 +86,36 @@ namespace com.parahtml.Core
 
             foreach (var property in properties)
             {
-                if (property.Key[0] != ValueContainerMarker)
-                {
-                    list.Add($"{Customnate(property.Key)}: {property.Value}");
-                }
-                else
-                {
-                    var decls = property.Value.Split(';');
-
-                    foreach (var decl in decls)
-                    {
-                        list.Add(decl.Trim());
-                    }
-
-                }
+                list.Add($"{Customnate(property.Key)}: {property.Value}");
             }
 
             return list;
-
         }
+
         public string ToDeclaration(PropertyDictionary properties)
         {
-            StringBuilder styleBuilder = new StringBuilder();
-            KeyValuePair<string, string>? lastProperty = null;
+            StringBuilder propertyBuilder = new StringBuilder();
+            bool firstPass = true;
 
-            foreach (var property in properties)
+            var list = ToList(properties);
+
+            foreach (var property in list)
             {
-                //after the first pass, pre-pend semicolon
-                if (lastProperty != null)
+                if (firstPass)
                 {
-                    //but not if the last property was a value container
-                    if (lastProperty.Value.Key[0] != ValueContainerMarker)
-                    {
-                        styleBuilder.Append("; ");
-                    }
-                }
-
-                if (property.Key[0] != ValueContainerMarker)
-                {
-                    styleBuilder.Append($"{PropertyBuilder.Customnate(property.Key)}: {property.Value}");
+                    firstPass = false;
                 }
                 else
                 {
-                    styleBuilder.Append(property.Value);
+                    propertyBuilder.Append("; ");
                 }
 
-                lastProperty = property;
+                propertyBuilder.Append(property);
             }
 
-            //there has to be a lastProperty since Count>0
-            if (lastProperty.Value.Key[0] != ValueContainerMarker)
-            {
-                styleBuilder.Append(";");
-            }
+            return propertyBuilder.ToString();
 
-            return styleBuilder.ToString();
         }
+
     }
 }

@@ -39,7 +39,6 @@ namespace com.parahtml.Core
             //special rules
             if (name!=null && value != null)
             {
-
                 //merge classes (only mixed case version)
                 if (name == "Class" && dictionary.ContainsKey("Class"))
                 {

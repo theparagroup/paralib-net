@@ -101,17 +101,17 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Css
 {
-    public class Style : IComplexValue<HtmlContext> //,StyleBase, IDynamicValueContainer
+    public class Style : StyleBase, IComplexValue<HtmlContext> //,StyleBase, IDynamicValueContainer
     {
         public string color { set; get; }
         public Color? Color { set; get; }
 
         public string background { get; set; }
-        protected Background _background;
+        public Background Background { get; set; } = new Background();
 
         public string ToValue(HtmlContext context)
         {
-            var properties =context.PropertyBuilder.Properties(this);
+            var properties = context.PropertyBuilder.Properties(this);
             var style = context.PropertyBuilder.ToDeclaration(properties);
             return style;
         }
@@ -137,23 +137,23 @@ namespace com.parahtml.Css
         //}
 
 
-        [DynamicValue]
-        public Background Background
-        {
-            set
-            {
-                _background = value;
-            }
-            get
-            {
-                if (_background == null)
-                {
-                    _background = new Background();
-                }
+        //[DynamicValue]
+        //public Background Background
+        //{
+        //    set
+        //    {
+        //        _background = value;
+        //    }
+        //    get
+        //    {
+        //        if (_background == null)
+        //        {
+        //            _background = new Background();
+        //        }
 
-                return _background;
-            }
-        }
+        //        return _background;
+        //    }
+        //}
 
 
     }

@@ -7,13 +7,16 @@ using com.paralib.Gen.Mapping;
 
 namespace com.parahtml.Css
 {
-    public class Background: StyleBase, IValueContainer //, IDynamicValueContainer
+    [Prefix]
+    public class Background: StyleBase //, IValueContainer //, IDynamicValueContainer
     {
-        public string backgroundColor { set; get; }
-        public Color? BackgroundColor { set; get; }
+        public string color { set; get; }
+        public Color? Color { set; get; }
 
-        public string backgroundImage { set; get; }
-        public List<BackgroundImage> Image = new List<BackgroundImage>();
+        //public string backgroundImage { set; get; }
+        //public List<BackgroundImage> Image = new List<BackgroundImage>();
+        
+        
         //protected BackgroundImage _backgroundImage;
 
         /*

@@ -45,22 +45,22 @@ namespace com.parahtml.Css
 
         public ICss Declaration(Action<Style> declaration)
         {
-            if (declaration != null)
-            {
-                var style = new Style();
+            //if (declaration != null)
+            //{
+            //    var style = new Style();
 
-                declaration(style);
+            //    declaration(style);
 
-                var properties = Context.PropertyBuilder.Properties(style);
+            //    var properties = Context.PropertyBuilder.Properties(style);
 
-                var declarations = Context.PropertyBuilder.ToList(properties);
+            //    var declarations = Context.PropertyBuilder.ToList(properties);
 
-                foreach (var decl in declarations)
-                {
-                    Declaration($"{decl};");
-                }
+            //    foreach (var decl in declarations)
+            //    {
+            //        Declaration($"{decl};");
+            //    }
 
-            }
+            //}
 
 
 
