@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Text.RegularExpressions;
 using com.paralib.Gen.Mapping;
 
 namespace com.parahtml.Core
@@ -30,22 +29,18 @@ namespace com.parahtml.Core
         //this needs to be the same as the Context option
         protected const char ValueContainerMarker = '!';
 
+        protected override string OnValueContainer(HtmlContext context, string name)
+        {
+            return $"{ValueContainerMarker}{name}";
+        }
+
+
         public PropertyBuilder(HtmlContext context):base(context)
         {
             Context = context;
         }
 
-        public static string Hyphenate(string name)
-        {
-            //mixed case should be replaced with hyphens (but not first letter)
-            return Regex.Replace(name, @"([a-z])([A-Z])", "$1-$2");
-        }
-
-        public static string Spacenate(string name)
-        {
-            //mixed case should be replaced with spaces (but not first letter)
-            return Regex.Replace(name, @"([a-z])([A-Z])", "$1 $2");
-        }
+      
 
         public static string Customnate(string name)
         {
@@ -57,28 +52,12 @@ namespace com.parahtml.Core
             return name;
         }
 
-        public static string Lowernate<T>(T value) where T : struct
-        {
-            return value.ToString().ToLower();
-        }
-
-        public static string Lowernate<T>(T? value) where T : struct
-        {
-            if (value.HasValue)
-            {
-                return value.ToString().ToLower();
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         public PropertyDictionary Properties(object properties)
         {
             //note: we call this in case-sensitive mode so we can hyphenate mixed case
             var dictionary = new PropertyDictionary();
-            Build(dictionary, properties, true);
+            Build(dictionary, properties);
 
             //merge mixed and camel case duplicates
             var merged = new PropertyDictionary();
@@ -88,7 +67,7 @@ namespace com.parahtml.Core
             {
                 if (char.IsUpper(key[0]))
                 {
-                    merged.Add(Hyphenate(key).ToLower(), dictionary[key]);
+                    merged.Add(HtmlBuilder.HyphenateMixedCase(key).ToLower(), dictionary[key]);
                 }
             }
 
@@ -99,7 +78,7 @@ namespace com.parahtml.Core
                 //underscore and other non-alpha characters... we want these too!
                 if (!char.IsUpper(key[0]))
                 {
-                    merged[Hyphenate(key).ToLower()] = dictionary[key];
+                    merged[HtmlBuilder.HyphenateMixedCase(key).ToLower()] = dictionary[key];
                 }
             }
 

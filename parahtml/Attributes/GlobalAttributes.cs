@@ -5,14 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Mapping;
 using com.parahtml.Css;
+using com.parahtml.Core;
 
 namespace com.parahtml.Attributes
 {
     /*
+
+        Base class for all html attributes.
+        
+        
         In HTML5, Global Attributes can be used on *any* element.
 
         In other versions, this isn't true. For example, in HTML 4.01, you can't 
-        put a style attrbiute on the following:
+        put a style attribute on the following:
 
             <base>
             <head>
@@ -29,11 +34,22 @@ namespace com.parahtml.Attributes
 
     public class GlobalAttributes:IDynamicValueContainer
     {
-        //upper case because we may pre-process these
-        public string Id { get; set; }
-        public string Class { get; set; }
+        protected HtmlContext Context { private set; get; }
 
+        internal void SetContext(HtmlContext context)
+        {
+            Context = context;
+        }
+
+        public string id { set; get; }
+        public string Id { set; get; }
+
+        public string @class { set; get; }
+        public string Class { set; get; }
+
+        public string tabindex { get; set; }
         public int? TabIndex { get; set; }
+
         public string title { get; set; }
 
         /*

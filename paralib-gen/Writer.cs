@@ -66,6 +66,8 @@ namespace com.paralib.Gen
             Init();
         }
 
+
+
         protected virtual void Init()
         {
             //these can be changed in derived classes

@@ -173,7 +173,7 @@ namespace com.parahtml.Grids
         {
             CloseContainer();
 
-            var containerTag = new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _gridOptions?.ContainerClass }), _containerColumnClassList);
+            var containerTag = new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = _gridOptions?.ContainerClass }), _containerColumnClassList);
 
             _containerColumnClassList =columnClassList;
 
@@ -217,7 +217,7 @@ namespace com.parahtml.Grids
         {
             CloseRow();
 
-            var rowTag = new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = _gridOptions?.RowClass }), _rowColumnClassList);
+            var rowTag = new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = _gridOptions?.RowClass }), _rowColumnClassList);
 
             _rowColumnClassList = columnClassList;
 
@@ -261,7 +261,7 @@ namespace com.parahtml.Grids
 
             ++_columnNumber;
 
-            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(new { @class = @class })));
+            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(new { Class = @class })));
         }
 
         public IColumn Column(Action<GlobalAttributes> attributes = null)
@@ -285,7 +285,7 @@ namespace com.parahtml.Grids
 
             ++_columnNumber;
 
-            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { @class = columnClasses, attributes=new { @class=_gridOptions?.ColumnClass} })));
+            return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = columnClasses, attributes=new { Class=_gridOptions?.ColumnClass} })));
         }
 
         public IGrid Grid(Action<GridOptions> gridOptions = null)

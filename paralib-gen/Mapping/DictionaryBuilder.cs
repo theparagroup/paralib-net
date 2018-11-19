@@ -9,26 +9,25 @@ namespace com.paralib.Gen.Mapping
 {
     /*
 
-        DictionaryBuilder, builds html attribute and css property dictionaries from strongly typed
-        objects. 
+        DictionaryBuilder
 
 
     */
-    public abstract class DictionaryBuilder<C,T> where C:Context where T : NVPDictionary
+    public abstract class DictionaryBuilder<C, T> where C : Context where T : NVPDictionary, new()
     {
-        protected C Context {private set; get;}
+        protected C Context { private set; get; }
 
         protected DictionaryBuilder(C context)
         {
             Context = context;
         }
 
-        protected void Build(T dictionary, object attributes, bool caseSensive)
+        protected void Build(T dictionary, object attributes)
         {
-            Build(dictionary, attributes, attributes.GetType(), caseSensive);
+            Build(dictionary, attributes, attributes.GetType());
         }
 
-        protected void Build(T dictionary, object attributes, Type type, bool caseSensive)
+        protected void Build(T dictionary, object attributes, Type type)
         {
             if (attributes != null)
             {
@@ -43,7 +42,7 @@ namespace com.paralib.Gen.Mapping
                 {
                     //we don't bother unless there is a getter, even for IComplexValue types
                     if (pi.CanRead)
-                    { 
+                    {
                         //we assume that the property does indeed have a value
                         //but the presence of DynamicValueAttribute allows
                         //us to check the backing store without invoking the
@@ -66,10 +65,10 @@ namespace com.paralib.Gen.Mapping
                         //otherwize v stays null
                         if (hasValue)
                         {
-                            //unless of course the actual property
                             v = pi.GetValue(attributes);
                         }
 
+                        //we only add non-null properties
                         if (v != null)
                         {
 
@@ -81,11 +80,11 @@ namespace com.paralib.Gen.Mapping
                             //let's do the name
                             string name = null;
 
-                            //see if the property has explicit builder options
-                            var options = pi.GetCustomAttribute<BuilderOptionsAttribute>();
-                            if (options?.Name != null)
+                            //see if the property has an explicit name
+                            var explicitNameAtt = pi.GetCustomAttribute<ExplicitNameAttribute>();
+                            if (explicitNameAtt?.Name != null)
                             {
-                                name = options.Name;
+                                name = explicitNameAtt.Name;
                             }
                             else if (typeof(IValueContainer).IsAssignableFrom(pi.PropertyType))
                             {
@@ -94,30 +93,33 @@ namespace com.paralib.Gen.Mapping
                                 //a valid HTML attribute name. this is mainly used by Style to organize
                                 //properties into nested classes (see Background). So if you are using this
                                 //interface, you need to do something with these bangs.
-                                name = $"{Context.Options.ValueContainerMarker}{pi.Name}";
+                                name = OnValueContainer(Context, pi.Name);
                             }
                             else
                             {
-                                //generally, we're always in case-insensitive mode, and by default attribute
-                                //names are lower case. however, in certain cases such as Style, it is useful
-                                //to build a dictionary of name/values with mixed case
-                                if (caseSensive)
-                                {
-                                    name = pi.Name;
-                                }
-                                else
-                                {
-                                    name = pi.Name.ToLower();
-                                }
+                                name = pi.Name;
                             }
 
                             //let's do the value. v is the raw, value is the processed.
-                            string value = null; 
+                            string value = null;
 
-                            if (options?.Value!=null)
+                            var explicitValueAtt = pi.GetCustomAttribute<ExplicitValueAttribute>();
+                            if (explicitValueAtt?.Value != null)
                             {
-                                //if [Attribute] was present and a value provided, use that
-                                value = options?.Value;
+                                //if [ExplicitValue] was present and a value provided, use that
+
+                                //since in most cases where this attribute is used are boolean situations,
+                                //let's check (otherwise the presence of any non-null means use the value)
+                                bool use = true;
+                                if (pi.PropertyType == typeof(bool) || pi.PropertyType == typeof(bool?))
+                                {
+                                    use = (bool)v;
+                                }
+
+                                if (use)
+                                {
+                                    value = explicitValueAtt.Value;
+                                }
                             }
                             else if (typeof(IComplexValue<C>).IsAssignableFrom(pi.PropertyType))
                             {
@@ -148,13 +150,16 @@ namespace com.paralib.Gen.Mapping
                             else
                             {
                                 //process unknown types recursively, looking for anything we can add to the dicitonary
-                                Build(dictionary, v, caseSensive);
+                                Build(dictionary, v);
                                 continue;
                             }
 
                             //again, at this point, "v" isn't null, but "value" may be...
-                            //add it to the dictionary
-                            OnAdd(Context, dictionary, name, value); 
+                            //add it to the dictionary if not null
+                            if (value!=null)
+                            {
+                                OnAdd(Context, dictionary, name, value);
+                            }
 
                         }//if v!=null
                     } //if canread
@@ -163,10 +168,43 @@ namespace com.paralib.Gen.Mapping
 
         }
 
+        protected virtual string OnValueContainer(C context, string name)
+        {
+            return name;
+        }
+
         protected virtual void OnAdd(C context, T dictionary, string name, string value)
         {
             dictionary.Add(name, value);
         }
+
+
+        protected T Merge(T dictionary, Func<string,bool> firstPass, Func<string,bool> secondPass, Func<string,string> formatKey)
+        {
+            //merge mixed and camel case duplicates
+            var merged = new T();
+
+            //first pass
+            foreach (var key in dictionary.Keys)
+            {
+                if (firstPass(key))
+                {
+                    merged.Add(formatKey(key), dictionary[key]);
+                }
+            }
+
+            //second pass
+            foreach (var key in dictionary.Keys)
+            {
+                if (secondPass(key))
+                {
+                    merged.Add(formatKey(key), dictionary[key]);
+                }
+            }
+
+            return merged;
+        }
+
 
     }
 }

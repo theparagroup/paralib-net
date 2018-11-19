@@ -23,7 +23,6 @@ namespace com.paralib.Gen
 
     public class Options
     {
-        public string ValueContainerMarker { set; get; } = "!";
         public bool DebugSourceFormatting { set; get; } = false;
 
         public Options()

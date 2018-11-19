@@ -22,13 +22,17 @@ namespace com.parahtml.Attributes
 
     public class ScriptAttributes : GlobalAttributes
     {
-        public MediaType Type { set; get; } = new MediaType(MediaTypes.Application.JavaScript);
         public string type { set; get; }
+        public MediaType Type { set; get; } = new MediaType(MediaTypes.Application.JavaScript);
 
-        [BuilderOptions("xml:space", Value = "preserve")]
-        public bool? XmlSpace { get; set; }
-        [BuilderOptions("xml:space")]
+
+        [ExplicitName("xml:space")]
         public string xmlspace { get; set; }
+
+        [ExplicitName("xml:space")]
+        [ExplicitValue("preserve")]
+        public bool? XmlSpace { get; set; }
+
 
     }
 }

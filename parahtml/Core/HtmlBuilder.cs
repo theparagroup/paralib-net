@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
 using com.parahtml.Html;
+using System.Text.RegularExpressions;
 
 namespace com.parahtml.Core
 {
@@ -20,6 +21,43 @@ namespace com.parahtml.Core
         public HtmlBuilder(HtmlContext context)
         {
             Context = context;
+        }
+
+        public static string HyphenateUnderscores(string name)
+        {
+            return name.Replace('_', '-');
+        }
+
+        public static string HyphenateMixedCase(string name)
+        {
+            //mixed case should be replaced with hyphens (but not first letter)
+            return Regex.Replace(name, @"([a-z])([A-Z])", "$1-$2");
+        }
+
+        public static string SpacenateMixedCase(string name)
+        {
+            //mixed case should be replaced with spaces (but not first letter)
+            return Regex.Replace(name, @"([a-z])([A-Z])", "$1 $2");
+        }
+
+        public static string StructToValue<E>(E value) where E : struct
+        {
+            //really just for enums
+            return value.ToString().ToLower();
+        }
+
+        public static string StructToValue<E>(E? value) where E : struct
+        {
+            //really just for nullable enums
+
+            if (value.HasValue)
+            {
+                return value.ToString().ToLower();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         protected virtual AttributeDictionary Attributes<T>(Action<T> attributes = null) where T : GlobalAttributes, new()

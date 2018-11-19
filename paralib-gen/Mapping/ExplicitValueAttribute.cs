@@ -8,14 +8,13 @@ namespace com.paralib.Gen.Mapping
 {
 
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
-    public class BuilderOptionsAttribute : Attribute
+    public class ExplicitValueAttribute : Attribute
     {
-        public string Name { private set; get; }
-        public string Value { set; get; }
+        public string Value { private set; get; }
 
-        public BuilderOptionsAttribute(string name)
+        public ExplicitValueAttribute(string value)
         {
-            Name = name;
+            Value = value;
         }
 
     }

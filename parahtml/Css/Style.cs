@@ -137,23 +137,23 @@ namespace com.parahtml.Css
         //}
 
 
-        //[DynamicValue]
-        //public Background Background
-        //{
-        //    set
-        //    {
-        //        _background = value;
-        //    }
-        //    get
-        //    {
-        //        if (_background == null)
-        //        {
-        //            _background = new Background();
-        //        }
+        [DynamicValue]
+        public Background Background
+        {
+            set
+            {
+                _background = value;
+            }
+            get
+            {
+                if (_background == null)
+                {
+                    _background = new Background();
+                }
 
-        //        return _background;
-        //    }
-        //}
+                return _background;
+            }
+        }
 
 
     }

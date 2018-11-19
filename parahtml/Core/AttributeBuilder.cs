@@ -37,15 +37,16 @@ namespace com.parahtml.Core
         protected override void OnAdd(HtmlContext context, AttributeDictionary dictionary, string name, string value)
         {
             //special rules
-            if (value != null)
+            if (name!=null && value != null)
             {
-                //merge classes
-                if (name == "class" && dictionary.ContainsKey("class"))
+
+                //merge classes (only mixed case version)
+                if (name == "Class" && dictionary.ContainsKey("Class"))
                 {
                     //note Union() will throw if one of the arrays is null
                     //we know value isn't null, but if you have a property Class=true,
                     //the what's in the dictionary could be
-                    string[] oldclasses = dictionary["class"]?.Split(' ') ?? new string[] { };
+                    string[] oldclasses = dictionary["Class"]?.Split(' ') ?? new string[] { };
                     string[] newClasses = value.Split(' ');
 
                     //this removes duplicates
@@ -59,14 +60,19 @@ namespace com.parahtml.Core
             base.OnAdd(context, dictionary, name, value);
         }
 
+        protected AttributeDictionary Flatten(AttributeDictionary dictionary)
+        {
+            return Merge(dictionary, f => char.IsUpper(f[0]), s => !char.IsUpper(s[0]), k => HtmlBuilder.HyphenateUnderscores(k).ToLower());
+        }
+
         public AttributeDictionary Attributes(object attributes)
         {
             AttributeDictionary dictionary = new AttributeDictionary();
-            Build(dictionary, attributes, false);
-            return dictionary;
+            Build(dictionary, attributes);
+            return Flatten(dictionary);
         }
 
-        public AttributeDictionary Attributes<T>(Action<T> attributes = null, object additional = null) where T : GlobalAttributes, new()
+        public AttributeDictionary Attributes<T>(Action<T> attributes, object additional = null) where T : GlobalAttributes, new()
         {
             //let's keep it simple if there is nothing to do
             if (attributes != null || additional != null)
@@ -79,21 +85,23 @@ namespace com.parahtml.Core
                 {
                     T a = new T();
 
+                    a.SetContext(Context);
+
                     attributes(a);
 
-                    Build(dictionary, a, typeof(T), false);
+                    Build(dictionary, a, typeof(T));
                 }
 
                 //merge any additional anonymous object-based attributes
                 if (additional != null)
                 {
-                    Build(dictionary, additional, false);
+                    Build(dictionary, additional);
                 }
 
                 //return null if there are no attributes
                 if (dictionary.Count > 0)
                 {
-                    return dictionary;
+                    return Flatten(dictionary);
                 }
             }
 
@@ -113,13 +121,26 @@ namespace com.parahtml.Core
                 {
                     if (value == "true" && !Context.Options.MinimizeBooleans)
                     {
+                        //<script defer="defer" ...
                         value = name;
                     }
 
                     if (value == "true")
                     {
-                        //boolean style attributes (e.g. "readonly")
+                        //if after the above we still have a true then we are minimizing booleans
+
+                        //<script defer ...
                         list.Add($"{name}");
+                    }
+                    else if (value == "false")
+                    {
+                        /*
+                            if at this point we have a false, then    
+                            don't add this attribute (html attributes are never "false")
+
+                                Boolean attributes may legally take a single value: the name of the
+                                attribute itself (e.g., selected="selected").
+                        */
                     }
                     else
                     {
@@ -166,5 +187,6 @@ namespace com.parahtml.Core
             return attributeBuilder.ToString();
 
         }
+
     }
 }

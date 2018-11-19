@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Mapping;
-using com.paralib.Gen;
 using com.parahtml.Core;
 
 namespace com.parahtml
@@ -30,7 +29,7 @@ namespace com.parahtml
         {
             string value = null;
 
-            value = color ?? PropertyBuilder.Lowernate(Color);
+            value = color ?? HtmlBuilder.StructToValue(Color);
 
             if (value != null)
             {

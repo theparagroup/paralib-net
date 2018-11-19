@@ -12,7 +12,7 @@ namespace com.parahtml
     {
         public Angle(float number, AngleUnits unit = AngleUnits.Deg)
         {
-            _value= $"{number}{PropertyBuilder.Lowernate(unit)}";
+            _value= $"{number}{HtmlBuilder.StructToValue(unit)}";
         }
     }
 }
