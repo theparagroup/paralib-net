@@ -68,12 +68,14 @@
     <Compile Include="Attributes\ImgAttributes.cs" />
     <Compile Include="Attributes\ScriptAttributes.cs" />
     <Compile Include="Attributes\StyleAttributes.cs" />
-    <Compile Include="Values\BackgroundImage.cs" />
+    <Compile Include="Css\BackgroundImage.cs" />
     <Compile Include="Values\ColorStop.cs" />
     <Compile Include="Css\Background.cs" />
     <Compile Include="Css\Style.cs" />
     <Compile Include="Css\StyleBase.cs" />
-    <Compile Include="Values\Directions.cs" />
+    <Compile Include="Values\LengthOrPercentage.cs" />
+    <Compile Include="Values\RadialGradientOptions.cs" />
+    <Compile Include="Values\SideOrCorner.cs" />
     <Compile Include="Values\FontLengthUnits.cs" />
     <Compile Include="Values\Gradient.cs" />
     <Compile Include="Values\Length.cs" />

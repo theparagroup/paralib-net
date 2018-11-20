@@ -40,26 +40,6 @@ namespace com.parahtml.Core
             return Regex.Replace(name, @"([a-z])([A-Z])", "$1 $2");
         }
 
-        public static string StructToValue<E>(E value) where E : struct
-        {
-            //really just for enums
-            return value.ToString().ToLower();
-        }
-
-        public static string StructToValue<E>(E? value) where E : struct
-        {
-            //really just for nullable enums
-
-            if (value.HasValue)
-            {
-                return value.ToString().ToLower();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         protected virtual AttributeDictionary Attributes<T>(Action<T> attributes = null) where T : GlobalAttributes, new()
         {
             //this method is just to simplify tag methods...

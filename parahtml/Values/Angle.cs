@@ -8,11 +8,11 @@ using com.parahtml.Core;
 
 namespace com.parahtml
 {
-    public class Angle:ComplexValue
+    public class Angle:ComplexValue<HtmlContext>
     {
         public Angle(float number, AngleUnits unit = AngleUnits.Deg)
         {
-            _value= $"{number}{HtmlBuilder.StructToValue(unit)}";
+            _value= $"{number}{unit.ToString().ToLower()}";
         }
     }
 }

@@ -9,23 +9,28 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Css
 {
-    public abstract class StyleBase //: IComplexValue<HtmlContext>
+    public abstract class StyleBase : IDynamicValueContainer
     {
-        public object Properties { set; get; }
+        protected AutoDictionary<string, object> _dynamicValues = new AutoDictionary<string, object>();
 
-       
-
-        //protected virtual string GetProperties(HtmlContext context)
+        //protected void _set<V>(string propertyName, V value)
         //{
-        //    //var properties = context.PropertyBuilder.Properties(this);
-        //    //return context.PropertyBuilder.ToDeclaration(properties);
-        //    return "";
+        //    _dynamicValues[propertyName] = value;
         //}
 
-        //public string ToValue(HtmlContext context)
-        //{
-        //    return GetProperties(context);
-        //}
+        protected V _get<V>(string propertyName) where V: new()
+        {
+            if (!_dynamicValues.ContainsKey(propertyName))
+            {
+                _dynamicValues[propertyName]=new V();
+            }
 
+            return (V)_dynamicValues[propertyName];
+        }
+
+        bool IDynamicValueContainer.HasValue(string propertyName)
+        {
+            return _dynamicValues.ContainsKey(propertyName);
+        }
     }
 }

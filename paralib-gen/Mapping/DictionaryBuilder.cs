@@ -68,6 +68,16 @@ namespace com.paralib.Gen.Mapping
                             v = pi.GetValue(attributes);
                         }
 
+                        //null value attribute
+                        if (v == null)
+                        {
+                            var nullValueAtt = pi.GetCustomAttribute<NullValueAttribute>();
+                            if (nullValueAtt?.Value != null)
+                            {
+                                v = nullValueAtt.Value;
+                            }
+                        }
+
                         //we only add non-null properties
                         if (v != null)
                         {

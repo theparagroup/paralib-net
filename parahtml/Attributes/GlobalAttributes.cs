@@ -30,29 +30,9 @@ namespace com.parahtml.Attributes
 
         We don't attempt to enforce these kinds of rules.
 
-    */
 
-    public class GlobalAttributes:IDynamicValueContainer
-    {
-        protected HtmlContext Context { private set; get; }
+        More stuff to do:
 
-        internal void SetContext(HtmlContext context)
-        {
-            Context = context;
-        }
-
-        public string id { set; get; }
-        public string Id { set; get; }
-
-        public string @class { set; get; }
-        public string Class { set; get; }
-
-        public string tabindex { get; set; }
-        public int? TabIndex { get; set; }
-
-        public string title { get; set; }
-
-        /*
             accesskey
             dir
             hidden
@@ -65,40 +45,37 @@ namespace com.parahtml.Attributes
                 dropzone
                 spellcheck
                 translate
-        */
+*/
+
+    public class GlobalAttributes:StyleBase
+    {
+        protected HtmlContext Context { private set; get; }
+
+        public object Attributes { get; set; }
+
+        internal void SetContext(HtmlContext context)
+        {
+            Context = context;
+        }
+
+        public string Id { set; get; }
+        public string id { set; get; }
+
+        public string Class { set; get; }
+        public string @class { set; get; }
+
+        public int? TabIndex { get; set; }
+        public string tabindex { get; set; }
+
+        public string title { get; set; }
 
         public string lang { get; set; }
 
-
-        public string style { get; set; }
-        protected Style _style;
-
         [DynamicValue]
-        public Style Style
-        {
-            set
-            {
-                _style = value;
-            }
-            get
-            {
-                if (_style==null)
-                {
-                    _style = new Style();
-                }
-
-                return _style;
-            }
-        }
-
-        bool IDynamicValueContainer.HasValue(string propertyName)
-        {
-            //we only have dynamic value so far
-            return (_style != null);
-        }
+        public Style Style => _get<Style>(nameof(Style));
+        public string style { get; set; }
 
 
-        public object Attributes { get; set; }
 
     }
 }

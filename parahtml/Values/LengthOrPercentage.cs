@@ -8,11 +8,7 @@ using com.parahtml.Core;
 
 namespace com.parahtml
 {
-    public class Percentage : LengthOrPercentage
+    public abstract class LengthOrPercentage : ComplexValue<HtmlContext>
     {
-        public Percentage(float number)
-        {
-            _value = $"{number}%";
-        }
     }
 }

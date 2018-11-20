@@ -9,16 +9,12 @@ namespace com.parahtml.Attributes
 {
     public class HrAttributes : GlobalAttributes
     {
-        public string align { set; get; }
         public HrAlignTypes? Align { set; get; }
+        public string align { set; get; }
 
+        public int Size { set; get; }
         public string size { set; get; }
-        public void Size(int pixels)
-        {
-            size = $"{pixels}";
-        }
 
-        public string width { set; get; }
         public void Width(int pixels)
         {
             width = $"{pixels}";
@@ -27,8 +23,9 @@ namespace com.parahtml.Attributes
         {
             width = $"{percentage}%";
         }
+        public string width { set; get; }
 
-        public string noshade { set; get; }
         public bool? NoShade { set; get; }
+        public string noshade { set; get; }
     }
 }

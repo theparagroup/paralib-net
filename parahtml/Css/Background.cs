@@ -7,62 +7,53 @@ using com.paralib.Gen.Mapping;
 
 namespace com.parahtml.Css
 {
-    [Prefix]
-    public class Background: StyleBase //, IValueContainer //, IDynamicValueContainer
-    {
-        public string color { set; get; }
-        public Color? Color { set; get; }
-
-        //public string backgroundImage { set; get; }
-        //public List<BackgroundImage> Image = new List<BackgroundImage>();
+    /*
         
-        
-        //protected BackgroundImage _backgroundImage;
+        https://www.w3.org/TR/css-backgrounds-3/
+        https://developer.mozilla.org/en-US/docs/Web/CSS/background
+        http://htmldog.com/references/css/properties/background/
 
-        /*
-            
-            position
-            size
-            repeat
-            origin
-            clip
+        
+        background:
             attachment
+            box
+            background-color
+            bg-image
+            position
+            repeat-style
+            bg-size
+
+        Supports multiple layers:
+
+
+        #example1 
+        {
+            background-image: url(img_flwr.gif), url(paper.gif);
+            background-position: right bottom, left top;
+            background-repeat: no-repeat, repeat;
+        } 
+
+        #example2 
+        {
+            background: url(img_flwr.gif) right bottom no-repeat, url(paper.gif) left top repeat;
+        } 
+
+
+    */
+
+    [Prefix]
+    public class Background: StyleBase 
+    {
+        public Color? Color { set; get; }
+        public string color { set; get; }
+
+        [DynamicValue]
+        public BackgroundImage Image => _get<BackgroundImage>(nameof(Image));
+        public string image { set; get; }
 
 
 
-        */
 
-
-        //bool IDynamicValueContainer.HasValue(string propertyName)
-        //{
-        //    switch (propertyName)
-        //    {
-        //        case nameof(BackgroundImage):
-        //            return _backgroundImage != null;
-
-        //        default:
-        //            throw new InvalidOperationException($"Property name {propertyName} not found");
-        //    }
-
-        //}
-
-        //[DynamicValue]
-        //public BackgroundImage BackgroundImage
-        //{
-        //    set
-        //    {
-        //        _backgroundImage = value;
-        //    }
-        //    get
-        //    {
-        //        if (_backgroundImage == null)
-        //        {
-        //            _backgroundImage = new BackgroundImage();
-        //        }
-
-        //        return _backgroundImage;
-        //    }
-        //}
 
 
     }

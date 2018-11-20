@@ -8,22 +8,22 @@ using com.parahtml.Core;
 
 namespace com.parahtml
 {
-    public class Length : ComplexValue
+    public class Length : LengthOrPercentage
     {
-        private Length(float number, string unit)
+        protected Length(float number, string unit)
         {
             _value = $"{number}{unit}";
         }
 
-        public Length(float number, LengthUnits unit) : this(number, HtmlBuilder.StructToValue(unit))
+        public Length(float number, LengthUnits unit) : this(number, unit.ToString().ToLower())
         {
         }
 
-        public Length(float number, ViewPortLengthUnits unit) : this(number, HtmlBuilder.StructToValue(unit))
+        public Length(float number, ViewPortLengthUnits unit) : this(number, unit.ToString().ToLower())
         {
         }
 
-        public Length(float number, FontLengthUnits unit) : this(number, HtmlBuilder.StructToValue(unit))
+        public Length(float number, FontLengthUnits unit) : this(number, unit.ToString().ToLower())
         {
         }
 

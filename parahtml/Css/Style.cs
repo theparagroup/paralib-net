@@ -42,9 +42,11 @@ using com.parahtml.Core;
         Mixed Case (BackgroundImage)
         Camel Case (backgroundImage)
 
-    Mixed case properties (typed) are reified with strongly typed structures.
+    Mixed case properties (Typed) are reified with strongly typed structures.
 
-    Camel case properties (freeform) are strings and can be used in a free-form fashion.
+    Camel case properties (freeForm) are strings and can be used in a free-form fashion.
+
+    We don't provide shorthand properties in camelCase (use an anonymous Properties object instead).
 
     We don't reify in any way:
         shorthand properties (e.g., "background: url(/foo.jpg) linear-gradient(red, green);")
@@ -101,13 +103,19 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Css
 {
-    public class Style : StyleBase, IComplexValue<HtmlContext> //,StyleBase, IDynamicValueContainer
+    public class Style : StyleBase, IComplexValue<HtmlContext>
     {
-        public string color { set; get; }
-        public Color? Color { set; get; }
+        public object Properties { set; get; }
 
-        public string background { get; set; }
-        public Background Background { get; set; } = new Background();
+        public Color? Color { set; get; }
+        public string color { set; get; }
+
+
+        //[NullValue("initial")]
+        //public string test { set; get; }
+
+        [DynamicValue]
+        public Background Background => _get<Background>(nameof(Background));
 
         public string ToValue(HtmlContext context)
         {
@@ -117,43 +125,7 @@ namespace com.parahtml.Css
         }
 
 
-        //protected override string GetProperties()
-        //{
-        //    //since stylebase doesn't add a final semicolon, do it here
-        //    return $"{base.GetProperties()};";
-        //}
-
-        //bool IDynamicValueContainer.HasValue(string propertyName)
-        //{
-        //    switch (propertyName)
-        //    {
-        //        case nameof(Background):
-        //            return _background != null;
-
-        //        default:
-        //            throw new InvalidOperationException($"Property name {propertyName} not found");
-        //    }
-
-        //}
-
-
-        //[DynamicValue]
-        //public Background Background
-        //{
-        //    set
-        //    {
-        //        _background = value;
-        //    }
-        //    get
-        //    {
-        //        if (_background == null)
-        //        {
-        //            _background = new Background();
-        //        }
-
-        //        return _background;
-        //    }
-        //}
+     
 
 
     }

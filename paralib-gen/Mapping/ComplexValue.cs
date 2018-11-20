@@ -12,13 +12,26 @@ namespace com.paralib.Gen.Mapping
         the constructor.
 
     */
-    public class ComplexValue:IComplexValue<Context>
+    public class ComplexValue<C>:IComplexValue<C> where C:Context
     {
         protected string _value;
 
-        public string ToValue(Context context)
+        protected virtual string Value
         {
-            return _value;
+            get
+            {
+                return _value;
+            }
+        }
+
+        public virtual string ToValue(C context)
+        {
+            return Value;
+        }
+
+        public override string ToString()
+        {
+            return Value;
         }
 
     }

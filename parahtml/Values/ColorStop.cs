@@ -16,37 +16,52 @@ namespace com.parahtml
 
 
     */
-    public class ColorStop: IComplexValue<HtmlContext>
+    public class ColorStop : ComplexValue<HtmlContext>
     {
-        public string color { set; get; }
-        public Color? Color { set; get; }
-        public string length { set; get; }
-        public Length Length { set; get; }
-        public string percentage { set; get; }
-        public Percentage Percentage { set; get; }
+        protected string _colorStop { get; }
+        protected Color? _color { get; }
+        protected string _lengthOrPercentage { get; }
 
-        public string ToValue(HtmlContext context)
+        public ColorStop(string colorStop)
         {
-            string value = null;
+            _colorStop = colorStop;
+        }
 
-            value = color ?? HtmlBuilder.StructToValue(Color);
+        public ColorStop(Color color)
+        {
+            _color = color;
+        }
 
-            if (value != null)
+        public ColorStop(Color color, Length length) : this(color)
+        {
+            _lengthOrPercentage = length.ToString();
+        }
+
+        public ColorStop(Color color, Percentage percentage) : this(color)
+        {
+            _lengthOrPercentage = percentage.ToString();
+        }
+
+        protected override string Value
+        {
+            get
             {
-                if (length != null)
+                if (_colorStop != null)
                 {
-                    value = $"{value} {length}";
+                    return _colorStop;
                 }
                 else
                 {
-                    if (Length!=null)
+                    if (_lengthOrPercentage == null)
                     {
-                        value = $"{value} {Length.ToValue(context)}";
+                        return _color.ToString().ToLower();
+                    }
+                    else
+                    {
+                        return $"{_color.ToString().ToLower()} {_lengthOrPercentage}";
                     }
                 }
             }
-
-            return value;
         }
     }
 }

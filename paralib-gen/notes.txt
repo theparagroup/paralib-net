@@ -43,6 +43,11 @@ Design Goals & Notes
 	stylebase and dynamic
 	flesh out style.background
 	inline and external style sheet
+	replace ivaluecontainer with a simple [Hide] attribute
+
+	public string prop {private set; get;}
+	or
+	public string prop {get;}
 
 	remove all junk from paralib-mvc
 	rewrite ttb

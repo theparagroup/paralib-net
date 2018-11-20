@@ -42,10 +42,5 @@ namespace com.paralib.Gen
 
         public abstract void Comment(string text);
 
-        public virtual string UrlPrefix(string url)
-        {
-            throw new NotImplementedException("need to refactor UrlPrefix out of context");
-        }
-
     }
 }

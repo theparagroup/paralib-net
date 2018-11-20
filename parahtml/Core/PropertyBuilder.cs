@@ -95,22 +95,14 @@ namespace com.parahtml.Core
         public string ToDeclaration(PropertyDictionary properties)
         {
             StringBuilder propertyBuilder = new StringBuilder();
-            bool firstPass = true;
 
             var list = ToList(properties);
 
             foreach (var property in list)
             {
-                if (firstPass)
-                {
-                    firstPass = false;
-                }
-                else
-                {
-                    propertyBuilder.Append("; ");
-                }
 
                 propertyBuilder.Append(property);
+                propertyBuilder.Append("; ");
             }
 
             return propertyBuilder.ToString();
