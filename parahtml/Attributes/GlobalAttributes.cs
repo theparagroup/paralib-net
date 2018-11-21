@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.paralib.Gen.Mapping;
 using com.parahtml.Css;
 using com.parahtml.Core;
+using com.paralib.Gen;
 
 namespace com.parahtml.Attributes
 {
@@ -47,13 +48,13 @@ namespace com.parahtml.Attributes
                 translate
 */
 
-    public class GlobalAttributes:StyleBase
+    public class GlobalAttributes:StyleBase, IHasContext<HtmlContext>
     {
         protected HtmlContext Context { private set; get; }
 
         public object Attributes { get; set; }
 
-        internal void SetContext(HtmlContext context)
+        void IHasContext<HtmlContext>.SetContext(HtmlContext context)
         {
             Context = context;
         }

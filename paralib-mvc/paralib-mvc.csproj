@@ -93,9 +93,17 @@
     <Compile Include="Tables\TableDefinition[T].cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\parahtml\parahtml.csproj">
+      <Project>{f72b0961-d74c-4260-8c8d-c616d51b68c9}</Project>
+      <Name>parahtml</Name>
+    </ProjectReference>
     <ProjectReference Include="..\paralib-common\paralib-common.csproj">
       <Project>{101e2741-5a3d-460b-bdf4-f5e5bd27cf1c}</Project>
       <Name>paralib-common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\paralib-gen\paralib-gen.csproj">
+      <Project>{55c1ac99-d46c-41b7-b1d2-77e4760ddf6e}</Project>
+      <Name>paralib-gen</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -71,7 +71,7 @@ namespace com.parahtml.Core
             return Flatten(dictionary);
         }
 
-        public AttributeDictionary Attributes<T>(Action<T> attributes, object additional = null) where T : GlobalAttributes, new()
+        public AttributeDictionary Attributes<T>(Action<T> attributes, object additional = null) where T : GlobalAttributes, IHasContext<HtmlContext>, new()
         {
             //let's keep it simple if there is nothing to do
             if (attributes != null || additional != null)
