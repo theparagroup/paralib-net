@@ -8,9 +8,9 @@ using com.paralib.Gen.Rendering;
 
 namespace com.parahtml.Html
 {
-    public class FluentHtml : FluentHtmlBase<FluentHtml>
+    public class FluentHtml<C> : FluentHtmlBase<C,FluentHtml<C>> where C:HtmlContext
     {
-        public FluentHtml(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentHtml(C context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
     }

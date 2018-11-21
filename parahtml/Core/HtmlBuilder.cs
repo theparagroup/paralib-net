@@ -108,6 +108,16 @@ namespace com.parahtml.Core
             return Inline("title", Attributes(attributes));
         }
 
+        public virtual Tag Link(Action<LinkAttributes> attributes = null)
+        {
+            return Block("link", Attributes(attributes), true);
+        }
+
+        public virtual Tag Meta(Action<MetaAttributes> attributes = null)
+        {
+            return Block("meta", Attributes(attributes), true);
+        }
+
         public virtual Tag Style(Action<StyleAttributes> attributes = null)
         {
             return Block("style", Attributes(attributes));
@@ -143,9 +153,9 @@ namespace com.parahtml.Core
             return Block("script", Attributes(attributes));
         }
 
-        public virtual Tag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
+        public virtual PseudoEmptyTag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
         {
-            return Inline("script", Attributes(attributes));
+            return new PseudoEmptyTag(Context, "script", Attributes(attributes));
         }
 
         public virtual Tag NoScript(Action<GlobalAttributes> attributes = null)

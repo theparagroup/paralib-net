@@ -13,13 +13,13 @@ namespace com.parahtml.Mvc
         Base class that makes a Fragment-derived class an IPage.
 
     */
-    public abstract class Page : Fragment, IPage
+    public abstract class Page : Fragment<MvcContext>, IPage 
     {
         public Page() : base(null)
         {
         }
 
-        void IPage.Render(HtmlContext context)
+        void IPage.Render(MvcContext context)
         {
             ((IPage)this).SetContext(context);
             OnRender();
@@ -31,5 +31,8 @@ namespace com.parahtml.Mvc
         {
             Dispose();    
         }
+
+       
+
     }
 }

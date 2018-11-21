@@ -4,15 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using com.parahtml.Core;
-using com.parahtml;
+using System.Web.Mvc;
 
 namespace com.parahtml.Mvc
 {
-    public class MvcContext:HtmlContext
+    public class MvcContext : HtmlContext
     {
-        public MvcContext(TextWriter textWriter):base(new MvcWriter(textWriter), new MvcServer(), GetOptions())
-        {
+        protected ControllerBase _controller;
 
+        public MvcContext(ControllerBase controller, TextWriter textWriter) : base(new MvcWriter(textWriter), new MvcServer(), GetOptions())
+        {
+            _controller = controller;
         }
 
         protected static HtmlOptions GetOptions()
@@ -30,5 +32,38 @@ namespace com.parahtml.Mvc
 
             return o;
         }
+
+        public bool IsAuthenticated
+        {
+            get
+            {
+                return HttpContext.Current.User.Identity.IsAuthenticated;
+            }
+        }
+
+        public string AreaName
+        {
+            get
+            {
+                return _controller.ControllerContext.RouteData.DataTokens["area"]?.ToString();
+            }
+        }
+
+        public string ControllerName
+        {
+            get
+            {
+                return _controller.ControllerContext.RouteData.GetRequiredString("controller");
+            }
+        }
+
+        public string ActionName
+        {
+            get
+            {
+                return _controller.ControllerContext.RouteData.GetRequiredString("action");
+            }
+        }
+
     }
 }

@@ -10,13 +10,13 @@ using com.parahtml.Attributes;
 
 namespace com.parahtml.Html
 {
-    public abstract class FluentHtmlBase<F> : FluentRendererStack<HtmlContext, F> where F : FluentHtmlBase<F>
+    public abstract class FluentHtmlBase<C, F> : FluentRendererStack<C, F> where F : FluentHtmlBase<C, F> where C : HtmlContext
     {
-        public FluentHtmlBase(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentHtmlBase(C context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 
-        public new HtmlContext Context
+        public new C Context
         {
             get
             {
@@ -80,6 +80,16 @@ namespace com.parahtml.Html
         public virtual F Title(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Title(attributes));
+        }
+
+        public virtual F Link(Action<LinkAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Link(attributes));
+        }
+
+        public virtual F Meta(Action<MetaAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Meta(attributes));
         }
 
         public virtual F Style(Action<StyleAttributes> attributes = null)

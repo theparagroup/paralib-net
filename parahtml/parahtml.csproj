@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\MetaAttributes.cs" />
+    <Compile Include="Attributes\LinkAttributes.cs" />
     <Compile Include="Attributes\ExternalScriptAttributes.cs" />
     <Compile Include="Core\AttributeDictionary.cs" />
     <Compile Include="Core\Server.cs" />
@@ -48,7 +50,7 @@
     <Compile Include="Css\Interfaces.cs" />
     <Compile Include="Css\Rule.cs" />
     <Compile Include="Html\FluentHtml.cs" />
-    <Compile Include="Html\FluentHtmlBase[F].cs" />
+    <Compile Include="Html\FluentHtmlBase[C,F].cs" />
     <Compile Include="Grids\FluentGrid.cs" />
     <Compile Include="Grids\GridOptions.cs" />
     <Compile Include="Grids\IColumn.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="Grids\IGrid.cs" />
     <Compile Include="Grids\IRow.cs" />
     <Compile Include="Html\DebugBlock.cs" />
+    <Compile Include="Html\PseudoEmptyTag.cs" />
     <Compile Include="Html\RendererComponent.cs" />
     <Compile Include="Html\TagComponent.cs" />
     <Compile Include="Values\Angle.cs" />

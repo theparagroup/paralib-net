@@ -4,22 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
+using com.parahtml.Core;
 using com.parahtml.Html;
 
 namespace com.parahtml.Grids
 {
-    public interface IRow
+    public interface IRow<C> where C:HtmlContext
     {
-        IRow Here(Action<IRow> row);
-        IRow Html(Action<FluentHtml> html);
+        IRow<C> Here(Action<IRow<C>> row);
+        IRow<C> Html(Action<FluentHtml<C>> html);
 
-        IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IRow Row(string[] columnClassList = null);
+        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IRow<C> Row(string[] columnClassList = null);
 
-        IColumn Column(Action<GlobalAttributes> attributes = null);
-        IColumn Column(string @class);
+        IColumn<C> Column(Action<GlobalAttributes> attributes = null);
+        IColumn<C> Column(string @class);
 
-        IGrid CloseGrid();
+        IGrid<C> CloseGrid();
 
     }
 }

@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
+using com.parahtml.Core;
 using com.parahtml.Html;
 
 namespace com.parahtml.Grids
 {
-    public interface IContainer
+    public interface IContainer<C> where C:HtmlContext
     {
-        IContainer Here(Action<IContainer> container);
-        IContainer Html(Action<FluentHtml> html);
+        IContainer<C> Here(Action<IContainer<C>> container);
+        IContainer<C> Html(Action<FluentHtml<C>> html);
 
-        IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IRow Row(string[] columnClassList = null);
+        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IRow<C> Row(string[] columnClassList = null);
 
-        IGrid CloseGrid();
+        IGrid<C> CloseGrid();
     }
 }

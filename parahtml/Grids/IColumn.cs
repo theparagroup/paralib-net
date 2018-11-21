@@ -5,24 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
 using com.parahtml.Html;
+using com.parahtml.Core;
 
 namespace com.parahtml.Grids
 {
-    public interface IColumn
+    public interface IColumn<C> where C : HtmlContext
     {
-        IColumn Here(Action<IColumn> column);
-        IColumn Html(Action<FluentHtml> html);
+        IColumn<C> Here(Action<IColumn<C>> column);
+        IColumn<C> Html(Action<FluentHtml<C>> html);
 
-        IColumn Column(Action<GlobalAttributes> attributes = null);
-        IColumn Column(string @class);
+        IColumn<C> Column(Action<GlobalAttributes> attributes = null);
+        IColumn<C> Column(string @class);
 
-        IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IRow Row(string[] columnClassLists = null);
+        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IRow<C> Row(string[] columnClassLists = null);
 
-        IContainer Container(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IContainer Container(string[] columnClassList = null);
+        IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IContainer<C> Container(string[] columnClassList = null);
 
-        IGrid Grid(Action<GridOptions> options=null);
-        IGrid CloseGrid();
+        IGrid<C> Grid(Action<GridOptions> options = null);
+        IGrid<C> CloseGrid();
     }
 }

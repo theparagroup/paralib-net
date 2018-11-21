@@ -12,9 +12,9 @@ namespace com.parahtml.Mvc
         Interface for use with the ParaView and ParaController.
     
     */
-    public interface IPage: IHasContext<HtmlContext>
+    public interface IPage : IHasContext<MvcContext> 
     {
-        void Render(HtmlContext context);
+        void Render(MvcContext context);
         void End();
     }
 }

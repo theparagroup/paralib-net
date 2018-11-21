@@ -5,20 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Attributes;
 using com.parahtml.Html;
+using com.parahtml.Core;
 
 namespace com.parahtml.Grids
 {
-    public interface IGrid
+    public interface IGrid<C> where C:HtmlContext
     {
-        IGrid Here(Action<IGrid> grid);
-        IGrid Html(Action<FluentHtml> html);
+        IGrid<C> Here(Action<IGrid<C>> grid);
+        IGrid<C> Html(Action<FluentHtml<C>> html);
 
-        IContainer Container(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IContainer Container(string[] columnClassList = null);
+        IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IContainer<C> Container(string[] columnClassList = null);
 
-        IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IRow Row(string[] columnClassList = null);
+        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
+        IRow<C> Row(string[] columnClassList = null);
 
-        IGrid CloseGrid();
+        IGrid<C> CloseGrid();
     }
 }

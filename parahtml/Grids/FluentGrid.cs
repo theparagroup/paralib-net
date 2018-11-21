@@ -83,7 +83,7 @@ namespace com.parahtml.Grids
 
     */
 
-    public partial class FluentGrid : FluentRendererStack<HtmlContext, FluentGrid>, IGrid, IContainer, IRow, IColumn
+    public partial class FluentGrid<C> : FluentRendererStack<C, FluentGrid<C>>, IGrid<C>, IContainer<C>, IRow<C>, IColumn<C> where C:HtmlContext
     {
         protected GridOptions _gridOptions;
 
@@ -93,7 +93,7 @@ namespace com.parahtml.Grids
         protected int _columnNumber;
 
 
-        public FluentGrid(HtmlContext context, RendererStack rendererStack, Action<GridOptions> gridOptions = null, GridOptions current=null) : base(context, rendererStack)
+        public FluentGrid(C context, RendererStack rendererStack, Action<GridOptions> gridOptions = null, GridOptions current=null) : base(context, rendererStack)
         {
             _gridOptions = new GridOptions();
 
@@ -107,7 +107,7 @@ namespace com.parahtml.Grids
 
         public class GridBlock : DebugBlock
         {
-            public GridBlock(HtmlContext context, GridOptions gridOptions) : base(context, "fluent grid", context.IsDebug(DebugFlags.Grids))
+            public GridBlock(C context, GridOptions gridOptions) : base(context, "fluent grid", context.IsDebug(DebugFlags.Grids))
             {
                 Data = gridOptions;
             }
@@ -115,7 +115,7 @@ namespace com.parahtml.Grids
 
         public class ContainerTag : Tag
         {
-            public ContainerTag(HtmlContext context, AttributeDictionary attributes, string[] columnClassList) : base(context, TagTypes.Block, "div", attributes)
+            public ContainerTag(C context, AttributeDictionary attributes, string[] columnClassList) : base(context, TagTypes.Block, "div", attributes)
             {
                 Data = columnClassList;
             }
@@ -123,7 +123,7 @@ namespace com.parahtml.Grids
 
         public class RowTag : Tag
         {
-            public RowTag(HtmlContext context, AttributeDictionary attributes, string[] columnClassList) : base(context, TagTypes.Block, "div", attributes)
+            public RowTag(C context, AttributeDictionary attributes, string[] columnClassList) : base(context, TagTypes.Block, "div", attributes)
             {
                 Data = columnClassList;
             }
@@ -169,7 +169,7 @@ namespace com.parahtml.Grids
 
         }
 
-        public IContainer Container(Action<GlobalAttributes> attributes, string[] columnClassList = null)
+        public IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClassList = null)
         {
             CloseContainer();
 
@@ -180,7 +180,7 @@ namespace com.parahtml.Grids
             return Open(containerTag);
         }
 
-        public IContainer Container(string[] columnClasses = null)
+        public IContainer<C> Container(string[] columnClasses = null)
         {
             return Container(null, columnClasses);
         }
@@ -213,7 +213,7 @@ namespace com.parahtml.Grids
 
         }
 
-        public IRow Row(Action<GlobalAttributes> attributes, string[] columnClassList = null)
+        public IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null)
         {
             CloseRow();
 
@@ -224,7 +224,7 @@ namespace com.parahtml.Grids
             return Open(rowTag);
         }
 
-        public IRow Row(string[] columnClasses = null)
+        public IRow<C> Row(string[] columnClasses = null)
         {
             return Row(null, columnClasses);
         }
@@ -255,7 +255,7 @@ namespace com.parahtml.Grids
 
         }
 
-        public IColumn Column(string @class)
+        public IColumn<C> Column(string @class)
         {
             CloseColumn();
 
@@ -264,7 +264,7 @@ namespace com.parahtml.Grids
             return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(new { Class = @class })));
         }
 
-        public IColumn Column(Action<GlobalAttributes> attributes = null)
+        public IColumn<C> Column(Action<GlobalAttributes> attributes = null)
         {
             CloseColumn();
 
@@ -288,13 +288,13 @@ namespace com.parahtml.Grids
             return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = columnClasses, attributes=new { Class=_gridOptions?.ColumnClass} })));
         }
 
-        public IGrid Grid(Action<GridOptions> gridOptions = null)
+        public IGrid<C> Grid(Action<GridOptions> gridOptions = null)
         {
-            var grid = new FluentGrid(Context, RendererStack, gridOptions, _gridOptions);
+            var grid = new FluentGrid<C>(Context, RendererStack, gridOptions, _gridOptions);
             return grid;
         }
 
-        public IGrid CloseGrid()
+        public IGrid<C> CloseGrid()
         {
             //end all elements up to last grid, if any
             //end last (current) grid
@@ -317,7 +317,7 @@ namespace com.parahtml.Grids
             return this;
         }
 
-        protected FluentGrid Here<T>(Action<T> action, T value)
+        protected FluentGrid<C> Here<T>(Action<T> action, T value)
         {
             if (action != null)
             {
@@ -327,53 +327,53 @@ namespace com.parahtml.Grids
             return this;
         }
 
-        public IGrid Here(Action<IGrid> grid)
+        public IGrid<C> Here(Action<IGrid<C>> grid)
         {
             return Here(grid, this);
         }
 
-        public IContainer Here(Action<IContainer> grid)
+        public IContainer<C> Here(Action<IContainer<C>> grid)
         {
             return Here(grid, this);
         }
 
-        public IRow Here(Action<IRow> grid)
+        public IRow<C> Here(Action<IRow<C>> grid)
         {
             return Here(grid, this);
         }
 
-        public IColumn Here(Action<IColumn> grid)
+        public IColumn<C> Here(Action<IColumn<C>> grid)
         {
             return Here(grid, this);
         }
 
-        protected FluentGrid _Html(Action<FluentHtml> action)
+        protected FluentGrid<C> _Html(Action<FluentHtml<C>> action)
         {
             if (action != null)
             {
-                var fh = new FluentHtml(Context, RendererStack);
+                var fh = new FluentHtml<C>(Context, RendererStack);
                 action(fh);
             }
 
             return this;
         }
 
-        IGrid IGrid.Html(Action<FluentHtml> html)
+        IGrid<C> IGrid<C>.Html(Action<FluentHtml<C>> html)
         {
             return _Html(html);
         }
 
-        IContainer IContainer.Html(Action<FluentHtml> html)
+        IContainer<C> IContainer<C>.Html(Action<FluentHtml<C>> html)
         {
             return _Html(html);
         }
 
-        IRow IRow.Html(Action<FluentHtml> html)
+        IRow<C> IRow<C>.Html(Action<FluentHtml<C>> html)
         {
             return _Html(html);
         }
 
-        IColumn IColumn.Html(Action<FluentHtml> html)
+        IColumn<C> IColumn<C>.Html(Action<FluentHtml<C>> html)
         {
             return _Html(html);
         }

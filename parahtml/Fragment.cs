@@ -11,9 +11,9 @@ using com.parahtml.Grids;
 
 namespace com.parahtml
 {
-    public class Fragment : FluentHtmlBase<Fragment>, IDisposable
+    public class Fragment<C> : FluentHtmlBase<C, Fragment<C>>, IDisposable where C : HtmlContext
     {
-        public Fragment(HtmlContext context) : base(context, new RendererStack(false))
+        public Fragment(C context) : base(context, new RendererStack(false))
         {
         }
 
@@ -24,9 +24,9 @@ namespace com.parahtml
             return css;
         }
 
-        public IGrid Grid(Action<GridOptions> options = null)
+        public IGrid<C> Grid(Action<GridOptions> options = null)
         {
-            return new FluentGrid(Context, RendererStack, options);
+            return new FluentGrid<C>(Context, RendererStack, options);
         }
 
         public void Dispose()

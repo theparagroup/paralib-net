@@ -19,11 +19,11 @@ namespace com.parahtml.Html
         to the usual rules.
 
     */
-    public abstract class TagComponent<P> : RendererComponent<TagComponent<P>, P> where P : Package, new()
+    public abstract class TagComponent<C,P> : RendererComponent<C,TagComponent<C,P>, P> where P : Package, new() where C:HtmlContext
     {
         protected Tag _tag;
 
-        public TagComponent(HtmlContext context, Tag tag, bool indentContent) : base(context, tag.LineMode, tag.ContainerMode, indentContent)
+        public TagComponent(C context, Tag tag, bool indentContent) : base(context, tag.LineMode, tag.ContainerMode, indentContent)
         {
             _tag = tag;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using com.parahtml;
+using com.parahtml.Core;
 
 namespace com.parahtml.Mvc
 {
@@ -17,12 +18,12 @@ namespace com.parahtml.Mvc
 
     */
 
-    public abstract class ParaWebViewPage<M>:WebViewPage<M>
+    public abstract class ParaWebViewPage<M> : WebViewPage<M>
     {
-        protected Fragment Fragment()
+        protected Fragment<MvcContext> Fragment()
         {
-            var context = new MvcContext(ViewContext.Writer);
-            return new Fragment(context);
+            var context = new MvcContext(ViewContext.Controller, ViewContext.Writer);
+            return new Fragment<MvcContext>(context);
         }
 
     }

@@ -19,14 +19,14 @@ namespace com.parahtml.Html
         to the usual rules.
 
     */
-    public abstract class RendererComponent<F,P> : HtmlComponentBase<F, P>, IHasRendererStack where F : RendererComponent<F, P> where P : Package, new()
+    public abstract class RendererComponent<C,F,P> : HtmlComponentBase<C,F, P>, IHasRendererStack where F : RendererComponent<C,F, P> where P : Package, new() where C:HtmlContext
     {
         private Renderer _renderer;
         protected LineModes _lineMode { private set; get; }
         protected ContainerModes _containerMode { private set; get; }
         public object Data { set; get; }
 
-        public RendererComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, new RendererStack(lineMode==LineModes.None))
+        public RendererComponent(C context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, new RendererStack(lineMode==LineModes.None))
         {
             _renderer = new Renderer(context, lineMode, containerMode, indentContent);
             _lineMode = lineMode;
