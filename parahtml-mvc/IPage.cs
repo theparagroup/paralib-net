@@ -10,9 +10,12 @@ namespace com.parahtml.Mvc
 {
     /*
         Interface for use with the ParaView and ParaController.
+
+        If for some reason it is not desirable to derive from Page, this
+        interface can be directly implemented.
     
     */
-    public interface IPage : IHasContext<MvcContext> 
+    public interface IPage
     {
         void Render(MvcContext context);
         void End();

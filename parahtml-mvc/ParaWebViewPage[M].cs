@@ -16,6 +16,40 @@ namespace com.parahtml.Mvc
             <system.web.webPages.razor>
                 <pages pageBaseType="com.parahtml.Mvc.ParaWebViewPage">
 
+
+        With optional models (object is default if not specified):
+
+            @model foo.MyModel
+            @model int
+            @model dynamic
+
+
+        Note you can use a concrete class or an expando object with dynamic, but not
+        an anonymous type.
+
+
+        Instead of useing @model, use @inherits:
+
+            @inherits com.parahtml.Mvc.ParaWebViewPage<object>
+            @inherits com.parahtml.Mvc.ParaWebViewPage<dynamic>
+            @inherits com.parahtml.Mvc.ParaWebViewPage<foo.MyModel>
+
+
+        Or with custom base classes:
+
+            public class MyView : ParaWebViewPage<object>
+            {
+            }
+
+            public class MyView : ParaWebViewPage<dynamic>
+            {
+            }
+
+            public class MyView<M> : ParaWebViewPage<M>
+            {
+            }
+
+
     */
 
     public abstract class ParaWebViewPage<M> : WebViewPage<M>

@@ -17,6 +17,7 @@ namespace com.parahtml.Mvc
         //this should be protected or routes.MapRoute() might pick it up
         protected ActionResult Page<P>(P page) where P: IPage
         {
+
             return View(new ParaView<P>(page));
         }
     }

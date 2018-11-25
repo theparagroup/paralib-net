@@ -5,6 +5,7 @@ using System.Web;
 using System.IO;
 using com.parahtml.Core;
 using com.parahtml;
+using com.paralib.Gen;
 
 namespace com.parahtml.Mvc
 {
@@ -15,13 +16,14 @@ namespace com.parahtml.Mvc
     */
     public abstract class Page : Fragment<MvcContext>, IPage 
     {
+
         public Page() : base(null)
         {
         }
 
         void IPage.Render(MvcContext context)
         {
-            ((IPage)this).SetContext(context);
+            ((IHasContext<MvcContext>)this).SetContext(context);
             OnRender();
         }
 
@@ -31,8 +33,6 @@ namespace com.parahtml.Mvc
         {
             Dispose();    
         }
-
-       
 
     }
 }

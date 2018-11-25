@@ -19,6 +19,8 @@ namespace com.parahtml.Mvc
 
         protected static HtmlOptions GetOptions()
         {
+            //TODO integrate with config system
+
             var o = new HtmlOptions();
 
             //o.DebugSourceFormatting = true;
