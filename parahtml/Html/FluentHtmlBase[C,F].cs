@@ -161,6 +161,13 @@ namespace com.parahtml.Html
             return Open(HtmlBuilder.A(attributes));
         }
 
+        public virtual F A(string content, Action<AAttributes> attributes = null)
+        {
+            Open(HtmlBuilder.A(attributes));
+            Write(content);
+            return Close();
+        }
+
         public virtual F Form(Action<FormAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Form(attributes));

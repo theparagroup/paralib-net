@@ -11,6 +11,6 @@ namespace com.parahtml.Grids
         public string ContainerClass { set; get; }
         public string RowClass { set; get; }
         public string ColumnClass { set; get; }
-        public string[] ColumnClassList { set; get; }
+        public string[] ColumnClasses { set; get; }
     }
 }

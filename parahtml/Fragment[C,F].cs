@@ -24,9 +24,9 @@ namespace com.parahtml
             return css;
         }
 
-        public IGrid<C> Grid(Action<GridOptions> options = null)
+        public IGrid<C> Grid(Action<GridOptions> gridOptions = null)
         {
-            return new FluentGrid<C>(Context, RendererStack, options);
+            return new FluentGrid<C>(Context, RendererStack, gridOptions);
         }
 
         public void Dispose()
