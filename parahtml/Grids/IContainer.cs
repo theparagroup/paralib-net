@@ -14,8 +14,9 @@ namespace com.parahtml.Grids
         IContainer<C> Here(Action<IContainer<C>> container);
         IContainer<C> Html(Action<FluentHtml<C>> html);
 
-        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null);
-        IRow<C> Row(string[] columnClassList = null);
+        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
+        IRow<C> Row(string @class, string[] columnClasses = null);
+        IRow<C> Row(string[] columnClasses = null);
 
         IGrid<C> CloseGrid();
     }

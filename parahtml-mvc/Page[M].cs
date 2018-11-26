@@ -3,27 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
-using com.parahtml.Core;
-using com.parahtml;
+using com.paralib.Gen;
+
 
 namespace com.parahtml.Mvc
 {
     /*
 
-        Base class that makes a Fragment-derived class an IPage, but with a 
-        Model.
+        Concrete implementation of Mvc Page.
 
     */
-
-
-    public abstract class Page<M> : Page
+    public abstract class Page<M> : Page<Page<M>, M> 
     {
-        protected M Model { private set; get; }
-
-        public Page(M model) 
-        {
-            Model = model;
-        }
-
     }
 }

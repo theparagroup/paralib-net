@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -52,11 +53,13 @@ namespace com.parahtml.Mvc
 
     */
 
-    public abstract class ParaWebViewPage<M> : WebViewPage<M>
+    public abstract class ParaWebViewPage<C,M> : WebViewPage<M>, ICreateContext<C> where C:MvcContext
     {
+        public abstract C CreateContext(ViewContext viewContext, TextWriter textWriter);
+
         protected Fragment<MvcContext> Fragment()
         {
-            var context = new MvcContext(ViewContext.Controller, ViewContext.Writer);
+            var context = new MvcContext(ViewContext, ViewContext.Writer);
             return new Fragment<MvcContext>(context);
         }
 

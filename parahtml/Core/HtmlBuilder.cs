@@ -163,7 +163,6 @@ namespace com.parahtml.Core
             return Block("noscript", Attributes(attributes));
         }
 
-
         public virtual Tag Ul(Action<GlobalAttributes> attributes = null)
         {
             return Block("ul", Attributes(attributes));
@@ -179,6 +178,20 @@ namespace com.parahtml.Core
             return Block("li", Attributes(attributes));
         }
 
+        public virtual Tag Img(Action<ImgAttributes> attributes = null)
+        {
+            return Inline("img", Attributes(attributes), true);
+        }
+
+        public virtual Tag A(Action<AAttributes> attributes = null)
+        {
+            return Inline("a", Attributes(attributes));
+        }
+
+        public virtual Tag Form(Action<FormAttributes> attributes = null)
+        {
+            return Block("form", Attributes(attributes));
+        }
 
     }
 }

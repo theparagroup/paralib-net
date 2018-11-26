@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\FormAttributes.cs" />
+    <Compile Include="Attributes\AAttributes.cs" />
+    <Compile Include="Attributes\InputAttributes.cs" />
     <Compile Include="Attributes\MetaAttributes.cs" />
     <Compile Include="Attributes\LinkAttributes.cs" />
     <Compile Include="Attributes\ExternalScriptAttributes.cs" />
@@ -49,6 +52,7 @@
     <Compile Include="Css\Css.cs" />
     <Compile Include="Css\Interfaces.cs" />
     <Compile Include="Css\Rule.cs" />
+    <Compile Include="Fragment[C,F].cs" />
     <Compile Include="Html\FluentHtml.cs" />
     <Compile Include="Html\FluentHtmlBase[C,F].cs" />
     <Compile Include="Grids\FluentGrid.cs" />
@@ -76,6 +80,7 @@
     <Compile Include="Css\Background.cs" />
     <Compile Include="Css\Style.cs" />
     <Compile Include="Css\StyleBase.cs" />
+    <Compile Include="Values\Methods.cs" />
     <Compile Include="Values\LengthOrPercentage.cs" />
     <Compile Include="Values\RadialGradientOptions.cs" />
     <Compile Include="Values\SideOrCorner.cs" />
@@ -98,7 +103,7 @@
     <Compile Include="Core\HtmlOptions.cs" />
     <Compile Include="Html\HtmlRenderer.cs" />
     <Compile Include="Values\DocumentTypes.cs" />
-    <Compile Include="Fragment.cs" />
+    <Compile Include="Fragment[C].cs" />
     <Compile Include="Values\HrAlignTypes.cs" />
     <Compile Include="Packages\Desp.cs" />
     <Compile Include="Packages\Package.cs" />

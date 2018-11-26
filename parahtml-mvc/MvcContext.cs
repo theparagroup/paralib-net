@@ -6,15 +6,16 @@ using System.Web;
 using com.parahtml.Core;
 using System.Web.Mvc;
 
+
 namespace com.parahtml.Mvc
 {
     public class MvcContext : HtmlContext
     {
-        protected ControllerBase _controller;
+        public ViewContext ViewContext { private set; get; }
 
-        public MvcContext(ControllerBase controller, TextWriter textWriter) : base(new MvcWriter(textWriter), new MvcServer(), GetOptions())
+        public MvcContext(ViewContext viewContext, TextWriter textWriter) : base(new MvcWriter(textWriter), new MvcServer(), GetOptions())
         {
-            _controller = controller;
+            ViewContext = viewContext;
         }
 
         protected static HtmlOptions GetOptions()
@@ -47,7 +48,7 @@ namespace com.parahtml.Mvc
         {
             get
             {
-                return _controller.ControllerContext.RouteData.DataTokens["area"]?.ToString();
+                return ViewContext.Controller.ControllerContext.RouteData.DataTokens["area"]?.ToString();
             }
         }
 
@@ -55,7 +56,7 @@ namespace com.parahtml.Mvc
         {
             get
             {
-                return _controller.ControllerContext.RouteData.GetRequiredString("controller");
+                return ViewContext.Controller.ControllerContext.RouteData.GetRequiredString("controller");
             }
         }
 
@@ -63,7 +64,7 @@ namespace com.parahtml.Mvc
         {
             get
             {
-                return _controller.ControllerContext.RouteData.GetRequiredString("action");
+                return ViewContext.Controller.ControllerContext.RouteData.GetRequiredString("action");
             }
         }
 

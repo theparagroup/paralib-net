@@ -40,11 +40,6 @@ namespace com.parahtml.Html
             }
         }
 
-        public string Url(string url)
-        {
-            return new Url(url).ToValue(Context);
-        }
-
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             if (tagType == TagTypes.Block)
@@ -154,6 +149,21 @@ namespace com.parahtml.Html
         public virtual F Li(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Li(attributes));
+        }
+
+        public virtual F Img(Action<ImgAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Img(attributes));
+        }
+
+        public virtual F A(Action<AAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.A(attributes));
+        }
+
+        public virtual F Form(Action<FormAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.Form(attributes));
         }
 
     }

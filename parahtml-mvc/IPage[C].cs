@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using com.parahtml.Core;
-using com.paralib.Gen;
-
 
 namespace com.parahtml.Mvc
 {
@@ -15,9 +12,9 @@ namespace com.parahtml.Mvc
         interface can be directly implemented.
     
     */
-    public interface IPage
+    public interface IPage<C> : ICreateContext<C> where C : MvcContext
     {
-        void Render(MvcContext context);
+        void Render(C context);
         void End();
     }
 }

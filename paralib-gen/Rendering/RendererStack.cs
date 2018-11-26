@@ -254,7 +254,7 @@ namespace com.paralib.Gen.Rendering
                     if (top.ContainerMode == ContainerModes.None)
                     {
                         Pop();
-                        break;
+                        continue;
                     }
                     else if (top.ContainerMode == ContainerModes.Inline)
                     {

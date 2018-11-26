@@ -47,16 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPage.cs" />
+    <Compile Include="Helpers[M].cs" />
+    <Compile Include="ICreateContext[C].cs" />
+    <Compile Include="IHasModel[M].cs" />
+    <Compile Include="IPage[C].cs" />
     <Compile Include="MvcContext.cs" />
     <Compile Include="MvcServer.cs" />
     <Compile Include="MvcWriter.cs" />
-    <Compile Include="Page.cs" />
     <Compile Include="Page[M].cs" />
+    <Compile Include="Page[F,M].cs" />
+    <Compile Include="Page.cs" />
+    <Compile Include="Page[C,F,M].cs" />
     <Compile Include="ParaController.cs" />
+    <Compile Include="ParaController[C].cs" />
     <Compile Include="ParaView[P].cs" />
-    <Compile Include="ParaWebViewPage[M].cs" />
+    <Compile Include="ParaView[C,P].cs" />
+    <Compile Include="ParaWebViewPage[C,M].cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewDataContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\parahtml\parahtml.csproj">

@@ -66,11 +66,6 @@ namespace com.parahtml.Core
             return (Options.Debug & debugFlags) != 0;
         }
 
-        public string Url(string url)
-        {
-            return Server.Url(url);
-        }
-
         public Package RegisterPackage<T>() where T : Package, new()
         {
             if (Packages.ContainsKey(typeof(T)))

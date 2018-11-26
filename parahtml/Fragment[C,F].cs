@@ -11,7 +11,7 @@ using com.parahtml.Grids;
 
 namespace com.parahtml
 {
-    public class Fragment<C> : FluentHtmlBase<C, Fragment<C>>, IDisposable where C : HtmlContext
+    public class Fragment<C, F> : FluentHtmlBase<C, F>, IDisposable where C : HtmlContext where F : Fragment<C, F>
     {
         public Fragment(C context) : base(context, new RendererStack(false))
         {

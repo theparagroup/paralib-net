@@ -169,20 +169,25 @@ namespace com.parahtml.Grids
 
         }
 
-        public IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClassList = null)
+        public IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClasses = null)
         {
             CloseContainer();
 
             var containerTag = new ContainerTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = _gridOptions?.ContainerClass }), _containerColumnClassList);
 
-            _containerColumnClassList =columnClassList;
+            _containerColumnClassList = columnClasses;
 
             return Open(containerTag);
         }
 
+        public IContainer<C> Container(string @class, string[] columnClasses = null)
+        {
+            return Container(a=>a.Class=@class, columnClasses);
+        }
+
         public IContainer<C> Container(string[] columnClasses = null)
         {
-            return Container(null, columnClasses);
+            return Container(attributes: null, columnClasses:columnClasses);
         }
 
         protected void CloseRow()
@@ -213,20 +218,25 @@ namespace com.parahtml.Grids
 
         }
 
-        public IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClassList = null)
+        public IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClasses = null)
         {
             CloseRow();
 
             var rowTag = new RowTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = _gridOptions?.RowClass }), _rowColumnClassList);
 
-            _rowColumnClassList = columnClassList;
+            _rowColumnClassList = columnClasses;
 
             return Open(rowTag);
         }
 
+        public IRow<C> Row(string @class, string[] columnClasses = null)
+        {
+            return Row(a => a.Class = @class, columnClasses);
+        }
+
         public IRow<C> Row(string[] columnClasses = null)
         {
-            return Row(null, columnClasses);
+            return Row(attributes: null, columnClasses: columnClasses);
         }
 
         protected void CloseColumn()
