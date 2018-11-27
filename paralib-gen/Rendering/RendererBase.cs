@@ -115,9 +115,8 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        private void Comment(string text)
+        protected virtual void Comment(string text)
         {
-            Context.Comment(text);
         }
 
         private bool DebugSourceFormatting

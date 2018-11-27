@@ -40,7 +40,5 @@ namespace com.paralib.Gen
             Writer = writer;
         }
 
-        public abstract void Comment(string text);
-
     }
 }

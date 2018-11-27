@@ -35,5 +35,10 @@ namespace com.parahtml.Html
             }
         }
 
+        protected override void Comment(string text)
+        {
+            Writer.Write($"<!-- {text} -->");
+        }
+
     }
 }

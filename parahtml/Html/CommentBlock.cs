@@ -23,7 +23,7 @@ namespace com.parahtml.Html
         {
             if (Visible)
             {
-                Context.Comment($"{Name} begin");
+                Comment($"{Name} begin");
             }
         }
 
@@ -31,7 +31,7 @@ namespace com.parahtml.Html
         {
             if (Visible)
             {
-                Context.Comment($"{Name} end");
+                Comment($"{Name} end");
             }
         }
     }

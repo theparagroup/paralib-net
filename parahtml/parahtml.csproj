@@ -48,7 +48,6 @@
     <Compile Include="Attributes\ExternalScriptAttributes.cs" />
     <Compile Include="Core\AttributeDictionary.cs" />
     <Compile Include="Core\Server.cs" />
-    <Compile Include="Css\CssContext.cs" />
     <Compile Include="Css\Css.cs" />
     <Compile Include="Css\Interfaces.cs" />
     <Compile Include="Css\Rule.cs" />

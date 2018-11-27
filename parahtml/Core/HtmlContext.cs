@@ -56,11 +56,6 @@ namespace com.parahtml.Core
             }
         }
 
-        public override void Comment(string text)
-        {
-            Writer.Write($"<!-- {text} -->");
-        }
-
         public bool IsDebug(DebugFlags debugFlags)
         {
             return (Options.Debug & debugFlags) != 0;

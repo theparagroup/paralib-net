@@ -168,7 +168,7 @@ namespace com.parahtml.Html
                 {
                     if (Attributes.ContainsKey("id"))
                     {
-                        Context.Comment($"end {Attributes["id"]}");
+                        Comment($"end {Attributes["id"]}");
                     }
                 }
             }

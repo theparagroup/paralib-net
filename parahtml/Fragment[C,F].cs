@@ -19,8 +19,7 @@ namespace com.parahtml
 
         public FluentCss Css()
         {
-            var cssContext = new Css.CssContext(Context);
-            var css = new FluentCss(cssContext, RendererStack);
+            var css = new FluentCss(Context, RendererStack);
             return css;
         }
 

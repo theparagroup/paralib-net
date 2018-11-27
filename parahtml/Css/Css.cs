@@ -13,7 +13,7 @@ namespace com.parahtml.Css
 
     public class FluentCss : FluentRendererStack<HtmlContext, FluentCss>, ICss
     {
-        public FluentCss(CssContext context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentCss(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
         {
         }
 
