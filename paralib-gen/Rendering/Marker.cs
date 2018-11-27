@@ -6,15 +6,57 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen.Rendering
 {
-    public class Marker
+    public class Marker : IRenderer
     {
-        public string Name { private set; get; }
-        public IRenderer Renderer { private set; get; }
+        public string Name { protected set; get; }
 
-        public Marker(string name, IRenderer renderer)
+        public Marker(string name)
         {
             Name = name;
-            Renderer = renderer;
+        }
+
+        public ContainerModes ContainerMode
+        {
+            get
+            {
+                return ContainerModes.Block;
+            }
+        }
+
+        public object Data
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public LineModes LineMode
+        {
+            get
+            {
+                return LineModes.Multiple;
+            }
+        }
+
+        public void Begin()
+        {
+        }
+
+        public void End()
+        {
         }
     }
+
+    //public class Marker
+    //{
+    //    public string Name { private set; get; }
+    //    public IRenderer Renderer { private set; get; }
+
+    //    public Marker(string name, IRenderer renderer)
+    //    {
+    //        Name = name;
+    //        Renderer = renderer;
+    //    }
+    //}
 }

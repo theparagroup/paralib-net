@@ -47,7 +47,7 @@ namespace com.parahtml.Grids
 
     */
 
-    public partial class FluentGrid<C> : FluentRendererStack<C, FluentGrid<C>>, IGrid<C>, IContainer<C>, IRow<C>, IColumn<C> where C : HtmlContext
+    public partial class FluentGrid<C> : FluentRendererStack<C, FluentGrid<C>>, IGrid<C>, IContainer<C>, IRow<C>, IColumn<C>  where C : HtmlContext
     {
         protected GridOptions _gridOptions;
 
@@ -59,8 +59,23 @@ namespace com.parahtml.Grids
 
         public FluentGrid(C context, RendererStack rendererStack, Action<GridOptions> gridOptions = null) : base(context, rendererStack)
         {
-            Grid(gridOptions);
+            NewGrid(GetOptions(gridOptions));
         }
+
+        protected GridOptions GetOptions(Action<GridOptions> gridOptions)
+        {
+            GridOptions options = null;
+
+            if (gridOptions != null)
+            {
+                options = new GridOptions();
+
+                gridOptions(options);
+            }
+
+            return options;
+        }
+
 
         protected class GridState
         {
@@ -101,7 +116,7 @@ namespace com.parahtml.Grids
             }
         }
 
-        public IGrid<C> Grid(Action<GridOptions> gridOptions = null)
+        protected void NewGrid(GridOptions gridOptions)
         {
             var gridState = new GridState();
             gridState.GridOptions = _gridOptions;
@@ -109,20 +124,15 @@ namespace com.parahtml.Grids
             gridState.RowColumnClasses = _rowColumnClasses;
             gridState.ColumnNumber = _columnNumber;
 
-            _gridOptions = new GridOptions();
+            _gridOptions = gridOptions;
             _containerColumnClasses = null;
             _rowColumnClasses = null;
             _columnNumber = 0;
 
-            if (gridOptions != null)
-            {
-                gridOptions(_gridOptions);
-            }
-
-            return Open(new GridBlock(Context, gridState));
+            Open(new GridBlock(Context, gridState));
         }
 
-        public IGrid<C> CloseGrid()
+        protected void CloseGrid()
         {
             //end all elements up to last grid
             //end last (current) grid
@@ -158,10 +168,6 @@ namespace com.parahtml.Grids
             if (!gridFound)
             {
                 throw new Exception("Can't close grid, no grid found");
-            }
-            else
-            {
-                return this;
             }
 
         }
@@ -337,6 +343,29 @@ namespace com.parahtml.Grids
             ++_columnNumber;
 
             return Open(new ColumnTag(Context, Context.AttributeBuilder.Attributes(attributes, new { Class = columnClasses, attributes = new { Class = _gridOptions?.ColumnClass } })));
+        }
+
+
+        protected IColumn<C> _Grid(GridOptions gridOptions, Action<IGrid<C>> grid)
+        {
+            if (grid!=null)
+            {
+                NewGrid(gridOptions);
+                grid(this);
+                CloseGrid();
+            }
+
+            return this;
+        }
+
+        public IColumn<C> Grid(Action<GridOptions> gridOptions, Action<IGrid<C>> grid)
+        {
+            return _Grid(GetOptions(gridOptions), grid);
+        }
+
+        public IColumn<C> Grid(Action<IGrid<C>> grid)
+        {
+            return _Grid(null, grid);
         }
 
         protected FluentGrid<C> Here<T>(Action<T> action, T value)

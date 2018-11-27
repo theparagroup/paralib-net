@@ -64,13 +64,13 @@ namespace com.paralib.Gen.Fluent
 
         public virtual F Mark(string marker)
         {
-            RendererStack.Mark(marker);
+            RendererStack.Mark(new Marker(marker));
             return (F)this;
         }
 
-        public virtual F Close(string marker)
+        public virtual F Close(string marker, Action<IRenderer> action = null)
         {
-            RendererStack.Close(marker);
+            RendererStack.Close(marker, action);
             return (F)this;
         }
 

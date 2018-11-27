@@ -75,7 +75,6 @@ namespace com.paralib.Gen.Rendering
     public class RendererStack 
     {
         protected Stack<IRenderer> Stack { private set; get; } = new Stack<IRenderer>();
-        public Stack<Marker> Markers { private set; get; }
         protected bool NoLineBreaks { private set; get; }
 
         public RendererStack(bool noLineBreaks)
@@ -327,29 +326,33 @@ namespace com.paralib.Gen.Rendering
 
         }
 
-        public virtual void Mark(string name)
+        public virtual void Mark(Marker marker)
         {
-            if (Markers == null)
-            {
-                Markers = new Stack<Marker>();
-            }
-
-            if (Top!=null)
-            {
-                Markers.Push(new Marker(name, Top));
-            }
+            Open(marker);
         }
 
-        public virtual void Close(string marker)
+        public virtual void Close(string marker, Action<IRenderer> action=null)
         {
-            while (Markers?.Count > 0)
+            while (Stack.Count > 0)
             {
-                var m = Markers.Pop();
+                IRenderer top = Stack.Peek();
 
-                if (m.Name == marker)
+                if (top is Marker)
                 {
-                    Close(m.Renderer);
-                    return;
+                    if (((Marker)top).Name == marker)
+                    {
+                        Pop();
+                        return;
+                    }
+                }
+                else
+                {
+                    if (action != null)
+                    {
+                        action(top);
+                    }
+
+                    Pop();
                 }
             }
 
@@ -366,9 +369,9 @@ namespace com.paralib.Gen.Rendering
 
                     Pop();
 
-                    var pop = func(top);
+                    var stop = func(top);
 
-                    if (pop)
+                    if (stop)
                     {
                         break;
                     }

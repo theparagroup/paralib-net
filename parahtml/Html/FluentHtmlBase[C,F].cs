@@ -46,6 +46,10 @@ namespace com.parahtml.Html
             return (F)this;
         }
 
+        public virtual F CommentBlock(string text, bool visible)
+        {
+            return Open(new CommentBlock(Context, text, visible));
+        }
 
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {

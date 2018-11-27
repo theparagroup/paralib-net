@@ -32,7 +32,11 @@ Design Goals & Notes
 	remember, we're not replacing a web server or mvc in this project, just creating
 	a generation library with a focus on building components
 
+	rework these grids
 
+	fluent system
+		do i need to pass context in the constructor
+		see if i really need <C> on everything
 
 	documentation review
 	re-test nested rendererstacks

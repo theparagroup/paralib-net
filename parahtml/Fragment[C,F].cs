@@ -23,9 +23,27 @@ namespace com.parahtml
             return css;
         }
 
-        public IGrid<C> Grid(Action<GridOptions> gridOptions = null)
+        private void _Grid(Action<GridOptions> gridOptions, Action<IGrid<C>> grid)
         {
-            return new FluentGrid<C>(Context, RendererStack, gridOptions);
+            if (grid != null)
+            {
+                var marker = Guid.NewGuid().ToString();
+                Mark(marker);
+                var fluentGrid= new FluentGrid<C>(Context, RendererStack, gridOptions);
+                grid(fluentGrid);
+                Close(marker);
+            }
+
+        }
+
+        public void Grid(Action<GridOptions> gridOptions, Action<IGrid<C>> grid)
+        {
+            _Grid(gridOptions, grid);
+        }
+
+        public void Grid(Action<IGrid<C>> grid)
+        {
+            _Grid(null, grid);
         }
 
         public void Dispose()

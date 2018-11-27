@@ -10,12 +10,12 @@ namespace com.parahtml.Html
 {
     public class CommentBlock : HtmlRenderer
     {
-        public string Name { private set; get; }
+        public string Text { private set; get; }
         public bool Visible { private set; get; }
 
-        public CommentBlock(HtmlContext context, string name, bool visible) : base(context, LineModes.Multiple, ContainerModes.Block, false)
+        public CommentBlock(HtmlContext context, string text, bool visible) : base(context, LineModes.Multiple, ContainerModes.Block, false)
         {
-            Name = name;
+            Text = text;
             Visible = visible;
         }
 
@@ -23,7 +23,7 @@ namespace com.parahtml.Html
         {
             if (Visible)
             {
-                Comment($"{Name} begin");
+                Comment($"{Text} begin");
             }
         }
 
@@ -31,7 +31,7 @@ namespace com.parahtml.Html
         {
             if (Visible)
             {
-                Comment($"{Name} end");
+                Comment($"{Text} end");
             }
         }
     }

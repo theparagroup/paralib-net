@@ -9,6 +9,7 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Grids
 {
+
     public interface IGrid<C> where C:HtmlContext
     {
         IGrid<C> Here(Action<IGrid<C>> grid);
@@ -21,7 +22,5 @@ namespace com.parahtml.Grids
         IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
         IRow<C> Row(string @class, string[] columnClasses = null);
         IRow<C> Row(string[] columnClasses = null);
-
-        IGrid<C> CloseGrid();
     }
 }

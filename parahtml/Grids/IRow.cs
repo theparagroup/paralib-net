@@ -20,8 +20,5 @@ namespace com.parahtml.Grids
 
         IColumn<C> Column(Action<GlobalAttributes> attributes = null);
         IColumn<C> Column(string @class);
-
-        IGrid<C> CloseGrid();
-
     }
 }
