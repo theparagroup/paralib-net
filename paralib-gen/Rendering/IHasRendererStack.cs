@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen.Rendering
 {
-    public interface IHasRendererStack:IRenderer
+    public interface IHasRendererStack
     {
         RendererStack RendererStack { get; }
     }

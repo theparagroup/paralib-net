@@ -40,6 +40,13 @@ namespace com.parahtml.Html
             }
         }
 
+        public virtual F Comment(string text)
+        {
+            HtmlRenderer.Comment(Context.Writer, text);
+            return (F)this;
+        }
+
+
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             if (tagType == TagTypes.Block)

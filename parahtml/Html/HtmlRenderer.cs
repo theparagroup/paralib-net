@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Core;
+using com.paralib.Gen;
 
 namespace com.parahtml.Html
 {
@@ -35,9 +36,14 @@ namespace com.parahtml.Html
             }
         }
 
+        public static void Comment(Writer writer, string text)
+        {
+            writer.Write($"<!-- {text} -->");
+        }
+
         protected override void Comment(string text)
         {
-            Writer.Write($"<!-- {text} -->");
+            Comment(Writer, text);
         }
 
     }
