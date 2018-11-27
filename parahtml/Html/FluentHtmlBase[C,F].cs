@@ -148,9 +148,19 @@ namespace com.parahtml.Html
             return Open(HtmlBuilder.Div(attributes));
         }
 
+        public virtual F Div(string @class)
+        {
+            return Open(HtmlBuilder.Div(a=> { a.Class = @class; }));
+        }
+
         public virtual F Span(Action<GlobalAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Span(attributes));
+        }
+
+        public virtual F Span(string @class)
+        {
+            return Open(HtmlBuilder.Span(a => { a.Class = @class; }));
         }
 
         public virtual F Br(Action<GlobalAttributes> attributes = null)

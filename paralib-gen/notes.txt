@@ -34,8 +34,33 @@ Design Goals & Notes
 
 	rework these grids
 
-	Content(string)
-	Content(action)
+		.Div("id", "claaz")
+			.Span("id","clazz")
+		.Div("col-xs-10 container")
+			.Grid(g=>
+			{
+				g
+				.Options("row", "column", new string[]{"c1", "c2"})
+				.Row("foo")
+					.Column("bar")
+						.Grid(g=>
+						{
+							g
+							.Options("r","c", new string[]{"a", "b"})
+							.Row()
+							.Row()
+								.Column()
+									.Html(h=> {});
+						})
+					.Column("bar")
+				.Row("foo")
+					.Column("bar")
+					.Column("bar")	})
+			})
+
+
+	markers
+		close on id instead?
 
 	need to wrap the html helper stuff in blocks/inlines
 
