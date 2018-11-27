@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.parahtml.Attributes;
 using com.parahtml.Html;
 using System.Text.RegularExpressions;
+using com.paralib.Gen.Rendering;
 
 namespace com.parahtml.Core
 {
@@ -65,7 +66,7 @@ namespace com.parahtml.Core
 
         public virtual Tag Block(string name, AttributeDictionary attributes = null, bool empty = false)
         {
-            return new Tag(Context, TagTypes.Block, name, attributes, empty);
+            return new Tag(Context, name, attributes, TagTypes.Block, empty);
         }
 
         public virtual Tag Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
@@ -75,7 +76,7 @@ namespace com.parahtml.Core
 
         public virtual Tag Inline(string name, AttributeDictionary attributes = null, bool empty = false)
         {
-            return new Tag(Context, TagTypes.Inline, name, attributes, empty);
+            return new Tag(Context, name, attributes, TagTypes.Inline, empty);
         }
 
         public virtual Tag Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
@@ -153,9 +154,9 @@ namespace com.parahtml.Core
             return Block("script", Attributes(attributes));
         }
 
-        public virtual PseudoEmptyTag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
+        public virtual Tag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
         {
-            return new PseudoEmptyTag(Context, "script", Attributes(attributes));
+            return new Tag(Context, "script", Attributes(attributes), LineModes.Single, ContainerModes.Block, false);
         }
 
         public virtual Tag NoScript(Action<GlobalAttributes> attributes = null)

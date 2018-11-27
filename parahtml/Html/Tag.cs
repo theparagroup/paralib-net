@@ -65,15 +65,19 @@ namespace com.parahtml.Html
         public TagTypes TagType { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
 
-        public Tag(HtmlContext context, TagTypes tagType, string tagName, AttributeDictionary attributes, bool empty = false) : base(context, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
+        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
         {
             TagName = tagName;
             Attributes = attributes;
 
-            if (TagName==null)
+            if (TagName == null)
             {
                 throw new InvalidOperationException("TagName cannot be null");
             }
+        }
+
+        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty ) : this(context, tagName, attributes, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
+        {
         }
 
         public bool Empty
@@ -158,7 +162,7 @@ namespace com.parahtml.Html
                 Writer.Write($"</{TagName}>");
             }
 
-            if (ContainerMode == ContainerModes.Block && Context.IsDebug(DebugFlags.EndTag))
+            if (LineMode== LineModes.Multiple && ContainerMode == ContainerModes.Block && Context.IsDebug(DebugFlags.EndTag))
             {
                 if (Attributes != null)
                 {

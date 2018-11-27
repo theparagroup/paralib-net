@@ -94,9 +94,7 @@ namespace com.parahtml.Html
 
         public virtual F Script(Action<ScriptAttributes> attributes = null)
         {
-            Open(HtmlBuilder.Script(attributes));
-            Close();
-            return (F)this;
+            return Open(HtmlBuilder.Script(attributes));
         }
 
         public virtual F ExternalScript(Action<ExternalScriptAttributes> attributes = null)
@@ -159,13 +157,6 @@ namespace com.parahtml.Html
         public virtual F A(Action<AAttributes> attributes = null)
         {
             return Open(HtmlBuilder.A(attributes));
-        }
-
-        public virtual F A(string content, Action<AAttributes> attributes = null)
-        {
-            Open(HtmlBuilder.A(attributes));
-            Write(content);
-            return Close();
         }
 
         public virtual F Form(Action<FormAttributes> attributes = null)
