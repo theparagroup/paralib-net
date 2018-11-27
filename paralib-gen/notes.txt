@@ -34,6 +34,11 @@ Design Goals & Notes
 
 	rework these grids
 
+	Content(string)
+	Content(action)
+
+	need to wrap the html helper stuff in blocks/inlines
+
 	fluent system
 		do i need to pass context in the constructor
 		see if i really need <C> on everything

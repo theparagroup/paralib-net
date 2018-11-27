@@ -40,6 +40,24 @@ namespace com.parahtml.Html
             }
         }
 
+        public virtual F Content(string text)
+        {
+            Write(text);
+            return Close();
+        }
+
+        public virtual F Content(Action<FluentHtmlBase<C, F>> html)
+        {
+            if (html != null)
+            {
+                var top = Top;
+                html(this);
+                Close(top);
+            }
+
+            return (F)this;
+        }
+
         public virtual F Comment(string text)
         {
             HtmlRenderer.Comment(Context.Writer, text);
@@ -137,7 +155,10 @@ namespace com.parahtml.Html
 
         public virtual F Br(Action<GlobalAttributes> attributes = null)
         {
-            return Open(HtmlBuilder.Br(attributes));
+            Open(HtmlBuilder.Br(attributes));
+            Close();
+            NewLine();
+            return (F)this;
         }
 
         public virtual F Hr(Action<HrAttributes> attributes = null)
@@ -173,6 +194,41 @@ namespace com.parahtml.Html
         public virtual F Form(Action<FormAttributes> attributes = null)
         {
             return Open(HtmlBuilder.Form(attributes));
+        }
+
+        public virtual F H1(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.H1(attributes));
+        }
+
+        public virtual F H2(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.H2(attributes));
+        }
+
+        public virtual F H3(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.H3(attributes));
+        }
+
+        public virtual F H4(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.H4(attributes));
+        }
+
+        public virtual F H5(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.H5(attributes));
+        }
+
+        public virtual F H6(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.H6(attributes));
+        }
+
+        public virtual F P(Action<GlobalAttributes> attributes = null)
+        {
+            return Open(HtmlBuilder.P(attributes));
         }
 
     }

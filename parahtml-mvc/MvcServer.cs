@@ -13,7 +13,14 @@ namespace com.parahtml.Mvc
 
         public override string Url(string url)
         {
-            return _urlHelper.Content(url);
+            if (!string.IsNullOrEmpty(url))
+            {
+                return _urlHelper.Content(url);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

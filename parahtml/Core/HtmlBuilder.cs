@@ -194,5 +194,45 @@ namespace com.parahtml.Core
             return Block("form", Attributes(attributes));
         }
 
+        protected virtual Tag Hn(int n, Action<GlobalAttributes> attributes = null)
+        {
+            return new Tag(Context, $"h{n}", Attributes(attributes), LineModes.Single, ContainerModes.Block, false);
+        }
+
+        public virtual Tag H1(Action<GlobalAttributes> attributes = null)
+        {
+            return Hn(1, attributes);
+        }
+
+        public virtual Tag H2(Action<GlobalAttributes> attributes = null)
+        {
+            return Hn(2, attributes);
+        }
+
+        public virtual Tag H3(Action<GlobalAttributes> attributes = null)
+        {
+            return Hn(3, attributes);
+        }
+
+        public virtual Tag H4(Action<GlobalAttributes> attributes = null)
+        {
+            return Hn(4, attributes);
+        }
+
+        public virtual Tag H5(Action<GlobalAttributes> attributes = null)
+        {
+            return Hn(5, attributes);
+        }
+
+        public virtual Tag H6(Action<GlobalAttributes> attributes = null)
+        {
+            return Hn(6, attributes);
+        }
+
+        public virtual Tag P(Action<GlobalAttributes> attributes = null)
+        {
+            return Inline("p", Attributes(attributes));
+        }
+
     }
 }

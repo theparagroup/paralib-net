@@ -8,7 +8,7 @@ namespace com.parahtml.Attributes
 {
     public class AAttributes : GlobalAttributes
     {
-        public Url HRef { set; get; }
+        public Url Href { set; get; }
         public string href { set; get; }
 
     }
