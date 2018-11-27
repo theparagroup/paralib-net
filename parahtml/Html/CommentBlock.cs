@@ -8,12 +8,12 @@ using com.paralib.Gen.Rendering;
 
 namespace com.parahtml.Html
 {
-    public class DebugBlock : HtmlRenderer
+    public class CommentBlock : HtmlRenderer
     {
         public string Name { private set; get; }
         public bool Visible { private set; get; }
 
-        public DebugBlock(HtmlContext context, string name, bool visible) : base(context, LineModes.Multiple, ContainerModes.Block, false)
+        public CommentBlock(HtmlContext context, string name, bool visible) : base(context, LineModes.Multiple, ContainerModes.Block, false)
         {
             Name = name;
             Visible = visible;

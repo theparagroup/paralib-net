@@ -70,7 +70,7 @@ namespace com.parahtml.Grids
             public int ColumnNumber;
         }
 
-        protected class GridBlock : DebugBlock
+        protected class GridBlock : CommentBlock
         {
             public GridBlock(C context, GridState gridState) : base(context, "fluent grid", context.IsDebug(DebugFlags.Grids))
             {
