@@ -62,13 +62,17 @@ namespace com.parahtml.Html
     public class Tag : HtmlRenderer
     {
         public string TagName { private set; get; }
-        public TagTypes TagType { private set; get; }
         public AttributeDictionary Attributes { private set; get; }
+        public TagTypes TagType { private set; get; }
+        public bool Empty { private set; get; }
 
-        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
+        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
         {
             TagName = tagName;
             Attributes = attributes;
+
+            TagType = tagType;
+            Empty = empty;
 
             if (TagName == null)
             {
@@ -76,17 +80,17 @@ namespace com.parahtml.Html
             }
         }
 
-        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty ) : this(context, tagName, attributes, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
+        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty ) : this(context, tagName, attributes, tagType, empty, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
         {
         }
 
-        public bool Empty
-        {
-            get
-            {
-                return ContainerMode==ContainerModes.None;
-            }
-        }
+        //public bool Empty
+        //{
+        //    get
+        //    {
+        //        return ContainerMode==ContainerModes.None;
+        //    }
+        //}
 
         public static LineModes GetLineMode(TagTypes tagType, bool empty)
         {

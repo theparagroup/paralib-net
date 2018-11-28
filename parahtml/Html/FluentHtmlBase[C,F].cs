@@ -141,7 +141,7 @@ namespace com.parahtml.Html
         public virtual F ExternalScript(Action<ExternalScriptAttributes> attributes = null)
         {
             Open(HtmlBuilder.ExternalScript(attributes));
-            Close();
+            //Close();
             return (F)this;
         }
 

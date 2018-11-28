@@ -156,7 +156,7 @@ namespace com.parahtml.Core
 
         public virtual Tag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
         {
-            return new Tag(Context, "script", Attributes(attributes), LineModes.Single, ContainerModes.Block, false);
+            return new Tag(Context, "script", Attributes(attributes), TagTypes.Block, false, LineModes.Single, ContainerModes.None, false);
         }
 
         public virtual Tag NoScript(Action<GlobalAttributes> attributes = null)
@@ -181,7 +181,9 @@ namespace com.parahtml.Core
 
         public virtual Tag Img(Action<ImgAttributes> attributes = null)
         {
-            return Inline("img", Attributes(attributes), true);
+            return new Tag(Context, "img", Attributes(attributes), TagTypes.Inline, true, LineModes.None, ContainerModes.Inline, false);
+
+            //return Inline("img", Attributes(attributes), true);
         }
 
         public virtual Tag A(Action<AAttributes> attributes = null)
@@ -196,7 +198,7 @@ namespace com.parahtml.Core
 
         protected virtual Tag Hn(int n, Action<GlobalAttributes> attributes = null)
         {
-            return new Tag(Context, $"h{n}", Attributes(attributes), LineModes.Single, ContainerModes.Block, false);
+            return new Tag(Context, $"h{n}", Attributes(attributes), TagTypes.Block, false, LineModes.Single, ContainerModes.Block, false);
         }
 
         public virtual Tag H1(Action<GlobalAttributes> attributes = null)
