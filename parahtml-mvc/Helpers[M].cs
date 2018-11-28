@@ -26,7 +26,7 @@ namespace com.parahtml.Mvc
             Url = new UrlHelper(viewContext.RequestContext, System.Web.Routing.RouteTable.Routes);
             User = viewContext.HttpContext.User;
 
-            var viewData = new ViewDataDictionary<M>(viewContext.ViewData) { Model=model};
+            var viewData = new ViewDataDictionary(viewContext.ViewData) { Model = model };
             var viewDataContainer = new ViewDataContainer(viewData);
 
             Ajax = new AjaxHelper<M>(viewContext, viewDataContainer, System.Web.Routing.RouteTable.Routes);
