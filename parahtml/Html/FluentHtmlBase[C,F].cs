@@ -58,6 +58,18 @@ namespace com.parahtml.Html
             return (F)this;
         }
 
+        public virtual F Content(Action html)
+        {
+            if (html != null)
+            {
+                var top = Top;
+                html();
+                Close(top);
+            }
+
+            return (F)this;
+        }
+
         public virtual F Comment(string text)
         {
             HtmlRenderer.Comment(Context.Writer, text);

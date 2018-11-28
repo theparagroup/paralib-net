@@ -111,6 +111,8 @@ namespace com.parahtml.Css
         public string color { set; get; }
 
 
+        public string textAlign { set; get; }
+
         //[NullValue("initial")]
         //public string test { set; get; }
 

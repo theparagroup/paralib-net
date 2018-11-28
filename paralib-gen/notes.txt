@@ -34,6 +34,19 @@ Design Goals & Notes
 
 	rework these grids
 
+		the main problems here:
+			set container, col, row classes
+			container should close to last container
+			row should close to last row
+			col should close to last col
+			set column classes at container, row level
+			nest column classes (push/pop)
+
+		grid is not needed
+
+		build this into fluent html? using specialized tags? 
+		no fluentgrid class to instatiate?
+
 		.Div("id", "claaz")
 			.Span("id","clazz")
 		.Div("col-xs-10 container")
