@@ -155,7 +155,15 @@ namespace com.paralib.Gen.Mapping
                             {
                                 value = v.ToString();
                             }
+                            else if (pi.PropertyType == typeof(long) || pi.PropertyType == typeof(long?))
+                            {
+                                value = v.ToString();
+                            }
                             else if (pi.PropertyType == typeof(float) || pi.PropertyType == typeof(float?))
+                            {
+                                value = v.ToString();
+                            }
+                            else if (pi.PropertyType == typeof(double) || pi.PropertyType == typeof(double?))
                             {
                                 value = v.ToString();
                             }
