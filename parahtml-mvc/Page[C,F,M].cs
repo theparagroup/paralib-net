@@ -58,6 +58,11 @@ namespace com.parahtml.Mvc
             return (F)WriteLine(text?.ToHtmlString());
         }
 
+        public F HiddenFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
+        {
+            return Write(Helpers.Html.HiddenFor(expression, htmlAttributes));
+        }
+
         public F LabelFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
             return Write(Helpers.Html.LabelFor(expression, htmlAttributes));
