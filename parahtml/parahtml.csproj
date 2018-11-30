@@ -74,6 +74,7 @@
     <Compile Include="Attributes\ScriptAttributes.cs" />
     <Compile Include="Attributes\StyleAttributes.cs" />
     <Compile Include="Css\BackgroundImage.cs" />
+    <Compile Include="Values\Targets.cs" />
     <Compile Include="Values\ColorStop.cs" />
     <Compile Include="Css\Background.cs" />
     <Compile Include="Css\Style.cs" />

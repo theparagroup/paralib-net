@@ -11,5 +11,7 @@ namespace com.parahtml.Attributes
         public Url Href { set; get; }
         public string href { set; get; }
 
+        public Targets? Target { set; get; }
+        public string target { set; get; }
     }
 }
