@@ -75,11 +75,11 @@ namespace com.paralib.Gen.Rendering
     public class RendererStack 
     {
         protected Stack<IRenderer> Stack { private set; get; } = new Stack<IRenderer>();
-        protected bool NoLineBreaks { private set; get; }
+        protected LineModes LineMode { private set; get; }
 
-        public RendererStack(bool noLineBreaks)
+        public RendererStack(LineModes lineMode)
         {
-            NoLineBreaks = noLineBreaks;
+            LineMode = lineMode;
         }
 
         public virtual int Count
@@ -125,11 +125,21 @@ namespace com.paralib.Gen.Rendering
             {
                 /*
 
+                    We don't want to mess up the formatting by adding incompatible content.
+
+                    RendererStack's LineMode rules:
+
+                        A 'Multiple' RendererStack can contain anything on it's stack
+                        Single can contain Single|None
+                        None can only contain None
+
+                    Note: this only applies for nested rendererstacks, as the root rendererstack
+                        would likely be in Multiple mode.            
                 */
 
-                if (NoLineBreaks && renderer.LineMode != LineModes.None)
+                if ((LineMode==LineModes.None && renderer.LineMode != LineModes.None) || (LineMode==LineModes.Single) && (renderer.LineMode==LineModes.Multiple)) 
                 { 
-                    throw new InvalidOperationException($"Renderer's LineMode {renderer.LineMode} is not allowed when RendererStack is in NoLineBreaks mode");
+                    throw new InvalidOperationException($"Renderer's LineMode {renderer.LineMode} is not allowed when RendererStack is {LineMode}");
                 }
 
 

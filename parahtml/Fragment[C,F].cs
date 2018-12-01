@@ -13,7 +13,7 @@ namespace com.parahtml
 {
     public class Fragment<C, F> : FluentHtmlBase<C, F>, IDisposable where C : HtmlContext where F : Fragment<C, F>
     {
-        public Fragment(C context) : base(context, new RendererStack(false))
+        public Fragment(C context) : base(context, new RendererStack(LineModes.Multiple))
         {
         }
 

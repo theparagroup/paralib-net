@@ -32,6 +32,10 @@ Design Goals & Notes
 	remember, we're not replacing a web server or mvc in this project, just creating
 	a generation library with a focus on building components
 
+	rework
+		move context from contstructors and use Render(context)
+
+
 	rework these grids
 
 		the main problems here:

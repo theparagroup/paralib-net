@@ -12,10 +12,10 @@ namespace com.parahtml.Html
     /*
         TagType is an HtmlComponent that is also an IRenderer and has its own stack.
 
-        TagTypes are Inline or Block, we don't support empty (None) elements as it
-        doesn't make any sense (just create a custom HtmlRenderer instead).
+        ContainerType should be Inline|Block, as a Component with no content makes no sense.
+        You can do it but you should just create a custom HtmlRenderer instead.
 
-        The component itself isn't visible but can be pushed and popped according
+        The base component itself isn't visible but can be pushed and popped according
         to the usual rules.
 
     */
@@ -26,7 +26,7 @@ namespace com.parahtml.Html
         protected ContainerModes _containerMode { private set; get; }
         public object Data { set; get; }
 
-        public RendererComponent(C context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, new RendererStack(lineMode==LineModes.None))
+        public RendererComponent(C context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, new RendererStack(lineMode))
         {
             _renderer = new Renderer(context, lineMode, containerMode, indentContent);
             _lineMode = lineMode;

@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Utils">
-    <Position X="1" Y="1" Width="1.5" />
+    <Position X="1" Y="5.5" Width="1.5" />
     <NestedTypes>
       <Class Name="com.paralib.Gen.Utils.Json" Collapsed="true">
         <TypeIdentifier>
@@ -27,16 +27,16 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Options">
-    <Position X="3.5" Y="3.25" Width="2" />
+    <Position X="3.5" Y="5.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Options.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Context">
     <Position X="3.5" Y="1" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAEAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAFAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFAAAA=</HashCode>
       <FileName>Context.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -72,21 +72,21 @@
   <Class Name="com.paralib.Gen.Rendering.RendererStack">
     <Position X="18.75" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAIAAAAAgAAAQAgICIQACAAACAAACBCAI=</HashCode>
+      <HashCode>AAACAAAAAAAAIAAQAAAAAAQAgICIAACAAACAAACBCAI=</HashCode>
       <FileName>Rendering\RendererStack.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Mapping.DictionaryBuilder&lt;C, T&gt;">
     <Position X="21" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgAAAAAAAAAAAIAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAIAAAAAAgQAAAAAAAACCAAA=</HashCode>
       <FileName>Mapping\DictionaryBuilder.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Mapping.NVPDictionary">
-    <Position X="21" Y="3" Width="2.25" />
+    <Position X="21" Y="5.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\NVPDictionary.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -97,25 +97,17 @@
       <FileName>Mapping\DynamicValueAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Mapping.ComplexValue">
-    <Position X="28" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>ABAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Mapping\ComplexValue.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.paralib.Gen.Mapping.BuilderOptionsAttribute">
+  <Class Name="com.paralib.Gen.Mapping.ExplicitNameAttribute">
     <Position X="18.25" Y="0.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAgAAAAAAA=</HashCode>
-      <FileName>Mapping\BuilderOptionsAttribute.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\ExplicitNameAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.RendererBase">
     <Position X="13.25" Y="8" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAkEAgEEAgAAAAAQAAAAAAAgAAAAAAAAAAAAAEFAAAA=</HashCode>
+      <HashCode>AAkEAgEEAgAAAAAQAAAAAAAgAAAAABAAAAAAAEFAAAA=</HashCode>
       <FileName>Rendering\RendererBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -159,8 +151,30 @@
   <Class Name="com.paralib.Gen.Rendering.Marker">
     <Position X="21" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAACAAAAAAAA=</HashCode>
+      <HashCode>AAIAAgAAAAAAAAAQAAAAAAQAAAAAEBAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\Marker.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.paralib.Gen.Mapping.ExplicitValueAttribute">
+    <Position X="18.25" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Mapping\ExplicitValueAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paralib.Gen.Mapping.AutoDictionary&lt;K, V&gt;">
+    <Position X="21" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Mapping\AutoDictionary.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paralib.Gen.Mapping.NullValueAttribute">
+    <Position X="18.25" Y="4.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Mapping\NullValueAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="com.paralib.Gen.Mapping.IValueContainer">
@@ -171,7 +185,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Mapping.IComplexValue&lt;C&gt;">
-    <Position X="26" Y="3.5" Width="1.75" />
+    <Position X="26" Y="3.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Mapping\IComplexValue.cs</FileName>
@@ -187,7 +201,7 @@
   <Interface Name="com.paralib.Gen.Rendering.IRenderer">
     <Position X="15.5" Y="8.25" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAIAAgAAAAAAAAAQAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAIAAgAAAAAAAAAQAAAAAAAAAAAAEBAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IRenderer.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -196,6 +210,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IHasRendererStack.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.paralib.Gen.IHasContext&lt;C&gt;">
+    <Position X="1.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IHasContext.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">
