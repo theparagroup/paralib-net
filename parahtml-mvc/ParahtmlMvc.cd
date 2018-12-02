@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="com.parahtml.Mvc.Page&lt;F, M&gt;">
+    <Position X="8" Y="4.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>oAAAgCAACgAAAAAIIAAAABgAAAAAEQgAAAgAIAGAAAA=</HashCode>
+      <FileName>Page[F,M].cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Fragment&lt;F&gt;">
+    <Position X="8.5" Y="1.25" Width="1.75" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Mvc.Page&lt;M&gt;">
+    <Position X="9.75" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Page[M].cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Mvc.Page">
+    <Position X="7" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Page.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Mvc.ParaController">
+    <Position X="14.25" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ParaController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Mvc.ParaView&lt;P&gt;">
+    <Position X="17" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAABAAAAAAAAA=</HashCode>
+      <FileName>ParaView[P].cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Mvc.ParaWebViewPage&lt;M&gt;">
+    <Position X="19" Y="1.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>ParaWebViewPage[M].cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Mvc.Helpers&lt;M&gt;">
+    <Position X="16.5" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAABAAAiAAAAAAAAAA=</HashCode>
+      <FileName>Helpers[M].cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Mvc.ViewDataContainer">
+    <Position X="18.75" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>ViewDataContainer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Mvc.MvcContext">
+    <Position X="1.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAEAAAAAgAAAAAAAQAAAEIAAAAAA=</HashCode>
+      <FileName>MvcContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Mvc.MvcServer">
+    <Position X="1.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEACAAAAAAAAAA=</HashCode>
+      <FileName>MvcServer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Mvc.MvcWriter">
+    <Position X="1.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAgAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>MvcWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="com.parahtml.Mvc.IPage">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>IPage.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Mvc.ICreateContext">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>ICreateContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Mvc.IHasModel&lt;M&gt;">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IHasModel[M].cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

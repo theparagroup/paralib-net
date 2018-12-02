@@ -107,38 +107,23 @@
   <Class Name="com.paralib.Gen.Rendering.RendererBase">
     <Position X="13" Y="8" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAkEAgEEAgAAAAAQAAAgAAAgAAAIABAAAAAAAEFAAAA=</HashCode>
+      <HashCode>AAkEAgEEAgAAAAAQAAAgAAAgAAAAABAAAAAAAEFAAAA=</HashCode>
       <FileName>Rendering\RendererBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="com.paralib.Gen.Fluent.FluentWriter&lt;C, F&gt;">
-    <Position X="24" Y="8.25" Width="3.25" />
+  <Class Name="com.paralib.Gen.Fluent.FluentWriter&lt;F&gt;">
+    <Position X="24.5" Y="8" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAgAMAAAIAAAgAAACAAAAAAAAAAACAgEAQAA=</HashCode>
-      <FileName>Fluent\FluentWriter[C,F].cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.paralib.Gen.Fluent.FluentWriter&lt;C&gt;">
-    <Position X="22.5" Y="12.75" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Fluent\FluentWriter.cs</FileName>
+      <HashCode>AAAAACAAAgAMAAAIAAAAAAACAAAAAAAAAAACAgEAQAA=</HashCode>
+      <FileName>Fluent\FluentWriter[F].cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Fluent.FluentRendererStack&lt;C, F&gt;">
-    <Position X="26.5" Y="12.75" Width="2.75" />
+  <Class Name="com.paralib.Gen.Fluent.FluentRendererStack&lt;F&gt;">
+    <Position X="24" Y="12.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAABAAAAAAAAAIAIAACAAACAAACAAAI=</HashCode>
-      <FileName>Fluent\FluentRendererStack[C,F].cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.paralib.Gen.Fluent.FluentRendererStack&lt;C&gt;">
-    <Position X="26.25" Y="16.5" Width="3.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Fluent\FluentRendererStack.cs</FileName>
+      <FileName>Fluent\FluentRendererStack[F].cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.Renderer">
@@ -212,7 +197,7 @@
       <FileName>Rendering\IHasRendererStack.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="com.paralib.Gen.IHasContext&lt;C&gt;">
+  <Interface Name="com.paralib.Gen.IHasContext">
     <Position X="1.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
