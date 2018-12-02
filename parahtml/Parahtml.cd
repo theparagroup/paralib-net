@@ -100,13 +100,6 @@
       <FileName>Html\DOCTYPE.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.parahtml.Html.FluentHtml&lt;C&gt;">
-    <Position X="27.25" Y="17" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Html\FluentHtml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="com.parahtml.Grids.GridOptions">
     <Position X="33.5" Y="10" Width="1.5" />
     <TypeIdentifier>
@@ -181,7 +174,7 @@
     <TypeIdentifier />
   </Class>
   <Class Name="com.parahtml.Html.HtmlComponentBase&lt;F, P&gt;">
-    <Position X="24.5" Y="20.5" Width="2.25" />
+    <Position X="23.75" Y="20.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Html\HtmlComponentBase.cs</FileName>
@@ -208,12 +201,19 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Html.HtmlRendererComponent&lt;F, P&gt;">
-    <Position X="24.5" Y="23.5" Width="2.25" />
+    <Position X="23.75" Y="23.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AIAAAAAIACAAAEAAABAgAABAEgCAABAECAAAAIAAAAA=</HashCode>
       <FileName>Html\HtmlRendererComponent.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Html.FluentHtml">
+    <Position X="27.25" Y="20.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html\FluentHtml.cs</FileName>
+    </TypeIdentifier>
   </Class>
   <Interface Name="com.parahtml.Grids.IGrid">
     <Position X="33.5" Y="12" Width="1.5" />
