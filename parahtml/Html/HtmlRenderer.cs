@@ -24,7 +24,7 @@ namespace com.parahtml.Html
         {
         }
 
-        void IHasContext.SetContext(Context context)
+        void IHasContext.SetContext(HtmlContext context)
         {
             base.Context = context;
         }

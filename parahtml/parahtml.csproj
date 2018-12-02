@@ -47,6 +47,7 @@
     <Compile Include="Attributes\LinkAttributes.cs" />
     <Compile Include="Attributes\ExternalScriptAttributes.cs" />
     <Compile Include="Core\AttributeDictionary.cs" />
+    <Compile Include="Core\IHasContext.cs" />
     <Compile Include="Core\Server.cs" />
     <Compile Include="Css\Css.cs" />
     <Compile Include="Css\Interfaces.cs" />

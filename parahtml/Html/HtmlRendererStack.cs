@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Rendering;
-using com.paralib.Gen;
 using com.parahtml.Core;
 
 namespace com.parahtml.Html
@@ -17,9 +16,9 @@ namespace com.parahtml.Html
         {
         }
 
-        public void SetContext(Context context)
+        public void SetContext(HtmlContext context)
         {
-            Context = (HtmlContext)context;
+            Context = context;
         }
 
         public override IRenderer Open(IRenderer renderer)

@@ -197,13 +197,6 @@
       <FileName>Rendering\IHasRendererStack.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="com.paralib.Gen.IHasContext">
-    <Position X="1.5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IHasContext.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">
     <Position X="11.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>

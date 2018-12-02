@@ -243,6 +243,13 @@
       <FileName>Grids\IColumn.cs</FileName>
     </TypeIdentifier>
   </Interface>
+  <Interface Name="com.parahtml.Core.IHasContext">
+    <Position X="21" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Core\IHasContext.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
   <Enum Name="com.parahtml.DebugFlags">
     <Position X="10" Y="1.75" Width="1.5" />
     <TypeIdentifier>

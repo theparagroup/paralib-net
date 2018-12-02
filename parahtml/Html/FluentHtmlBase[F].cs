@@ -7,7 +7,6 @@ using com.paralib.Gen.Fluent;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Attributes;
-using com.paralib.Gen;
 
 namespace com.parahtml.Html
 {
@@ -17,7 +16,7 @@ namespace com.parahtml.Html
         {
         }
 
-        void IHasContext.SetContext(Context context)
+        void IHasContext.SetContext(HtmlContext context)
         {
             base.Context = (HtmlContext)context;
             OnContext();

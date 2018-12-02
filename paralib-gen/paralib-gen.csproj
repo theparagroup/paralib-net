@@ -44,7 +44,6 @@
     <Compile Include="Fluent\FluentConcepts.cs" />
     <Compile Include="Fluent\FluentRendererStack[F].cs" />
     <Compile Include="Fluent\FluentWriter[F].cs" />
-    <Compile Include="IHasContext.cs" />
     <Compile Include="Mapping\AutoDictionary.cs" />
     <Compile Include="Mapping\NullValueAttribute.cs" />
     <Compile Include="Mapping\PrefixAttribute.cs" />

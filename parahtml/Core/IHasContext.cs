@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Gen
+namespace com.parahtml.Core
 {
     public interface IHasContext
     {
-        void SetContext(Context context);
+        void SetContext(HtmlContext context);
     }
 }

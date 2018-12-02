@@ -54,7 +54,7 @@ namespace com.parahtml.Attributes
 
         public object Attributes { get; set; }
 
-        void IHasContext.SetContext(Context context)
+        void IHasContext.SetContext(HtmlContext context)
         {
             Context = (HtmlContext)context;
         }
