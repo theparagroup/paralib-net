@@ -12,13 +12,27 @@ namespace com.parahtml.Mvc
 {
     /*
 
+        Wrapper for IPage objects that implements MVC's IView interface 
+        for use in MVC controllers.
 
     */
-    public class ParaView<P> : ParaView<MvcContext, P> where P: IPage<MvcContext>
+    public class ParaView<P> : IView where P : IPage
     {
-        public ParaView(P page):base(page)
+        protected P _page;
+
+        public ParaView(P page)
         {
             _page = page;
         }
+
+        public void Render(ViewContext viewContext, TextWriter textWriter)
+        {
+            var context = _page.CreateContext(viewContext, textWriter);
+            _page.Render(context);
+            _page.End();
+
+        }
+
+
     }
 }

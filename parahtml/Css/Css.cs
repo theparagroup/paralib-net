@@ -11,10 +11,13 @@ using com.parahtml.Html;
 namespace com.parahtml.Css
 {
 
-    public class FluentCss : FluentRendererStack<HtmlContext, FluentCss>, ICss
+    public class FluentCss : FluentRendererStack<FluentCss>, ICss
     {
-        public FluentCss(HtmlContext context, RendererStack rendererStack) : base(context, rendererStack)
+        protected HtmlContext Context;
+
+        public FluentCss(HtmlContext context, RendererStack rendererStack) : base(rendererStack)
         {
+            Context = context;
         }
 
         public ICss Rule(string selector)

@@ -34,8 +34,9 @@ namespace com.paralib.Gen.Rendering
 
 
         */
-        public Renderer(Context context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
+        public Renderer(Context context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(lineMode, containerMode, indentContent)
         {
+            Context = context;
         }
 
         public new void OnPreBegin()

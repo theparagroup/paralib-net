@@ -66,7 +66,7 @@ namespace com.parahtml.Core
 
         public virtual Tag Block(string name, AttributeDictionary attributes = null, bool empty = false)
         {
-            return new Tag(Context, name, attributes, TagTypes.Block, empty);
+            return new Tag(name, attributes, TagTypes.Block, empty);
         }
 
         public virtual Tag Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
@@ -76,7 +76,7 @@ namespace com.parahtml.Core
 
         public virtual Tag Inline(string name, AttributeDictionary attributes = null, bool empty = false)
         {
-            return new Tag(Context, name, attributes, TagTypes.Inline, empty);
+            return new Tag(name, attributes, TagTypes.Inline, empty);
         }
 
         public virtual Tag Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
@@ -86,12 +86,12 @@ namespace com.parahtml.Core
 
         public virtual DOCTYPE DOCTYPE(string specification)
         {
-            return new DOCTYPE(Context, specification);
+            return new DOCTYPE(specification);
         }
 
         public virtual DOCTYPE DOCTYPE(DocumentTypes documentType)
         {
-            return new DOCTYPE(Context, documentType);
+            return new DOCTYPE(documentType);
         }
 
         public virtual Tag Html(Action<HtmlAttributes> attributes = null)
@@ -156,7 +156,7 @@ namespace com.parahtml.Core
 
         public virtual Tag ExternalScript(Action<ExternalScriptAttributes> attributes = null)
         {
-            return new Tag(Context, "script", Attributes(attributes), TagTypes.Block, false, LineModes.Single, ContainerModes.None, false);
+            return new Tag("script", Attributes(attributes), TagTypes.Block, false, LineModes.Single, ContainerModes.None, false);
         }
 
         public virtual Tag NoScript(Action<GlobalAttributes> attributes = null)
@@ -181,7 +181,7 @@ namespace com.parahtml.Core
 
         public virtual Tag Img(Action<ImgAttributes> attributes = null)
         {
-            return new Tag(Context, "img", Attributes(attributes), TagTypes.Inline, true, LineModes.None, ContainerModes.Inline, false);
+            return new Tag("img", Attributes(attributes), TagTypes.Inline, true, LineModes.None, ContainerModes.Inline, false);
 
             //return Inline("img", Attributes(attributes), true);
         }
@@ -198,7 +198,7 @@ namespace com.parahtml.Core
 
         protected virtual Tag Hn(int n, Action<GlobalAttributes> attributes = null)
         {
-            return new Tag(Context, $"h{n}", Attributes(attributes), TagTypes.Block, false, LineModes.Single, ContainerModes.Block, false);
+            return new Tag($"h{n}", Attributes(attributes), TagTypes.Block, false, LineModes.Single, ContainerModes.Block, false);
         }
 
         public virtual Tag H1(Action<GlobalAttributes> attributes = null)

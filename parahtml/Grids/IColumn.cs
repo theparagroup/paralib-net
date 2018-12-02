@@ -10,24 +10,24 @@ using com.parahtml.Core;
 namespace com.parahtml.Grids
 {
 
-    public interface IColumn<C> where C : HtmlContext
+    public interface IColumn
     {
-        IColumn<C> Here(Action<IColumn<C>> column);
-        IColumn<C> Html(Action<FluentHtml<C>> html);
+        IColumn Here(Action<IColumn> column);
+        IColumn Html(Action<FluentHtml> html);
 
-        IColumn<C> Column(Action<GlobalAttributes> attributes = null);
-        IColumn<C> Column(string @class);
+        IColumn Column(Action<GlobalAttributes> attributes = null);
+        IColumn Column(string @class);
 
-        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
-        IRow<C> Row(string @class, string[] columnClasses = null);
-        IRow<C> Row(string[] columnClasses = null);
+        IRow Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
+        IRow Row(string @class, string[] columnClasses = null);
+        IRow Row(string[] columnClasses = null);
 
-        IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClasses = null);
-        IContainer<C> Container(string @class, string[] columnClasses = null);
-        IContainer<C> Container(string[] columnClasses = null);
+        IContainer Container(Action<GlobalAttributes> attributes, string[] columnClasses = null);
+        IContainer Container(string @class, string[] columnClasses = null);
+        IContainer Container(string[] columnClasses = null);
 
-        IColumn<C> Grid(Action<GridOptions> gridOptions, Action<IGrid<C>> grid);
-        IColumn<C> Grid(Action<IGrid<C>> grid);
+        IColumn Grid(Action<GridOptions> gridOptions, Action<IGrid> grid);
+        IColumn Grid(Action<IGrid> grid);
 
     }
 }

@@ -18,12 +18,12 @@ namespace com.parahtml.Html
     {
         private string _specification;
 
-        public DOCTYPE(HtmlContext context, string specification) : base(context, LineModes.Single, ContainerModes.None, false)
+        public DOCTYPE(string specification) : base(LineModes.Single, ContainerModes.None, false)
         {
             _specification = specification;
         }
 
-        public DOCTYPE(HtmlContext context, DocumentTypes documentType) : this(context, DecodeDocumentType(documentType))
+        public DOCTYPE(DocumentTypes documentType) : this(DecodeDocumentType(documentType))
         {
 
         }

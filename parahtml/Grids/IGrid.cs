@@ -10,17 +10,17 @@ using com.parahtml.Core;
 namespace com.parahtml.Grids
 {
 
-    public interface IGrid<C> where C:HtmlContext
+    public interface IGrid
     {
-        IGrid<C> Here(Action<IGrid<C>> grid);
-        IGrid<C> Html(Action<FluentHtml<C>> html);
+        IGrid Here(Action<IGrid> grid);
+        IGrid Html(Action<FluentHtml> html);
 
-        IContainer<C> Container(Action<GlobalAttributes> attributes, string[] columnClasses = null);
-        IContainer<C> Container(string @class, string[] columnClasses = null);
-        IContainer<C> Container(string[] columnClasses = null);
+        IContainer Container(Action<GlobalAttributes> attributes, string[] columnClasses = null);
+        IContainer Container(string @class, string[] columnClasses = null);
+        IContainer Container(string[] columnClasses = null);
 
-        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
-        IRow<C> Row(string @class, string[] columnClasses = null);
-        IRow<C> Row(string[] columnClasses = null);
+        IRow Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
+        IRow Row(string @class, string[] columnClasses = null);
+        IRow Row(string[] columnClasses = null);
     }
 }

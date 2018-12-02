@@ -12,9 +12,9 @@ namespace com.parahtml.Mvc
         interface can be directly implemented.
     
     */
-    public interface IPage<C> : ICreateContext<C> where C : MvcContext
+    public interface IPage:ICreateContext
     {
-        void Render(C context);
+        void Render(MvcContext context);
         void End();
     }
 }

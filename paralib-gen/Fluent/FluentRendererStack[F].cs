@@ -8,15 +8,12 @@ using com.paralib.Gen.Rendering;
 namespace com.paralib.Gen.Fluent
 {
 
-    public abstract class FluentRendererStack<C, F> : FluentWriter<C, F> where C : Context where F : FluentRendererStack<C, F>
+    public abstract class FluentRendererStack<F> : FluentWriter<F> where F : FluentRendererStack<F>
     {
-        
 
-        public FluentRendererStack(C context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentRendererStack(RendererStack rendererStack) : base(rendererStack)
         {
         }
-
-       
 
         public virtual IRenderer Top
         {

@@ -7,20 +7,32 @@ using com.paralib.Gen.Fluent;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Attributes;
+using com.paralib.Gen;
 
 namespace com.parahtml.Html
 {
-    public abstract class FluentHtmlBase<C, F> : FluentRendererStack<C, F> where F : FluentHtmlBase<C, F> where C : HtmlContext
+    public abstract class FluentHtmlBase<F> : FluentRendererStack<F>, IHasContext where F : FluentHtmlBase<F>
     {
-        public FluentHtmlBase(C context, RendererStack rendererStack) : base(context, rendererStack)
+        public FluentHtmlBase(RendererStack rendererStack) : base(rendererStack)
         {
         }
 
-        public new C Context
+        void IHasContext.SetContext(Context context)
+        {
+            base.Context = (HtmlContext)context;
+            OnContext();
+        }
+
+        protected virtual void OnContext()
+        {
+
+        }
+
+        public new HtmlContext Context
         {
             get
             {
-                return base.Context;
+                return (HtmlContext)base.Context;
             }
         }
 
@@ -28,7 +40,7 @@ namespace com.parahtml.Html
         {
             get
             {
-                return base.Context.Options;
+                return Context.Options;
             }
         }
 
@@ -46,7 +58,7 @@ namespace com.parahtml.Html
             return Close();
         }
 
-        public virtual F Content(Action<FluentHtmlBase<C, F>> html)
+        public virtual F Content(Action<FluentHtmlBase<F>> html)
         {
             if (html != null)
             {
@@ -78,7 +90,7 @@ namespace com.parahtml.Html
 
         public virtual F CommentBlock(string text, bool visible)
         {
-            return Open(new CommentBlock(Context, text, visible));
+            return Open(new CommentBlock(text));
         }
 
         public virtual F Tag(TagTypes tagType, string name, Action<GlobalAttributes> attributes = null, bool empty = false)

@@ -66,7 +66,7 @@ namespace com.parahtml.Html
         public TagTypes TagType { private set; get; }
         public bool Empty { private set; get; }
 
-        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
+        public Tag(string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(lineMode, containerMode, indentContent)
         {
             TagName = tagName;
             Attributes = attributes;
@@ -80,7 +80,7 @@ namespace com.parahtml.Html
             }
         }
 
-        public Tag(HtmlContext context, string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty ) : this(context, tagName, attributes, tagType, empty, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
+        public Tag(string tagName, AttributeDictionary attributes, TagTypes tagType, bool empty ) : this(tagName, attributes, tagType, empty, GetLineMode(tagType, empty), GetContainerMode(tagType, empty), true)
         {
         }
 

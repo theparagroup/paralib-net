@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using com.parahtml;
 using com.parahtml.Core;
+using com.paralib.Gen;
 
 namespace com.parahtml.Mvc
 {
@@ -53,14 +54,16 @@ namespace com.parahtml.Mvc
 
     */
 
-    public abstract class ParaWebViewPage<C,M> : WebViewPage<M>, ICreateContext<C> where C:MvcContext
+    public abstract class ParaWebViewPage<M> : WebViewPage<M>, ICreateContext
     {
-        public abstract C CreateContext(ViewContext viewContext, TextWriter textWriter);
+        public abstract MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter);
 
-        protected Fragment<MvcContext> Fragment()
+        protected Fragment Fragment()
         {
+            var fragment = new Fragment();
             var context = new MvcContext(ViewContext, ViewContext.Writer);
-            return new Fragment<MvcContext>(context);
+            ((IHasContext)fragment).SetContext(context);
+            return fragment;
         }
 
     }

@@ -11,11 +11,7 @@ using com.parahtml.Grids;
 
 namespace com.parahtml
 {
-    public class Fragment<C> : Fragment<C, Fragment<C>> where C : HtmlContext
+    public class Fragment : Fragment<Fragment>
     {
-        public Fragment(C context) : base(context)
-        {
-        }
-
     }
 }

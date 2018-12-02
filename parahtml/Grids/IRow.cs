@@ -9,16 +9,16 @@ using com.parahtml.Html;
 
 namespace com.parahtml.Grids
 {
-    public interface IRow<C> where C:HtmlContext
+    public interface IRow
     {
-        IRow<C> Here(Action<IRow<C>> row);
-        IRow<C> Html(Action<FluentHtml<C>> html);
+        IRow Here(Action<IRow> row);
+        IRow Html(Action<FluentHtml> html);
 
-        IRow<C> Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
-        IRow<C> Row(string @class, string[] columnClasses = null);
-        IRow<C> Row(string[] columnClasses = null);
+        IRow Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
+        IRow Row(string @class, string[] columnClasses = null);
+        IRow Row(string[] columnClasses = null);
 
-        IColumn<C> Column(Action<GlobalAttributes> attributes = null);
-        IColumn<C> Column(string @class);
+        IColumn Column(Action<GlobalAttributes> attributes = null);
+        IColumn Column(string @class);
     }
 }

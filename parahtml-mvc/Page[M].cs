@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using com.paralib.Gen;
-
+using System.Web.Mvc;
 
 namespace com.parahtml.Mvc
 {
@@ -13,7 +13,12 @@ namespace com.parahtml.Mvc
         Concrete implementation of Mvc Page.
 
     */
-    public abstract class Page<M> : Page<Page<M>, M> 
+    public abstract class Page<M> : Page<Page<M>,M>
     {
+        public override MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter)
+        {
+            return new MvcContext(viewContext, textWriter);
+        }
+
     }
 }

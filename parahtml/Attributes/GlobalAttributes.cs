@@ -48,15 +48,15 @@ namespace com.parahtml.Attributes
                 translate
 */
 
-    public class GlobalAttributes:StyleBase, IHasContext<HtmlContext>
+    public class GlobalAttributes:StyleBase, IHasContext
     {
         protected HtmlContext Context { private set; get; }
 
         public object Attributes { get; set; }
 
-        void IHasContext<HtmlContext>.SetContext(HtmlContext context)
+        void IHasContext.SetContext(Context context)
         {
-            Context = context;
+            Context = (HtmlContext)context;
         }
 
         public string Id { set; get; }

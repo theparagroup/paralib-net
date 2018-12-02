@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using com.parahtml.Core;
+using com.parahtml;
+using System.Linq.Expressions;
+using System.Web.Mvc.Html;
 using com.paralib.Gen;
 using System.Web.Mvc;
 
@@ -10,14 +14,92 @@ namespace com.parahtml.Mvc
 {
     /*
 
-        Concrete implementation of Mvc Page.
+        Base class that makes a Fragment-derived class an IPage, but with a 
+        Model.
 
     */
-    public abstract class Page<F, M> : Page<MvcContext, F, M> where F : Page<F, M>
+    public abstract class Page<F, M> : Fragment<F>, IPage, IHasModel<M> where F : Page<F, M>
     {
-        public override MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter)
+        protected M Model { private set; get; }
+        protected Helpers<M> Helpers { private set; get; }
+
+        protected new MvcContext Context
         {
-            return new MvcContext(viewContext, textWriter);
+            get
+            {
+                return (MvcContext)base.Context;
+            }
+        }
+
+        public abstract MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter);
+
+        void IHasModel<M>.SetModel(M model)
+        {
+            Model = model;
+        }
+
+        void IPage.Render(MvcContext context)
+        {
+            ((IHasContext)this).SetContext(context);
+            Helpers = new Helpers<M>(Context.ViewContext, Model);
+            OnRender();
+        }
+
+        protected abstract void OnRender();
+
+        void IPage.End()
+        {
+            Dispose();
+        }
+
+        public F Write(HtmlString text)
+        {
+            return (F)Write(text?.ToHtmlString());
+        }
+
+        public F WriteLine(HtmlString text)
+        {
+            return (F)WriteLine(text?.ToHtmlString());
+        }
+
+        public F HiddenFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
+        {
+            return Write(Helpers.Html.HiddenFor(expression, htmlAttributes));
+        }
+
+        public F LabelFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
+        {
+            return Write(Helpers.Html.LabelFor(expression, htmlAttributes));
+        }
+
+        public F TextBoxFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
+        {
+            return Write(Helpers.Html.TextBoxFor(expression, htmlAttributes));
+        }
+
+        public F PasswordFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
+        {
+            return Write(Helpers.Html.PasswordFor(expression, htmlAttributes));
+        }
+
+        public F CheckBoxFor(Expression<Func<M, bool>> expression, object htmlAttributes = null)
+        {
+            return Write(Helpers.Html.CheckBoxFor(expression, htmlAttributes));
+        }
+
+        public F ValidationMessageFor<TProperty>(Expression<Func<M, TProperty>> expression)
+        {
+            return Write(Helpers.Html.ValidationMessageFor(expression));
+        }
+
+        public F ValidationSummary(bool excludePropertyErrors, string message)
+        {
+            return Write(Helpers.Html.ValidationSummary(excludePropertyErrors, message));
+        }
+
+        public F ValidationSummary(string message, object htmlAttributes)
+        {
+            return Write(Helpers.Html.ValidationSummary(message, htmlAttributes));
         }
 
     }

@@ -33,7 +33,17 @@ Design Goals & Notes
 	a generation library with a focus on building components
 
 	rework
-		move context from contstructors and use Render(context)
+		move context from contstructors and use IRender.Begin(context)
+		remove C type from all context-related classes (don't think this is neccessary)
+		move Render from page to fragment for context checking
+		re-paramterize IHasContext
+
+		remove Mark() methods, Marker
+		colapse fluentwriter and fluentrendererstack
+		reconceptualize non-fluent and fluent modes
+		rename fluentwriter, fluentrendererstack, etc
+
+		remove data from irenderer (and refactor grids)
 
 
 	rework these grids
@@ -45,6 +55,8 @@ Design Goals & Notes
 			col should close to last col
 			set column classes at container, row level
 			nest column classes (push/pop)
+
+		creagte MvcFragment with MvcContext new for use in ParaWebViewPage?
 
 		grid is not needed
 

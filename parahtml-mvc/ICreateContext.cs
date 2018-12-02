@@ -8,8 +8,8 @@ using System.Web.Mvc;
 
 namespace com.parahtml.Mvc
 {
-    public interface ICreateContext<C> where C:MvcContext
+    public interface ICreateContext
     {
-        C CreateContext(ViewContext viewContext, TextWriter textWriter);
+        MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter);
     }
 }

@@ -42,10 +42,8 @@
   <ItemGroup>
     <Compile Include="Context.cs" />
     <Compile Include="Fluent\FluentConcepts.cs" />
-    <Compile Include="Fluent\FluentRendererStack[C,F].cs" />
-    <Compile Include="Fluent\FluentRendererStack.cs" />
-    <Compile Include="Fluent\FluentWriter.cs" />
-    <Compile Include="Fluent\FluentWriter[C,F].cs" />
+    <Compile Include="Fluent\FluentRendererStack[F].cs" />
+    <Compile Include="Fluent\FluentWriter[F].cs" />
     <Compile Include="IHasContext.cs" />
     <Compile Include="Mapping\AutoDictionary.cs" />
     <Compile Include="Mapping\NullValueAttribute.cs" />

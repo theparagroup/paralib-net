@@ -14,10 +14,19 @@ namespace com.parahtml.Html
         All HTML-based renderers should derive from this.
 
     */
-    public abstract class HtmlRenderer : RendererBase
+    public abstract class HtmlRenderer : RendererBase, IHasContext
     {
-        public HtmlRenderer(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(context, lineMode, containerMode, indentContent)
+        public HtmlRenderer(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(lineMode, containerMode, indentContent)
         {
+        }
+
+        public HtmlRenderer(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(lineMode, containerMode, indentContent)
+        {
+        }
+
+        void IHasContext.SetContext(Context context)
+        {
+            base.Context = context;
         }
 
         protected new HtmlContext Context

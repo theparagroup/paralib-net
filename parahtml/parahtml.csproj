@@ -51,9 +51,8 @@
     <Compile Include="Css\Css.cs" />
     <Compile Include="Css\Interfaces.cs" />
     <Compile Include="Css\Rule.cs" />
-    <Compile Include="Fragment[C,F].cs" />
-    <Compile Include="Html\FluentHtml[C].cs" />
-    <Compile Include="Html\FluentHtmlBase[C,F].cs" />
+    <Compile Include="Fragment[F].cs" />
+    <Compile Include="Html\FluentHtmlBase[F].cs" />
     <Compile Include="Grids\FluentGrid.cs" />
     <Compile Include="Grids\GridOptions.cs" />
     <Compile Include="Grids\IColumn.cs" />
@@ -61,6 +60,8 @@
     <Compile Include="Grids\IGrid.cs" />
     <Compile Include="Grids\IRow.cs" />
     <Compile Include="Html\CommentBlock.cs" />
+    <Compile Include="Html\FluentHtml.cs" />
+    <Compile Include="Html\HtmlRendererStack.cs" />
     <Compile Include="Html\RendererComponent.cs" />
     <Compile Include="Html\TagComponent.cs" />
     <Compile Include="Values\Angle.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Core\HtmlOptions.cs" />
     <Compile Include="Html\HtmlRenderer.cs" />
     <Compile Include="Values\DocumentTypes.cs" />
-    <Compile Include="Fragment[C].cs" />
+    <Compile Include="Fragment.cs" />
     <Compile Include="Values\HrAlignTypes.cs" />
     <Compile Include="Packages\Desp.cs" />
     <Compile Include="Packages\Package.cs" />

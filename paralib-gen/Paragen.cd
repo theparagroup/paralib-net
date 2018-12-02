@@ -105,9 +105,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.RendererBase">
-    <Position X="13.25" Y="8" Width="2" />
+    <Position X="13" Y="8" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAkEAgEEAgAAAAAQAAAAAAAgAAAAABAAAAAAAEFAAAA=</HashCode>
+      <HashCode>AAkEAgEEAgAAAAAQAAAgAAAgAAAIABAAAAAAAEFAAAA=</HashCode>
       <FileName>Rendering\RendererBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -142,7 +142,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.Renderer">
-    <Position X="13.5" Y="12.5" Width="1.5" />
+    <Position X="13.5" Y="13" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEEAAEAAAAAAAAAAAAAAAAgAgAAAAAACAAAAAAAAAA=</HashCode>
       <FileName>Rendering\Renderer.cs</FileName>
@@ -199,14 +199,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Rendering.IRenderer">
-    <Position X="15.5" Y="8.25" Width="1.75" />
+    <Position X="15.75" Y="8.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAIAAgAAAAAAAAAQAAAAAAAAAAAAEBAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IRenderer.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.Rendering.IHasRendererStack">
-    <Position X="15.5" Y="10.75" Width="1.75" />
+    <Position X="15.75" Y="10.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IHasRendererStack.cs</FileName>
@@ -220,14 +220,14 @@
     </TypeIdentifier>
   </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">
-    <Position X="11.5" Y="8.25" Width="1.5" />
+    <Position X="11.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAEAAAAACAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Rendering\LineModes.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="com.paralib.Gen.Rendering.ContainerModes">
-    <Position X="11.5" Y="9.75" Width="1.5" />
+    <Position X="11.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
       <FileName>Rendering\StackModes.cs</FileName>

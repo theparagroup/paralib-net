@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Html;
+using com.paralib.Gen;
 
 namespace com.parahtml.Css
 {
@@ -13,8 +14,9 @@ namespace com.parahtml.Css
     {
         protected string _selector;
 
-        public Rule(HtmlContext context, string selector) : base(context, LineModes.Multiple, ContainerModes.None, context.Options.CssFormat!=CssFormats.Readable?false:true)
+        public Rule(HtmlContext context, string selector) : base(LineModes.Multiple, ContainerModes.None, context.Options.CssFormat!=CssFormats.Readable?false:true)
         {
+            ((IHasContext)this).SetContext(context);
             _selector = selector;
         }
 

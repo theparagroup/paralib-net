@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen
 {
-    public interface IHasContext<C> where C: Context
+    public interface IHasContext
     {
-        void SetContext(C context);
+        void SetContext(Context context);
     }
 }

@@ -72,7 +72,7 @@ namespace com.paralib.Gen.Rendering
 
     */
 
-    public class RendererStack 
+    public abstract class RendererStack 
     {
         protected Stack<IRenderer> Stack { private set; get; } = new Stack<IRenderer>();
         protected LineModes LineMode { private set; get; }
@@ -193,7 +193,7 @@ namespace com.paralib.Gen.Rendering
                     }
                 }
 
-                //begin it
+                //begin it (context should have been set by now)
                 renderer.Begin();
 
                 //push it
@@ -286,12 +286,13 @@ namespace com.paralib.Gen.Rendering
             return false;
         }
 
+        public abstract IRenderer Open(IRenderer renderer);
 
-        public virtual IRenderer Open(IRenderer renderer)
-        {
-            Push(renderer);
-            return renderer;
-        }
+        //public virtual IRenderer Open(IRenderer renderer)
+        //{
+        //    Push(renderer);
+        //    return renderer;
+        //}
 
         public virtual void Close()
         {
