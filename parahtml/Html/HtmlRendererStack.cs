@@ -5,29 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Core;
+using com.paralib.Gen;
 
 namespace com.parahtml.Html
 {
-    public class HtmlRendererStack : RendererStack, IHasContext
+    public class HtmlRendererStack : RendererStack, IHtmlRendererStack
     {
-        protected HtmlContext Context { private set; get; }
+        protected HtmlContext _context;
 
         public HtmlRendererStack(LineModes lineMode) : base(lineMode)
         {
         }
 
-        public void SetContext(HtmlContext context)
+        void IHtmlRendererStack.SetContext(HtmlContext context)
         {
-            Context = context;
+            _context = context;
         }
 
         public override IRenderer Open(IRenderer renderer)
         {
-            if (renderer is IHasContext)
-            {
-                ((IHasContext)renderer).SetContext(Context);
-            }
-
+            renderer.SetContext(_context);
             Push(renderer);
             return renderer;
         }

@@ -39,7 +39,7 @@ namespace com.parahtml.Mvc
 
         void IPage.Render(MvcContext context)
         {
-            ((IHasContext)this).SetContext(context);
+            ((IFluentHtmlBase)this).SetContext(context);
             Helpers = new Helpers<M>(Context.ViewContext, Model);
             OnRender();
         }

@@ -15,6 +15,10 @@ namespace com.paralib.Gen.Rendering
             Name = name;
         }
 
+        public void SetContext(Context context)
+        {
+        }
+
         public ContainerModes ContainerMode
         {
             get
@@ -46,17 +50,8 @@ namespace com.paralib.Gen.Rendering
         public void End()
         {
         }
+
     }
 
-    //public class Marker
-    //{
-    //    public string Name { private set; get; }
-    //    public IRenderer Renderer { private set; get; }
-
-    //    public Marker(string name, IRenderer renderer)
-    //    {
-    //        Name = name;
-    //        Renderer = renderer;
-    //    }
-    //}
+    
 }

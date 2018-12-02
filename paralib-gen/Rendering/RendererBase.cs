@@ -85,7 +85,7 @@ namespace com.paralib.Gen.Rendering
 
     public abstract class RendererBase : BeginBase, IRenderer
     {
-        protected Context Context { set; get; }
+        private Context _context; 
         public LineModes LineMode { private set; get; }
         public ContainerModes ContainerMode { private set; get; }
         public bool IndentContent { private set; get; }
@@ -98,17 +98,26 @@ namespace com.paralib.Gen.Rendering
             IndentContent = indentContent;
         }
 
-        protected override void DoBegin()
+        void IRenderer.SetContext(Context context)
         {
-            if (Context==null)
+            _context = context;
+        }
+
+        protected virtual Context Context
+        {
+            get
             {
-                /*
-                    We don't care how this was set, only that it was, and that it was set by
-                    a derived class because Context is protected.
-                */
-                throw new InvalidOperationException("Cannot Begin Renderer with a null Context");
+                if (_context == null)
+                {
+                    /*
+                        We don't care how this was set, only that it was, and that it was set by
+                        a derived class because Context is protected.
+                    */
+                    throw new InvalidOperationException("Renderer has no Context");
+                }
+
+                return _context;
             }
-            base.DoBegin();
         }
 
         protected Writer Writer
@@ -225,5 +234,6 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
+       
     }
 }

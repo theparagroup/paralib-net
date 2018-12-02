@@ -60,7 +60,7 @@ namespace com.parahtml.Mvc
         {
             var fragment = new Fragment();
             var context = new MvcContext(ViewContext, ViewContext.Writer);
-            ((IHasContext)fragment).SetContext(context);
+            ((IFluentHtmlBase)fragment).SetContext(context);
             return fragment;
         }
 

@@ -33,15 +33,17 @@ Design Goals & Notes
 	a generation library with a focus on building components
 
 	rework
-		move context from contstructors and use IRender.Begin(context)
-		remove C type from all context-related classes (don't think this is neccessary)
-		move Render from page to fragment for context checking
-		re-paramterize IHasContext
-
-		remove Mark() methods, Marker
-		colapse fluentwriter and fluentrendererstack
+		
 		reconceptualize non-fluent and fluent modes
-		rename fluentwriter, fluentrendererstack, etc
+			rename ifluentwriter, fluentwriter, fluentrendererstack, etc
+			colapse fluentwriter and fluentrendererstack
+			CloseUpIfTopNotMultipleLine should not exist. WriteLine() etc should only be avalible in multiline context
+			remove Mark() methods, Marker
+
+
+		move Render from page to fragment for context checking
+
+
 
 		remove data from irenderer (and refactor grids)
 

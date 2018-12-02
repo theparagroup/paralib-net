@@ -7,14 +7,27 @@ using com.paralib.Gen.Rendering;
 
 namespace com.paralib.Gen.Fluent
 {
-    public abstract class FluentWriter<F>where F : FluentWriter<F>
+    public abstract class FluentWriter<F>: IFluentWriter where F : FluentWriter<F>
     {
+        private Context _context;
         protected RendererStack RendererStack;
-        protected Context Context { set; get; }
 
         public FluentWriter(RendererStack rendererStack)
         {
             RendererStack = rendererStack;
+        }
+
+        void IFluentWriter.SetContext(Context context)
+        {
+            _context = context;
+        }
+
+        protected Context Context
+        {
+            get
+            {
+                return _context;
+            }
         }
 
         private void CloseUpIfTopNotMultipleLine()

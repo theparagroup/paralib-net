@@ -42,12 +42,13 @@
   <ItemGroup>
     <Compile Include="Attributes\FormAttributes.cs" />
     <Compile Include="Attributes\AAttributes.cs" />
+    <Compile Include="Attributes\IGlobalAttribute.cs" />
     <Compile Include="Attributes\InputAttributes.cs" />
     <Compile Include="Attributes\MetaAttributes.cs" />
     <Compile Include="Attributes\LinkAttributes.cs" />
     <Compile Include="Attributes\ExternalScriptAttributes.cs" />
     <Compile Include="Core\AttributeDictionary.cs" />
-    <Compile Include="Core\IHasContext.cs" />
+    <Compile Include="Core\IFluentHtmlBase.cs" />
     <Compile Include="Core\Server.cs" />
     <Compile Include="Css\Css.cs" />
     <Compile Include="Css\Interfaces.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Html\FluentHtml.cs" />
     <Compile Include="Html\HtmlRendererStack.cs" />
     <Compile Include="Html\HtmlRendererComponent.cs" />
+    <Compile Include="Html\IHtmlRendererStack.cs" />
     <Compile Include="Html\TagComponent.cs" />
     <Compile Include="Values\Angle.cs" />
     <Compile Include="Values\AngleUnits.cs" />

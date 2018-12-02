@@ -7,24 +7,20 @@ using com.paralib.Gen.Fluent;
 using com.parahtml.Core;
 using com.paralib.Gen.Rendering;
 using com.parahtml.Attributes;
+using com.paralib.Gen;
 
 namespace com.parahtml.Html
 {
-    public abstract class FluentHtmlBase<F> : FluentRendererStack<F>, IHasContext where F : FluentHtmlBase<F>
+    public abstract class FluentHtmlBase<F> : FluentRendererStack<F>, IFluentHtmlBase where F : FluentHtmlBase<F>
     {
-        public FluentHtmlBase(RendererStack rendererStack) : base(rendererStack)
+        public FluentHtmlBase(HtmlRendererStack rendererStack) : base(rendererStack)
         {
         }
 
-        void IHasContext.SetContext(HtmlContext context)
+        void IFluentHtmlBase.SetContext(HtmlContext context)
         {
-            base.Context = (HtmlContext)context;
-            OnContext();
-        }
-
-        protected virtual void OnContext()
-        {
-
+            ((IFluentWriter)this).SetContext(context);
+            ((IHtmlRendererStack)RendererStack).SetContext(context);
         }
 
         public new HtmlContext Context
@@ -32,6 +28,14 @@ namespace com.parahtml.Html
             get
             {
                 return (HtmlContext)base.Context;
+            }
+        }
+
+        protected new HtmlRendererStack RendererStack
+        {
+            get
+            {
+                return (HtmlRendererStack)base.RendererStack;
             }
         }
 

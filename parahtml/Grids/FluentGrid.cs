@@ -8,6 +8,7 @@ using com.paralib.Gen.Rendering;
 using com.parahtml.Html;
 using com.parahtml.Attributes;
 using com.paralib.Gen.Fluent;
+using com.paralib.Gen;
 
 namespace com.parahtml.Grids
 {
@@ -57,9 +58,9 @@ namespace com.parahtml.Grids
         protected int _columnNumber;
 
 
-        public FluentGrid(HtmlContext context, RendererStack rendererStack, Action<GridOptions> gridOptions = null) : base(rendererStack)
+        public FluentGrid(HtmlContext context, HtmlRendererStack rendererStack, Action<GridOptions> gridOptions = null) : base(rendererStack)
         {
-            base.Context = context;
+            ((IFluentWriter)this).SetContext(context);
             NewGrid(GetOptions(gridOptions));
         }
 
@@ -416,7 +417,7 @@ namespace com.parahtml.Grids
         {
             if (action != null)
             {
-                var fh = new FluentHtml(Context, RendererStack);
+                var fh = new FluentHtml(Context, (HtmlRendererStack)RendererStack);
                 action(fh);
             }
 

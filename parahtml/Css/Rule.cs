@@ -16,7 +16,7 @@ namespace com.parahtml.Css
 
         public Rule(HtmlContext context, string selector) : base(LineModes.Multiple, ContainerModes.None, context.Options.CssFormat!=CssFormats.Readable?false:true)
         {
-            ((IHasContext)this).SetContext(context);
+            ((IRenderer)this).SetContext(context);
             _selector = selector;
         }
 

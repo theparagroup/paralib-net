@@ -11,15 +11,10 @@ using com.parahtml.Grids;
 
 namespace com.parahtml
 {
-    public class Fragment<F> : FluentHtmlBase<F>, IHasContext, IDisposable where F : Fragment<F>
+    public class Fragment<F> : FluentHtmlBase<F>, IDisposable where F : Fragment<F>
     {
         public Fragment() : base(new HtmlRendererStack(LineModes.Multiple))
         {
-        }
-
-        protected override void OnContext()
-        {
-            ((IHasContext)RendererStack).SetContext(Context);
         }
 
         public FluentCss Css()

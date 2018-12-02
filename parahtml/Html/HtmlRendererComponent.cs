@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using com.parahtml.Core;
 using com.parahtml.Packages;
+using com.paralib.Gen;
 using com.paralib.Gen.Rendering;
 
 namespace com.parahtml.Html
@@ -26,15 +27,29 @@ namespace com.parahtml.Html
         protected ContainerModes _containerMode { private set; get; }
         public object Data { set; get; }
 
-        public HtmlRendererComponent(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(new HtmlRendererStack(lineMode))
+        public HtmlRendererComponent(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(new HtmlRendererStack(lineMode))
         {
-            _renderer = new Renderer(context, lineMode, containerMode, indentContent);
+            _renderer = new Renderer(lineMode, containerMode, indentContent);
             _lineMode = lineMode;
             _containerMode = containerMode;
 
-            ((IHasContext)this).SetContext(context);
-            ((IHasContext)RendererStack).SetContext(context);
         }
+
+        void IRenderer.SetContext(Context context)
+        {
+            ((IRenderer)_renderer).SetContext(context);
+
+            if (context is HtmlContext)
+            {
+                ((IFluentHtmlBase)this).SetContext((HtmlContext)context);
+                ((IHtmlRendererStack)RendererStack).SetContext((HtmlContext)context);
+            }
+            else
+            {
+                throw new InvalidOperationException("HtmlRendererComponent requires an HtmlContext");
+            }
+        }
+
 
         LineModes IRenderer.LineMode
         {
@@ -84,10 +99,6 @@ namespace com.parahtml.Html
         protected abstract void OnBeginContent();
         protected abstract void OnEndContent();
         protected abstract void OnEnd();
-
-
-
-      
 
     }
 }
