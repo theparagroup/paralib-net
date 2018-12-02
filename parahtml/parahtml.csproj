@@ -62,7 +62,7 @@
     <Compile Include="Html\CommentBlock.cs" />
     <Compile Include="Html\FluentHtml.cs" />
     <Compile Include="Html\HtmlRendererStack.cs" />
-    <Compile Include="Html\RendererComponent.cs" />
+    <Compile Include="Html\HtmlRendererComponent.cs" />
     <Compile Include="Html\TagComponent.cs" />
     <Compile Include="Values\Angle.cs" />
     <Compile Include="Values\AngleUnits.cs" />

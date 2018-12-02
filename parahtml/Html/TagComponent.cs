@@ -19,7 +19,7 @@ namespace com.parahtml.Html
         to the usual rules.
 
     */
-    public abstract class TagComponent<P> : RendererComponent<TagComponent<P>, P> where P : Package, new()
+    public abstract class TagComponent<P> : HtmlRendererComponent<TagComponent<P>, P> where P : Package, new()
     {
         protected Tag _tag;
 

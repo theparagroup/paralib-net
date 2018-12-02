@@ -121,14 +121,6 @@
       <FileName>Html\TagComponent.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.parahtml.Html.RendererComponent&lt;F, P&gt;">
-    <Position X="24.5" Y="24" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>gIAAAAAIACAAAEAAABAgAABAEgCAABAECAAAAIAAAAA=</HashCode>
-      <FileName>Html\RendererComponent.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="com.paralib.Gen.Context" Collapsed="true">
     <Position X="5.5" Y="0.75" Width="1.5" />
     <TypeIdentifier />
@@ -191,9 +183,10 @@
   <Class Name="com.parahtml.Html.HtmlComponentBase&lt;F, P&gt;">
     <Position X="24.5" Y="20.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Html\HtmlComponentBase.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="com.parahtml.Html.HtmlRendererStack">
     <Position X="24" Y="7" Width="2.25" />
@@ -213,6 +206,14 @@
       <HashCode>AAAAAAAAAAAAEAAAAAAAAAAAAgAAAAAACAAACAAAAAA=</HashCode>
       <FileName>Html\CommentBlock.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html.HtmlRendererComponent&lt;F, P&gt;">
+    <Position X="24.5" Y="23.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAIACAAAEAAABAgAABAEgCAABAECAAAAIAAAAA=</HashCode>
+      <FileName>Html\HtmlRendererComponent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="com.parahtml.Grids.IGrid">
     <Position X="33.5" Y="12" Width="1.5" />
