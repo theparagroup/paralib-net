@@ -84,14 +84,6 @@ namespace com.parahtml.Html
         {
         }
 
-        //public bool Empty
-        //{
-        //    get
-        //    {
-        //        return ContainerMode==ContainerModes.None;
-        //    }
-        //}
-
         public static LineModes GetLineMode(TagTypes tagType, bool empty)
         {
             if (tagType == TagTypes.Block)

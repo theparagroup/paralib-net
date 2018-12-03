@@ -20,7 +20,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        public abstract IRenderer Open(IRenderer renderer);
+        public abstract void Open(IRenderer renderer);
 
         public virtual void Close()
         {

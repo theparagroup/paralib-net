@@ -22,11 +22,10 @@ namespace com.parahtml.Html
             _context = context;
         }
 
-        public override IRenderer Open(IRenderer renderer)
+        public override void Open(IRenderer renderer)
         {
             renderer.SetContext(_context);
             Push(renderer);
-            return renderer;
         }
 
     }

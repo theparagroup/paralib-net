@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\IBuilderBase.cs" />
+    <Compile Include="Builders\IContent.cs" />
     <Compile Include="Context.cs" />
+    <Compile Include="Builders\BuilderBase.cs" />
+    <Compile Include="Builders\IClosable.cs" />
+    <Compile Include="Builders\Closable.cs" />
     <Compile Include="Fluent\FluentConcepts.cs" />
     <Compile Include="Fluent\FluentRendererStack[F].cs" />
     <Compile Include="Fluent\FluentWriter[F].cs" />
@@ -69,7 +74,7 @@
     <Compile Include="Rendering\RendererBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
     <Compile Include="Rendering\RendererStackBase.cs" />
-    <Compile Include="Rendering\StackModes.cs" />
+    <Compile Include="Rendering\ContainerModes.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Writer.cs" />
     <Compile Include="Writers\ConsoleWriter.cs" />

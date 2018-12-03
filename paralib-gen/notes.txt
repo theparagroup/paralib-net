@@ -40,6 +40,14 @@ Design Goals & Notes
 			CloseUpIfTopNotMultipleLine should not exist. WriteLine() etc should only be avalible in multiline context
 			remove Mark() methods, Marker
 
+			Begin/End => Open/Close
+			track open/close state
+			Content() method only closes(renderer) if renderer is not already closed
+				this prevents this from closing the whole stack:
+					Span().Content(c=>
+					{
+						Div();
+					});	
 
 		move Render from page to fragment for context checking
 

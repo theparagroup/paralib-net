@@ -72,7 +72,7 @@
   <Class Name="com.paralib.Gen.Rendering.RendererStack">
     <Position X="18.75" Y="8.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAIAAAACAAACAAACAAAI=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAQAAIAIAACAAACAAACAAAI=</HashCode>
       <FileName>Rendering\RendererStack.cs</FileName>
       <NewMemberFileName>Rendering\RendererStackBase.cs</NewMemberFileName>
     </TypeIdentifier>
@@ -185,25 +185,11 @@
       <FileName>Mapping\IDynamicValueContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="com.paralib.Gen.Rendering.IRenderer">
-    <Position X="15.75" Y="8" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAIAAgAAAAIAAAAQAAAAAAAAAAAAEBAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rendering\IRenderer.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="com.paralib.Gen.Rendering.IHasRendererStack">
     <Position X="18.75" Y="7.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Rendering\IHasRendererStack.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="com.paralib.Gen.Fluent.IFluentWriter">
-    <Position X="27" Y="8" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Fluent\IFluentWriter.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="com.paralib.Gen.Rendering.LineModes">
@@ -217,7 +203,7 @@
     <Position X="11.25" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>Rendering\StackModes.cs</FileName>
+      <FileName>Rendering\ContainerModes.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

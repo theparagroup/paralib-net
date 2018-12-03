@@ -54,6 +54,8 @@
     <Compile Include="Css\Interfaces.cs" />
     <Compile Include="Css\Rule.cs" />
     <Compile Include="Fragment[F].cs" />
+    <Compile Include="Html2\Fragment2[C].cs" />
+    <Compile Include="Html2\HtmlBuilder2[C].cs" />
     <Compile Include="Html\FluentHtmlBase[F].cs" />
     <Compile Include="Grids\FluentGrid.cs" />
     <Compile Include="Grids\GridOptions.cs" />
