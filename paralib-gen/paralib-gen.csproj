@@ -68,6 +68,7 @@
     <Compile Include="Rendering\LineModes.cs" />
     <Compile Include="Rendering\RendererBase.cs" />
     <Compile Include="Rendering\RendererStack.cs" />
+    <Compile Include="Rendering\RendererStackBase.cs" />
     <Compile Include="Rendering\StackModes.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Writer.cs" />

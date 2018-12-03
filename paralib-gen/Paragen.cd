@@ -72,8 +72,9 @@
   <Class Name="com.paralib.Gen.Rendering.RendererStack">
     <Position X="18.75" Y="8.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAIAAQAAAAAAQAgICIAACAAACAAACBCAI=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAIAAAACAAACAAACAAAI=</HashCode>
       <FileName>Rendering\RendererStack.cs</FileName>
+      <NewMemberFileName>Rendering\RendererStackBase.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Mapping.DictionaryBuilder&lt;C, T&gt;">
