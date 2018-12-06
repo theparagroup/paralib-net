@@ -38,12 +38,22 @@ namespace com.paralib.Gen.Builders
             Div();            
 
         "With" (sets context, closes renderer)
-            With(renderer, builder => 
+            With(renderer, renderer => 
             {
+                Div();
+                renderer.Method();
             }); 
 
 
-            With(Div(), builder=>{});
+            With(Div(), ()=>
+            {
+                Div();
+            }); //closes div
+
+            With(Span(), ()=>
+            {
+                Div(); //implicitly closes span
+            }); //does not close to span
 
 
         Components
@@ -51,8 +61,13 @@ namespace com.paralib.Gen.Builders
             {
             });
 
-            With(component, builder=>{});
-            With(component, start=>{});
+            With(component, component=>
+            {
+                Div()
+                Span();
+                component.Method();
+
+            }); //closes to component
 
 
 
