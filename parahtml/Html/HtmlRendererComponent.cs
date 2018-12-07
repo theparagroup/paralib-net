@@ -20,25 +20,27 @@ namespace com.parahtml.Html
         to the usual rules.
 
     */
-    public abstract class HtmlRendererComponent<F,P> : HtmlComponentBase<F, P>, IRenderer  where F : HtmlRendererComponent<F, P> where P : Package, new()
+    public abstract class HtmlRendererComponent<F,P> : HtmlComponentBase<F, P>  where F : HtmlRendererComponent<F, P> where P : Package, new()
     {
         private Renderer _renderer;
         protected LineModes _lineMode { private set; get; }
         protected ContainerModes _containerMode { private set; get; }
         public object Data { set; get; }
 
-        public HtmlRendererComponent(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(new HtmlRendererStack(lineMode))
+        public HtmlRendererComponent(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(new RendererStack(lineMode))
         {
             _renderer = new Renderer(lineMode, containerMode, indentContent);
+
+            _renderer.Opening += _renderer_Opening;
+            _renderer.Closing += _renderer_Closing;
+
             _lineMode = lineMode;
             _containerMode = containerMode;
 
         }
 
-        void IRenderer.SetContext(Context context)
+        public void Initialize(Context context)
         {
-            ((IRenderer)_renderer).SetContext(context);
-
             if (context is HtmlContext)
             {
                 ((IFluentHtmlBase)this).SetContext((HtmlContext)context);
@@ -49,56 +51,20 @@ namespace com.parahtml.Html
                 throw new InvalidOperationException("HtmlRendererComponent requires an HtmlContext");
             }
         }
-
-
-        LineModes IRenderer.LineMode
+        private void _renderer_Opening(object sender, EventArgs e)
         {
-            get
-            {
-                return _lineMode;
-            }
-        }
-
-        ContainerModes IRenderer.ContainerMode
-        {
-            get
-            {
-                return _containerMode;
-            }
-        }
-
-        void IRenderer.Begin()
-        {
-            DoBegin();
-        }
-
-        protected virtual void DoBegin()
-        {
-            _renderer.OnPreBegin();
-            OnBegin();
-            _renderer.OnPostBegin();
-
             OnBeginContent();
         }
 
-        void IRenderer.End()
-        {
-            DoEnd();
-        }
+        protected abstract void OnBeginContent();
 
-        protected virtual void DoEnd()
+
+        private void _renderer_Closing(object sender, EventArgs e)
         {
             OnEndContent();
-
-            _renderer.OnPreEnd();
-            OnEnd();
-            _renderer.OnPostEnd();
         }
 
-        protected abstract void OnBegin();
-        protected abstract void OnBeginContent();
         protected abstract void OnEndContent();
-        protected abstract void OnEnd();
 
     }
 }

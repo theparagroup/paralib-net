@@ -17,7 +17,7 @@ namespace com.parahtml.Html2
 
     public abstract class HtmlBuilder2<C> : BuilderBase<C> where C:HtmlContext
     {
-        public HtmlBuilder2(RendererStack rendererStack) : base(rendererStack)
+        public HtmlBuilder2() : base(LineModes.Multiple)
         {
         }
 
@@ -30,59 +30,62 @@ namespace com.parahtml.Html2
         private Tag Tag(string name, AttributeDictionary attributes, TagTypes tagType, bool empty)
         {
             var tag = new Tag(name, attributes, tagType, empty);
-            ((IRenderer)tag).SetContext(Context);
-            ((IBuilderBase<C>)this).Open(tag);
+            Open(tag);
             return tag;
         }
 
-        private Closable Block(string name, AttributeDictionary attributes = null, bool empty = false)
+        private Renderer Block(string name, AttributeDictionary attributes = null, bool empty = false)
         {
-            return new Closable(Tag(name, attributes, TagTypes.Block, empty));
+            return Tag(name, attributes, TagTypes.Block, empty);
         }
 
-        private void Inline(string name, AttributeDictionary attributes = null, bool empty = false)
+        private Renderer Inline(string name, AttributeDictionary attributes = null, bool empty = false)
         {
-            Tag(name, attributes, TagTypes.Inline, empty);
+            return Tag(name, attributes, TagTypes.Inline, empty);
         }
 
-        public virtual Closable Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        public virtual Renderer Block(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
             return Block(name, Attributes(attributes), empty);
         }
 
-        public virtual void Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
+        public virtual Renderer Inline(string name, Action<GlobalAttributes> attributes = null, bool empty = false)
         {
-            Inline(name, Attributes(attributes), empty);
+            return Inline(name, Attributes(attributes), empty);
         }
 
-        public virtual Closable Div(Action<GlobalAttributes> attributes = null)
+        public virtual Renderer Div(Action<GlobalAttributes> attributes = null)
         {
             return Block("div", Attributes(attributes));
         }
 
-        public virtual Closable Div(string @class)
+        public virtual Renderer Div(string @class)
         {
             return Block("div", Attributes<GlobalAttributes>(a=>a.Class=@class));
         }
 
-        public virtual void Span(Action<GlobalAttributes> attributes = null)
+        public virtual Renderer Span(Action<GlobalAttributes> attributes = null)
         {
-            Inline("span", Attributes(attributes));
+            return Inline("span", Attributes(attributes));
         }
 
-        public virtual void Span(string @class)
+        public virtual Renderer Span(string @class)
         {
-            Inline("span", Attributes<GlobalAttributes> (a => a.Class = @class));
+            return Inline("span", Attributes<GlobalAttributes> (a => a.Class = @class));
         }
 
-        public virtual Closable Hr(Action<HrAttributes> attributes = null)
+        public virtual Renderer Hr(Action<HrAttributes> attributes = null)
         {
             return Block("hr", Attributes(attributes), true);
         }
 
-        public virtual void Br(Action<HrAttributes> attributes = null)
+        public virtual Renderer Br(Action<HrAttributes> attributes = null)
         {
-            Inline("br", Attributes(attributes), true);
+            //return Inline("br", Attributes(attributes), true);
+            var tag= new Tag("br", Attributes(attributes), TagTypes.Inline, true, LineModes.None, ContainerModes.Inline, false);
+            Open(tag);
+            Close();
+            return tag;
         }
 
 

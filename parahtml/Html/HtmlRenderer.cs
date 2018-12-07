@@ -14,7 +14,7 @@ namespace com.parahtml.Html
         All HTML-based renderers should derive from this.
 
     */
-    public abstract class HtmlRenderer : RendererBase
+    public abstract class HtmlRenderer : Renderer
     {
         public HtmlRenderer(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(lineMode, containerMode, indentContent)
         {

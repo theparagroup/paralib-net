@@ -8,30 +8,21 @@ namespace com.paralib.Gen.Rendering
 {
     public class Marker : IRenderer
     {
-        public string Name { protected set; get; }
+        protected LineModes _lineMode { private set; get; }
+        protected ContainerModes _containerMode { private set; get; }
+        protected RenderStates _renderState { private set; get; } = RenderStates.New;
 
-        public Marker(string name)
+        public Marker(LineModes lineMode, ContainerModes containerMode)
         {
-            Name = name;
-        }
-
-        public void SetContext(Context context)
-        {
+            _lineMode = lineMode;
+            _containerMode = containerMode;
         }
 
         public ContainerModes ContainerMode
         {
             get
             {
-                return ContainerModes.Block;
-            }
-        }
-
-        public object Data
-        {
-            get
-            {
-                return null;
+                return _containerMode;
             }
         }
 
@@ -39,19 +30,29 @@ namespace com.paralib.Gen.Rendering
         {
             get
             {
-                return LineModes.Multiple;
+                return _lineMode;
             }
         }
 
-        public void Begin()
+        public RenderStates RenderState
         {
+            get
+            {
+                return _renderState;
+            }
         }
 
-        public void End()
+        public void Open(Context context)
         {
+            _renderState = RenderStates.Open;
+        }
+
+        public void Close()
+        {
+            _renderState = RenderStates.Closed;
         }
 
     }
 
-    
+
 }

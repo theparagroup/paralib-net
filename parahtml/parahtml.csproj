@@ -54,18 +54,16 @@
     <Compile Include="Css\Interfaces.cs" />
     <Compile Include="Css\Rule.cs" />
     <Compile Include="Fragment[F].cs" />
+    <Compile Include="Grids\ns.cs" />
+    <Compile Include="Html2\HtmlBuilderComponent[C].cs" />
+    <Compile Include="Html2\StackComponent.cs" />
+    <Compile Include="Html2\FluentHtml2[C].cs" />
     <Compile Include="Html2\Fragment2[C].cs" />
     <Compile Include="Html2\HtmlBuilder2[C].cs" />
+    <Compile Include="Html2\MyComponent.cs" />
     <Compile Include="Html\FluentHtmlBase[F].cs" />
-    <Compile Include="Grids\FluentGrid.cs" />
-    <Compile Include="Grids\GridOptions.cs" />
-    <Compile Include="Grids\IColumn.cs" />
-    <Compile Include="Grids\IContainer.cs" />
-    <Compile Include="Grids\IGrid.cs" />
-    <Compile Include="Grids\IRow.cs" />
     <Compile Include="Html\CommentBlock.cs" />
     <Compile Include="Html\FluentHtml.cs" />
-    <Compile Include="Html\HtmlRendererStack.cs" />
     <Compile Include="Html\HtmlRendererComponent.cs" />
     <Compile Include="Html\IHtmlRendererStack.cs" />
     <Compile Include="Html\TagComponent.cs" />
@@ -135,6 +133,7 @@
   <ItemGroup>
     <None Include="Parahtml.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

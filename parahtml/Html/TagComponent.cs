@@ -23,7 +23,7 @@ namespace com.parahtml.Html
     {
         protected Tag _tag;
 
-        public TagComponent(Tag tag, bool indentContent) : base(tag.LineMode, tag.ContainerMode, indentContent)
+        public TagComponent(Tag tag, bool indentContent) : base(((Renderer)tag).LineMode, ((Renderer)tag).ContainerMode, indentContent)
         {
             _tag = tag;
         }

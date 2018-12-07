@@ -13,7 +13,7 @@ namespace com.parahtml.Html
 {
     public abstract class FluentHtmlBase<F> : FluentRendererStack<F>, IFluentHtmlBase where F : FluentHtmlBase<F>
     {
-        public FluentHtmlBase(HtmlRendererStack rendererStack) : base(rendererStack)
+        public FluentHtmlBase(RendererStack rendererStack) : base(rendererStack)
         {
         }
 
@@ -30,14 +30,7 @@ namespace com.parahtml.Html
                 return (HtmlContext)base.Context;
             }
         }
-
-        protected new HtmlRendererStack RendererStack
-        {
-            get
-            {
-                return (HtmlRendererStack)base.RendererStack;
-            }
-        }
+       
 
         protected HtmlOptions Options
         {

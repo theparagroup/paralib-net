@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace com.paralib.Gen.Builders
+namespace com.parahtml.Grids
 {
-    public interface IContent<I>
+    class ns
     {
-        I Content(Action<I> action);
     }
 }

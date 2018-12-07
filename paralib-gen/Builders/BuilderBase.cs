@@ -18,37 +18,39 @@ namespace com.paralib.Gen.Builders
             blocks under an inline close
             anything under a none close
 
-        renderers and components? cannot be instatiated by developers
-
         all methods avaliable
 
-        block methods return "blocks", all else void
+        renderers and components? cannot be instatiated by developers
         
         implementation of builder should call CloseAll()
+            something like a OnRender() method
+            IDispose
+            etc
 
-        example
-            Div();
-            Span();
-            Div();
+        implicit example:
+        
+            Div();              <div>
+            Span();                 <span></span>
+            Div();                  <div>
+            CloseAll();             </div>
+            ...                 </div>
+        
+        explicit closing of Blocks only:
 
-        explicit closing of Blocks only
-            var div1=Div();
-            Span();
-            Close(div1);
-            Div();            
+            var div1=Div();     <div>
+            Span();                 <span></span>
+            Close(div1);        </div>
+            Div();              <div>
+            ...                 ...
 
         "With" (sets context, closes renderer)
-            With(renderer, renderer => 
+
+            With(renderer, () => 
             {
                 Div();
-                renderer.Method();
-            }); 
+            }); //closes renderer
 
-
-            With(Div(), ()=>
-            {
-                Div();
-            }); //closes div
+        Note: renderers are only closed once:
 
             With(Span(), ()=>
             {
@@ -57,6 +59,7 @@ namespace com.paralib.Gen.Builders
 
 
         Components
+
             var component=new Component(options=>
             {
             });
@@ -81,26 +84,35 @@ namespace com.paralib.Gen.Builders
         });
 
     */
-    public abstract class BuilderBase<C>:IBuilderBase<C> where C:Context 
+    public abstract class BuilderBase<C> : ILazyContext, IContainer where C : Context
     {
         private C _context;
         private RendererStack _rendererStack;
 
-        public BuilderBase(RendererStack rendererStack)
+        public BuilderBase(LineModes lineMode)
         {
-            _rendererStack = rendererStack;
+            _rendererStack = new RendererStack(lineMode);
         }
 
-        void IBuilderBase<C>.SetContext(C context)
+        void ILazyContext.Initialize(Context context)
         {
-            _context = context;
+            _context = (C)context;
+            _rendererStack.Initialize(context);
         }
 
-        protected C Context
+        public C Context
         {
             get
             {
-                return _context;
+                if (_context != null)
+                {
+                    return _context;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Builder Context cannot be null");
+                }
+
             }
         }
 
@@ -135,29 +147,113 @@ namespace com.paralib.Gen.Builders
             Context.Writer.Space();
         }
 
-        void IBuilderBase<C>.Open(IRenderer renderer)
+        public virtual IRenderer Top
+        {
+            get
+            {
+                return _rendererStack.Top;
+            }
+        }
+
+        public virtual IRenderer Open(IRenderer renderer)
         {
             _rendererStack.Open(renderer);
+            return renderer;
         }
 
-        public virtual void Close(IClosable closable)
+        public virtual void Close()
         {
-            _rendererStack.Close(closable.Renderer);
+            _rendererStack.Close();
         }
 
-        void IBuilderBase<C>.CloseAll()
+        public virtual void Close(IRenderer renderer)
+        {
+            _rendererStack.Close(renderer);
+        }
+
+        public virtual void CloseAll()
         {
             _rendererStack.CloseAll();
         }
 
-        void With(IClosable closable, Action<BuilderBase<C>> action)
+        public void With(IRenderer renderer, Action action)
         {
-            if (action!=null)
-            {
+            var renderState = renderer.RenderState;
 
+            if (renderState == RenderStates.New)
+            {
+                Open(renderer);
+            }
+            else if (renderState == RenderStates.Open)
+            {
+                //already open, do nothing
+            }
+            else if (renderState==RenderStates.Closed)
+            {
+                throw new InvalidOperationException("Can't call With() on a closed renderer");
             }
 
+            if (action!=null)
+            {
+                action();
+            }
+
+            Close(renderer);
         }
 
+        public void With<T>(T component, Action<T> action) where T:IComponent 
+        {
+            component.Begin(this);
+
+            if (action!=null)
+            {
+                action(component);
+            }
+
+            component.End();
+        }
+
+        public void With<T,F>(T component, Action<F> action) where T : IComponent, F
+        {
+            component.Begin(this);
+
+            if (action != null)
+            {
+                action(component);
+            }
+
+            component.End();
+        }
+
+
+        Context IContainer.Context
+        {
+            get
+            {
+                return Context;
+            }
+        }
+
+        RendererStack IContainer.RendererStack
+        {
+            get
+            {
+                return _rendererStack;
+            }
+        }
     }
+
+    public interface IComponent
+    {
+        void Begin(IContainer container);
+        void End();
+    }
+
+    public interface IContainer
+    {
+        Context Context { get; }
+        RendererStack RendererStack { get; }
+    }
+
+
 }

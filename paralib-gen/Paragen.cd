@@ -105,14 +105,6 @@
       <FileName>Mapping\ExplicitNameAttribute.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Rendering.RendererBase">
-    <Position X="13" Y="8" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAkEAgEEAgAABAAQQAAAAAAgAAAAABAAAAAAAEFAAAA=</HashCode>
-      <FileName>Rendering\RendererBase.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="com.paralib.Gen.Fluent.FluentWriter&lt;F&gt;">
     <Position X="24.5" Y="8" Width="2.25" />
     <TypeIdentifier>
@@ -126,13 +118,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAABAAAAAAAAAIAIAACAAACAAACAAAI=</HashCode>
       <FileName>Fluent\FluentRendererStack[F].cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="com.paralib.Gen.Rendering.Renderer">
-    <Position X="13.5" Y="13" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAEEAAEAAAAAAAAAAAAAAAAgAgAAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>Rendering\Renderer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.paralib.Gen.Rendering.Marker">
@@ -163,6 +148,21 @@
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Mapping\NullValueAttribute.cs</FileName>
     </TypeIdentifier>
+  </Class>
+  <Class Name="com.paralib.Gen.Rendering.Renderer">
+    <Position X="13.5" Y="13" Width="1.5" />
+    <NestedTypes>
+      <Class Name="com.paralib.Gen.Rendering.Renderer.SettingContextEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Rendering\Renderer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAsEAgEEAgAAREAYQAAAAABgBgAAkBAECAAAAMFCAAA=</HashCode>
+      <FileName>Rendering\Renderer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Interface Name="com.paralib.Gen.Mapping.IValueContainer">
     <Position X="26" Y="2" Width="1.5" />

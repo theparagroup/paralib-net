@@ -38,22 +38,12 @@ Design Goals & Notes
 			rename ifluentwriter, fluentwriter, fluentrendererstack, etc
 			colapse fluentwriter and fluentrendererstack
 			CloseUpIfTopNotMultipleLine should not exist. WriteLine() etc should only be avalible in multiline context
-			remove Mark() methods, Marker
 
-			Begin/End => Open/Close
-			track open/close state
-			Content() method only closes(renderer) if renderer is not already closed
-				this prevents this from closing the whole stack:
-					Span().Content(c=>
-					{
-						Div();
-					});	
+		there is a problem with br under span, a problem with None under Inline
+			perhaps none (empty) should be seperated from inline/block? yes.
 
 		move Render from page to fragment for context checking
 
-
-
-		remove data from irenderer (and refactor grids)
 
 
 	rework these grids

@@ -9,22 +9,15 @@ using com.paralib.Gen;
 
 namespace com.parahtml.Html
 {
-    public class HtmlRendererStack : RendererStack, IHtmlRendererStack
+    public class HtmlRendererStack : RendererStack//, IHtmlRendererStack
     {
-        protected HtmlContext _context;
 
         public HtmlRendererStack(LineModes lineMode) : base(lineMode)
         {
         }
 
-        void IHtmlRendererStack.SetContext(HtmlContext context)
-        {
-            _context = context;
-        }
-
         public override void Open(IRenderer renderer)
         {
-            renderer.SetContext(_context);
             Push(renderer);
         }
 

@@ -13,7 +13,7 @@ namespace com.parahtml
 {
     public class Fragment<F> : FluentHtmlBase<F>, IDisposable where F : Fragment<F>
     {
-        public Fragment() : base(new HtmlRendererStack(LineModes.Multiple))
+        public Fragment() : base(new RendererStack(LineModes.Multiple))
         {
         }
 
@@ -23,28 +23,28 @@ namespace com.parahtml
             return css;
         }
 
-        private void _Grid(Action<GridOptions> gridOptions, Action<IGrid> grid)
-        {
-            if (grid != null)
-            {
-                var marker = Guid.NewGuid().ToString();
-                Mark(marker);
-                var fluentGrid= new FluentGrid(Context, RendererStack, gridOptions);
-                grid(fluentGrid);
-                Close(marker);
-            }
+        //private void _Grid(Action<GridOptions> gridOptions, Action<IGrid> grid)
+        //{
+        //    if (grid != null)
+        //    {
+        //        var marker = Guid.NewGuid().ToString();
+        //        Mark(marker);
+        //        var fluentGrid= new FluentGrid(Context, RendererStack, gridOptions);
+        //        grid(fluentGrid);
+        //        Close(marker);
+        //    }
 
-        }
+        //}
 
-        public void Grid(Action<GridOptions> gridOptions, Action<IGrid> grid)
-        {
-            _Grid(gridOptions, grid);
-        }
+        //public void Grid(Action<GridOptions> gridOptions, Action<IGrid> grid)
+        //{
+        //    _Grid(gridOptions, grid);
+        //}
 
-        public void Grid(Action<IGrid> grid)
-        {
-            _Grid(null, grid);
-        }
+        //public void Grid(Action<IGrid> grid)
+        //{
+        //    _Grid(null, grid);
+        //}
 
         public void Dispose()
         {

@@ -23,7 +23,7 @@ namespace com.paralib.Gen.Fluent
             }
         }
 
-        public virtual F Open(IRenderer renderer)
+        public virtual F Open(Renderer renderer)
         {
             RendererStack.Open(renderer);
             return (F)this;
@@ -59,25 +59,13 @@ namespace com.paralib.Gen.Fluent
             return (F)this;
         }
 
-        public virtual F Mark(string marker)
-        {
-            RendererStack.Mark(new Marker(marker));
-            return (F)this;
-        }
-
-        public virtual F Close(string marker, Action<IRenderer> action = null)
-        {
-            RendererStack.Close(marker, action);
-            return (F)this;
-        }
-
         public virtual F Close(Func<IRenderer, bool> func)
         {
             RendererStack.Close(func);
             return (F)this;
         }
 
-        public virtual F Open<R>(R renderer, Action<R> action) where R : IRenderer
+        public virtual F Open<R>(R renderer, Action<R> action) where R : Renderer
         {
             Open(renderer);
 

@@ -8,14 +8,13 @@ namespace com.paralib.Gen.Rendering
 {
     public interface IRenderer
     {
-        LineModes LineMode {  get; }
+        LineModes LineMode { get; }
         ContainerModes ContainerMode { get; }
-
-        void SetContext(Context context);
-
-        object Data { get; }
-
-        void Begin();
-        void End();
+        RenderStates RenderState { get; }
+        void Open(Context context);
+        void Close();
     }
+
+    
+
 }
