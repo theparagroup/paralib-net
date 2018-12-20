@@ -18,6 +18,19 @@ namespace com.paralib.Xandroid.Widgets
             _footerHeight = footerHeight;
         }
 
+        public int FooterHeight
+        {
+            get
+            {
+                return _footerHeight;
+            }
+            set
+            {
+                _footerHeight = value;
+                RequestLayout();
+            }
+        }
+
         protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
         {
             int parentHeight = MeasureSpec.GetSize(heightMeasureSpec);
