@@ -243,17 +243,9 @@ namespace com.paralib.Gen.Builders
         }
     }
 
-    public interface IComponent
-    {
-        void Begin(IContainer container);
-        void End();
-    }
 
-    public interface IContainer
-    {
-        Context Context { get; }
-        RendererStack RendererStack { get; }
-    }
+
+    
 
 
 }

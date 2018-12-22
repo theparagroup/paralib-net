@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="com.parahtml.Html2.MyComponentOptions">
+    <Position X="13.25" Y="18.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html2\MyComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html2.MyComponent">
+    <Position X="15.5" Y="17.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html2\MyComponent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Html2.HtmlBuilderComponent&lt;C&gt;">
+    <Position X="17" Y="14" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAgAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html2\HtmlBuilderComponent[C].cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Html2.HtmlBuilder2&lt;C&gt;">
+    <Position X="18.75" Y="10.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAEAgAAAgAAAAAAAQAAAAAAAEAQAAAAIAAAA=</HashCode>
+      <FileName>Html2\HtmlBuilder2[C].cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.paralib.Gen.Builders.BuilderBase&lt;C&gt;">
+    <Position X="18.75" Y="6.25" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Html2.StackComponent">
+    <Position X="9.25" Y="14" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>iIAEAAAAACAAAAAAQAAAACBABAAAAAAEAAAEIACIAAA=</HashCode>
+      <FileName>Html2\StackComponent.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Html2.Fragment2&lt;C&gt;">
+    <Position X="21" Y="14" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html2\Fragment2[C].cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="com.parahtml.Html2.FluentHtml2&lt;C&gt;">
+    <Position X="18.75" Y="17.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAACBAAAAQAAAUAAAAAAIACAAA=</HashCode>
+      <FileName>Html2\FluentHtml2[C].cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="com.parahtml.Html2.IInline">
+    <Position X="21.75" Y="17.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAEAAAAAAMAAAA=</HashCode>
+      <FileName>Html2\FluentHtml2[C].cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Html2.IBlock">
+    <Position X="21.75" Y="20" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAoAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Html2\FluentHtml2[C].cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.parahtml.Html2.IFluentHtml2">
+    <Position X="21.75" Y="22.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Html2\FluentHtml2[C].cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="com.paralib.Gen.Builders.IComponent">
+    <Position X="15.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="com.paralib.Gen.Builders.IContainer">
+    <Position X="13.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="com.paralib.Gen.Rendering.IHasRendererStack">
+    <Position X="11.25" Y="6.25" Width="1.75" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="com.paralib.Gen.Rendering.IRenderer">
+    <Position X="11.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="com.paralib.Gen.ILazyContext">
+    <Position X="13.5" Y="8" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

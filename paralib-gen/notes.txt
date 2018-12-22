@@ -33,7 +33,24 @@ Design Goals & Notes
 	a generation library with a focus on building components
 
 	rework
-		
+
+		Marker/Renderers/RendererStacks
+			IRenderer should derive from IMarker and that's what builders return/close, e.g., Close(marker)
+			always fire events in renderer (so derived classes don't forget to call base)
+				_OnBegin
+				OnBegin
+			move opening/closing events to IRenderer and implement explicitly?
+			derive Renderer from abstract Marker? implmenet events there?
+			the idea being that markers are IRenderers that don't render anything, but Renderers provide a
+				base for actual rendering
+			perhaps (make these changes last)
+				RenderStack (renders content)
+				Content (marker, empty content), implements IContent (modes, open, close, events)
+				IContent derives from IMarker
+				Renderer (simply derives from Content)
+				move linemode from IContent to Renderer, and remove linemode from rendererstack (it is specific to the renderer pattern)
+
+
 		reconceptualize non-fluent and fluent modes
 			rename ifluentwriter, fluentwriter, fluentrendererstack, etc
 			colapse fluentwriter and fluentrendererstack
@@ -43,6 +60,25 @@ Design Goals & Notes
 			perhaps none (empty) should be seperated from inline/block? yes.
 
 		move Render from page to fragment for context checking
+
+		components/containers
+			HtmlBuilderComponent probably won't work because it's not pushed to the main stack
+			semantics
+				Begin/End means render the beginning/ending of the component
+				Open/Close is Begin/End in the context of a nested stack
+				change component semantics to Open/Close? (stack is implied)
+			should icomponent be ibuilder? can we parameterize With() so that
+
+
+		renderstacks & linemode
+			currently have implicit containermode=block, and you can set the linemode
+			is this really neccessary?
+			or shouldn't it really be checking the Top's linemode (and ignoring the mode of the rstack?)
+			or just skip it altogether and leave it to the dev?
+			use case is basically creating a custom component (inline) and wanting to restrict it to certain content
+			see builderbase OnBeforeNewLine for ideas
+			rename CloseUp to CloseInlines(), other changes? is this important?
+
 
 
 

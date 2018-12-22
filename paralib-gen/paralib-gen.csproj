@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\IComponent.cs" />
+    <Compile Include="Builders\IContainer.cs" />
     <Compile Include="ILazyContext.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Builders\BuilderBase.cs" />
@@ -47,15 +49,15 @@
     <Compile Include="Fluent\FluentRendererStack[F].cs" />
     <Compile Include="Fluent\FluentWriter[F].cs" />
     <Compile Include="Fluent\IFluentWriter.cs" />
-    <Compile Include="Mapping\AutoDictionary.cs" />
+    <Compile Include="Mapping\AutoDictionary[K,V].cs" />
     <Compile Include="Mapping\NullValueAttribute.cs" />
     <Compile Include="Mapping\PrefixAttribute.cs" />
     <Compile Include="Mapping\ExplicitValueAttribute.cs" />
     <Compile Include="Mapping\ExplicitNameAttribute.cs" />
     <Compile Include="Mapping\ComplexValue.cs" />
-    <Compile Include="Mapping\DictionaryBuilder.cs" />
+    <Compile Include="Mapping\DictionaryBuilder[C,T].cs" />
     <Compile Include="Mapping\DynamicValueAttribute.cs" />
-    <Compile Include="Mapping\IComplexValue.cs" />
+    <Compile Include="Mapping\IComplexValue[C].cs" />
     <Compile Include="Mapping\IDynamicValueContainer.cs" />
     <Compile Include="Mapping\IValueContainer.cs" />
     <Compile Include="Mapping\NVPDictionary.cs" />

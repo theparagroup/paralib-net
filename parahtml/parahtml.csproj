@@ -131,6 +131,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Html2\Html2.cd" />
     <None Include="Parahtml.cd" />
   </ItemGroup>
   <ItemGroup />
