@@ -11,7 +11,7 @@ using com.paralib.Gen;
 namespace com.parahtml.Html2
 {
 
-    public class HtmlBuilderComponent<C> : HtmlBuilder2<C>, IComponent where C : HtmlContext
+    public class HtmlBuilderComponent : HtmlBuilder2, IComponent 
     {
         protected IRenderer _start;
 

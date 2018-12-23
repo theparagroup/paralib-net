@@ -7,86 +7,10 @@ using com.paralib.Gen.Rendering;
 
 namespace com.paralib.Gen.Builders
 {
-    /*
-
-        Builder Mode
-        --------------------------------------------------------
-
-        implicit (stack) rules apply
-            anything under a block nests
-            inlines under an inline nest
-            blocks under an inline close
-            anything under a none close
-
-        all methods avaliable
-
-        renderers and components? cannot be instatiated by developers
-        
-        implementation of builder should call CloseAll()
-            something like a OnRender() method
-            IDispose
-            etc
-
-        implicit example:
-        
-            Div();              <div>
-            Span();                 <span></span>
-            Div();                  <div>
-            CloseAll();             </div>
-            ...                 </div>
-        
-        explicit closing of Blocks only:
-
-            var div1=Div();     <div>
-            Span();                 <span></span>
-            Close(div1);        </div>
-            Div();              <div>
-            ...                 ...
-
-        "With" (sets context, closes renderer)
-
-            With(renderer, () => 
-            {
-                Div();
-            }); //closes renderer
-
-        Note: renderers are only closed once:
-
-            With(Span(), ()=>
-            {
-                Div(); //implicitly closes span
-            }); //does not close to span
-
-
-        Components
-
-            var component=new Component(options=>
-            {
-            });
-
-            With(component, component=>
-            {
-                Div()
-                Span();
-                component.Method();
-
-            }); //closes to component
-
-
-
-
-
-        Fluent Mode
-        --------------------------------------------------------
-        Html(fluent => 
-        {
-
-        });
-
-    */
-    public abstract class BuilderBase<C> : ILazyContext, IContainer where C : Context
+    
+    public abstract class BuilderBase : ILazyContext, IContainer
     {
-        private C _context;
+        private Context _context;
         private RendererStack _rendererStack;
 
         public BuilderBase(LineModes lineMode)
@@ -96,11 +20,11 @@ namespace com.paralib.Gen.Builders
 
         void ILazyContext.Initialize(Context context)
         {
-            _context = (C)context;
+            _context = context;
             _rendererStack.Initialize(context);
         }
 
-        public C Context
+        public Context Context
         {
             get
             {
@@ -225,25 +149,37 @@ namespace com.paralib.Gen.Builders
             component.Close();
         }
 
-        public void With<F>(IComponent component, Action<F> action) where F : IComponent
-        {
-            component.Open(this);
+        //public void With2<F,T>(T component, Action<F> action) where T : IComponent, F where F : class
+        //{
+        //    component.Open(this);
 
-            if (action != null)
-            {
-                if (component is F)
-                {
-                    action((F)component);
-                }
-                else
-                {
-                    throw new InvalidCastException($"Component {component.GetType().Name} is not {typeof(F).Name}");
-                }
+        //    if (action != null)
+        //    {
+        //        action(component);
+        //    }
 
-            }
+        //    component.Close();
+        //}
 
-            component.Close();
-        }
+        //public void With<F>(IComponent component, Action<F> action) where F : IComponent
+        //{
+        //    component.Open(this);
+
+        //    if (action != null)
+        //    {
+        //        if (component is F)
+        //        {
+        //            action((F)component);
+        //        }
+        //        else
+        //        {
+        //            throw new InvalidCastException($"Component {component.GetType().Name} is not {typeof(F).Name}");
+        //        }
+
+        //    }
+
+        //    component.Close();
+        //}
 
 
         Context IContainer.Context

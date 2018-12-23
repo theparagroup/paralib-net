@@ -55,12 +55,12 @@
     <Compile Include="Css\Rule.cs" />
     <Compile Include="Fragment[F].cs" />
     <Compile Include="Grids\ns.cs" />
-    <Compile Include="Html2\HtmlBuilderComponent[C].cs" />
+    <Compile Include="Html2\HtmlBuilderComponent.cs" />
     <Compile Include="Html2\MyFluent.cs" />
     <Compile Include="Html2\StackComponent.cs" />
-    <Compile Include="Html2\FluentHtml2[C].cs" />
-    <Compile Include="Html2\Fragment2[C].cs" />
-    <Compile Include="Html2\HtmlBuilder2[C].cs" />
+    <Compile Include="Html2\FluentHtml2.cs" />
+    <Compile Include="Html2\Fragment2.cs" />
+    <Compile Include="Html2\HtmlBuilder2.cs" />
     <Compile Include="Html2\MyComponent.cs" />
     <Compile Include="Html\FluentHtmlBase[F].cs" />
     <Compile Include="Html\CommentBlock.cs" />

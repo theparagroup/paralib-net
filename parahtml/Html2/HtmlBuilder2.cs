@@ -15,10 +15,18 @@ namespace com.parahtml.Html2
 
 
 
-    public abstract class HtmlBuilder2<C> : BuilderBase<C> where C:HtmlContext
+    public abstract class HtmlBuilder2 : BuilderBase
     {
         public HtmlBuilder2() : base(LineModes.Multiple)
         {
+        }
+
+        public new HtmlContext Context
+        {
+            get
+            {
+                return (HtmlContext)base.Context;
+            }
         }
 
         private AttributeDictionary Attributes<T>(Action<T> attributes = null) where T : GlobalAttributes, new()

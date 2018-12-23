@@ -29,7 +29,7 @@ namespace com.parahtml.Html2
 
     }
 
-    public partial class FluentHtml2<C> : HtmlBuilderComponent<C>, IFluentHtml2 where C:HtmlContext
+    public partial class FluentHtml2 : HtmlBuilderComponent, IFluentHtml2 
     {
         IBlock IBlock.Div(string @class)
         {

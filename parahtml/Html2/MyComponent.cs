@@ -15,7 +15,7 @@ namespace com.parahtml.Html2
         public string Foo;
     }
 
-    public class MyComponent : HtmlBuilderComponent<HtmlContext>, IComponent
+    public class MyComponent : HtmlBuilderComponent, IComponent
     {
         protected MyComponentOptions _options;
 

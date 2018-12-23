@@ -1,4 +1,5 @@
 ﻿using com.parahtml.Core;
+using com.paralib.Gen.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,29 +26,40 @@ namespace com.parahtml.Html2
 
     public class SuperThing : ISuperThing, IMore, ILess
     {
-        public void Done()
+        protected HtmlBuilder2 _builder;
+        protected IRenderer _start;
+
+        public SuperThing(HtmlBuilder2 builder)
         {
-            
+            _builder = builder;
+            _start = builder.Div("superthing");
         }
 
-        public ILess Less()
+        public void Done()
         {
-            return this;
+            _builder.Close(_start);
         }
 
         public IMore More()
         {
+            _builder.Div("more");
             return this;
         }
+
+        public ILess Less()
+        {
+            _builder.Span("less");
+            return this;
+        }
+
     }
 
     public static class MyFluentExtensions
     {
-        public static ISuperThing Super(this HtmlContext obj)
+        public static ISuperThing Super(this HtmlBuilder2 obj)
         {
-            return null;
+            return new SuperThing(obj);
         }
-
     }
 
 

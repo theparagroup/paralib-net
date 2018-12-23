@@ -9,7 +9,7 @@ using com.paralib.Gen.Builders;
 
 namespace com.parahtml.Html2
 {
-    public class Fragment2<C> : HtmlBuilder2<C> where C : HtmlContext
+    public class Fragment2 : HtmlBuilder2
     {
     }
 }
