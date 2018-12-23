@@ -11,7 +11,7 @@ namespace com.paralib.Gen.Rendering
         LineModes LineMode { get; }
         ContainerModes ContainerMode { get; }
         ContentStates ContentState { get; }
-        void Open(Context context);
+        void Open(Context context, LineModes? lineMode);
         void Close();
     }
 

@@ -87,7 +87,7 @@ namespace com.parahtml.Html2
         public virtual Renderer Br(Action<HrAttributes> attributes = null)
         {
             //return Inline("br", Attributes(attributes), true);
-            var tag= new Tag("br", Attributes(attributes), TagTypes.Inline, true, LineModes.None, ContainerModes.Inline, false);
+            var tag= new Tag("br", Attributes(attributes), true, LineModes.None, ContainerModes.Inline, false);
             Open(tag);
             Close();
             return tag;

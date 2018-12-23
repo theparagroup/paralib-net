@@ -135,7 +135,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected virtual void Begin(Context context)
+        protected virtual void Begin(Context context, LineModes? lineMode)
         {
             if (context==null)
             {
@@ -143,6 +143,11 @@ namespace com.paralib.Gen.Rendering
             }
 
             _context = context;
+
+            if (lineMode!=null)
+            {
+                LineMode = lineMode.Value;
+            }
 
             OnPreBegin();
             OnBegin();
@@ -272,9 +277,9 @@ namespace com.paralib.Gen.Rendering
         }
        
 
-        void IContent.Open(Context context)
+        void IContent.Open(Context context, LineModes? lineMode)
         {
-            Begin(context);
+            Begin(context, lineMode);
             ContentState = ContentStates.Open;
         }
 

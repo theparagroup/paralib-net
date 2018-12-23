@@ -42,7 +42,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        public void Open(Context context)
+        public void Open(Context context, LineModes? lineMode)
         {
             _contentState = ContentStates.Open;
         }

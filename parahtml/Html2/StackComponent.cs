@@ -70,7 +70,7 @@ namespace com.parahtml.Html2
             }
         }
 
-        void IContent.Open(Context context)
+        void IContent.Open(Context context, LineModes? lineMode)
         {
             OnRender();
             _contentState = ContentStates.Open;

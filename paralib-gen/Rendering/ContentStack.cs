@@ -21,8 +21,8 @@ namespace com.paralib.Gen.Rendering
         ContainerMode can have the following values:
 
             None:      may not contain any renderers
-            Block:     may contain both Block and Inline renderers
-            Inline:    may only contain other Inline renderers
+            Inline:    may contain Inline, and None renderers
+            Block:     may contain Block, Inline, and None renderers
 
         Note, we're talking about nesting renderers inside other renderers, not "content". Any
         ContainerMode may have "content" between the Begin() and End() calls, such as
@@ -170,10 +170,10 @@ namespace com.paralib.Gen.Rendering
                             top = FindNestedTop(rs);
                         }
 
-                        if (top.ContainerMode == ContainerModes.None || (top.ContainerMode == ContainerModes.Inline && content.ContainerMode != ContainerModes.Inline))
+                        if (top.ContainerMode == ContainerModes.None || (top.ContainerMode == ContainerModes.Inline && content.ContainerMode == ContainerModes.Block))
                         {
                             //if the top is a None,
-                            //or if we're pushing a non-inline onto an inline, 
+                            //or if we're pushing a block onto an inline, 
                             //clear inlines to last block
                             PopToBlock(false);
                         }
@@ -183,7 +183,53 @@ namespace com.paralib.Gen.Rendering
                 //begin it (if new)
                 if (content.ContentState == ContentStates.New)
                 {
-                    content.Open(_context);
+                    /* 
+                        New approach to LineMode:
+
+                        Content has it's own preferred LineMode, but the ContentStack can request that
+                        the Content conform to the LineMode of the Top.
+
+                        Multiple    -> Multiple, Single, None
+                        Single      -> Single, None
+                        None        -> None
+
+                        If we pass null, that tells the Content to use it's own LineMode.
+
+                        Keep in mind, we may have already Popped() the Top used for ContentMode, so we're
+                        going with the new Top.
+
+                    */
+
+                    top = Peek();
+
+                    LineModes? lineMode=null;
+
+                    if (top != null)
+                    {
+
+                        if (top.LineMode == LineModes.Multiple)
+                        {
+                            //anything can go under multiple
+                        }
+                        else if (top.LineMode == LineModes.Single)
+                        {
+                            if (content.LineMode == LineModes.Multiple)
+                            {
+                                //only single and none can go under single
+                                lineMode = LineModes.Single;
+                            }
+                        }
+                        else if (top.LineMode == LineModes.None)
+                        {
+                            if (content.LineMode != LineModes.None)
+                            {
+                                //only none can go under none
+                                lineMode = LineModes.None;
+                            }
+                        }
+                    }
+
+                    content.Open(_context, lineMode);
                 }
                 else
                 {
