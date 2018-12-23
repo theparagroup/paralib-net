@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen.Rendering
 {
-    public partial class RendererStack
+    public partial class ContentStack
     {
 
-        public virtual IRenderer Top
+        public virtual IContent Top
         {
             get
             {
@@ -17,11 +17,11 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        public virtual void Open(IRenderer renderer)
+        public virtual void Open(IContent content)
         {
-            if (renderer.RenderState == RenderStates.New)
+            if (content.ContentState == ContentStates.New)
             {
-                Push(renderer);
+                Push(content);
             }
             else
             {
@@ -49,12 +49,12 @@ namespace com.paralib.Gen.Rendering
             PopAll();
         }
 
-        public virtual void Close(IRenderer renderer)
+        public virtual void Close(IContent content)
         {
-            PopRenderer(renderer);
+            Pop(content);
         }
 
-        public virtual void Close(Func<IRenderer, bool> func)
+        public virtual void Close(Func<IContent, bool> func)
         {
             Pop(func);
         }

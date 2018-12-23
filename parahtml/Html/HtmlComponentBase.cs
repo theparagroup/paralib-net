@@ -22,19 +22,19 @@ namespace com.parahtml.Html
 
 
     */
-    public abstract class HtmlComponentBase<F, P> : FluentHtmlBase<F>, IHasRendererStack  where F : HtmlComponentBase<F,P>  where P : Package, new()
+    public abstract class HtmlComponentBase<F, P> : FluentHtmlBase<F>, IHasContentStack  where F : HtmlComponentBase<F,P>  where P : Package, new()
     {
-        public HtmlComponentBase(RendererStack rendererStack) : base(rendererStack)
+        public HtmlComponentBase(ContentStack contentStack) : base(contentStack)
         {
             //register package
             Context.RegisterPackage<P>();
         }
 
-        RendererStack IHasRendererStack.RendererStack
+        ContentStack IHasContentStack.ContentStack
         {
             get
             {
-                return RendererStack;
+                return ContentStack;
             }
         }
 

@@ -13,14 +13,14 @@ namespace com.parahtml.Html
 {
     public abstract class FluentHtmlBase<F> : FluentRendererStack<F>, IFluentHtmlBase where F : FluentHtmlBase<F>
     {
-        public FluentHtmlBase(RendererStack rendererStack) : base(rendererStack)
+        public FluentHtmlBase(ContentStack contentStack) : base(contentStack)
         {
         }
 
         void IFluentHtmlBase.SetContext(HtmlContext context)
         {
             ((IFluentWriter)this).SetContext(context);
-            ((IHtmlRendererStack)RendererStack).SetContext(context);
+            ((IHtmlRendererStack)ContentStack).SetContext(context);
         }
 
         public new HtmlContext Context

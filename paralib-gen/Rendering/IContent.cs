@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen.Rendering
 {
-    public interface IRenderer
+    public interface IContent:ICloseable
     {
         LineModes LineMode { get; }
         ContainerModes ContainerMode { get; }
-        RenderStates RenderState { get; }
+        ContentStates ContentState { get; }
         void Open(Context context);
         void Close();
     }

@@ -15,7 +15,7 @@ namespace com.parahtml.Css
     {
         protected HtmlContext Context;
 
-        public FluentCss(HtmlContext context, RendererStack rendererStack) : base(rendererStack)
+        public FluentCss(HtmlContext context, ContentStack contentStack) : base(contentStack)
         {
             Context = context;
         }

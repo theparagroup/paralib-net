@@ -72,16 +72,10 @@ namespace com.paralib.Gen.Rendering
 
     */
 
-    public partial class RendererStack : ILazyContext
+    public partial class ContentStack : ILazyContext
     {
         protected Context _context { private set; get; }
-        protected Stack<IRenderer> _stack = new Stack<IRenderer>();
-        protected LineModes _lineMode;
-
-        public RendererStack(LineModes lineMode)
-        {
-            _lineMode = lineMode;
-        }
+        protected Stack<IContent> _stack = new Stack<IContent>();
 
         public void Initialize(Context context)
         {
@@ -96,7 +90,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected IRenderer Peek()
+        protected IContent Peek()
         {
             if (Count > 0)
             {
@@ -108,13 +102,13 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected static IRenderer FindNestedTop(RendererStack rendererStack)
+        protected static IContent FindNestedTop(ContentStack contentStack)
         {
-            var top = rendererStack.Peek();
+            var top = contentStack.Peek();
 
-            if (top is IHasRendererStack)
+            if (top is IHasContentStack)
             {
-                return FindNestedTop(((IHasRendererStack)top).RendererStack);
+                return FindNestedTop(((IHasContentStack)top).ContentStack);
             }
             else
             {
@@ -122,7 +116,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected virtual void Push(IRenderer renderer)
+        protected virtual void Push(IContent content)
         {
             //initialization check
             if (_context == null)
@@ -132,27 +126,8 @@ namespace com.paralib.Gen.Rendering
 
 
             //we never want nulls on the stack
-            if (renderer != null)
+            if (content != null)
             {
-                /*
-
-                    We don't want to mess up the formatting by adding incompatible content.
-
-                    RendererStack's LineMode rules:
-
-                        A 'Multiple' RendererStack can contain anything on it's stack
-                        Single can contain Single|None
-                        None can only contain None
-
-                    Note: this only applies for nested rendererstacks, as the root rendererstack
-                        would likely be in Multiple mode.            
-                */
-
-                if ((_lineMode == LineModes.None && renderer.LineMode != LineModes.None) || (_lineMode == LineModes.Single) && (renderer.LineMode == LineModes.Multiple))
-                {
-                    throw new InvalidOperationException($"Renderer's LineMode {renderer.LineMode} is not allowed when RendererStack is {_lineMode}");
-                }
-
 
                 /*
                     Before we Begin() and Push() this new renderer, we want to clean up the stack first.
@@ -189,13 +164,13 @@ namespace com.paralib.Gen.Rendering
                         //unless it is a nested rendererstack, in which case
                         //we need it's "top"
 
-                        if (top is IHasRendererStack)
+                        if (top is IHasContentStack)
                         {
-                            var rs = ((IHasRendererStack)top).RendererStack;
+                            var rs = ((IHasContentStack)top).ContentStack;
                             top = FindNestedTop(rs);
                         }
 
-                        if (top.ContainerMode == ContainerModes.None || (top.ContainerMode == ContainerModes.Inline && renderer.ContainerMode != ContainerModes.Inline))
+                        if (top.ContainerMode == ContainerModes.None || (top.ContainerMode == ContainerModes.Inline && content.ContainerMode != ContainerModes.Inline))
                         {
                             //if the top is a None,
                             //or if we're pushing a non-inline onto an inline, 
@@ -206,17 +181,17 @@ namespace com.paralib.Gen.Rendering
                 }
 
                 //begin it (if new)
-                if (renderer.RenderState == RenderStates.New)
+                if (content.ContentState == ContentStates.New)
                 {
-                    renderer.Open(_context);
+                    content.Open(_context);
                 }
                 else
                 {
-                    throw new InvalidOperationException("Can't push open renderer");
+                    throw new InvalidOperationException("Can't push open or closed renderer");
                 }
 
                 //push it
-                _stack.Push(renderer);
+                _stack.Push(content);
             }
         }
 
@@ -253,7 +228,7 @@ namespace com.paralib.Gen.Rendering
 
                 //The order is important here(renderer stacks first).
 
-                if (top is IHasRendererStack)
+                if (top is IHasContentStack)
                 {
                     /*
                         we can implement IRenderer on a custom rendererstack
@@ -269,11 +244,11 @@ namespace com.paralib.Gen.Rendering
                             it's the same thing, so we just ignore container
                             mode here
                     */
-                    var rs = ((IHasRendererStack)top).RendererStack;
-                    var blockfound = rs.PopToBlock(popBlock);
+                    var cs = ((IHasContentStack)top).ContentStack;
+                    var blockfound = cs.PopToBlock(popBlock);
 
                     //if we emptied rs, pop rs too
-                    if (rs.Count == 0)
+                    if (cs.Count == 0)
                     {
                         Pop();
                     }
@@ -313,15 +288,15 @@ namespace com.paralib.Gen.Rendering
             return false;
         }
 
-        protected void PopRenderer(IRenderer renderer)
+        protected void Pop(IContent content)
         {
-            if (renderer.RenderState == RenderStates.Open)
+            if (content.ContentState == ContentStates.Open)
             {
                 while (Count > 0)
                 {
                     var top = Peek();
 
-                    if (top == renderer)
+                    if (top == content)
                     {
                         Pop();
                         break;
@@ -334,7 +309,7 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        protected virtual void Pop(Func<IRenderer, bool> func)
+        protected virtual void Pop(Func<IContent, bool> func)
         {
             if (func != null)
             {

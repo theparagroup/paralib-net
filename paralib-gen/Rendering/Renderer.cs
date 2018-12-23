@@ -83,20 +83,20 @@ namespace com.paralib.Gen.Rendering
 
     */
 
-    public class Renderer : IRenderer
+    public class Renderer : IContent
     {
         private Context _context;
-        public RenderStates RenderState { private set; get; } = RenderStates.New;
+        public ContentStates ContentState { private set; get; } = ContentStates.New;
         public LineModes LineMode { private set; get; }
         public ContainerModes ContainerMode { private set; get; }
-        public bool IndentContent { private set; get; }
+        public bool IndentContents { private set; get; }
 
 
-        public Renderer(LineModes lineMode, ContainerModes containerMode, bool indentContent)
+        public Renderer(LineModes lineMode, ContainerModes containerMode, bool indentContents)
         {
             LineMode = lineMode;
             ContainerMode = containerMode;
-            IndentContent = indentContent;
+            IndentContents = indentContents;
         }
 
         protected virtual Context Context
@@ -196,7 +196,7 @@ namespace com.paralib.Gen.Rendering
                     Writer.NewLine();
                 }
 
-                if (IndentContent)
+                if (IndentContents)
                 {
                     //indent content
                     Writer.Indent();
@@ -233,7 +233,7 @@ namespace com.paralib.Gen.Rendering
                     Writer.NewLine();
                 }
 
-                if (IndentContent)
+                if (IndentContents)
                 {
                     //undo the content indent
                     Writer.Dedent();
@@ -272,16 +272,16 @@ namespace com.paralib.Gen.Rendering
         }
        
 
-        void IRenderer.Open(Context context)
+        void IContent.Open(Context context)
         {
             Begin(context);
-            RenderState = RenderStates.Open;
+            ContentState = ContentStates.Open;
         }
 
-        void IRenderer.Close()
+        void IContent.Close()
         {
             End();
-            RenderState = RenderStates.Closed;
+            ContentState = ContentStates.Closed;
         }
 
     }

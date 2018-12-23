@@ -33,7 +33,7 @@
   <Class Name="com.parahtml.Html2.StackComponent">
     <Position X="9.25" Y="14" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>iIAAAAAAACAAAAAAQAAAACBAAAAAAAAEABAEIACIAAA=</HashCode>
+      <HashCode>gIAAAAAABCEAAAAAAAAAACAAAAAAAAAIEBAAIKAAAQA=</HashCode>
       <FileName>Html2\StackComponent.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -80,14 +80,6 @@
   </Interface>
   <Interface Name="com.paralib.Gen.Builders.IContainer">
     <Position X="13.5" Y="6.25" Width="1.5" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="com.paralib.Gen.Rendering.IHasRendererStack">
-    <Position X="11.25" Y="6.25" Width="1.75" />
-    <TypeIdentifier />
-  </Interface>
-  <Interface Name="com.paralib.Gen.Rendering.IRenderer">
-    <Position X="11.5" Y="8" Width="1.5" />
     <TypeIdentifier />
   </Interface>
   <Interface Name="com.paralib.Gen.ILazyContext">

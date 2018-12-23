@@ -27,7 +27,7 @@ namespace com.parahtml.Html
         protected ContainerModes _containerMode { private set; get; }
         public object Data { set; get; }
 
-        public HtmlRendererComponent(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(new RendererStack(lineMode))
+        public HtmlRendererComponent(LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(new ContentStack())
         {
             _renderer = new Renderer(lineMode, containerMode, indentContent);
 
@@ -44,7 +44,7 @@ namespace com.parahtml.Html
             if (context is HtmlContext)
             {
                 ((IFluentHtmlBase)this).SetContext((HtmlContext)context);
-                ((IHtmlRendererStack)RendererStack).SetContext((HtmlContext)context);
+                ((IHtmlRendererStack)ContentStack).SetContext((HtmlContext)context);
             }
             else
             {

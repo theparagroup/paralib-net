@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace com.paralib.Gen.Rendering
 {
-    public class Marker : IRenderer
+    public class Marker : IContent
     {
         protected LineModes _lineMode { private set; get; }
         protected ContainerModes _containerMode { private set; get; }
-        protected RenderStates _renderState { private set; get; } = RenderStates.New;
+        protected ContentStates _contentState { private set; get; } = ContentStates.New;
 
         public Marker(LineModes lineMode, ContainerModes containerMode)
         {
@@ -34,22 +34,22 @@ namespace com.paralib.Gen.Rendering
             }
         }
 
-        public RenderStates RenderState
+        public ContentStates ContentState
         {
             get
             {
-                return _renderState;
+                return _contentState;
             }
         }
 
         public void Open(Context context)
         {
-            _renderState = RenderStates.Open;
+            _contentState = ContentStates.Open;
         }
 
         public void Close()
         {
-            _renderState = RenderStates.Closed;
+            _contentState = ContentStates.Closed;
         }
 
     }

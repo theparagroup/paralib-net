@@ -10,7 +10,7 @@ namespace com.parahtml.Html
 {
     public class FluentHtml : FluentHtmlBase<FluentHtml>
     {
-        public FluentHtml(HtmlContext context, RendererStack rendererStack) : base(rendererStack)
+        public FluentHtml(HtmlContext context, ContentStack contentStack) : base(contentStack)
         {
             ((IFluentHtmlBase)this).SetContext(context);
         }

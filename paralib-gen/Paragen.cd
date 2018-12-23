@@ -54,15 +54,6 @@
       <FileName>Writers\ConsoleWriter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="com.paralib.Gen.Rendering.RendererStack">
-    <Position X="20" Y="1.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAAAQCAEJQAAAAAAAAQAAICIAADAAAAAAACBCBI=</HashCode>
-      <FileName>Rendering\RendererStack.cs</FileName>
-      <NewMemberFileName>Rendering\RendererStackBase.cs</NewMemberFileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="com.paralib.Gen.Mapping.DictionaryBuilder&lt;C, T&gt;">
     <Position X="7.25" Y="13.25" Width="2.25" />
     <TypeIdentifier>
@@ -94,7 +85,7 @@
   <Class Name="com.paralib.Gen.Rendering.Marker">
     <Position X="25.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAgAAACAAIQAQAAAAAAAAAAAAAAAAAAAAAACIAAA=</HashCode>
+      <HashCode>AIAAAgAABiAAIAAQAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Rendering\Marker.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -123,7 +114,7 @@
   <Class Name="com.paralib.Gen.Rendering.Renderer">
     <Position X="15.25" Y="1.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAsEAgEEAgAABQAQAAAAAAAgBgAAkAAACAAEAEHAAAA=</HashCode>
+      <HashCode>gAMEAgEEAgAABEAQAAAAAAAgBgAAkAAACAAAAGFAAAA=</HashCode>
       <FileName>Rendering\Renderer.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -172,18 +163,18 @@
       <FileName>Mapping\IDynamicValueContainer.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="com.paralib.Gen.Rendering.IHasRendererStack">
+  <Interface Name="com.paralib.Gen.Rendering.IHasContentStack">
     <Position X="22.5" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Rendering\IHasRendererStack.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Rendering\IHasContentStack.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="com.paralib.Gen.Rendering.IRenderer">
+  <Interface Name="com.paralib.Gen.Rendering.IContent">
     <Position X="18" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAgAAAAAAIQAQAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>Rendering\IRenderer.cs</FileName>
+      <HashCode>AAAAAgAAAgAAIAAQAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Rendering\IContent.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.paralib.Gen.ILazyContext">
@@ -221,11 +212,11 @@
       <FileName>Rendering\ContainerModes.cs</FileName>
     </TypeIdentifier>
   </Enum>
-  <Enum Name="com.paralib.Gen.Rendering.RenderStates">
+  <Enum Name="com.paralib.Gen.Rendering.ContentStates">
     <Position X="13.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAICAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>Rendering\RendererStates.cs</FileName>
+      <FileName>Rendering\ContentStates.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />

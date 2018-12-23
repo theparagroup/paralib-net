@@ -11,57 +11,57 @@ namespace com.paralib.Gen.Fluent
     public abstract class FluentRendererStack<F> : FluentWriter<F> where F : FluentRendererStack<F>
     {
 
-        public FluentRendererStack(RendererStack rendererStack) : base(rendererStack)
+        public FluentRendererStack(ContentStack contentStack) : base(contentStack)
         {
         }
 
-        public virtual IRenderer Top
+        public virtual IContent Top
         {
             get
             {
-                return RendererStack.Top;
+                return ContentStack.Top;
             }
         }
 
         public virtual F Open(Renderer renderer)
         {
-            RendererStack.Open(renderer);
+            ContentStack.Open(renderer);
             return (F)this;
         }
 
         public virtual F CloseUp()
         {
-            RendererStack.CloseUp();
+            ContentStack.CloseUp();
             return (F)this;
         }
 
         public virtual F CloseBlock()
         {
-            RendererStack.CloseBlock();
+            ContentStack.CloseBlock();
             return (F)this;
         }
 
         public virtual F CloseAll()
         {
-            RendererStack.CloseAll();
+            ContentStack.CloseAll();
             return (F)this;
         }
 
         public virtual F Close()
         {
-            RendererStack.Close();
+            ContentStack.Close();
             return (F)this;
         }
 
-        public virtual F Close(IRenderer renderer)
+        public virtual F Close(IContent renderer)
         {
-            RendererStack.Close(renderer);
+            ContentStack.Close(renderer);
             return (F)this;
         }
 
-        public virtual F Close(Func<IRenderer, bool> func)
+        public virtual F Close(Func<IContent, bool> func)
         {
-            RendererStack.Close(func);
+            ContentStack.Close(func);
             return (F)this;
         }
 

@@ -11,17 +11,17 @@ namespace com.paralib.Gen.Builders
     public abstract class BuilderBase : ILazyContext, IContainer
     {
         private Context _context;
-        private RendererStack _rendererStack;
+        private ContentStack _contentStack;
 
-        public BuilderBase(LineModes lineMode)
+        public BuilderBase()
         {
-            _rendererStack = new RendererStack(lineMode);
+            _contentStack = new ContentStack();
         }
 
         void ILazyContext.Initialize(Context context)
         {
             _context = context;
-            _rendererStack.Initialize(context);
+            _contentStack.Initialize(context);
         }
 
         public Context Context
@@ -42,9 +42,9 @@ namespace com.paralib.Gen.Builders
 
         private void OnBeforeNewLine()
         {
-            if (_rendererStack.Top?.LineMode != LineModes.Multiple)
+            if (_contentStack.Top?.LineMode != LineModes.Multiple)
             {
-                _rendererStack.CloseUp();
+                _contentStack.CloseUp();
             }
         }
 
@@ -71,48 +71,55 @@ namespace com.paralib.Gen.Builders
             Context.Writer.Space();
         }
 
-        public virtual IRenderer Top
+        public virtual IContent Top
         {
             get
             {
-                return _rendererStack.Top;
+                return _contentStack.Top;
             }
         }
 
-        public virtual IRenderer Open(IRenderer renderer)
+        public virtual ICloseable Open(IContent content)
         {
-            _rendererStack.Open(renderer);
-            return renderer;
+            _contentStack.Open(content);
+            return content;
         }
 
         public virtual void Close()
         {
-            _rendererStack.Close();
+            _contentStack.Close();
         }
 
-        public virtual void Close(IRenderer renderer)
+        public virtual void Close(ICloseable closable)
         {
-            _rendererStack.Close(renderer);
+            if (closable is IContent)
+            {
+                _contentStack.Close((IContent)closable);
+            }
+            else
+            {
+                throw new InvalidOperationException("Can only close IContent");
+            }
         }
 
         public virtual void CloseAll()
         {
-            _rendererStack.CloseAll();
+            _contentStack.CloseAll();
         }
 
-        public void With(IRenderer renderer, Action action)
+        public void With(IContent content, Action action)
         {
-            var renderState = renderer.RenderState;
+            var contentState = content.ContentState;
 
-            if (renderState == RenderStates.New)
+            if (contentState == ContentStates.New)
             {
-                Open(renderer);
+                Open(content);
             }
-            else if (renderState == RenderStates.Open)
+            else if (contentState == ContentStates.Open)
             {
                 //already open, do nothing
             }
-            else if (renderState==RenderStates.Closed)
+            else if (contentState == ContentStates.Closed)
             {
                 throw new InvalidOperationException("Can't call With() on a closed renderer");
             }
@@ -122,7 +129,7 @@ namespace com.paralib.Gen.Builders
                 action();
             }
 
-            Close(renderer);
+            Close(content);
         }
 
         public void With<T>(T component, Action<T> action) where T:IComponent 
@@ -190,11 +197,11 @@ namespace com.paralib.Gen.Builders
             }
         }
 
-        RendererStack IContainer.RendererStack
+        ContentStack IContainer.ContentStack
         {
             get
             {
-                return _rendererStack;
+                return _contentStack;
             }
         }
     }

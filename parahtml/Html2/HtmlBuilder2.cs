@@ -17,9 +17,6 @@ namespace com.parahtml.Html2
 
     public abstract class HtmlBuilder2 : BuilderBase
     {
-        public HtmlBuilder2() : base(LineModes.Multiple)
-        {
-        }
 
         public new HtmlContext Context
         {

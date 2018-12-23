@@ -27,7 +27,7 @@ namespace com.parahtml.Html2
     public class SuperThing : ISuperThing, IMore, ILess
     {
         protected HtmlBuilder2 _builder;
-        protected IRenderer _start;
+        protected IContent _start;
 
         public SuperThing(HtmlBuilder2 builder)
         {

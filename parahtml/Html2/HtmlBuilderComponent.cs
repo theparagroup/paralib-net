@@ -13,7 +13,7 @@ namespace com.parahtml.Html2
 
     public class HtmlBuilderComponent : HtmlBuilder2, IComponent 
     {
-        protected IRenderer _start;
+        protected ICloseable _start;
 
         void IComponent.Open(IContainer container)
         {

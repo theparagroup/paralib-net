@@ -10,11 +10,11 @@ namespace com.paralib.Gen.Fluent
     public abstract class FluentWriter<F>: IFluentWriter where F : FluentWriter<F>
     {
         private Context _context;
-        protected RendererStack RendererStack;
+        protected ContentStack ContentStack;
 
-        public FluentWriter(RendererStack rendererStack)
+        public FluentWriter(ContentStack contentStack)
         {
-            RendererStack = rendererStack;
+            ContentStack = contentStack;
         }
 
         void IFluentWriter.SetContext(Context context)
@@ -32,9 +32,9 @@ namespace com.paralib.Gen.Fluent
 
         private void CloseUpIfTopNotMultipleLine()
         {
-            if (RendererStack.Top?.LineMode != LineModes.Multiple)
+            if (ContentStack.Top?.LineMode != LineModes.Multiple)
             {
-                RendererStack.CloseUp();
+                ContentStack.CloseUp();
             }
         }
 

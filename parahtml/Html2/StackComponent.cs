@@ -10,42 +10,42 @@ using com.parahtml.Html;
 
 namespace com.parahtml.Html2
 {
-    public abstract class StackComponent : IComponent, IRenderer, IHasRendererStack
+    public abstract class StackComponent : IComponent, IContent, IHasContentStack
     {
         protected IContainer _container { private set; get; }
         protected LineModes _lineMode { private set; get; }
         protected ContainerModes _containerMode { private set; get; }
-        protected RendererStack _rendererStack { private set; get; }
-        protected RenderStates _renderState { private set; get; } = RenderStates.New;
+        protected ContentStack _contentStack { private set; get; }
+        protected ContentStates _contentState { private set; get; } = ContentStates.New;
 
         public StackComponent(LineModes lineMode, ContainerModes containerMode)
         {
             _lineMode = lineMode;
             _containerMode = containerMode;
-            _rendererStack = new RendererStack(_lineMode);
+            _contentStack = new ContentStack();
         }
 
         void IComponent.Open(IContainer container)
         {
             _container = container;
-            _rendererStack.Initialize(container.Context);
-            _container.RendererStack.Open(this);
+            _contentStack.Initialize(container.Context);
+            _container.ContentStack.Open(this);
         }
 
         void IComponent.Close()
         {
-            _container.RendererStack.Close(this);
+            _container.ContentStack.Close(this);
         }
 
-        RendererStack IHasRendererStack.RendererStack
+        ContentStack IHasContentStack.ContentStack
         {
             get
             {
-                return _rendererStack;
+                return _contentStack;
             }
         }
 
-        ContainerModes IRenderer.ContainerMode
+        ContainerModes IContent.ContainerMode
         {
             get
             {
@@ -53,7 +53,7 @@ namespace com.parahtml.Html2
             }
         }
 
-        LineModes IRenderer.LineMode
+        LineModes IContent.LineMode
         {
             get
             {
@@ -62,26 +62,26 @@ namespace com.parahtml.Html2
         }
 
 
-        RenderStates IRenderer.RenderState
+        ContentStates IContent.ContentState
         {
             get
             {
-                return _renderState;
+                return _contentState;
             }
         }
 
-        void IRenderer.Open(Context context)
+        void IContent.Open(Context context)
         {
             OnRender();
-            _renderState = RenderStates.Open;
+            _contentState = ContentStates.Open;
         }
 
         protected abstract void OnRender();
 
-        void IRenderer.Close()
+        void IContent.Close()
         {
-            _rendererStack.CloseAll();
-            _renderState = RenderStates.Closed;
+            _contentStack.CloseAll();
+            _contentState = ContentStates.Closed;
         }
 
     }

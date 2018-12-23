@@ -13,13 +13,13 @@ namespace com.parahtml
 {
     public class Fragment<F> : FluentHtmlBase<F>, IDisposable where F : Fragment<F>
     {
-        public Fragment() : base(new RendererStack(LineModes.Multiple))
+        public Fragment() : base(new ContentStack())
         {
         }
 
         public FluentCss Css()
         {
-            var css = new FluentCss(Context, RendererStack);
+            var css = new FluentCss(Context, ContentStack);
             return css;
         }
 
