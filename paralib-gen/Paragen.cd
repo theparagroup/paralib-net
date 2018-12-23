@@ -196,7 +196,7 @@
   <Interface Name="com.paralib.Gen.Builders.IComponent">
     <Position X="30.5" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>Builders\IComponent.cs</FileName>
     </TypeIdentifier>
   </Interface>

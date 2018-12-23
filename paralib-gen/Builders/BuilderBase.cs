@@ -203,26 +203,46 @@ namespace com.paralib.Gen.Builders
 
         public void With<T>(T component, Action<T> action) where T:IComponent 
         {
-            component.Begin(this);
+            component.Open(this);
 
             if (action!=null)
             {
                 action(component);
             }
 
-            component.End();
+            component.Close();
         }
 
-        public void With<T,F>(T component, Action<F> action) where T : IComponent, F
+        public void With<T,F>(T component, Action<F> action) where T : IComponent, F where F: class
         {
-            component.Begin(this);
+            component.Open(this);
 
             if (action != null)
             {
                 action(component);
             }
 
-            component.End();
+            component.Close();
+        }
+
+        public void With<F>(IComponent component, Action<F> action) where F : IComponent
+        {
+            component.Open(this);
+
+            if (action != null)
+            {
+                if (component is F)
+                {
+                    action((F)component);
+                }
+                else
+                {
+                    throw new InvalidCastException($"Component {component.GetType().Name} is not {typeof(F).Name}");
+                }
+
+            }
+
+            component.Close();
         }
 
 

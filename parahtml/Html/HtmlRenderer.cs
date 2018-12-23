@@ -20,10 +20,6 @@ namespace com.parahtml.Html
         {
         }
 
-        public HtmlRenderer(HtmlContext context, LineModes lineMode, ContainerModes containerMode, bool indentContent) : base(lineMode, containerMode, indentContent)
-        {
-        }
-
         protected new HtmlContext Context
         {
             get

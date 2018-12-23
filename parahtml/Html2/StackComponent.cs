@@ -25,14 +25,14 @@ namespace com.parahtml.Html2
             _rendererStack = new RendererStack(_lineMode);
         }
 
-        void IComponent.Begin(IContainer container)
+        void IComponent.Open(IContainer container)
         {
             _container = container;
             _rendererStack.Initialize(container.Context);
             _container.RendererStack.Open(this);
         }
 
-        void IComponent.End()
+        void IComponent.Close()
         {
             _container.RendererStack.Close(this);
         }

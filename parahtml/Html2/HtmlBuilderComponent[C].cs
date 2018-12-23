@@ -15,7 +15,7 @@ namespace com.parahtml.Html2
     {
         protected IRenderer _start;
 
-        void IComponent.Begin(IContainer container)
+        void IComponent.Open(IContainer container)
         {
             ((ILazyContext)this).Initialize(container.Context);
 
@@ -23,7 +23,7 @@ namespace com.parahtml.Html2
         }
 
 
-        void IComponent.End()
+        void IComponent.Close()
         {
             Close(_start);
         }

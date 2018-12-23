@@ -8,7 +8,7 @@ namespace com.paralib.Gen.Builders
 {
     public interface IComponent
     {
-        void Begin(IContainer container);
-        void End();
+        void Open(IContainer container);
+        void Close();
     }
 }
