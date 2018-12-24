@@ -8,7 +8,7 @@ using com.paralib.Gen.Rendering;
 namespace com.paralib.Gen.Builders
 {
     
-    public abstract class BuilderBase : ILazyContext, IContainer
+    public abstract class BuilderBase : ILazyContext
     {
         private Context _context;
         private ContentStack _contentStack;
@@ -20,6 +20,7 @@ namespace com.paralib.Gen.Builders
 
         public BuilderBase(BuilderBase builderBase)
         {
+            _context = builderBase._context;
             _contentStack = builderBase._contentStack;
         }
 
@@ -90,11 +91,13 @@ namespace com.paralib.Gen.Builders
             return content;
         }
 
-        //public virtual ICloseable Open(IComponent2 component)
-        //{
-        //    ((IComponent2)component).Open();
-        //    return component;
-        //}
+        public virtual ICloseable Open(IComponent component)
+        {
+            //since components should implement IComponent explicitly (not required)
+            //this is a convienence method, like Using()
+            ((IComponent)component).Open();
+            return component;
+        }
 
         public virtual void Close()
         {
@@ -110,10 +113,10 @@ namespace com.paralib.Gen.Builders
                 {
                     _contentStack.Close((IContent)closable);
                 }
-                //else if (closable is IComponent2)
-                //{
-                //    ((IComponent2)closable).Close();
-                //}
+                else if (closable is IComponent)
+                {
+                    ((IComponent)closable).Close();
+                }
 
             }
         }
@@ -141,7 +144,7 @@ namespace com.paralib.Gen.Builders
                 //return;
             }
 
-            if (action!=null)
+            if (action != null)
             {
                 action();
             }
@@ -149,19 +152,8 @@ namespace com.paralib.Gen.Builders
             Close(content);
         }
 
-        public void With<T>(T component, Action<T> action) where T:IComponent 
-        {
-            component.Open(this);
 
-            if (action!=null)
-            {
-                action(component);
-            }
-
-            component.Close();
-        }
-
-        public void Using<T>(T component, Action<T> action) where T : IComponent2
+        public void Using<T>(T component, Action<T> action) where T : IComponent
         {
             component.Open();
 
@@ -173,21 +165,9 @@ namespace com.paralib.Gen.Builders
             component.Close();
         }
 
-        public void With<T,F>(T component, Action<F> action) where T : IComponent, F where F: class
-        {
-            component.Open(this);
-
-            if (action != null)
-            {
-                action(component);
-            }
-
-            component.Close();
-        }
-
-        //public void With2<F,T>(T component, Action<F> action) where T : IComponent, F where F : class
+        //public void Using<T,F>(T component, Action<F> action) where T : IComponent, F where F: class
         //{
-        //    component.Open(this);
+        //    component.Open();
 
         //    if (action != null)
         //    {
@@ -197,42 +177,6 @@ namespace com.paralib.Gen.Builders
         //    component.Close();
         //}
 
-        //public void With<F>(IComponent component, Action<F> action) where F : IComponent
-        //{
-        //    component.Open(this);
-
-        //    if (action != null)
-        //    {
-        //        if (component is F)
-        //        {
-        //            action((F)component);
-        //        }
-        //        else
-        //        {
-        //            throw new InvalidCastException($"Component {component.GetType().Name} is not {typeof(F).Name}");
-        //        }
-
-        //    }
-
-        //    component.Close();
-        //}
-
-
-        Context IContainer.Context
-        {
-            get
-            {
-                return Context;
-            }
-        }
-
-        ContentStack IContainer.ContentStack
-        {
-            get
-            {
-                return _contentStack;
-            }
-        }
     }
 
 

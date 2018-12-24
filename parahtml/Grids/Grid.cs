@@ -12,7 +12,7 @@ using com.parahtml.Core;
 
 namespace com.parahtml.Grids
 {
-    public class Grid : IComponent2, IContainer, IRow, IColumn
+    public class Grid : IComponent, IContainer, IRow, IColumn
     {
         protected HtmlBuilder2 _htmlBuilder;
 
@@ -70,12 +70,12 @@ namespace com.parahtml.Grids
             _htmlBuilder.Close(closable);
         }
 
-        void IComponent2.Open()
+        void IComponent.Open()
         {
             _marker = _htmlBuilder.Open(new Marker(LineModes.Multiple, ContainerModes.Block));
         }
 
-        void IComponent2.Close()
+        void IComponent.Close()
         {
             Close(_marker);
         }
@@ -171,21 +171,11 @@ namespace com.parahtml.Grids
             if (action != null)
             {
                 action();
+                CloseColumn();
             }
 
             return this;
         }
-
-        //public IColumn Column(string @class, Action action = null)
-        //{
-        //    CloseColumn();
-
-        //    ++_columnNumber;
-
-        //    _column = Open(new Tag("div", Context.AttributeBuilder.Attributes(new { Class = @class }), TagTypes.Block, false));
-
-        //    return this;
-        //}
 
         public IColumn Column(string @class, Action action = null)
         {

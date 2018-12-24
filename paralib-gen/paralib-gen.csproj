@@ -40,9 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\IComponent2.cs" />
     <Compile Include="Builders\IComponent.cs" />
-    <Compile Include="Builders\IContainer.cs" />
     <Compile Include="ILazyContext.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="Builders\BuilderBase.cs" />

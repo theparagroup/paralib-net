@@ -62,13 +62,11 @@ Design Goals & Notes
 
 		move Render from page to fragment for context checking
 
-		components/containers
-			HtmlBuilderComponent probably won't work because it's not pushed to the main stack
-			semantics
-				Begin/End means render the beginning/ending of the component
-				Open/Close is Begin/End in the context of a nested stack
-				change component semantics to Open/Close? (stack is implied)
-			should icomponent be ibuilder? can we parameterize With() so that
+		content/components
+			IClosable (for closing)
+			IContent:IClosable (for With(), developers)
+			IStackContent:IContent (for ContentStack)
+			IComponent:IClosable (for Using, developers)
 
 
 		renderstacks & linemode
@@ -80,6 +78,9 @@ Design Goals & Notes
 			see builderbase OnBeforeNewLine for ideas
 			rename CloseUp to CloseInlines(), other changes? is this important?
 
+	tags
+		tagtype is too constrictive, esp with improved linemode system
+		expand builder to allow for direct tag creation
 
 	grids
 		similar to how we plan on doing namespacing (Class="[foo]"), let's add some syntax that means "don't merge"
