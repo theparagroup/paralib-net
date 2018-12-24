@@ -8,11 +8,12 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="com.parahtml.Mvc.Page">
+  <Class Name="com.parahtml.Mvc.Page2">
     <Position X="7" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Page.cs</FileName>
+      <FileName>Page2.cs</FileName>
+      <NewMemberFileName>Page.cs</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Mvc.ParaController">
@@ -76,6 +77,14 @@
   <Class Name="com.parahtml.Fragment&lt;F&gt;">
     <Position X="8.5" Y="1.25" Width="1.75" />
     <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="com.parahtml.Mvc.Page2&lt;M&gt;">
+    <Position X="9.75" Y="10.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACgAAAAAAAAAAABAAAAAAAQAAAAgAIAAAAAA=</HashCode>
+      <FileName>Page2[M].cs</FileName>
+    </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="com.parahtml.Mvc.IPage">

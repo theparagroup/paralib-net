@@ -18,6 +18,14 @@ namespace com.parahtml.Html2
     public abstract class HtmlBuilder2 : BuilderBase
     {
 
+        public HtmlBuilder2(ContentStack contentStack):base(contentStack)
+        {
+        }
+
+        public HtmlBuilder2(HtmlBuilder2 htmlBuilder):base(htmlBuilder)
+        {
+        }
+
         public new HtmlContext Context
         {
             get

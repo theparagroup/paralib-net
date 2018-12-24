@@ -35,6 +35,7 @@ Design Goals & Notes
 	rework
 
 		Marker/Renderers/RendererStacks
+			in constructors, make containermode before linemode
 			IRenderer should derive from IMarker and that's what builders return/close, e.g., Close(marker)
 			always fire events in renderer (so derived classes don't forget to call base)
 				_OnBegin
@@ -80,54 +81,15 @@ Design Goals & Notes
 			rename CloseUp to CloseInlines(), other changes? is this important?
 
 
+	grids
+		similar to how we plan on doing namespacing (Class="[foo]"), let's add some syntax that means "don't merge"
+			Class="!foo" (this would override all classes)
+			Class="!!foo" (escapes)
+			or just let that be changed in the context
+
+	
 
 
-	rework these grids
-
-		the main problems here:
-			set container, col, row classes
-			container should close to last container
-			row should close to last row
-			col should close to last col
-			set column classes at container, row level
-			nest column classes (push/pop)
-
-		creagte MvcFragment with MvcContext new for use in ParaWebViewPage?
-
-		grid is not needed
-
-		build this into fluent html? using specialized tags? 
-		no fluentgrid class to instatiate?
-
-		.Div("id", "claaz")
-			.Span("id","clazz")
-		.Div("col-xs-10 container")
-			.Grid(g=>
-			{
-				g
-				.Options("row", "column", new string[]{"c1", "c2"})
-				.Row("foo")
-					.Column("bar")
-						.Grid(g=>
-						{
-							g
-							.Options("r","c", new string[]{"a", "b"})
-							.Row()
-							.Row()
-								.Column()
-									.Html(h=> {});
-						})
-					.Column("bar")
-				.Row("foo")
-					.Column("bar")
-					.Column("bar")	})
-			})
-
-
-	markers
-		close on id instead?
-
-	need to wrap the html helper stuff in blocks/inlines
 
 	fluent system
 		do i need to pass context in the constructor

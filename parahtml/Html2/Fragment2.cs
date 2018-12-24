@@ -11,5 +11,10 @@ namespace com.parahtml.Html2
 {
     public class Fragment2 : HtmlBuilder2
     {
+        public Fragment2() : base(new ContentStack())
+        {
+
+        }
+
     }
 }

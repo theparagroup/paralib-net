@@ -19,7 +19,7 @@ namespace com.parahtml.Html2
     {
         protected MyComponentOptions _options;
 
-        public MyComponent(Action<MyComponentOptions> options)
+        public MyComponent(HtmlBuilder2 htmlBuilder, Action<MyComponentOptions> options):base(htmlBuilder)
         {
             _options = new MyComponentOptions();
 

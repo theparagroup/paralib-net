@@ -13,9 +13,14 @@ namespace com.paralib.Gen.Builders
         private Context _context;
         private ContentStack _contentStack;
 
-        public BuilderBase()
+        public BuilderBase(ContentStack contentStack)
         {
-            _contentStack = new ContentStack();
+            _contentStack = contentStack;
+        }
+
+        public BuilderBase(BuilderBase builderBase)
+        {
+            _contentStack = builderBase._contentStack;
         }
 
         void ILazyContext.Initialize(Context context)
@@ -85,6 +90,12 @@ namespace com.paralib.Gen.Builders
             return content;
         }
 
+        //public virtual ICloseable Open(IComponent2 component)
+        //{
+        //    ((IComponent2)component).Open();
+        //    return component;
+        //}
+
         public virtual void Close()
         {
             _contentStack.Close();
@@ -92,13 +103,18 @@ namespace com.paralib.Gen.Builders
 
         public virtual void Close(ICloseable closable)
         {
-            if (closable is IContent)
+            if (closable!=null)
             {
-                _contentStack.Close((IContent)closable);
-            }
-            else
-            {
-                throw new InvalidOperationException("Can only close IContent");
+
+                if (closable is IContent)
+                {
+                    _contentStack.Close((IContent)closable);
+                }
+                //else if (closable is IComponent2)
+                //{
+                //    ((IComponent2)closable).Close();
+                //}
+
             }
         }
 
@@ -122,6 +138,7 @@ namespace com.paralib.Gen.Builders
             else if (contentState == ContentStates.Closed)
             {
                 throw new InvalidOperationException("Can't call With() on a closed renderer");
+                //return;
             }
 
             if (action!=null)
@@ -137,6 +154,18 @@ namespace com.paralib.Gen.Builders
             component.Open(this);
 
             if (action!=null)
+            {
+                action(component);
+            }
+
+            component.Close();
+        }
+
+        public void Using<T>(T component, Action<T> action) where T : IComponent2
+        {
+            component.Open();
+
+            if (action != null)
             {
                 action(component);
             }

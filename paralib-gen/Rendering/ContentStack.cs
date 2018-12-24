@@ -233,7 +233,7 @@ namespace com.paralib.Gen.Rendering
                 }
                 else
                 {
-                    throw new InvalidOperationException("Can't push open or closed renderer");
+                    throw new InvalidOperationException("Can't push open or closed content");
                 }
 
                 //push it
@@ -336,22 +336,31 @@ namespace com.paralib.Gen.Rendering
 
         protected void Pop(IContent content)
         {
-            if (content.ContentState == ContentStates.Open)
+            if (content!=null)
             {
-                while (Count > 0)
-                {
-                    var top = Peek();
 
-                    if (top == content)
+                if (content.ContentState == ContentStates.Open)
+                {
+                    while (Count > 0)
                     {
-                        Pop();
-                        break;
-                    }
-                    else
-                    {
-                        Pop();
+                        var top = Peek();
+
+                        if (top == content)
+                        {
+                            Pop();
+                            break;
+                        }
+                        else
+                        {
+                            Pop();
+                        }
                     }
                 }
+
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't Pop null content");
             }
         }
 

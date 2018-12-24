@@ -15,6 +15,11 @@ namespace com.parahtml.Html2
     {
         protected ICloseable _start;
 
+        public HtmlBuilderComponent(HtmlBuilder2 htmlBuilder) : base(htmlBuilder)
+        {
+
+        }
+
         void IComponent.Open(IContainer container)
         {
             ((ILazyContext)this).Initialize(container.Context);
