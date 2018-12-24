@@ -56,8 +56,10 @@
     <Compile Include="Fragment[F].cs" />
     <Compile Include="Grids\Grid.cs" />
     <Compile Include="Grids\GridOptions.cs" />
+    <Compile Include="Grids\IColumn.cs" />
+    <Compile Include="Grids\IContainer.cs" />
     <Compile Include="Grids\interfaces.cs" />
-    <Compile Include="Grids\ns.cs" />
+    <Compile Include="Grids\IRow.cs" />
     <Compile Include="Html2\HtmlBuilderComponent.cs" />
     <Compile Include="Html2\MyFluent.cs" />
     <Compile Include="Html2\StackComponent.cs" />

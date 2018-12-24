@@ -11,9 +11,6 @@ namespace com.parahtml.Grids
 {
     public interface IContainer
     {
-        IContainer Here(Action<IContainer> container);
-        IContainer Html(Action<FluentHtml> html);
-
         IRow Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
         IRow Row(string @class, string[] columnClasses = null);
         IRow Row(string[] columnClasses = null);

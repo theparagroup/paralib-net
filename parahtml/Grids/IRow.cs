@@ -11,14 +11,12 @@ namespace com.parahtml.Grids
 {
     public interface IRow
     {
-        IRow Here(Action<IRow> row);
-        IRow Html(Action<FluentHtml> html);
-
         IRow Row(Action<GlobalAttributes> attributes, string[] columnClasses = null);
         IRow Row(string @class, string[] columnClasses = null);
         IRow Row(string[] columnClasses = null);
 
-        IColumn Column(Action<GlobalAttributes> attributes = null);
-        IColumn Column(string @class);
+        IColumn Column(Action<GlobalAttributes> attributes, Action action = null);
+        IColumn Column(string @class, Action action = null);
+        IColumn Column(Action action = null);
     }
 }
