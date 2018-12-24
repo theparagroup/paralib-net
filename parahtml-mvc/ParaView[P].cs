@@ -27,10 +27,9 @@ namespace com.parahtml.Mvc
 
         public void Render(ViewContext viewContext, TextWriter textWriter)
         {
-            var context = _page.CreateContext(viewContext, textWriter);
+            var context = new MvcContext(viewContext, textWriter);
             _page.Render(context);
             _page.End();
-
         }
 
 

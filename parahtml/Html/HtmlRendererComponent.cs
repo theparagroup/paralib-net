@@ -44,7 +44,7 @@ namespace com.parahtml.Html
             if (context is HtmlContext)
             {
                 ((IFluentHtmlBase)this).SetContext((HtmlContext)context);
-                ((IHtmlRendererStack)ContentStack).SetContext((HtmlContext)context);
+                ((ILazyContext)ContentStack).Initialize(context);
             }
             else
             {

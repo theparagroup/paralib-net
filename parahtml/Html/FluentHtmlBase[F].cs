@@ -20,7 +20,7 @@ namespace com.parahtml.Html
         void IFluentHtmlBase.SetContext(HtmlContext context)
         {
             ((IFluentWriter)this).SetContext(context);
-            ((IHtmlRendererStack)ContentStack).SetContext(context);
+            ((ILazyContext)ContentStack).Initialize(context);
         }
 
         public new HtmlContext Context

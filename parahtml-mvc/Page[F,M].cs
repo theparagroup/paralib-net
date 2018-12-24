@@ -30,8 +30,6 @@ namespace com.parahtml.Mvc
             }
         }
 
-        public abstract MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter);
-
         void IHasModel<M>.SetModel(M model)
         {
             Model = model;

@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helpers[M].cs" />
-    <Compile Include="ICreateContext.cs" />
     <Compile Include="IHasModel[M].cs" />
     <Compile Include="IPage.cs" />
     <Compile Include="MvcContext.cs" />

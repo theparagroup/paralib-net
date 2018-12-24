@@ -15,10 +15,6 @@ namespace com.parahtml.Mvc
     */
     public abstract class Page<M> : Page<Page<M>,M>
     {
-        public override MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter)
-        {
-            return new MvcContext(viewContext, textWriter);
-        }
 
     }
 }

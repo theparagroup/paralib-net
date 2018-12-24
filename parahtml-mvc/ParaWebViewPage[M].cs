@@ -52,10 +52,8 @@ namespace com.parahtml.Mvc
 
     */
 
-    public abstract class ParaWebViewPage<M> : WebViewPage<M>, ICreateContext
+    public abstract class ParaWebViewPage<M> : WebViewPage<M>
     {
-        public abstract MvcContext CreateContext(ViewContext viewContext, TextWriter textWriter);
-
         protected Fragment Fragment()
         {
             var fragment = new Fragment();
@@ -63,6 +61,5 @@ namespace com.parahtml.Mvc
             ((IFluentHtmlBase)fragment).SetContext(context);
             return fragment;
         }
-
     }
 }

@@ -3,17 +3,10 @@
   <Class Name="com.parahtml.Mvc.Page&lt;F, M&gt;">
     <Position X="8" Y="4.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>oAAAgCAACgAAAAAIIAAAABgAAAAAEQgAAAgAIAGAAAA=</HashCode>
+      <HashCode>oAAAgCAACgAAAAAIIAAAABgAAAAAEQgAAAgAIAEAAAA=</HashCode>
       <FileName>Page[F,M].cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
-  </Class>
-  <Class Name="com.parahtml.Mvc.Page&lt;M&gt;">
-    <Position X="9.75" Y="10.25" Width="2.75" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>Page[M].cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="com.parahtml.Mvc.Page">
     <Position X="7" Y="10.25" Width="1.5" />
@@ -40,10 +33,9 @@
   <Class Name="com.parahtml.Mvc.ParaWebViewPage&lt;M&gt;">
     <Position X="19" Y="1.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ParaWebViewPage[M].cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="com.parahtml.Mvc.Helpers&lt;M&gt;">
     <Position X="16.5" Y="4.25" Width="2" />
@@ -91,13 +83,6 @@
     <TypeIdentifier>
       <HashCode>AAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>IPage.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="com.parahtml.Mvc.ICreateContext">
-    <Position X="5.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
-      <FileName>ICreateContext.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="com.parahtml.Mvc.IHasModel&lt;M&gt;">
