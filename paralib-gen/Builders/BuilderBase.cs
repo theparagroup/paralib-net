@@ -27,7 +27,7 @@ namespace com.paralib.Gen.Builders
         void ILazyContext.Initialize(Context context)
         {
             _context = context;
-            _contentStack.Initialize(context);
+            ((ILazyContext)_contentStack).Initialize(context);
         }
 
         public Context Context

@@ -8,7 +8,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="com.parahtml.Mvc.Page2">
+  <Class Name="com.parahtml.Mvc.MvcPage">
     <Position X="7" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
@@ -79,11 +79,11 @@
     <TypeIdentifier />
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="com.parahtml.Mvc.Page2&lt;M&gt;">
+  <Class Name="com.parahtml.Mvc.MvcPage&lt;M&gt;">
     <Position X="9.75" Y="10.25" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACgAAAAAAAAAAABAAAAAAAQAAAAgAIAAAAAA=</HashCode>
-      <FileName>Page2[M].cs</FileName>
+      <FileName>MvcPage[M].cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>

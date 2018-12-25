@@ -81,6 +81,81 @@ namespace com.parahtml.Html2
             Empty(name, Attributes(attributes));
         }
 
+        public void Comment(string text)
+        {
+            HtmlRenderer.Comment(Context.Writer, text);
+        }
+
+        public virtual ICloseable CommentBlock(string text, bool visible)
+        {
+            return Open(new CommentBlock(text));
+        }
+
+        public virtual void DOCTYPE(string specification)
+        {
+            Open(new DOCTYPE(specification));
+        }
+
+        public virtual void DOCTYPE(DocumentTypes documentType)
+        {
+            Open(new DOCTYPE(documentType));
+        }
+
+        public virtual IContent Html(Action<HtmlAttributes> attributes = null)
+        {
+            return Block("html", Attributes(attributes));
+        }
+
+        public virtual IContent Head(Action<HeadAttributes> attributes = null)
+        {
+            return Block("head", Attributes(attributes));
+        }
+
+        public virtual void Title(string text, Action<GlobalAttributes> attributes = null)
+        {
+            var tag = Tag("title", Attributes(attributes), ContainerModes.None, LineModes.Single, false, false);
+            Write(text);
+            Close(tag);
+        }
+
+        public virtual void Link(Action<LinkAttributes> attributes = null)
+        {
+            var tag = Tag("link", Attributes(attributes), ContainerModes.None, LineModes.Single, false, true);
+            Close(tag);
+        }
+
+        public virtual void Meta(Action<MetaAttributes> attributes = null)
+        {
+            var tag = Tag("meta", Attributes(attributes), ContainerModes.None, LineModes.Single, false, true);
+            Close(tag);
+        }
+
+        public virtual IContent Style(Action<StyleAttributes> attributes = null)
+        {
+            return Block("style", Attributes(attributes));
+        }
+
+        public virtual IContent Script(Action<ScriptAttributes> attributes = null)
+        {
+            return Block("script", Attributes(attributes));
+        }
+
+        public virtual void ExternalScript(Action<ExternalScriptAttributes> attributes = null)
+        {
+            var tag = Tag("script", Attributes(attributes), ContainerModes.None, LineModes.Single, false, false);
+            Close(tag);
+        }
+
+        public virtual IContent NoScript(Action<GlobalAttributes> attributes = null)
+        {
+            return Block("noscript", Attributes(attributes));
+        }
+
+        public virtual IContent Body(Action<BodyAttributes> attributes = null)
+        {
+            return Block("body", Attributes(attributes));
+        }
+
         public virtual IContent Div(Action<GlobalAttributes> attributes = null)
         {
             return Block("div", attributes);

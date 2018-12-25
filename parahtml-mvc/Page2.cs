@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace com.parahtml.Mvc
 {
-    public abstract class Page2 : Page2<object>
+    public abstract class MvcPage : MvcPage<object>
     {
 
     }

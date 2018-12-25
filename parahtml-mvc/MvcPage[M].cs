@@ -9,11 +9,11 @@ using com.parahtml.Html2;
 
 namespace com.parahtml.Mvc
 {
-    public abstract class Page2<M> : Fragment2, IPage, IHasModel<M>
+    public abstract class MvcPage<M> : Fragment2, IPage, IHasModel<M>
     {
-        protected M Model { private set; get; }
+        public M Model { private set; get; }
 
-        protected new MvcContext Context
+        public new MvcContext Context
         {
             get
             {

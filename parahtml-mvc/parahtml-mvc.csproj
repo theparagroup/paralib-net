@@ -50,11 +50,13 @@
     <Compile Include="Helpers[M].cs" />
     <Compile Include="IHasModel[M].cs" />
     <Compile Include="IPage.cs" />
+    <Compile Include="MvcComponent[M].cs" />
     <Compile Include="MvcContext.cs" />
+    <Compile Include="MvcForm.cs" />
     <Compile Include="MvcServer.cs" />
     <Compile Include="MvcWriter.cs" />
     <Compile Include="Page2.cs" />
-    <Compile Include="Page2[M].cs" />
+    <Compile Include="MvcPage[M].cs" />
     <Compile Include="Page[M].cs" />
     <Compile Include="Page.cs" />
     <Compile Include="Page[F,M].cs" />

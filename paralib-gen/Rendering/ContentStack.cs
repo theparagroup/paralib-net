@@ -77,7 +77,7 @@ namespace com.paralib.Gen.Rendering
         protected Context _context { private set; get; }
         protected Stack<IContent> _stack = new Stack<IContent>();
 
-        public void Initialize(Context context)
+        void ILazyContext.Initialize(Context context)
         {
             _context = context;
         }

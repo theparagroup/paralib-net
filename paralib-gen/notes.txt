@@ -88,9 +88,9 @@ Design Goals & Notes
 			Class="!!foo" (escapes)
 			or just let that be changed in the context
 
-	
+	review html encoding/raw strings
 
-
+	fix meta tag should be <meta blah>
 
 	fluent system
 		do i need to pass context in the constructor

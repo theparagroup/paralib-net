@@ -16,6 +16,8 @@ namespace com.parahtml.Html401
 
         We're inclusive, not exclusive (e.g. we ignore the fact that A cannot nest under A)?
 
+         https://stackoverflow.com/questions/5997254/where-in-the-world-are-are-the-html-nesting-rules
+
     */
 
     public interface IFlow:IBlock, IInline
