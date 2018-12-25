@@ -61,7 +61,6 @@
     <Compile Include="Grids\IRow.cs" />
     <Compile Include="Html2\401\Inline_.cs" />
     <Compile Include="Html2\401\interfaces.cs" />
-    <Compile Include="Html2\Fragment2.cs" />
     <Compile Include="Html2\401\Block_.cs" />
     <Compile Include="Html2\401\Html401.cs" />
     <Compile Include="Html2\HtmlBuilder2.cs" />

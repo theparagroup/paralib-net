@@ -50,6 +50,7 @@
     <Compile Include="Helpers[M].cs" />
     <Compile Include="IHasModel[M].cs" />
     <Compile Include="IPage.cs" />
+    <Compile Include="MvcBuilder.cs" />
     <Compile Include="MvcComponent[M].cs" />
     <Compile Include="MvcContext.cs" />
     <Compile Include="MvcForm.cs" />

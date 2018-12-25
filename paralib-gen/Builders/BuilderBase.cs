@@ -165,6 +165,11 @@ namespace com.paralib.Gen.Builders
             component.Close();
         }
 
+        public void Using<T>(T component) where T : IComponent
+        {
+            Using(component, null);
+        }
+
         //public void Using<T,F>(T component, Action<F> action) where T : IComponent, F where F: class
         //{
         //    component.Open();

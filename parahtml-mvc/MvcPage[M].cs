@@ -9,17 +9,9 @@ using com.parahtml.Html2;
 
 namespace com.parahtml.Mvc
 {
-    public abstract class MvcPage<M> : Fragment2, IPage, IHasModel<M>
+    public abstract class MvcPage<M> : MvcBuilder, IPage, IHasModel<M>
     {
         public M Model { private set; get; }
-
-        public new MvcContext Context
-        {
-            get
-            {
-                return (MvcContext)base.Context;
-            }
-        }
 
         void IHasModel<M>.SetModel(M model)
         {
