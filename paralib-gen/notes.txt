@@ -40,6 +40,8 @@ Design Goals & Notes
 
 		support for expando objects in attributes/properties would be nice
 
+		in af, let's access the actual parameters used in the finish function (for selecting)
+
 		Marker/Renderers/RendererStacks
 			in constructors, make containermode before linemode
 			IRenderer should derive from IMarker and that's what builders return/close, e.g., Close(marker)
