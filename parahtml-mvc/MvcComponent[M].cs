@@ -9,13 +9,13 @@ namespace com.parahtml.Mvc
 {
     public abstract class MvcComponent<M> : IComponent
     {
-        protected MvcPage<M> MvcPage { private set; get; }
+        protected MvcFragment<M> Fragment { private set; get; }
         protected Helpers<M> Helpers { private set; get; }
 
-        public MvcComponent(MvcPage<M> mvcPage)
+        public MvcComponent(MvcFragment<M> mvcFragment)
         {
-            MvcPage = mvcPage;
-            Helpers = new Helpers<M>(MvcPage.Context.ViewContext, MvcPage.Model);
+            Fragment = mvcFragment;
+            Helpers = new Helpers<M>(Fragment.Context.ViewContext, Fragment.Model);
         }
 
         void IComponent.Open()

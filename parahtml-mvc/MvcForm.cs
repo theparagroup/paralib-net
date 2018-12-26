@@ -8,6 +8,7 @@ using com.paralib.Gen.Rendering;
 using System.Linq.Expressions;
 using System.Web.Mvc.Html;
 using com.parahtml.Attributes;
+using System.Web.Mvc;
 
 namespace com.parahtml.Mvc
 {
@@ -16,29 +17,29 @@ namespace com.parahtml.Mvc
         protected ICloseable _form;
         protected Action<FormAttributes> _attributes;
 
-        public MvcForm(MvcPage<M> mvcPage, Action<FormAttributes> attributes) : base(mvcPage)
+        public MvcForm(MvcFragment<M> mvcFragment, Action<FormAttributes> attributes=null) : base(mvcFragment)
         {
             _attributes = attributes;
         }
 
         protected override void OnOpen()
         {
-            _form = MvcPage.Form(_attributes);
+            _form = Fragment.Form(_attributes);
         }
 
         protected override void OnClose()
         {
-            MvcPage.Close(_form);
+            Fragment.Close(_form);
         }
 
         protected void Write(HtmlString text)
         {
-            MvcPage.Write(text?.ToHtmlString());
+            Fragment.Write(text?.ToHtmlString());
         }
 
         protected void WriteLine(HtmlString text)
         {
-            MvcPage.WriteLine(text?.ToHtmlString());
+            Fragment.WriteLine(text?.ToHtmlString());
         }
 
         public void HiddenFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
@@ -64,6 +65,11 @@ namespace com.parahtml.Mvc
         public void CheckBoxFor(Expression<Func<M, bool>> expression, object htmlAttributes = null)
         {
             Write(Helpers.Html.CheckBoxFor(expression, htmlAttributes));
+        }
+
+        public void DropDownListFor<TProperty>(Expression<Func<M, TProperty>> expression, IEnumerable<SelectListItem> selectList, string optionLabel, object htmlAttributes=null)
+        {
+            Write(Helpers.Html.DropDownListFor(expression, selectList, optionLabel, htmlAttributes));
         }
 
         public void ValidationMessageFor<TProperty>(Expression<Func<M, TProperty>> expression)

@@ -34,6 +34,12 @@ Design Goals & Notes
 
 	rework
 
+		go back to using fragment terminology
+		IPage -> IFragment
+		rename MvcFragment to Fragment (after all cleanup)
+
+		support for expando objects in attributes/properties would be nice
+
 		Marker/Renderers/RendererStacks
 			in constructors, make containermode before linemode
 			IRenderer should derive from IMarker and that's what builders return/close, e.g., Close(marker)
@@ -188,10 +194,8 @@ Design Goals & Notes
 
 		}
 
-	in paracontroller, add View() replacements:
-		Page()
-		Fragment()
 		
+
 	when we flesh out HtmlBuilder/FluentHtml, let's split into several partials:
 		https://www.w3schools.com/tags/ref_byfunc.asp
 		BasicHTML

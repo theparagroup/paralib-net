@@ -15,6 +15,7 @@ namespace com.parahtml.Html2
 
     public abstract class HtmlBuilder2 : BuilderBase
     {
+        protected Html401.FluentHtml _fluentHtml401;
 
         public HtmlBuilder2(ContentStack contentStack):base(contentStack)
         {
@@ -29,6 +30,21 @@ namespace com.parahtml.Html2
             get
             {
                 return (HtmlContext)base.Context;
+            }
+        }
+
+        protected Html401.IFlow Html401
+        {
+            get
+            {
+                if (_fluentHtml401 == null)
+                {
+                    _fluentHtml401 = new Html401.FluentHtml(this);
+                }
+
+                _fluentHtml401.Start();
+
+                return _fluentHtml401;
             }
         }
 

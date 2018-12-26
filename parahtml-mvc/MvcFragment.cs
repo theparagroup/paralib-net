@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.IO;
+using System.Text;
+using System.Threading.Tasks;
 using com.paralib.Gen;
-using System.Web.Mvc;
-using com.parahtml.Html2;
 
 namespace com.parahtml.Mvc
 {
-    public abstract class MvcPage<M> : MvcBuilder, IPage, IHasModel<M>
+    public abstract class MvcFragment: MvcBuilder, IPage
     {
-        public M Model { private set; get; }
-
-        void IHasModel<M>.SetModel(M model)
-        {
-            Model = model;
-        }
-
         void IPage.Render(MvcContext context)
         {
             ((ILazyContext)this).Initialize(context);
@@ -30,7 +21,6 @@ namespace com.parahtml.Mvc
         {
             CloseAll();
         }
-
 
     }
 }

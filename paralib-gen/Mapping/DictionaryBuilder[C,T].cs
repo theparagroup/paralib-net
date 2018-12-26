@@ -31,6 +31,24 @@ namespace com.paralib.Gen.Mapping
         {
             if (attributes != null)
             {
+                //let's allow for passing in dictionaries for attributes
+                if (attributes is Dictionary<string,string>)
+                {
+                    var nestedDictionary = (Dictionary<string, string>)attributes;
+                    foreach (var key in nestedDictionary.Keys)
+                    {
+                        var value = nestedDictionary[key];
+                        if (value!=null)
+                        {
+                            OnAdd(Context, dictionary, key, value);
+                        }
+                    }
+
+                    return;
+                }
+
+                //TODO we could support expando objects too
+
                 //this includes inherited properties (see missing DeclaredOnly flag)
                 //this also excludes interface properties implemented explictly
                 BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty;

@@ -99,10 +99,10 @@ namespace com.paralib.Gen.Builders
             return component;
         }
 
-        public virtual void Close()
-        {
-            _contentStack.Close();
-        }
+        //public virtual void Close()
+        //{
+        //    _contentStack.Close();
+        //}
 
         public virtual void Close(ICloseable closable)
         {

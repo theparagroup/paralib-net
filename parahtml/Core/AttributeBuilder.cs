@@ -60,6 +60,7 @@ namespace com.parahtml.Core
 
         protected AttributeDictionary Flatten(AttributeDictionary dictionary)
         {
+            //add MixedCase first, then overwrite with camelCase
             return Merge(dictionary, f => char.IsUpper(f[0]), s => !char.IsUpper(s[0]), k => HtmlBuilder.HyphenateUnderscores(k).ToLower());
         }
 
