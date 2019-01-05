@@ -14,9 +14,13 @@ namespace com.parahtml.Mvc
         void IHasModel<M>.SetModel(M model)
         {
             Model = model;
+            OnModelSet();
         }
 
+        protected virtual void OnModelSet()
+        {
 
+        }
 
     }
 }
