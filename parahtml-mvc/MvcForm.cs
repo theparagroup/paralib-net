@@ -17,6 +17,14 @@ namespace com.parahtml.Mvc
         protected ICloseable _form;
         protected Action<FormAttributes> _attributes;
 
+        public new Helpers<M> Helpers
+        {
+            get
+            {
+                return base.Helpers;
+            }
+        }
+
         public MvcForm(MvcFragment<M> mvcFragment, Action<FormAttributes> attributes=null) : base(mvcFragment)
         {
             _attributes = attributes;
