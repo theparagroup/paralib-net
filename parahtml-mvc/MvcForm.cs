@@ -57,6 +57,11 @@ namespace com.parahtml.Mvc
             Write(Helpers.Html.TextBoxFor(expression, htmlAttributes));
         }
 
+        public void TextBoxFor<TProperty>(Expression<Func<M, TProperty>> expression, string format, object htmlAttributes = null)
+        {
+            Write(Helpers.Html.TextBoxFor(expression, format, htmlAttributes));
+        }
+
         public void PasswordFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
             Write(Helpers.Html.PasswordFor(expression, htmlAttributes));
