@@ -11,8 +11,13 @@ namespace com.parahtml.Mvc
     {
         void IPage.Render(MvcContext context)
         {
-            ((ILazyContext)this).Initialize(context);
+            OnInitialize(context);
             OnRender();
+        }
+
+        protected virtual void OnInitialize(MvcContext context)
+        {
+            ((ILazyContext)this).Initialize(context);
         }
 
         protected abstract void OnRender();

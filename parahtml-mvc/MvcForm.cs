@@ -17,14 +17,6 @@ namespace com.parahtml.Mvc
         protected ICloseable _form;
         protected Action<FormAttributes> _attributes;
 
-        public new Helpers<M> Helpers
-        {
-            get
-            {
-                return base.Helpers;
-            }
-        }
-
         public MvcForm(MvcFragment<M> mvcFragment, Action<FormAttributes> attributes=null) : base(mvcFragment)
         {
             _attributes = attributes;
@@ -52,52 +44,52 @@ namespace com.parahtml.Mvc
 
         public void HiddenFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
-            Write(Helpers.Html.HiddenFor(expression, htmlAttributes));
+            Write(Fragment.Helpers.Html.HiddenFor(expression, htmlAttributes));
         }
 
         public void LabelFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
-            Write(Helpers.Html.LabelFor(expression, htmlAttributes));
+            Write(Fragment.Helpers.Html.LabelFor(expression, htmlAttributes));
         }
 
         public void TextBoxFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
-            Write(Helpers.Html.TextBoxFor(expression, htmlAttributes));
+            Write(Fragment.Helpers.Html.TextBoxFor(expression, htmlAttributes));
         }
 
         public void TextBoxFor<TProperty>(Expression<Func<M, TProperty>> expression, string format, object htmlAttributes = null)
         {
-            Write(Helpers.Html.TextBoxFor(expression, format, htmlAttributes));
+            Write(Fragment.Helpers.Html.TextBoxFor(expression, format, htmlAttributes));
         }
 
         public void PasswordFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
-            Write(Helpers.Html.PasswordFor(expression, htmlAttributes));
+            Write(Fragment.Helpers.Html.PasswordFor(expression, htmlAttributes));
         }
 
         public void CheckBoxFor(Expression<Func<M, bool>> expression, object htmlAttributes = null)
         {
-            Write(Helpers.Html.CheckBoxFor(expression, htmlAttributes));
+            Write(Fragment.Helpers.Html.CheckBoxFor(expression, htmlAttributes));
         }
 
         public void DropDownListFor<TProperty>(Expression<Func<M, TProperty>> expression, IEnumerable<SelectListItem> selectList, string optionLabel, object htmlAttributes=null)
         {
-            Write(Helpers.Html.DropDownListFor(expression, selectList, optionLabel, htmlAttributes));
+            Write(Fragment.Helpers.Html.DropDownListFor(expression, selectList, optionLabel, htmlAttributes));
         }
 
         public void ValidationMessageFor<TProperty>(Expression<Func<M, TProperty>> expression)
         {
-            Write(Helpers.Html.ValidationMessageFor(expression));
+            Write(Fragment.Helpers.Html.ValidationMessageFor(expression));
         }
 
         public void ValidationSummary(bool excludePropertyErrors, string message)
         {
-            Write(Helpers.Html.ValidationSummary(excludePropertyErrors, message));
+            Write(Fragment.Helpers.Html.ValidationSummary(excludePropertyErrors, message));
         }
 
         public void ValidationSummary(string message, object htmlAttributes)
         {
-            Write(Helpers.Html.ValidationSummary(message, htmlAttributes));
+            Write(Fragment.Helpers.Html.ValidationSummary(message, htmlAttributes));
         }
 
 
