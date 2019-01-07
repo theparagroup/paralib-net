@@ -58,9 +58,6 @@
     <Compile Include="MvcServer.cs" />
     <Compile Include="MvcWriter.cs" />
     <Compile Include="MvcFragment[M].cs" />
-    <Compile Include="Page[M].cs" />
-    <Compile Include="Page.cs" />
-    <Compile Include="Page[F,M].cs" />
     <Compile Include="ParaController.cs" />
     <Compile Include="ParaView[P].cs" />
     <Compile Include="ParaWebViewPage[M].cs" />
