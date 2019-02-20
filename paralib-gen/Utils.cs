@@ -46,7 +46,7 @@ namespace com.paralib.Gen
 
             if (data != null)
             {
-                parameter = $"{Json.Serialize(data, true)}, ";
+                parameter = $"{Json.Serialize(data)}, ";
             }
 
             return parameter;
@@ -62,9 +62,9 @@ namespace com.paralib.Gen
 
         public static class Json
         {
-            public static string Serialize(object value, bool ignoreLoops = true)
+            public static string Serialize(object value)
             {
-                return com.paralib.Utils.Json.Serialize(value, ignoreLoops);
+                return com.paralib.Utils.Json.Serialize(value);
             }
         }
 
