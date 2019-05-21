@@ -52,6 +52,16 @@ namespace com.parahtml.Mvc
             Write(Fragment.Helpers.Html.LabelFor(expression, htmlAttributes));
         }
 
+        public void TextAreaFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
+        {
+            Write(Fragment.Helpers.Html.TextAreaFor(expression, htmlAttributes));
+        }
+
+        public void TextAreaFor<TProperty>(Expression<Func<M, TProperty>> expression, int rows, int columns, object htmlAttributes = null)
+        {
+            Write(Fragment.Helpers.Html.TextAreaFor(expression, rows, columns, htmlAttributes));
+        }
+
         public void TextBoxFor<TProperty>(Expression<Func<M, TProperty>> expression, object htmlAttributes = null)
         {
             Write(Fragment.Helpers.Html.TextBoxFor(expression, htmlAttributes));
