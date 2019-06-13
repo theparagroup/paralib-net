@@ -1,4 +1,30 @@
-﻿=============================================================
+﻿OR Java SE Development Kit 8u45 32 bit
+jdk-8u45-windows-i586.exe
+https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
+
+install android sdk
+https://dl.google.com/android/installer_r24.4.1-windows.exe
+
+Using SDK Manager, install (only)
+	Android SDK Tools 25.2.5
+	Android SDK Build-tools 25.0.3
+	Android 4.4.2 (API 19)
+		SDK Platform
+		Google APIs
+
+ndk_r10e (Jan 2015) Windows 32-bit
+http://dl.google.com/android/ndk/android-ndk-r10e-windows-x86.exe
+
+http://download.xamarin.com/XamarinforVisualStudio/Windows/Xamarin.VisualStudio_4.2.1.62.msi
+
+Configure Xamarin in Visual Studio (Tools/Options/Xamarin)
+	Set 
+		java path
+		sdk path
+		ndk path
+
+
+=============================================================
 ====	Xamarin Install
 =============================================================
 
@@ -25,13 +51,28 @@ Installing through Visual Studio
 
 
 
-install java 1.7 32 bit
+install java 1.7 32 bit (1.7.0_45 - JDK 7u45)
+https://www.oracle.com/technetwork/java/javase/7u45-relnotes-2016950.html
+https://www.oracle.com/technetwork/java/javase/downloads/java-archive-downloads-javase7-521261.html
+
+OR Java SE Development Kit 8u45 32 bit
+http://jdk-8u45-windows-i586.exe/
+https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html
+
 install android sdk
+https://dl.google.com/android/installer_r24.4.1-windows.exe
+
+https://dl.google.com/android/repository/platform-tools_r27.0.0-windows.zip
+https://dl.google.com/android/repository/platform-tools_r23.0.2-windows.zip
+
+http://dl-ssl.google.com/android/repository/tools_r23.0.2-windows.zip (java 7)
+http://dl-ssl.google.com/android/repository/tools_r25.2.5-windows.zip (java 8)
+
 install xamarin for visual studio
 
 Run SDK Manager (as admin)
 install
-	Android SDK Tools
+	Android SDK Tools 
 	Android SDK Platform-tools
 	Android SDK Build Tool (latest - but see note about v24 and and Java8 below)
 	SDK Platforms for APIs you want to target
