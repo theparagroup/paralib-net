@@ -27,6 +27,7 @@ namespace com.paralib.Xandroid.Utils
 
             set
             {
+                //TODO currently this isn't called anywhere - clearly it is a way to override the getter... do we need this?
                 _networkConnected = value;
             }
 
