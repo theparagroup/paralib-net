@@ -1,14 +1,9 @@
-﻿using com.paralib.Xandroid.Utils;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace com.paralib.Xandroid.Http
+namespace com.paralib.Http
 {
     public class EndPoint<T>
     {
