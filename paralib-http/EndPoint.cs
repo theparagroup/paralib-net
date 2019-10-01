@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace com.paralib.Http
 {
     public class EndPoint<T>
     {
-        private static HttpClient _httpClient;
         public virtual string Host {get; set;}
         public virtual string Path { get; set; }
         public virtual HttpMethods Method { get; set; }
@@ -20,19 +18,6 @@ namespace com.paralib.Http
         public virtual T Response { get; protected set; }
         public virtual string ResponseJson { get; protected set; }
 
-        protected static HttpClient HttpClient
-        {
-            get
-            {
-                if (_httpClient==null)
-                {
-                    _httpClient = new HttpClient();
-                }
-
-                return _httpClient;
-            }
-
-        }
 
         protected virtual bool OnUnauthorized()
         {
@@ -57,11 +42,10 @@ namespace com.paralib.Http
 
         public void Call()
         {
-            var byteArray = Encoding.ASCII.GetBytes($"{User}:{Password}");
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+            //initialize singleton, if not already initialized
+            HttpClientSingleton.Init(Timeout, Encoding.ASCII.GetBytes($"{User}:{Password}"));
 
             Uri uri = new Uri($"http{(Secure ? "s" : "")}://{Host}/{Path}");
-            HttpClient.Timeout = Timeout;
 
             HttpResponseMessage response = null;
 
@@ -72,7 +56,7 @@ namespace com.paralib.Http
                     throw new Exception("Can't send content on GET operation");
                 }
 
-                response = HttpClient.GetAsync(uri).Result;
+                response = HttpClientSingleton.Instance.GetAsync(uri).Result;
             }
             else if (Method == HttpMethods.PUT || Method == HttpMethods.POST)
             {
@@ -83,11 +67,11 @@ namespace com.paralib.Http
 
                 if (Method == HttpMethods.PUT)
                 {
-                    response = HttpClient.PutAsync(uri, httpContent).Result;
+                    response = HttpClientSingleton.Instance.PutAsync(uri, httpContent).Result;
                 }
                 else if (Method == HttpMethods.POST)
                 {
-                    response = HttpClient.PostAsync(uri, httpContent).Result;
+                    response = HttpClientSingleton.Instance.PostAsync(uri, httpContent).Result;
                 }
             }
             else
