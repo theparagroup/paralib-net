@@ -6,7 +6,7 @@ namespace com.paralib.Http
 {
     public class EndPoint<T>
     {
-        public virtual string Host {get; set;}
+        public virtual string Host { get; set; }
         public virtual string Path { get; set; }
         public virtual HttpMethods Method { get; set; }
         public virtual bool Secure { get; set; }
@@ -15,8 +15,9 @@ namespace com.paralib.Http
         public virtual TimeSpan Timeout { get; set; }
         public virtual T Content { get; set; }
         public virtual int ResponseCode { get; protected set; }
+        public virtual string ReasonPhrase { get; protected set; }
         public virtual T Response { get; protected set; }
-        public virtual string ResponseJson { get; protected set; }
+        public virtual string RawResponse { get; protected set; }
 
 
         protected virtual bool OnUnauthorized()
@@ -29,7 +30,7 @@ namespace com.paralib.Http
 
         }
 
-        public EndPoint(string host, string path, HttpMethods method=HttpMethods.GET, bool secure=false)
+        public EndPoint(string host, string path, HttpMethods method = HttpMethods.GET, bool secure = false)
         {
             Host = host;
             Path = path;
@@ -51,7 +52,7 @@ namespace com.paralib.Http
 
             if (Method == HttpMethods.GET)
             {
-                if (Content!=null)
+                if (Content != null)
                 {
                     throw new Exception("Can't send content on GET operation");
                 }
@@ -80,30 +81,20 @@ namespace com.paralib.Http
             }
 
             ResponseCode = (int)response.StatusCode;
-            ResponseJson = null;
+            ReasonPhrase = response.ReasonPhrase;
+            RawResponse = response.Content.ReadAsStringAsync().Result;
             Response = default(T);
 
             if (response.IsSuccessStatusCode)
             {
-                //call sync
-                var responseContent = response.Content;
-                ResponseJson = responseContent.ReadAsStringAsync().Result;
-
-                //TODO which methods can return a response?
-
-                //if (Method == HttpMethods.GET)
-                //{
-                //    Response = Json.DeSerialize<T>(ResponseJson);
-                //}
-
-                //let's say all of them
-                Response = Json.DeSerialize<T>(ResponseJson);
-
+                Response = Json.DeSerialize<T>(RawResponse);
             }
-
-            if (ResponseCode==401)
+            else
             {
-                OnUnauthorized();
+                if (ResponseCode == 401)
+                {
+                    OnUnauthorized();
+                }
             }
 
         }
