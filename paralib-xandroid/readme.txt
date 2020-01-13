@@ -211,3 +211,12 @@ Lollipop
 21/5.0.1
 22/5.1.1
 
+
+
+=============================================================
+====	Turn on developer mode/ enable debugging
+=============================================================
+
+Tap Build Number 7 times
+Goto settings developer options
+
