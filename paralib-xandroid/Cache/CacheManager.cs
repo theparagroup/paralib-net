@@ -197,6 +197,26 @@ namespace com.paralib.Xandroid.Cache
             }
         }
 
+
+        public static void SetSavedOn<T>(DateTime savedOn, long? id = null)
+        {
+            DateTime now = DateTime.Now;
+
+            using (var db = new SQLiteConnection(DbPath))
+            {
+                var oldItem = Get<T>(id);
+
+                if (oldItem != null)
+                {
+                    oldItem.SavedOn = savedOn;
+
+                    db.Update(oldItem);
+                }
+
+            }
+        }
+
+
         public static bool? IsDirty<T>(long? id = null)
         {
             using (var db = new SQLiteConnection(DbPath))
